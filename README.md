@@ -14,9 +14,3 @@ Version 0.8
 - Holding the walk button charges the attack gauge at four times the normal rate, both below and above 100%. This also works while stationary.
 - The repetitive 100% charged sound is gone.
 - This works for both players as the base is a two-player ROM.
-
-## Required ROM and patching
-
-Apply `Casual_Run_Patch.ips` directly to the original supplied ROM. **Do not apply any of the earlier individual or combined patches first.**
-
-The required source is an unheadered, 3,670,016-byte HiROM whose internal title is `SoE 2-Player FuSoYa`.
