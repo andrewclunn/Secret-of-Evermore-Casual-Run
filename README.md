@@ -6,6 +6,7 @@
 - Incorporates other base patches.
 - Fixes Crustacia river bridge bug.
 - This now works for both players as the base is a two-player ROM.
+- Incorporates assassin17’s Silver Sheath fix and Infinite Bazooka Ammo fix
 
 ## Version 0.8
 - Holding the former run button makes the character walk, so it functions as a walk button.
