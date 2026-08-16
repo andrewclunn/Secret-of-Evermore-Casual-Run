@@ -1,4 +1,4 @@
-# Secret of Evermore - Casual Run Patch - Version 0.15
+# Secret of Evermore - Casual Run Patch - Version 0.16
 
 ## Patch Summary
 
@@ -8,33 +8,27 @@ To that end the main new changes are changing the run button to a walk / charge-
 
 ## New Features
 
-### New Game Plus
+### Run Button Becomes Walk Button
 
-The large blue-glass device on the left side of Tinker's central workbench now shares an interaction region with the nearby Slow Burn shelf.
+- Movement defaults to running whenever running is available.
+- Holding the former run button makes the character walk, so it functions as a walk button.
+- Running no longer drains the attack gauge or forces a charge above 100% back to 100%.
 
-The device is deliberately repeatable and does not create an automatic save.
+### Improved Weapon Charging
 
-#### What New Game Plus retains
+- The attack gauge continues charging at its normal rate while running, including above 100%.
+- Removes the repetitive 100%-charged sound.
+- Weapon charging beyond 100% happens automatically unless the attack button is pressed.
+- Holding the walk button charges the attack gauge at four times the normal rate, both below and above 100%. This also works while stationary.
 
-- Boy and dog names, levels, experience, and permanent character growth
-- Owned weapons, the equipped weapon, and weapon levels/experience
-- Learned alchemy formulas and their levels/experience
-- Equipment, charms, rare items, ingredients, consumables, and ammunition
-- Currencies and ordinary trade goods
+### Improved Healing Items
 
-Temporary positive and negative statuses are cleared, both characters are healed, both party members are made available, and the dog returns to its Act 1 wolf form.
+- Petals and Nectars are now not so useless.
 
-#### What New Game Plus resets
+### Better Sniff Rewards
 
-The first pass broadly resets the normal progression windows used by:
-
-- Boss and story completion
-- Doors, switches, bridges, and other event triggers
-- Chests, gourds, and sniff spots
-- Major story keys and the Exhibition Ticket
-- Act and map progression state
-
-It then deliberately restores the state immediately after the raptor recovery so that the opening tutorial is not replayed and the next objective is Bugmuck.
+- More ingredients found when following your dog's nose.
+- The dog gains a small amount of experience when you find ingredients on the ground.
 
 ### Slightly faster character-stat growth
 
@@ -70,6 +64,7 @@ The diminishing passive formula experience inherited from the balance patch has 
 
 - Doubles the table-based currency reward for regular enemies.
 - Boss rewards and scripted currency awards are unchanged.
+- Normal one-unit enemy ingredient drops give two instead of one.
 
 ### Dog Kills Count for Weapon Experience
 
@@ -100,18 +95,33 @@ The diminishing passive formula experience inherited from the balance patch has 
 
 - Fixes the Crustacia river-bridge bug introduced by the two-player patch.
 
-### Run Button Becomes Walk Button
+### New Game Plus
 
-- Movement defaults to running whenever running is available.
-- Holding the former run button makes the character walk, so it functions as a walk button.
-- Running no longer drains the attack gauge or forces a charge above 100% back to 100%.
+The large blue-glass device on the left side of Tinker's central workbench now shares an interaction region with the nearby Slow Burn shelf.
 
-### Improved Weapon Charging
+The device is deliberately repeatable and does not create an automatic save.
 
-- The attack gauge continues charging at its normal rate while running, including above 100%.
-- Removes the repetitive 100%-charged sound.
-- Weapon charging beyond 100% happens automatically unless the attack button is pressed.
-- Holding the walk button charges the attack gauge at four times the normal rate, both below and above 100%. This also works while stationary.
+#### What New Game Plus retains
+
+- Boy and dog names, levels, experience, and permanent character growth
+- Owned weapons, the equipped weapon, and weapon levels/experience
+- Learned alchemy formulas and their levels/experience
+- Equipment, charms, rare items, ingredients, consumables, and ammunition
+- Currencies and ordinary trade goods
+
+Temporary positive and negative statuses are cleared, both characters are healed, both party members are made available, and the dog returns to its Act 1 wolf form.
+
+#### What New Game Plus resets
+
+The first pass broadly resets the normal progression windows used by:
+
+- Boss and story completion
+- Doors, switches, bridges, and other event triggers
+- Chests, gourds, and sniff spots
+- Major story keys and the Exhibition Ticket
+- Act and map progression state
+
+It then deliberately restores the state immediately after the raptor recovery so that the opening tutorial is not replayed and the next objective is Bugmuck.
 
 ## Inherited Changes
 
