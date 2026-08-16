@@ -1,14 +1,6 @@
-# Secret of Evermore - Casual Run Patch - Version 0.16
+# Secret of Evermore - Casual Run Patch - Version 0.18
 
 ## Current Bugs to Fix
-
-### Dog Gaining No Attack Experience
-
-The dog's attack skill is not going up any. That's okay though because rather than fix this normally, I think I want to make it so that the dog's attack skill increases as the player picks up ingredients to reward them for following the dog's sniffing.
-
-### Annoying Charging Sound
-
-I have gotten rid of the blip indicating that the weapon meter hit 100%, but the pitched charging soudn effect is still there and annoying for bar progress beyond that.
 
 ## Patch Summary
 
@@ -27,7 +19,7 @@ To that end the main new changes are turning the run button into a walk / charge
 ### Improved Weapon Charging
 
 - The attack gauge continues charging at its normal rate while running, including above 100%.
-- Removes the repetitive 100%-charged sound.
+- Removes all attack meter charging sound effects.
 - Weapon charging beyond 100% happens automatically unless the attack button is pressed.
 - Holding the walk button charges the attack gauge at four times the normal rate, both below and above 100%. This also works while stationary.
 
@@ -39,6 +31,7 @@ To that end the main new changes are turning the run button into a walk / charge
 
 - More ingredients found when following your dog's nose.
 - The dog gains a small amount of experience when you find ingredients on the ground.
+- Picking up ingredients on the ground is also now how the dog gains attack level experience.
 
 ### Slightly faster character-stat growth
 
@@ -76,7 +69,7 @@ The diminishing passive formula experience inherited from the balance patch has 
 - Boss rewards and scripted currency awards are unchanged.
 - Normal one-unit enemy ingredient drops give two instead of one.
 
-### Dog Kills Count for Weapon Experience
+### Dog Kills Count for Boy's Weapon Experience
 
 - Kills credited to either the boy or dog now grant weapon experience to the boy's currently equipped weapon family.
 
@@ -101,9 +94,28 @@ The diminishing passive formula experience inherited from the balance patch has 
 - The Atlas Amulet vendor charges a flat 100 Jewels per amulet.
 - The vendor continually restocks Atlas Amulets to 99, so the supply does not run out.
 
-### Crustacia river-bridge bug-fix
+### Crustacia River-Bridge Bug Fixed
 
 - Fixes the Crustacia river-bridge bug introduced by the two-player patch.
+
+### Charm Rebalancing
+
+| Charm         | Effect                                                               |
+|---|---:|
+| Armor Polish   | Adds 12.5% of equipped armor Defense                                |
+| Chocobo Egg    | +45 maximum HP to both characters, capped at 999.                   |
+| Insect Incense | Prevents insect/arachnid attack routines from hurting the party.    |
+| Jade Disk      | Approximately +2–3 Hit for both characters, capped at 99.           |
+| Jaguar Ring    | Enables auto-run                                                    |
+| Magic Gourd    | Ceramic-pot rewards become 50 Jewels instead of the ordinary 10.    |
+| Moxa Stick     | Increases item and alchemy healing by 50%                           |
+| Oracle Bone    | Unlocks additional dialogue and Stop is available from an alchemist.|
+| Ruby Heart     | Reduces enemy Hit chance by 15 percentage points                    |
+| Silver Sheath  | Adds 25% of the qualifying sword-family weapon’s attack value.      |
+| Staff of Life  | Reads Defense from five levels farther along the stat table.        |
+| Sun Stone      | Reads Attack from five levels farther along the stat table.         |
+| Thug’s Cloak   | Adds 5 Evade to both characters, capped at 99                       |
+| Wizard’s Coin  | Approximately +10–12 Magic Defense for the boy and +4–6 for the dog |
 
 ### New Game Plus
 
@@ -155,7 +167,6 @@ It then deliberately restores the state immediately after the raptor recovery so
 - Rebalances weapon base damage so weapon progression is more meaningful across the game.
 - Introduces shared weapon-family experience: every fourth qualifying kill grants experience to other weapons in the equipped weapon’s family, including weapons not yet acquired.
 - Caps physical evasion at 64%, preventing extreme Speed-based evasion exploits.
-- Casting requires the boy’s attack gauge to be at 100%.
 - Rebalances the formula learning-rate table to reduce excessive grinding.
 - Reduces Cryo-Blast’s base damage from 800 to 600.
 - Rebalances individual formulas, including reduced Heal and Crush strength and improved later offensive formulas.
