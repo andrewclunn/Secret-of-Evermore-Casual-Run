@@ -1,10 +1,20 @@
 # Secret of Evermore - Casual Run Patch - Version 0.16
 
+## Current Bugs to Fix
+
+### Dog Gaining No Attack Experience
+
+The dog's attack skill is not going up any. That's okay though because rather than fix this normally, I think I want to make it so that the dog's attack skill increases as the player picks up ingredients to reward them for following the dog's sniffing.
+
+### Annoying Charging Sound
+
+I have gotten rid of the blip indicating that the weapon meter hit 100%, but the pitched charging soudn effect is still there and annoying for bar progress beyond that.
+
 ## Patch Summary
 
 This patch is a cumulative IPS patch for the unheadered U.S. release of *Secret of Evermore*. It includes the FuSoYa's two-player patch, builds on Ninakoru's gameplay-balance work, and includes several of assassin17's bugfixes, while also making various adjustments and additional control and logic edits. The end goal is to remove glitches, make gameplay faster, and reduce grinding, while leaving the core gameplay experience intact.
 
-To that end the main new changes are changing the run button to a walk / charge-speed-up button, making running not interrupt waepon charging, increased currency drops, gaiing weapon experience on dog kills, and better cross alchemy passive leveling. There is also an experimental new game plus feature and some boss health rebalancing. A more complete change list is below.
+To that end the main new changes are turning the run button into a walk / charge-speed-up button, making running not interrupt waepon charging, increased currency and ingredient drops, changes to attack skill and alchemy experience growth, an experimental new game plus feature, and several other balancing and bug fix changes. A more complete change list is below.
 
 ## New Features
 
@@ -144,7 +154,6 @@ It then deliberately restores the state immediately after the raptor recovery so
 - Rebalances weapon charge multipliers and base damage, particularly overpowered level-three attacks.
 - Rebalances weapon base damage so weapon progression is more meaningful across the game.
 - Introduces shared weapon-family experience: every fourth qualifying kill grants experience to other weapons in the equipped weapon’s family, including weapons not yet acquired.
-- Slows the dog’s weapon-charge progression from one level per 128 attacks to one per 256.
 - Caps physical evasion at 64%, preventing extreme Speed-based evasion exploits.
 - Casting requires the boy’s attack gauge to be at 100%.
 - Rebalances the formula learning-rate table to reduce excessive grinding.
