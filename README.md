@@ -119,7 +119,7 @@ The diminishing passive formula experience inherited from the balance patch has 
 
 ### New Game Plus
 
-The large blue-glass device on the left side of Tinker's central workbench now shares an interaction region with the nearby Slow Burn shelf.
+NOTE - The New Game Plus has intentionally been removed due to causing bugs, and will be readded in a later revision. It is preserved as the feature functionality is intended to be re-added in a later version.
 
 The device is deliberately repeatable and does not create an automatic save.
 
@@ -173,21 +173,12 @@ It then deliberately restores the state immediately after the raptor recovery so
 - Adjusts Speed, Regrowth, Barrier, and other effect durations.
 - Changes Barrier’s Limestone requirement to an Atlas Amulet to limit repeated near-invulnerability.
 - Rebalances the boy’s Attack, dog’s Defense, and both of their Magic Defense development.
-- Adds small base Magic Defense adjustments to the boy and dog.
-- Reduces helmet and bracelet Defense bonuses by roughly 30%; body armor and dog collars are largely unchanged.
+- Reduces helmet and bracelet Defense bonuses by roughly 30%.
 - Reduces the toaster dog’s bonuses from +80 Attack/+250 Defense to +70/+180.
-- Rebalances the statistics of roughly 90% of enemies and bosses.
-- Strengthens later-act enemies and creates a more progressive experience-and-money curve.
-- Raises certain boss magic-damage multipliers from 2× to 2.5×.
-- Modifies Windwalker shuttle-part encounters, including several special enemies.
+- Rebalances the statistics of various enemies and bosses.
 - Corrects the space-station Aquagoth tentacles to use the intended stronger version.
 - Adds Guardbots and strengthens the upper-floor Neo Greebles in the space-station area.
-Economy and rewards
-- Reduces the Feather’s price from 1,000 to 600.
-- Doubles the prices of the strongest Act III and Act IV armor.
-- Reduces the Chocobo Egg’s sale value from 10,000 to 5,000.
-- Reduces the Aquagoth reward from 5,000 to 4,000.
-- Reduces the post-Mungola reward from 10,000 to 5,000.
+- NOTE Several features of this balance patch were seen as not compatible with the vision of the Casual Run patch, and so were specifically not included / removed. They are not mentioned here precisely because they were not included (an example being the limitation on casting alchemy when below 100% weapon charge.)
 
 ### Bug Fixes by assassin17
 
