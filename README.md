@@ -1,4 +1,4 @@
-# Secret of Evermore - Casual Run Patch - Version 0.18
+# Secret of Evermore - Casual Run Patch - Version 0.20
 
 ## Current Bugs to Fix
 
@@ -37,6 +37,7 @@ To that end the main new changes are turning the run button into a walk / charge
 
 - The boy retains his original level-1 Defense and gains one additional cumulative innate Defense point after every four level-ups.
 - The dog retains its original level-1 Attack and gains one additional cumulative innate Attack point after every five level-ups.
+- Experience requirements halved for character level ups.
 
 ### Fixed 50% alchemy-family experience sharing
 
@@ -50,7 +51,7 @@ The diminishing passive formula experience inherited from the balance patch has 
 - Laser remains isolated in its own one-formula family.
 
 | Family | Formulas |
-|---|---|
+|---|---:|
 | Enhancement | Atlas, Barrier, Defend, Energize, Force Field, Reflect, Speed |
 | Elemental | Acid Rain, Fireball, Fire Power, Flash, Lightning Storm, Slow Burn |
 | Restoration | Cure, Heal, Miracle Cure, One Up, Regrowth, Revive, Super Heal |
@@ -119,9 +120,18 @@ The diminishing passive formula experience inherited from the balance patch has 
 
 ### New Game Plus
 
-NOTE - The New Game Plus has intentionally been removed due to causing bugs, and will be readded in a later revision. It is preserved as the feature functionality is intended to be re-added in a later version.
+Version 0.20 adds a deliberately minimal New Game Plus reset for beta testing. It does not yet include a transition, restart scene, or polished explanation.
 
-The device is deliberately repeatable and does not create an automatic save.
+The woman in the second village hut in Prehistoria (the NPC whose original dialogue mentioned the jungle fight early in the game and thanked the player for protecting the village late in the game) has been replaced by a Gothic adult.
+
+They always ask:
+
+> Reset game state?
+>
+> No  
+> Yes
+
+NOTE - The New Game Plus feature is there for testing and will undergo future development.
 
 #### What New Game Plus retains
 
