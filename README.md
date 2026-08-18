@@ -2,6 +2,10 @@
 
 ## Current Bugs to Fix
 
+Found in testing New Game Plus (with intentional maximal sequence breaks):
+- Returning to the area south of the prehistoric village lead to the dog intro / bone sword pick up scene. Then leaving lead to the raptor fight. FIX: Those flags should not be reset as part of New Game Plus.
+- After completing the Ivory Tower dog escape, when getting sent to the dungeon after the dog ruins the banquet, the player is spawned inside the door and are then stuck (the door remains shut and the scene of the man leading us to our cell doesn't happen). FIX: Unsure.
+
 ## Patch Summary
 
 This patch is a cumulative IPS patch for the unheadered U.S. release of *Secret of Evermore*. It includes the FuSoYa's two-player patch, builds on Ninakoru's gameplay-balance work, and includes several of assassin17's bugfixes, while also making various adjustments and additional control and logic edits. The end goal is to remove glitches, make gameplay faster, and reduce grinding, while leaving the core gameplay experience intact.
