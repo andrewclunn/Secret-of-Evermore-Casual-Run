@@ -1,10 +1,4 @@
-# Secret of Evermore - Casual Run Patch - Version 0.20
-
-## Current Bugs to Fix
-
-Found in testing New Game Plus (with intentional maximal sequence breaks):
-- Returning to the area south of the prehistoric village lead to the dog intro / bone sword pick up scene. Then leaving lead to the raptor fight. FIX: Those flags should not be reset as part of New Game Plus.
-- After completing the Ivory Tower dog escape, when getting sent to the dungeon after the dog ruins the banquet, the player is spawned inside the door and are then stuck (the door remains shut and the scene of the man leading us to our cell doesn't happen). FIX: Unsure.
+# Secret of Evermore - Casual Run Patch - Version 0.24
 
 ## Patch Summary
 
@@ -20,12 +14,13 @@ To that end the main new changes are turning the run button into a walk / charge
 - Holding the former run button makes the character walk, so it functions as a walk button.
 - Running no longer drains the attack gauge or forces a charge above 100% back to 100%.
 
-### Improved Weapon Charging
+### Modified Weapon Charging
 
 - The attack gauge continues charging at its normal rate while running, including above 100%.
 - Removes all attack meter charging sound effects.
 - Weapon charging beyond 100% happens automatically unless the attack button is pressed.
 - Holding the walk button charges the attack gauge at four times the normal rate, both below and above 100%. This also works while stationary.
+- The bazooka continues to charge in a loop instead of stopping at 100% unless the player is holding the attack button. This is intentional as it makes "reloading" the bazooka slightly more purposeful, and balances it a bit compared to the other weapons.
 
 ### Improved Healing Items
 
@@ -90,19 +85,6 @@ The diminishing passive formula experience inherited from the balance patch has 
 | Verminator | 3,600 |
 | Mungola | 8,000 |
 
-### Cheaper Initial Amulet of Annihilation
-
-- Lowers the hidden Crustacia vendor's Amulet of Annihilation price from 10,000 to 500 Jewels.
-
-### Endless Atlas Amulet
-
-- The Atlas Amulet vendor charges a flat 100 Jewels per amulet.
-- The vendor continually restocks Atlas Amulets to 99, so the supply does not run out.
-
-### Crustacia River-Bridge Bug Fixed
-
-- Fixes the Crustacia river-bridge bug introduced by the two-player patch.
-
 ### Charm Rebalancing
 
 | Charm         | Effect                                                               |
@@ -122,42 +104,38 @@ The diminishing passive formula experience inherited from the balance patch has 
 | Thug’s Cloak   | Adds 5 Evade to both characters, capped at 99                       |
 | Wizard’s Coin  | Approximately +10–12 Magic Defense for the boy and +4–6 for the dog |
 
+### Map And Event Changes
+
+#### Prhistoria
+
+- A New Game Plus feature, which is detailed more below.
+
+#### Crustacia
+
+- Fixed the Crustacia river-bridge bug introduced by the two-player patch.
+- Lowered the hidden Crustacia vendor's Amulet of Annihilation price from 10,000 to 500 Jewels.
+
+#### Nobilia
+
+- The Atlas Amulet vendor charges a flat 100 Jewels per amulet and continually restocks Atlas Amulets to 99, so the supply does not run out.
+- A rice vender has been changed to a bead vendor, not with the best deal, but with the most convenient by selling directly for Jewels.
+
+#### Gothica
+
+- The lady who gives the dog a key now also provides a hint at the bookshelf exit.
+
+#### Omnitopia
+
+- The vertical pipes begin opened to allow for faster traversal.
+
 ### New Game Plus
 
-Version 0.20 adds a deliberately minimal New Game Plus reset for beta testing. It does not yet include a transition, restart scene, or polished explanation.
-
-The woman in the second village hut in Prehistoria (the NPC whose original dialogue mentioned the jungle fight early in the game and thanked the player for protecting the village late in the game) has been replaced by a Gothic adult.
-
-They always ask:
-
-> Reset game state?
->
-> No  
-> Yes
-
-NOTE - The New Game Plus feature is there for testing and will undergo future development.
-
-#### What New Game Plus retains
-
-- Boy and dog names, levels, experience, and permanent character growth
-- Owned weapons, the equipped weapon, and weapon levels/experience
-- Learned alchemy formulas and their levels/experience
-- Equipment, charms, rare items, ingredients, consumables, and ammunition
-- Currencies and ordinary trade goods
-
-Temporary positive and negative statuses are cleared, both characters are healed, both party members are made available, and the dog returns to its Act 1 wolf form.
-
-#### What New Game Plus resets
-
-The first pass broadly resets the normal progression windows used by:
-
-- Boss and story completion
-- Doors, switches, bridges, and other event triggers
-- Chests, gourds, and sniff spots
-- Major story keys and the Exhibition Ticket
-- Act and map progression state
-
-It then deliberately restores the state immediately after the raptor recovery so that the opening tutorial is not replayed and the next objective is Bugmuck.
+This is activated by talking to a conspiculously out place character named Jade in one of the huts in the prehistoric village. The player must intentionally select this, and it is not available until after certain events have transpired. The results of this are:
+- Boss and story completion are reset until just after the scene where Fire Eyes asks you for help and your dog's name is given.
+- Doors, switches, bridges, other event triggers, chests, gourds, sniff spots, and act and map progression states are all reset.
+- Major story key items such as the Diamon Eyes and the Exhibition Ticket are removed from your inventory.
+- Your equipped weapon is set to the Bone Crusher and the Bazooka is removed from your inventory.
+- The secret easter-egg flag is set that causes the cameo of Carltron cleaning a box at the start of act 2.
 
 ## Inherited Changes
 
@@ -199,6 +177,15 @@ It then deliberately restores the state immediately after the raptor recovery so
 - Silver Sheath fix: the sword-damage bonus is applied only after the Silver Sheath has actually been obtained. The unmodified game effectively applies it whether owned or not.
 - Infinite Bazooka Ammo fix: Particle Bomb and Cryo-Blast ammunition is properly consumed.
 - Bazooka leveling/interface fix: the Bazooka begins at level one and its equipped-weapon and ammunition information is handled correctly.
+
+## Stil TODO
+
+- The queen's key needs to be removed from the charm inventory as part of New Game Plus reset.
+- We should update the initial text of of the women who gives the key to the dog in order to make her elude to being a ghost.
+- I want the damage of both the Laser Lance and Neutron blade reduced by 5 (Leave the Atom Smasher as it is).
+- I should maybe get rid of some extra junk blocking off access to the two vendors in Nobilia that you presently can only reach by going through the shop.
+- Perhaps I should make more of the invisible pathways visable in the Ivor Tower Dog Maze so there is less "randomly moving in the dark trying to find the way forward."
+- I like the idea of adding an additional NPC in an early dead end in the The Dark Forest, who says, "The watchers. I tried to escape them. Were they showing me the way?" Then I should add another NPC at a mid-point dead end saying, "They're in the trees. They are guides." This should prevent messing with the atmosphere while strongly hinting to the user about following the watchers as a means to identify the correct path.
 
 ## Applying the patch
 
