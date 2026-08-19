@@ -181,7 +181,7 @@ This is activated by talking to a conspiculously out place character named Jade 
 ## Stil TODO
 
 - The queen's key needs to be removed from the charm inventory as part of New Game Plus reset.
-- We should update the initial text of of the women who gives the key to the dog in order to make her elude to being a ghost.
+- I should update the initial text of of the women who gives the key to the dog in order to make her elude to being a ghost.
 - I want the damage of both the Laser Lance and Neutron blade reduced by 5 (Leave the Atom Smasher as it is).
 - I should maybe get rid of some extra junk blocking off access to the two vendors in Nobilia that you presently can only reach by going through the shop.
 - Perhaps I should make more of the invisible pathways visable in the Ivor Tower Dog Maze so there is less "randomly moving in the dark trying to find the way forward."
