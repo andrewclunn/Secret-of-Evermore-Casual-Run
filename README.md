@@ -1,4 +1,4 @@
-# Secret of Evermore - Casual Run Patch - Version 0.24
+# Secret of Evermore - Casual Run Patch - Version 1.02
 
 ## Patch Summary
 
@@ -73,6 +73,10 @@ The diminishing passive formula experience inherited from the balance patch has 
 
 - Kills credited to either the boy or dog now grant weapon experience to the boy's currently equipped weapon family.
 
+### End Game Weapon Rebalancing
+
+- Both the Laser Lance and Neutron blade have had their power reduced by 5 (Leaving the Atom Smasher as the most powerful base weapon).
+
 ### Boss HP Rebalancing
 
 - Reduces the maximum HP of five longer bosses by 20%:
@@ -123,6 +127,7 @@ The diminishing passive formula experience inherited from the balance patch has 
 #### Gothica
 
 - The lady who gives the dog a key now also provides a hint at the bookshelf exit.
+- Fixed a soft lock where one can kill Mungola wihour ever having defeated Verminator (through extensive backtracking). This is still possible, but once Mungola is killed Verminator is also considered to have been defeated, opening up Ebon Keep fully through this alternative access without getting stuck in boxes on entering a door.
 
 #### Omnitopia
 
@@ -130,10 +135,10 @@ The diminishing passive formula experience inherited from the balance patch has 
 
 ### New Game Plus
 
-This is activated by talking to a conspiculously out place character named Jade in one of the huts in the prehistoric village. The player must intentionally select this, and it is not available until after certain events have transpired. The results of this are:
+This is activated by talking to a conspiculously out of place character in one of the huts in the prehistoric village. The player must intentionally select this, and it is not available until after certain events have transpired. The results of this are:
 - Boss and story completion are reset until just after the scene where Fire Eyes asks you for help and your dog's name is given.
 - Doors, switches, bridges, other event triggers, chests, gourds, sniff spots, and act and map progression states are all reset.
-- Major story key items such as the Diamon Eyes and the Exhibition Ticket are removed from your inventory.
+- Major story key items such as the Diamond Eyes and the Exhibition Ticket are removed from your inventory.
 - Your equipped weapon is set to the Bone Crusher and the Bazooka is removed from your inventory.
 - The secret easter-egg flag is set that causes the cameo of Carltron cleaning a box at the start of act 2.
 
@@ -167,7 +172,7 @@ This is activated by talking to a conspiculously out place character named Jade 
 - Rebalances the boy’s Attack, dog’s Defense, and both of their Magic Defense development.
 - Reduces helmet and bracelet Defense bonuses by roughly 30%.
 - Reduces the toaster dog’s bonuses from +80 Attack/+250 Defense to +70/+180.
-- Rebalances the statistics of various enemies and bosses.
+- Rebalances the statistics of various enemies and bosses (overwritten in some cases).
 - Corrects the space-station Aquagoth tentacles to use the intended stronger version.
 - Adds Guardbots and strengthens the upper-floor Neo Greebles in the space-station area.
 - NOTE Several features of this balance patch were seen as not compatible with the vision of the Casual Run patch, and so were specifically not included / removed. They are not mentioned here precisely because they were not included (an example being the limitation on casting alchemy when below 100% weapon charge.)
@@ -177,15 +182,6 @@ This is activated by talking to a conspiculously out place character named Jade 
 - Silver Sheath fix: the sword-damage bonus is applied only after the Silver Sheath has actually been obtained. The unmodified game effectively applies it whether owned or not.
 - Infinite Bazooka Ammo fix: Particle Bomb and Cryo-Blast ammunition is properly consumed.
 - Bazooka leveling/interface fix: the Bazooka begins at level one and its equipped-weapon and ammunition information is handled correctly.
-
-## Stil TODO
-
-- The queen's key needs to be removed from the charm inventory as part of New Game Plus reset.
-- I should update the initial text of of the women who gives the key to the dog in order to make her elude to being a ghost.
-- I want the damage of both the Laser Lance and Neutron blade reduced by 5 (Leave the Atom Smasher as it is).
-- I should maybe get rid of some extra junk blocking off access to the two vendors in Nobilia that you presently can only reach by going through the shop.
-- Perhaps I should make more of the invisible pathways visable in the Ivor Tower Dog Maze so there is less "randomly moving in the dark trying to find the way forward."
-- I like the idea of adding an additional NPC in an early dead end in the The Dark Forest, who says, "The watchers. I tried to escape them. Were they showing me the way?" Then I should add another NPC at a mid-point dead end saying, "They're in the trees. They are guides." This should prevent messing with the atmosphere while strongly hinting to the user about following the watchers as a means to identify the correct path.
 
 ## Applying the patch
 
