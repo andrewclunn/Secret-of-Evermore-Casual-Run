@@ -1,4 +1,4 @@
-# Secret of Evermore - Casual Run Patch - Version 1.02
+# Secret of Evermore - Casual Run Patch - Version 1.03
 
 ## Patch Summary
 
