@@ -4,7 +4,7 @@
 
 This patch is a cumulative IPS patch for the unheadered U.S. release of *Secret of Evermore*. It includes the FuSoYa's two-player patch, builds on Ninakoru's gameplay-balance work, and includes several of assassin17's bugfixes, while also making various adjustments and additional control and logic edits. The end goal is to remove glitches, make gameplay faster, and reduce grinding, while leaving the core gameplay experience intact.
 
-To that end the main new changes are turning the run button into a walk / charge-speed-up button, making running not interrupt waepon charging, increased currency and ingredient drops, changes to attack skill and alchemy experience growth, an experimental new game plus feature, and several other balancing and bug fix changes. A more complete change list is below.
+To that end the main new changes are turning the run button into a walk / charge-speed-up button, making running not interrupt weapon charging, increased currency and ingredient drops, changes to attack skill and alchemy experience growth, an experimental new game plus feature, and several other balancing and bug fix changes. A more complete change list is below.
 
 ## New Features
 
