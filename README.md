@@ -1,485 +1,330 @@
-# Secret of Evermore - Casual Run Patch - Version 1.17
+# Secret of Evermore: Casual Run
 
-## Patch Summary
+**Current development baseline:** v1.28  
+**Next major milestone:** 2.0  
+**Longer-term expansion:** 3.0
 
-**Secret of Evermore: Casual Run** is a cumulative improvement patch for the clean, unheadered U.S. release of *Secret of Evermore*. It incorporates FuSoYa's two-player work, selected balance and bug-fix work by Ninakoru, selected fixes by assassin17, an integrated version of the Conn/RedScorpion MSU-1 patch, and a large set of original Casual Run quality-of-life, progression, balance, dialogue, and control changes.
+## What Casual Run Is
 
-The goal is a faster, smoother playthrough with less grinding and fewer progression traps while preserving the feel of the original SNES game. Casual Run is not intended to be a hard-mode hack or a radical redesign. It favors useful quality-of-life improvements, clearer progression, modest balance changes, and optional depth without adding modern HUD elements or intrusive interfaces.
+**Secret of Evermore: Casual Run** is a cumulative improvement patch for the clean, unheadered U.S. release of *Secret of Evermore*.
 
-Version **1.17** completes the full story/world script review begun after the regional text-arena conversion. Every documented script arena has now been reviewed entry-by-entry, including NPC dialogue, signs, receipts, conditional variants, Dog-only text, major story scenes, and the active New Game Plus callbacks. The accepted pass corrects grammar, punctuation, terminology, consistency, and selected awkward wording while preserving established character voices, event logic, and the frozen gameplay/control feature set.
+The goal is a faster, smoother, less frustrating playthrough while preserving the feel and presentation language of the original SNES game. Casual Run is not intended to be a hard-mode hack or a remake. It favors quality-of-life improvements, clearer progression, modest rebalance, optional depth, bug fixes, and better presentation without turning the game into a modern HUD-heavy redesign.
 
----
+Casual Run builds on earlier community work, including FuSoYa's two-player patch, selected balance and bug-fix work by Ninakoru, fixes by assassin17, the Conn/RedScorpion MSU-1 work, and later community research and fixes credited below.
 
-## Version 1.17 Release Notes
-
-- Completes the full **25-arena** story/world script review.
-- Standardizes recurring terminology such as **formula** versus **spell** where the game is specifically referring to alchemy formulas.
-- Corrects punctuation, capitalization, spacing, typographical errors, item-name consistency, and a small number of awkward constructions throughout the game.
-- Preserves established major-character voices and intentional joke/synchronization text rather than broadly rewriting the script.
-- Retains all active normal/NG+ mirrored callbacks, including the residual-memory dialogue.
-- Keeps the v1.16 regional raw-text arena architecture and all accepted gameplay/control behavior unchanged.
+This README is the **player-facing feature summary, roadmap, and credits document**. The authoritative ASM source is the technical source of truth for exact ROM changes, build identity, hooks, memory usage, validation requirements, historical experiments, and implementation details.
 
 ---
 
-## New Controls and Ring Shortcuts
+## Roadmap at a Glance
 
-Casual Run's final control layout is designed around the fact that normal movement already defaults to running.
+The headings **1.0**, **2.0**, and **3.0** are major public-release generations rather than a literal mapping to every internal development version. **1.0** represents the foundation that was already released publicly. **2.0** is the current major revision: several of its headline systems are already implemented in the v1.28 development baseline, while final QA and the Omnitopia flight-return feature remain unfinished. **3.0** is the planned future content expansion.
 
-### Field Controls
+### Status Key
 
-- **A** - Action, interaction, attack, and confirm. This takes over the original B-button role.
-- **B** - Walk while held and accelerate weapon charging. This takes over the original A-button walk/charge role.
-- **Start** - Open the Boy's **Main Ring**.
-- **X** - Open the Boy's **Item Ring** directly.
-- **Y** - Open the Boy's **Alchemy Ring** directly.
+- **Complete** — implemented and accepted into the current development baseline for that release generation.
+- **In testing** — implemented and undergoing runtime validation before acceptance.
+- **In progress** — active work is underway but the feature is not ready for release acceptance.
+- **Planned** — accepted roadmap scope, but implementation is still future work.
 
-### Ring Controls
-
-- **A** - Confirm.
-- **B** - Cancel / back.
-- **Start** - Cancel / back, including closing the Ring.
-- **Select** - Switch between the Boy and Dog Rings.
-
-The shortcuts use the game's own remembered Ring-page state rather than simulating menu navigation, so Item and Alchemy open directly without visible intermediate transitions.
-
-### Two-Player Behavior
-
-- The A/B role swap applies to both controllers.
-- Player 1 receives the Start/X/Y Ring shortcuts.
-- Player 2 does **not** receive the new menu shortcuts.
-- Player 2's Start button retains FuSoYa's original multiplayer enable/disable behavior.
-- The existing two-player character-ownership and camera behavior is otherwise preserved.
-
----
-
-## Movement and Weapon Charging
-
-### Run Button Becomes Walk / Fast-Charge Button
-
-- Movement defaults to running whenever running is available.
-- Holding **B** makes the controlled character walk.
-- Running no longer drains the attack gauge or forces a charge above 100% back down to 100%.
-- The attack gauge continues charging normally while running, including above 100%.
-- Holding **B** charges the attack gauge at four times the normal rate, both below and above 100%, including while stationary.
-- Charging beyond 100% happens automatically unless the attack button is pressed.
-- Charge sound effects above 100% are silenced to reduce repeated audio during normal play.
-- The Bazooka continues charging in a loop rather than stopping permanently at 100% unless the attack button is held. This makes reloading more deliberate and keeps it from completely overshadowing the other weapons.
+| Release bucket | Feature | Status | Summary |
+|---|---|---|---|
+| **1.0** | Core controls and Ring-menu overhaul | **Complete** | Default running, walk/fast-charge behavior, A/B role cleanup, direct Main/Item/Alchemy Ring shortcuts, and consistent menu controls. |
+| **1.0** | Two-player integration | **Complete** | FuSoYa's multiplayer foundation retained and integrated with Casual Run controls without breaking Player 2's join/withdraw behavior. |
+| **1.0** | Faster progression and reduced grinding | **Complete** | Faster character growth, shared weapon-family progress, Dog growth from sniffing, improved ingredient rewards, and reworked alchemy-family experience sharing. |
+| **1.0** | Economy, healing, item, charm, weapon, and combat rebalance | **Complete** | Gentler economy and progression tuning, selected boss/weapon adjustments, useful charm improvements, and targeted alchemy balance. |
+| **1.0** | Progression and softlock fixes | **Complete** | Numerous navigation, state, dungeon-repeatability, Mungola/Tinker, Tiny's-lair, Ivory Tower, and related progression safeguards. |
+| **1.0** | New Game Plus | **Complete** | Optional repeatable replay system through Jade with retained progression and selective residual-memory dialogue. |
+| **2.0** | Windwalker flight overhaul | **Complete** | DSP-1 perspective rendering, calmer turning response, repaired native world-map graphics, and an always-visible flight minimap. |
+| **2.0** | MSU-1 support with native fallback | **Complete** | Optional external soundtrack support while preserving native sound effects and falling back cleanly to the original soundtrack when a PCM is missing. |
+| **2.0** | Dialogue presentation and character theming | **Complete** | Reworked dialogue presentation, semantic character/theme identities, cleaner window behavior, and character/category-specific visual treatment. |
+| **2.0** | Script and dialogue revision | **Complete** | Full regional story/world script review, movie-reference cleanup, terminology and consistency corrections, and selected NG+ dialogue variants. |
+| **2.0** | Full-game QA, script, theme, and friction pass | **In progress** | Play the game end to end and make surgical corrections to bugs, awkward presentation, dialogue/theme coverage, unclear progression, and unnecessary friction discovered in normal play. |
+| **2.0** | Return to Omnitopia through Windwalker flight | **Planned** | Replace the menu-style return to the space station with an actual action/destination taken during Windwalker flight. |
+| **3.0** | Higher-quality MSU-1 PCM soundtrack | **Planned** | Regenerate or replace the existing external soundtrack PCMs at substantially higher quality while preserving the working MSU/native fallback behavior. |
+| **3.0** | New music | **Planned** | Expand the soundtrack with new music where the new 3.0 content benefits from its own musical identity. |
+| **3.0** | Atom Smasher side quest | **Planned** | Turn acquisition of the strongest end-game weapon into a meaningful optional quest rather than leaving its current acquisition as-is. |
+| **3.0** | End-game Colosseum arena | **Planned** | Add repeatable postgame/end-game combat content built around fame, challenges, rewards, and useful loot. |
+| **3.0** | Expanded Windwalker navigation/presentation | **Planned** | Revisit additional flight-space landmarks, approach cues, minimap/navigation ideas, and presentation refinements where they support the expanded content. |
 
 ---
 
-## Faster Character and Skill Growth
+# 1.0 — Original Public Foundation
 
-### Character Leveling
+The 1.0 bucket represents the core Casual Run foundation that was already released publicly before the current 2.0 development cycle. These systems established the project's faster, lower-friction approach to controls, progression, balance, replayability, and bug fixing.
 
-- Total cumulative experience required to reach level 99 is approximately half of the original amount.
-- The Boy keeps his original level-1 Defense and gains one additional cumulative innate Defense point after every four level-ups.
-- The Dog keeps its original level-1 Attack and gains one additional cumulative innate Attack point after every five level-ups.
+## Faster, More Direct Controls
 
-### Weapon Experience
+Normal movement defaults to running. The former run button instead becomes a deliberate walk/fast-charge control, allowing the player to move quickly by default without giving up weapon charging.
 
-- Kills credited to either the Boy or Dog can grant weapon-family experience to the Boy's currently equipped weapon family.
-- This preserves the inherited shared weapon-family progression while making Dog participation less punishing to the Boy's weapon growth.
+### Field controls
 
-### Dog Growth From Sniffing
+- **A** — action, interaction, attack, and confirm.
+- **B** — walk while held and accelerate weapon charging.
+- **Start** — open the Boy's Main Ring.
+- **X** — open the Boy's Item Ring directly.
+- **Y** — open the Boy's Alchemy Ring directly.
+- **Select** — switch the controlled character in the field.
 
-- Successful ingredient finds give the Dog a small amount of character experience.
-- Ingredient pickups found by sniffing also advance the Dog's attack-skill experience.
-- This gives normal exploration and sniffing a meaningful long-term benefit without requiring dedicated Dog grinding.
+### Ring and management controls
 
----
+- **A** confirms selections.
+- **B** consistently backs out or cancels.
+- **Start** can also close the Ring.
+- Direct Ring shortcuts use the game's actual remembered Ring state rather than visibly simulating menu navigation.
+- The redundant Targeting command and normal access to Window Edit were removed from the Boy's Main Ring.
+- Dog Equipment replaces the old Control Preferences slot, while the Dog's separate main Ring is removed from normal access.
 
-## Fixed 50% Alchemy-Family Experience Sharing
+### Two-player behavior
 
-The diminishing passive formula experience inherited from the balance patch has been replaced with a predictable family-sharing system.
+Casual Run retains FuSoYa's two-player foundation. The A/B role swap applies to both controllers, while Player 1 receives the new Start/X/Y Ring shortcuts. Player 2's existing Start-button join/withdraw behavior is deliberately preserved.
 
-Every second cast within a family awards one normal, current-level experience tick to every formula in that family.
+## Less Grinding, Better Growth
 
-- The formula actually cast still receives its normal direct experience.
-- On every second family cast, the active formula also receives the passive tick.
-- Over time, the active formula therefore receives about 150% of normal experience while related formulas receive about 50%.
-- Passive experience can accumulate for formulas that have not yet been learned.
-- Passive level-ups remain silent.
-- All formulas retain the normal level-9 cap.
-- The every-second-cast counter is shared by the family, so alternating related formulas still advances the same rhythm.
-- Laser remains isolated in its own one-formula family.
+Casual Run reduces the amount of repetitive training needed to enjoy the game's systems.
 
-| Family | Formulas |
-|---|---|
-| Enhancement | Atlas, Barrier, Defend, Energize, Force Field, Reflect, Speed |
-| Elemental | Acid Rain, Fireball, Fire Power, Flash, Lightning Storm, Slow Burn |
-| Restoration | Cure, Heal, Miracle Cure, One Up, Regrowth, Revive, Super Heal |
-| Utility | Call Up, Escape, Levitate, Revealer, Stop |
-| Offensive | Corrosion, Crush, Double Drain, Drain, Explosion, Hard Ball, Lance, Nitro, Sting |
-| Laser | Laser |
+- Total character experience needed to reach level 99 is approximately halved.
+- The Boy receives slightly faster innate Defense growth.
+- The Dog receives slightly faster innate Attack growth.
+- Kills credited to either character can contribute to the Boy's weapon-family growth where the inherited shared-family system applies.
+- Successful sniffing gives the Dog character and attack-skill progress.
+- Common ingredient sniff rewards and ordinary one-unit enemy ingredient drops give two ingredients instead of one.
+- Charge sound effects above 100% are silenced to make ordinary play less noisy.
 
----
+### Alchemy-family experience
 
-## Healing, Consumables, and Ingredient Rewards
+Related formulas share experience at a predictable 50% rate. Every second cast within a family awards a normal current-level experience tick to the other formulas in that family, reducing the need to grind every spell independently while still rewarding actual use.
 
-### Improved Healing Items
+## Healing, Inventory, Economy, and Rewards
 
-- **Petal:** heals 80 HP.
-- **Nectar:** heals 200 HP.
+- Petals heal **80 HP**.
+- Nectar heals **200 HP**.
+- The practical cap for ordinary consumables is raised to **9**.
+- Regular enemies award double currency.
+- The first hidden desert-crossing Amulet of Annihilation costs **500 Jewels** instead of 10,000.
+- The Nobilia Atlas Amulet vendor charges **100 Jewels** and restocks indefinitely.
+- A redundant Nobilia rice vendor is replaced with a bead vendor selling **5 beads for 75 Jewels**.
+- Ordinary drop behavior is more rewarding when enemies are affected by negative status conditions.
 
-### Consumable Cap Increased to 9
+## Combat, Alchemy, Weapons, and Charms
 
-The practical carry cap is raised from 6 to 9 for ordinary consumables, including:
+Casual Run uses targeted rather than wholesale rebalance. The intent is to reduce obvious outliers and make more of the game's existing options worth using.
 
-- Petals
-- Nectar
-- Honey
-- Dog Biscuits
-- Wings
-- Essence
-- Pixie Dust
+- Five longer boss fights have reduced maximum HP.
+- Laser Lance and Neutron Blade receive small end-game power reductions while Atom Smasher remains the strongest base weapon.
+- Drain and Double Drain are normalized around a modest offensive strength and useful healing role.
+- Barrier, Atlas, and Crush receive mild later balance trims.
+- Selected inherited weapon, formula, enemy, armor, stat-growth, and evasion adjustments are retained where they fit Casual Run's lower-friction design.
+- Multiple charms receive stronger or corrected effects so collecting them matters more.
+- Silver Sheath ownership behavior and Bazooka ammunition/level/interface bugs are repaired.
 
-Special Honey and Petal reward paths that bypass the normal loot handler are also updated so they respect the new cap.
+## Progression and Softlock Repairs
 
-### Better Ingredient Rewards
+A major Casual Run priority is preventing unusual routing, backtracking, or replay from leaving the game in contradictory states.
 
-- Common ingredient sniff rewards give **2** ingredients instead of 1.
-- Normal one-unit enemy ingredient drops give **2** instead of 1.
+Examples include:
 
----
-
-## Economy Changes
-
-- Regular-enemy currency rewards are doubled.
-- Boss rewards and scripted currency awards are unchanged.
-- The hidden Crustacia desert-crossing Amulet of Annihilation price is reduced from **10,000 to 500 Jewels** for the first crossing.
-- The Nobilia Atlas Amulet vendor charges a flat **100 Jewels** per amulet and continually restocks the supply.
-- One redundant Nobilia rice vendor is replaced with a convenient bead vendor selling **5 beads for 75 Jewels**.
-
----
-
-## Boss and Weapon Rebalancing
-
-### Selected Boss HP Reductions
-
-Five longer fights have their maximum HP reduced by 20%:
-
-| Boss | New HP |
-|---|---:|
-| Salabog | 1,280 |
-| Rimsala (Pyramid) | 1,600 |
-| Aquagoth | 2,800 |
-| Verminator | 3,600 |
-| Mungola | 8,000 |
-
-### End-Game Weapon Adjustment
-
-- Laser Lance: base power reduced by 5.
-- Neutron Blade: base power reduced by 5.
-- Atom Smasher remains unchanged, leaving it as the strongest base weapon of the three.
-
----
-
-## Charm Rebalancing
-
-| Charm | Effect |
-|---|---|
-| Armor Polish | Adds 12.5% of equipped armor Defense. |
-| Chocobo Egg | +45 maximum HP to both characters, capped at 999. |
-| Insect Incense | Prevents insect/arachnid attack routines from hurting the party. |
-| Jade Disk | Approximately +2-3 Hit for both characters, capped at 99. |
-| Jaguar Ring | Enables the faster Casual Run movement behavior and its revised walk/charge control. |
-| Magic Gourd | Ceramic-pot rewards become 50 Jewels instead of the ordinary 10. |
-| Moxa Stick | Increases item and alchemy healing by 50%. |
-| Oracle Bone | Unlocks additional dialogue and makes Stop available from an alchemist. |
-| Ruby Heart | Reduces enemy Hit chance by 15 percentage points. |
-| Silver Sheath | Adds 25% of the qualifying sword-family weapon's attack value. |
-| Staff of Life | Reads Defense from five levels farther along the stat table. |
-| Sun Stone | Reads Attack from five levels farther along the stat table. |
-| Thug's Cloak | Adds 5 Evade to both characters, capped at 99. |
-| Wizard's Coin | Approximately +10-12 Magic Defense for the Boy and +4-6 for the Dog. |
-
----
-
-## Map, Navigation, and Progression Changes
-
-### Prehistoria
-
-- Adds the repeatable **New Game Plus** system described below.
-
-### Crustacia
-
-- Fixes the river-bridge bug introduced by the two-player patch.
-- Reduces the hidden desert vendor's first-crossing amulet price to 500 Jewels.
-
-### Nobilia
-
-- Atlas Amulets cost 100 Jewels and restock indefinitely.
-- A redundant rice vendor is replaced with the 5-beads-for-75-Jewels vendor.
-- Fixes the replacement vendor's page/lock behavior so using it cannot trap the player.
-
-### Gothica / Tinker's Area
-
-- The NPC formerly used for the Bursitis exchange is repurposed as a bookshelf/navigation hint.
-- Fixes progression when Mungola is defeated before the usual Verminator/Tinker sequence.
-- Defeating Mungola through unusual backtracking now establishes a coherent post-imposter, pre-Windwalker state instead of leaving Ebon Keep/Tinker's Tower progression contradictory or softlocked.
-- Queen's Key and related dungeon-repeatability state are cleaned up for replay/NG+ behavior.
-
-### Ivory Tower
-
-- Fixes the post-banquet dungeon spawn/progression issue.
-
-### Omnitopia
-
-- The vertical pipes begin opened for faster traversal.
-- Certain horizontal-door sentry behavior is suppressed to avoid unnecessary progression friction.
-
----
+- Crustacia bridge repair.
+- Ivory Tower post-banquet progression repair.
+- Queen's Key cleanup and dungeon-repeatability safeguards.
+- Mungola completion establishing a coherent post-imposter, pre-Windwalker Tinker state.
+- Tiny's-lair leave/re-entry softlock prevention.
+- Removal or suppression of several unnecessary progression blockers and repeated traversal obstacles.
+- Faster Omnitopia traversal through opened vertical pipes and reduced sentry friction.
 
 ## New Game Plus
 
-New Game Plus is an intentionally opt-in feature accessed through **Jade**, an out-of-place older man in a hut in the prehistoric village.
+Casual Run includes an optional, repeatable New Game Plus system accessed through **Jade**, an intentionally out-of-place older man in a Prehistoria village hut.
 
-Jade becomes available after the Mammoth Graveyard vipers have been defeated. His dialogue explicitly asks whether the player believes time travel is possible and whether they want to help with an experiment, so NG+ cannot be triggered accidentally.
+Jade becomes available after the Mammoth Graveyard vipers are defeated and explicitly asks whether the player wants to participate in a time-travel experiment, so the reset cannot be triggered accidentally.
 
-Activating the experiment resets the game to a stable early-story replay state just after Fire Eyes has asked for help and the Dog has been named.
+The reset returns the story to a stable early-game replay state while retaining much of the player's long-term growth. Story progression, bosses, switches, chests, gourds, sniff spots, and other replay-sensitive state are reset as needed. The Jaguar Ring is retained, the Bazooka is removed, and the Bone Crusher becomes the equipped weapon.
 
-### Reset
-
-- Story and boss-completion progression needed for another playthrough.
-- Doors, switches, bridges, and related event triggers.
-- Chests, gourds, and sniff spots.
-- Act and map progression state.
-- Exhibition Ticket.
-- Diamond Eyes.
-- Energy Core.
-- Queen's Key and other reset-sensitive story inventory handled by the NG+ state cleanup.
-
-### Retained / Changed
-
-- Character levels, learned formulas, equipment progression, and other intended long-term growth are retained unless specifically reset by the NG+ script.
-- Jaguar Ring is retained.
-- Bazooka is removed.
-- Bone Crusher becomes the equipped weapon.
-- Early raptor/intro state is deliberately retained so the opening Dog-introduction sequence does not replay.
-- The Carltron box-cleaning cameo marker is enabled and also serves as Casual Run's reliable NG+ dialogue marker.
-
-After activation Jade says, **"It worked! Naris will be so proud!"** and later identifies Naris as his son.
-
-### NG+ Dialogue Variations
-
-Several scenes contain subtle alternate dialogue in NG+ suggesting residual memory of the previous cycle. These are selective callbacks rather than a full rewrite and include material involving Fire Eyes, Camellia, Tinker, the arena, Ruffleberg, and Horace.
+Selected characters also receive subtle alternate dialogue in NG+, suggesting residual memory of the previous cycle without rewriting the entire story around the mechanic.
 
 ---
 
-## Dialogue and Movie-Reference Pass
+# 2.0 — Current Major Revision
 
-Casual Run includes a targeted dialogue pass replacing selected fictional or placeholder movie references with real-film references while preserving the Boy's movie-obsessed characterization and leaving appropriate in-world titles alone.
+2.0 is a substantial second-generation release rather than a small polish update. Several of its headline features are already implemented in the current v1.28 development baseline; the remaining work is to finish the full-game QA/polish pass and make returning to Omnitopia an action performed in Windwalker flight.
 
-References introduced or revised include material drawing on films such as *Mars Needs Women*, *Planet of the Vampires*, *The Poseidon Adventure*, *The Blob*, *Flash Gordon*, *Invasion of the Body Snatchers*, *Spartacus*, *Puppet Master*, *Destroy All Monsters*, *The Adventures of Buckaroo Banzai Across the 8th Dimension*, *The Brave Little Toaster*, and *The Thing*.
+The four completed feature families below are therefore **2.0 features**, even though they were developed and tested incrementally in internal v1.x builds.
 
-This pass also supports the NG+ residual-memory dialogue described above.
+## Script and Dialogue Revision — **Complete**
 
----
+The original script has received both targeted character passes and a full regional story/world review.
 
-## Optional MSU-1 Support With Native Music Fallback
+Changes include:
 
-Casual Run integrates the Conn/RedScorpion MSU-1 v3 track numbering and loop policy into the expanded ROM without sacrificing the original soundtrack.
+- Grammar, punctuation, terminology, speaker attribution, and consistency fixes.
+- Selected dialogue revisions that preserve established character voices.
+- Replacement of selected fictional or placeholder movie references with real-film references that better support the Boy's movie-obsessed characterization.
+- Selective NG+ residual-memory dialogue.
 
-- With no MSU-1 hardware/files available, the game uses the original SPC soundtrack normally.
-- If MSU-1 is available and the requested PCM track exists, the MSU track plays.
-- If an expected PCM track is missing, Casual Run falls back to the native SPC soundtrack and keeps native music ownership for the remainder of that play session.
-- This prevents a later MSU track from layering over already-running SPC music.
-- A reset/power cycle makes MSU-1 eligible again.
-- The old MSU patch's permanent SPC mute is **not** used.
+## Dialogue Presentation and Character Theming — **Complete**
 
-Historical PCM packs use the basename `soe_msu`, for example:
+The way dialogue is presented has also been overhauled rather than merely rewritten.
 
-- `soe_msu.sfc`
-- `soe_msu.msu` (if the emulator/core expects a marker file)
-- `soe_msu-0.pcm`
-- `soe_msu-1.pcm`
-- and so on.
+- Ordinary dialogue uses cleaner pacing and window lifecycle behavior.
+- Redundant or awkward page breaks and unnecessary presentation delays are removed where appropriate.
+- Semantic presentation identities distinguish narration/system text, generic NPCs, the Boy, robots, comedic characters, alchemists, merchants, guards/authority figures, inventors, adventurers, major story characters, artificial counterparts, supernatural guides, and other recurring categories.
+- Themes can use different combinations of window placement, pattern, and border treatment without abandoning the visual language of the original game.
 
-The PCM music files themselves are not part of Casual Run.
+The underlying theme system is considered established. The remaining full-game QA pass is intended to catch missed or misapplied callsites rather than redesign the architecture.
 
----
+## Optional MSU-1 Soundtrack Support — **Complete**
 
-## Presentation Changes
+Casual Run supports an external MSU-1 soundtrack while retaining the original SNES music as a reliable fallback.
 
-- Internal ROM title changed to **SoE Casual Run**.
-- The title screen includes a **CASUAL RUN** tag.
-- Jaguar Ring tutorial text is updated for the final B-button walk/charge control.
+- With no MSU-1 support, the native soundtrack behaves normally.
+- If a requested PCM is present, the external track can replace the native music for that request.
+- Native song data still initializes so sound effects continue to work correctly.
+- If a PCM is missing, that request falls back to native music.
+- A missing PCM does **not** disable later MSU tracks, so partial soundtrack packs are supported.
 
----
+The current soundtrack uses the established 1–70 track numbering. PCM files are optional and are not part of the core ROM patch.
 
-## Inherited Two-Player Support by FuSoYa
+## Windwalker Flight Overhaul — **Complete**
 
-Casual Run retains FuSoYa's two-player foundation, with later control integration layered on top.
+The 2.0 flight overhaul substantially upgrades the Windwalker world-map presentation.
 
-- Player 2 can join or withdraw using the retained multiplayer Start behavior.
-- Either controller can control either character through the existing ownership system.
-- A controller indicator shows character ownership.
-- Existing single-player character switching and multiplayer camera behavior are preserved where not superseded by the Ring-specific controls described above.
-- Casual Run applies its A/B control-role swap to both controllers while reserving Start/X/Y Ring shortcuts for Player 1.
+- The world map now uses a DSP-1-assisted perspective rather than the original flatter presentation.
+- Turning response is reduced to a calmer half-rate heading integration while preserving the native acceleration behavior.
+- The original world-map/minimap object graphics were repaired after an older patch allocation was found to overlap them.
+- The native lower-left minimap, facing indicator, landing markers, position math, and layout are retained.
+- The minimap remains visible during Windwalker flight.
 
----
+Experimental altitude-speed changes, alternate flight-control mappings, and prototype field-of-view wedges are **not** part of the current baseline.
 
-## Inherited Bug Fixes by Ninakoru
+## Full-Game QA, Script, Theme, and Friction Pass — **In progress**
 
-- Corrects a sound-delay problem seen in many SNES emulators.
-- Corrects stat-magic wear-off behavior, preventing stacked-stat exploits involving death, resurrection, and Pixie Dust.
-- Prevents the extreme Atlas-related damage/stat exploit associated with saving while the effect is active.
-- Miracle Cure also removes Confound/reversed-control status.
+The game will be played from beginning to end with the current feature set active.
 
----
+This pass can make surgical corrections when normal play exposes:
 
-## Selected Balance-Patch Changes by Ninakoru
+- Bugs or regressions.
+- Missed or incorrect dialogue-theme assignments.
+- Script wording, speaker, punctuation, or presentation problems.
+- Awkward window lifecycle or pacing.
+- Unclear progression or navigation.
+- Unnecessary menu trips, repeated presentation, or other friction that conflicts with Casual Run's design goals.
+- Balance issues that become obvious only in the context of a complete casual playthrough.
 
-Casual Run retains selected parts of Ninakoru's balance work where they fit the project's faster, lower-friction design.
+The goal is **coverage and polish**, not another architectural rewrite.
 
-- Rebalances weapon charge multipliers and base damage, particularly overpowered level-three attacks.
-- Rebalances weapon base damage so progression between weapons is more meaningful.
-- Uses shared weapon-family experience: every fourth qualifying kill grants experience to related weapons in the equipped weapon's family, including weapons not yet acquired.
-- Caps physical evasion at 64%, preventing extreme Speed-based evasion exploits.
-- Rebalances the formula learning-rate table to reduce excessive grinding.
-- Reduces Cryo-Blast's base damage from 800 to 600.
-- Rebalances individual formulas, including reduced Heal and Crush strength and improved later offensive formulas.
-- Adjusts Speed, Regrowth, Barrier, and other effect durations.
-- Changes Barrier's Limestone requirement to an Atlas Amulet to limit repeated near-invulnerability.
-- Rebalances the Boy's Attack, Dog's Defense, and both characters' Magic Defense development.
-- Reduces helmet and bracelet Defense bonuses by roughly 30%.
-- Reduces the toaster Dog's bonuses from +80 Attack/+250 Defense to +70/+180.
-- Rebalances statistics of various enemies and bosses, with some values later overwritten by Casual Run changes.
-- Corrects the space-station Aquagoth tentacles to use the intended stronger version.
-- Adds Guardbots and strengthens upper-floor Neo Greebles in the space-station area.
+## Return to Omnitopia Through Windwalker Flight — **Planned**
 
-Not every feature of the original balance patch is included. Changes that conflicted with Casual Run's design were deliberately omitted or reverted; for example, Casual Run does **not** keep the restriction that prevented alchemy casting below 100% weapon charge.
+Returning to the space station should become an action taken in the flight world rather than a menu-style destination choice.
+
+The intended result is for Omnitopia to feel like a real place the player returns to through Windwalker navigation. The exact approach/trigger presentation will be determined through implementation and testing, but the design goal is straightforward: **fly back to the station instead of selecting it from a menu**.
+
+This is the only planned new headline gameplay feature for 2.0.
 
 ---
 
-## Bug Fixes by assassin17
+# 3.0 — New Content and Soundtrack Expansion
 
-- **Silver Sheath fix:** the sword-damage bonus is applied only after the Silver Sheath has actually been obtained. The unmodified game effectively applies the bonus regardless of ownership.
-- **Infinite Bazooka Ammo fix:** Particle Bomb and Cryo-Blast ammunition is properly consumed.
-- **Bazooka leveling/interface fix:** the Bazooka begins at level one and its equipped-weapon/ammunition information is handled correctly.
+Where 2.0 finishes the existing game, 3.0 is intended to expand it. The features below belong together because the new quests, combat content, flight-space presentation, and music can be designed as one cohesive addition rather than separate late patches.
 
----
+## Atom Smasher Side Quest — **Planned**
 
-## Known Remaining Limitation
+Create a new optional quest around obtaining the Atom Smasher. The weapon can remain the strongest of the late-game trio, but acquiring it should become a memorable piece of end-game content rather than leaving its current acquisition path unchanged.
 
-- A rare Tiny/Pyramid progression problem is still noted. The NG+ system provides a practical escape/recovery path, but the underlying edge case is not claimed as fully repaired.
-- Old save files already damaged by superseded experimental Tinker/Windwalker builds are not specifically repaired. Current v1.17 progression logic is designed to prevent that bad state from being created going forward.
+## End-Game Colosseum Arena — **Planned**
 
----
+Expand the Colosseum into repeatable end-game/postgame combat content with a fame-and-reward structure.
 
-## Applying the Patch
+The exact challenge ladder, reward economy, opponent structure, and relationship to New Game Plus remain design work, but the intended pillars are:
 
-Apply `Casual_Run_Patch_v117.ips` to a **clean, unheadered U.S. ROM** using an IPS-compatible patcher.
+- Repeatable combat challenges.
+- Fame or equivalent progression.
+- Useful loot and rewards.
+- A reason to engage with the game's combat systems after the normal story progression has opened up.
 
-### Required Base ROM
+## New Music — **Planned**
 
-- Game: *Secret of Evermore (USA)*
-- Header: none / unheadered
-- Expected size: **3,145,728 bytes**
-- SHA-256: `17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db`
+Add new tracks where the new 3.0 content benefits from distinct music. New music is being held for the content expansion rather than added to 2.0 in isolation so that the soundtrack additions have clear in-game purposes.
 
-### Expected Patched ROM
+## Higher-Quality MSU-1 PCM Set — **Planned**
 
-The patch expands the ROM to 4 MiB.
+Produce a substantially higher-quality version of the external MSU-1 soundtrack. Existing track identity and fallback compatibility should be preserved wherever appropriate, while the audio assets themselves receive a quality upgrade.
 
-- Expected size: **4,194,304 bytes**
-- v1.17 SHA-256: `ff1ffb57e4c5ba96f18ae912cbf327f49b51fd89e90467f2519ce7aa8a51c068`
-- SNES checksum/complement: `4E33 / B1CC`
+This work naturally pairs with the new 3.0 music so the expanded soundtrack can be treated as one coherent package.
 
-This is the accepted v1.17 release ROM produced by the authoritative source and release IPS.
+## Expanded Windwalker Navigation and Presentation — **Planned**
 
----
+Revisit additional flight-space ideas after the 2.0 Omnitopia-return feature establishes the basic destination interaction.
 
-## Version Highlights
-
-| Version | Major Change |
-|---|---|
-| v0.09 | Two-player/balance foundation, default running, walk/fast-charge control, charge preservation while running. |
-| v0.10 | Atlas Amulet vendor changed to 100 Jewels with unlimited restocking. |
-| v0.11 | Double regular-enemy currency, consumable-cap work, Dog kills contribute to Boy weapon growth, boss HP reductions, first desert crossing 500. |
-| v0.12 | Slightly faster Boy Defense and Dog Attack growth. |
-| v0.14 | Stable 50% alchemy-family experience sharing. |
-| v0.16 | Petal/Nectar improvements and doubled common ingredient rewards. |
-| v0.17 | Sniffing advances Dog growth; above-100% charge audio silenced. |
-| v0.18 | Charm-effect rebalance. |
-| v0.19 | Character EXP curve reduced to about half through level 99. |
-| v0.20-v0.21 | Jade/New Game Plus established in its current form. |
-| v0.23-v0.25 | Nobilia bead vendor, navigation/progression fixes, end-game weapon adjustment, Mungola/Tinker safeguard. |
-| v1.00 | Internal ROM title changed to SoE Casual Run. |
-| v1.02 | Stable Mungola/Tinker/Windwalker progression-state fix. |
-| v1.03 | Final CASUAL RUN title-screen treatment. |
-| v1.04 | Real-film dialogue pass and NG+ residual-memory dialogue. |
-| v1.05 | MSU-1 support with safe native-SPC fallback. |
-| v1.06 | Final A/B controls and direct Start/X/Y Ring shortcuts. |
-| v1.07 | Source flattened to one authoritative ASM file; no gameplay-byte changes from v1.06. |
-| v1.08 | Status-aware ordinary-enemy drops; Drain / Double Drain rebalance. |
-| v1.09 | Secondary-menu B-back/display cleanup; Dog Equipment replaces Control Prefs; Dog main Ring removed from normal access. |
-| v1.10 | Tiny's-lair leave/re-entry softlock prevention. |
-| v1.11-v1.14 | Major-character script passes for Fire Eyes/Elizabeth, Horace, Camellia/Queen Bluegarden, and Ruffleberg/Carltron. |
-| v1.15 | Redundant Targeting command removed from the Boy Main Ring. |
-| v1.16 | Live story text reorganized into documented regional raw-text arenas with reserved expansion space. |
-| v1.17 | Full 25-arena story/world script review completed and promoted as the official release. |
+Possible work in this bucket includes clearer landmarks and approach cues, additional minimap/navigation presentation, and other flight-world polish that supports the new content. Specific visual experiments are not considered locked merely because they were prototyped earlier; each one still has to justify itself in actual play.
 
 ---
 
-## Credits and Source Lineage
+## Retired Experiments / Not Current Roadmap Scope
 
-Casual Run is cumulative work built on several earlier community projects and fixes:
+Casual Run has tried a number of ideas that did not survive testing. Unless deliberately reopened in the future, these should not be treated as planned features.
 
-- **FuSoYa** - two-player foundation.
-- **Ninakoru** - balance-patch work and bug fixes selectively incorporated into Casual Run.
-- **assassin17** - Silver Sheath, Bazooka-ammo, and Bazooka-level/interface fixes incorporated into the foundation.
-- **Conn / RedScorpion** - original Secret of Evermore MSU-1 v3 implementation whose track numbering and loop policy were ported into Casual Run's fallback-safe MSU system.
-- **Casual Run project** - cumulative QoL, control, economy, growth, New Game Plus, progression, dialogue, title-screen, MSU integration, and source-recovery/maintenance work described above.
+- Automatic healing shortcuts.
+- Repeat-last-alchemy shortcuts.
+- Synthetic auto-target/menu-navigation experiments replaced by the direct Ring shortcuts.
+- Faster Windwalker ascent/descent experiments.
+- Alternate Windwalker control remapping experiments.
+- Prototype flight FOV indicators that were not accepted into the current baseline.
+- Modern boss-HP or numeric-combat overlays and other HUD-heavy presentation changes that conflict with the project's SNES-style design.
+
+A failed prototype may still teach us something, but it is not part of the roadmap simply because code for it once existed.
 
 ---
 
-## Design Note
+## Applying Casual Run
 
-Casual Run intentionally does **not** try to automate every useful action. Earlier development experimented with automatic healing and repeat-last-alchemy shortcuts, but these were dropped. Direct access to the Item and Alchemy Rings proved faster, more flexible, easier to understand, and more consistent with *Secret of Evermore*'s original interface.
+Casual Run is intended for a **clean, unheadered U.S. ROM of _Secret of Evermore_**.
 
-The current control scheme is considered final.
+Use the release patch associated with the version you want to play and apply it to that clean base ROM with an appropriate patcher.
 
---
+For exact base-ROM hashes, patched-ROM hashes, checksums, source build instructions, expansion-space ownership, and other technical validation information, consult the authoritative ASM source included with the project.
 
-## Technical References
+---
 
-For **Secret of Evermore–specific technical documentation**, these have been the most useful, roughly in order of how much they have contributed to the Casual Run project:
+# Credits and Thanks
 
-1. **Data Crystal / TCRF – Secret of Evermore ROM & RAM maps**
-   Probably the single most useful general reference. The SoE pages document the ROM format, known ROM regions, WRAM locations, entity structures, charms/progression flags, enemy-stat layout, drop-chance byte, interrupt-related state, and a lot of other low-level information. We have repeatedly used it as the first reference point before verifying something directly against the ROM. ([Data Crystal][1])
-   [Secret of Evermore on Data Crystal](https://datacrystal.tcrf.net/wiki/Secret_of_Evermore?utm_source=chatgpt.com)
+Casual Run is cumulative work. Some features directly incorporate earlier patches; others were made possible by documentation, reverse engineering, archives, tools, and independent research from the wider *Secret of Evermore* community.
 
-2. **RAMsetta Stone for Secret of Evermore – CleanCodeX/XETH**
-   Extremely valuable for **SRAM ↔ WRAM relationships and structured save/player data**. This was especially useful for HP, stats, inventory, alchemy levels, equipment, and other persistent state. It gave us a more structured view than the older flat RAM maps.
-   [RAMsettaStone.SoE on GitHub](https://github.com/CleanCodeX/RAMsettaStone.SoE?utm_source=chatgpt.com)
+## Work Incorporated Into Casual Run
 
-3. **RustyBlazer – hellow554**
-   The most useful source we found when we needed something closer to an actual **bank-by-bank SoE disassembly** rather than just address lists. Its labels and reconstructed routines were particularly valuable when tracing controller handling, Ring-menu logic, item/alchemy routines, and general engine flow. It is not always identical to the exact patched ROM we are working from, so we still verify bytes against our ROM, but it is excellent for establishing what native code is trying to do.
-   [RustyBlazer on GitHub](https://github.com/hellow554/RustyBlazer?utm_source=chatgpt.com)
+- **FuSoYa** — original *Secret of Evermore* two-player foundation that Casual Run retains and builds around.
+- **Ninakoru** — gameplay balance work and bug fixes selectively incorporated into the Casual Run foundation, including extensive prior research into combat, growth, equipment, formulas, charms, enemies, and related systems.
+- **assassin17** — Silver Sheath fix, Bazooka ammunition fix, and Bazooka level/interface fixes incorporated into the project.
+- **Conn / RedScorpion** — original *Secret of Evermore* MSU-1 implementation and the track numbering, loop policy, and music-mute approach that remain the basis for Casual Run's optional soundtrack support.
+- **black-sliver / Evermizer** — Tiny's-lair leave/re-entry softlock prevention incorporated into Casual Run, along with a large body of modern *Secret of Evermore* hacking work that has served as valuable reference material.
 
-4. **Evermizer – black-sliver**
-   Probably the strongest existing body of **modern SoE ROM-hacking source code**. Because Evermizer actually changes a huge range of game systems, its source and patch files expose useful ROM addresses, item/action IDs, alchemy structures, script locations, ring-menu data, progression requirements, and known engine quirks. We have used it both as documentation and as independent corroboration of things discovered in the ROM. ([GitHub][2])
-   [Evermizer source](https://github.com/black-sliver/evermizer?utm_source=chatgpt.com)
+## Research, Tools, Documentation, and Community Resources
 
-5. **Awesome Secret of Evermore – maluramichael**
-   Less a reverse-engineering project itself and more the best **index/archive of SoE technical work**. It points to and preserves tools, ROM hacks, RAM documentation, the Gameplay Balance Patch, FuSoYa's two-player patch, assassin17's fixes, SecretOfEverhack, SoETilesViewer, SRAM utilities, and other material that would otherwise be scattered or lost. It has been invaluable for discovering older work. ([GitHub][3])
-   [Awesome Secret of Evermore](https://github.com/maluramichael/awesome-secret-of-evermore?utm_source=chatgpt.com)
+Special thanks to the people and projects whose work made the later source recovery, text work, reverse engineering, validation, and feature development practical:
 
-6. **SecretOfEverhack – Gemini/Loboto3**
-   Especially useful for the **text engine**. It contains the SoE translation toolchain, text extraction/reinsertion code, text pointer rebuilding, menu-text handling, and assembly intended to work around the game's dialogue compression. That made it one of the more useful references when our work moved beyond simple fixed-length string replacement and into relocated script/text banks. ([GitHub][4])
-   [SecretOfEverhack on GitHub](https://github.com/Gemini-Loboto3/SecretOfEverhack?utm_source=chatgpt.com)
+- **Data Crystal / TCRF contributors** — ROM/RAM maps and long-running technical documentation for *Secret of Evermore*.
+- **CleanCodeX / XETH — RAMsetta Stone for Secret of Evermore** — structured SRAM/WRAM and persistent-state documentation.
+- **hellow554 — RustyBlazer** — disassembly and labeled engine research useful for tracing native game behavior.
+- **Gemini / Loboto3 — SecretOfEverhack** — text-engine and translation tooling/research, especially useful once Casual Run moved into relocated script work.
+- **maluramichael — Awesome Secret of Evermore** — invaluable archive/index of patches, tools, technical work, and older community resources.
+- **Zeldix community** — MSU-1 information, preservation, and discussion.
+- **RetroAchievements community** — useful ROM-identity and compatibility reference material.
+- **GameFAQs, Secret of Evermore Wiki contributors, and older guide authors** — gameplay documentation and leads for obscure intended behavior that could then be verified against the game.
 
-7. **FuSoYa's Secret of Evermore 2-Player Edition / FuSoYa's Niche**
-   Crucial because Casual Run inherits FuSoYa's multiplayer implementation. The public documentation is not a full disassembly, but the patch itself and associated material establish the controller-ownership model and multiplayer behavior we have had to preserve. A large part of the controls work only made sense once we stopped assuming that the patched engine's Boy/Dog input paths were synonymous with controller 1/controller 2. FuSoYa's site still hosts the SoE 2 Player Edition section. ([FuSoYa's Niche][5])
-   [FuSoYa's Niche](https://fusoya.eludevisibility.org/?utm_source=chatgpt.com)
+## Casual Run Project Work
 
-8. **Ninakoru's Secret of Evermore Gameplay Balance Patch + assassin17's bug-fix work**
-   These have been less like general-purpose documentation and more like **documented prior research into specific engine systems**. Ninakoru's work gave us known-good implementations and observations around combat formulas, weapon EXP, alchemy growth, stats, charms, enemies, equipment, and other balancing systems. assassin17's patches supplied proven fixes for Silver Sheath behavior, Bazooka ammunition, and Bazooka level/interface issues. The Awesome SoE archive has been especially useful for keeping this older material accessible. ([GitHub][3])
+The Casual Run project adds the cumulative original work described in this README: control integration, quality-of-life changes, progression and economy tuning, New Game Plus, dialogue and presentation revisions, theme architecture, progression repairs, MSU integration/repair, source recovery and documentation, Windwalker presentation work, and the ongoing 2.0/3.0 roadmap.
 
-9. **Zeldix + RetroAchievements' SoE/MSU documentation**
-   These became particularly important for the **MSU-1 port**. The Conn/RedScorpion implementation provided the original SoE-specific MSU code, track numbering, loop information, NMI/request handling, and manifests. RetroAchievements was also useful for verifying recognized vanilla, FuSoYa, and MSU ROM identities/hashes. ([RetroAchievements][6])
-   [Zeldix](https://www.zeldix.net/?utm_source=chatgpt.com)
+---
 
-10. **GameFAQs / Secret of Evermore Wiki / older gameplay guides**
-    These have been secondary rather than assembly references, but useful when we need to establish **intended gameplay behavior**: formulas, item effects, missables, progression order, obscure interactions, boss/stat information, or whether something we observe is actually vanilla behavior. They are best treated as leads to verify rather than authoritative ROM documentation.
+## Project Philosophy
+
+When deciding whether something belongs in Casual Run, the guiding questions are simple:
+
+- Does it make a normal playthrough smoother without flattening the game into automation?
+- Does it reduce grinding, softlocks, missable traps, or unnecessary friction?
+- Does it preserve optional depth for players who want to engage more deeply?
+- Does it still look and feel like something that belongs in a SNES game?
+- If the original game is confusing or inconsistent, can it be fixed cleanly rather than merely preserved?
+- Can the change be tested and maintained without making the rest of the project fragile?
+
+The roadmap can change when testing proves an idea does not work. The current accepted ROM and authoritative ASM decide what Casual Run actually is; this README describes the player-facing result and where the project intends to go next.
