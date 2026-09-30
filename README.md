@@ -1,6 +1,6 @@
 # Secret of Evermore: Casual Run
 
-**Current development baseline:** v1.28  
+**Current development baseline:** v1.30  
 **Next major milestone:** 2.0  
 **Longer-term expansion:** 3.0
 
@@ -10,7 +10,7 @@
 
 The goal is a faster, smoother, less frustrating playthrough while preserving the feel and presentation language of the original SNES game. Casual Run is not intended to be a hard-mode hack or a remake. It favors quality-of-life improvements, clearer progression, modest rebalance, optional depth, bug fixes, and better presentation without turning the game into a modern HUD-heavy redesign.
 
-Casual Run builds on earlier community work, including FuSoYa's two-player patch, selected balance and bug-fix work by Ninakoru, fixes by assassin17, the Conn/RedScorpion MSU-1 work, and later community research and fixes credited below.
+Casual Run builds on earlier community work, including FuSoYa's two-player patch, selected balance and bug-fix work by Ninakoru, fixes by assassin17, and later community research and fixes credited below. Conn/RedScorpion's MSU-1 work remains an important historical reference for the planned 3.0 audio reimplementation, but MSU-1 is not active in the v1.30/2.0 production line.
 
 This README is the **player-facing feature summary, roadmap, and credits document**. The authoritative ASM source is the technical source of truth for exact ROM changes, build identity, hooks, memory usage, validation requirements, historical experiments, and implementation details.
 
@@ -18,7 +18,7 @@ This README is the **player-facing feature summary, roadmap, and credits documen
 
 ## Roadmap at a Glance
 
-The headings **1.0**, **2.0**, and **3.0** are major public-release generations rather than a literal mapping to every internal development version. **1.0** represents the foundation that was already released publicly. **2.0** is the current major revision: several of its headline systems are already implemented in the v1.28 development baseline, while final QA and the Omnitopia flight-return feature remain unfinished. **3.0** is the planned future content expansion.
+The headings **1.0**, **2.0**, and **3.0** are major public-release generations rather than a literal mapping to every internal development version. **1.0** represents the foundation that was already released publicly. **2.0** is the current major revision: its script, presentation, stable Windwalker/minimap behavior, and native-audio baseline are implemented in v1.30, while final QA and the Omnitopia flight-return feature remain unfinished. **3.0** is the planned future content and audio expansion.
 
 ### Status Key
 
@@ -35,13 +35,14 @@ The headings **1.0**, **2.0**, and **3.0** are major public-release generations 
 | **1.0** | Economy, healing, item, charm, weapon, and combat rebalance | **Complete** | Gentler economy and progression tuning, selected boss/weapon adjustments, useful charm improvements, and targeted alchemy balance. |
 | **1.0** | Progression and softlock fixes | **Complete** | Numerous navigation, state, dungeon-repeatability, Mungola/Tinker, Tiny's-lair, Ivory Tower, and related progression safeguards. |
 | **1.0** | New Game Plus | **Complete** | Optional repeatable replay system through Jade with retained progression and selective residual-memory dialogue. |
-| **2.0** | Windwalker flight overhaul | **Complete** | DSP-1 perspective rendering, calmer turning response, repaired native world-map graphics, and an always-visible flight minimap. |
-| **2.0** | MSU-1 support with native fallback | **Complete** | Optional external soundtrack support while preserving native sound effects and falling back cleanly to the original soundtrack when a PCM is missing. |
+| **2.0** | Windwalker flight stabilization | **Complete** | Native perspective and steering restored after the DSP-1 experiment; repaired world-map graphics retained; minimap defaults ON but remains toggleable. |
+| **2.0** | Native audio stability baseline | **Complete** | Experimental MSU-1 interception removed after full-game QA found unintended song changes; 2.0 uses the original SPC music path. |
 | **2.0** | Dialogue presentation and character theming | **Complete** | Reworked dialogue presentation, semantic character/theme identities, cleaner window behavior, and character/category-specific visual treatment. |
 | **2.0** | Script and dialogue revision | **Complete** | Full regional story/world script review, movie-reference cleanup, terminology and consistency corrections, and selected NG+ dialogue variants. |
 | **2.0** | Full-game QA, script, theme, and friction pass | **In progress** | Play the game end to end and make surgical corrections to bugs, awkward presentation, dialogue/theme coverage, unclear progression, and unnecessary friction discovered in normal play. |
 | **2.0** | Return to Omnitopia through Windwalker flight | **Planned** | Replace the menu-style return to the space station with an actual action/destination taken during Windwalker flight. |
-| **3.0** | Higher-quality MSU-1 PCM soundtrack | **Planned** | Regenerate or replace the existing external soundtrack PCMs at substantially higher quality while preserving the working MSU/native fallback behavior. |
+| **3.0** | MSU-1 support reimplementation | **Planned** | Rebuild external soundtrack support from the v1.30 native-audio baseline, preserving no-change room semantics and validating the new backend across the full game. |
+| **3.0** | Higher-quality MSU-1 PCM soundtrack | **Planned** | Produce a substantially higher-quality external soundtrack after the replacement MSU backend is stable. |
 | **3.0** | New music | **Planned** | Expand the soundtrack with new music where the new 3.0 content benefits from its own musical identity. |
 | **3.0** | Atom Smasher side quest | **Planned** | Turn acquisition of the strongest end-game weapon into a meaningful optional quest rather than leaving its current acquisition as-is. |
 | **3.0** | End-game Colosseum arena | **Planned** | Add repeatable postgame/end-game combat content built around fame, challenges, rewards, and useful loot. |
@@ -146,9 +147,9 @@ Selected characters also receive subtle alternate dialogue in NG+, suggesting re
 
 # 2.0 — Current Major Revision
 
-2.0 is a substantial second-generation release rather than a small polish update. Several of its headline features are already implemented in the current v1.28 development baseline; the remaining work is to finish the full-game QA/polish pass and make returning to Omnitopia an action performed in Windwalker flight.
+2.0 is a substantial second-generation release rather than a small polish update. Its major script, presentation, stable Windwalker/minimap, and native-audio work are implemented in the current v1.30 development baseline; the remaining work is to finish the full-game QA/polish pass and make returning to Omnitopia an action performed in Windwalker flight.
 
-The four completed feature families below are therefore **2.0 features**, even though they were developed and tested incrementally in internal v1.x builds.
+These completed feature families are therefore **2.0 features**, even though they were developed and tested incrementally in internal v1.x builds.
 
 ## Script and Dialogue Revision — **Complete**
 
@@ -172,29 +173,35 @@ The way dialogue is presented has also been overhauled rather than merely rewrit
 
 The underlying theme system is considered established. The remaining full-game QA pass is intended to catch missed or misapplied callsites rather than redesign the architecture.
 
-## Optional MSU-1 Soundtrack Support — **Complete**
+## Native Audio Stability Baseline — **Complete**
 
-Casual Run supports an external MSU-1 soundtrack while retaining the original SNES music as a reliable fallback.
+2.0 now deliberately uses Secret of Evermore's original SPC music path.
 
-- With no MSU-1 support, the native soundtrack behaves normally.
-- If a requested PCM is present, the external track can replace the native music for that request.
-- Native song data still initializes so sound effects continue to work correctly.
-- If a PCM is missing, that request falls back to native music.
-- A missing PCM does **not** disable later MSU tracks, so partial soundtrack packs are supported.
+Earlier Casual Run builds included an MSU-1 backend that passed focused one-shot/loop/fallback tests, but the full-game QA pass uncovered unintended song changes in scenes and rooms that normally preserve the music already playing. Restoring the native music-change routine fixed the problem, while restoring the original song-pointer table alone did not.
 
-The current soundtrack uses the established 1–70 track numbering. PCM files are optional and are not part of the core ROM patch.
+For v1.30 and the eventual 2.0 release:
 
-## Windwalker Flight Overhaul — **Complete**
+- Native SPC music playback remains in control end to end.
+- No Casual Run MSU-1 hook is active.
+- External PCM files are not required or used.
+- The old v1.05/v1.18 implementation is retired rather than patched around individual bad rooms.
+- MSU-1 is moved to 3.0 for a clean reimplementation from the native-audio baseline.
 
-The 2.0 flight overhaul substantially upgrades the Windwalker world-map presentation.
+The full experiment history, isolation tests, historical 1-70 track mapping, and 3.0 requirements are preserved in **`README_MSU1_EXPERIMENT.md`**.
 
-- The world map now uses a DSP-1-assisted perspective rather than the original flatter presentation.
-- Turning response is reduced to a calmer half-rate heading integration while preserving the native acceleration behavior.
+## Windwalker Flight Stabilization — **Complete**
+
+The world-map work keeps the useful navigation repair while returning the renderer and steering to the game's proven native behavior.
+
+- The original Windwalker Mode-7 perspective is restored.
+- Native left/right steering response is restored.
 - The original world-map/minimap object graphics were repaired after an older patch allocation was found to overlap them.
 - The native lower-left minimap, facing indicator, landing markers, position math, and layout are retained.
-- The minimap remains visible during Windwalker flight.
+- The minimap starts **ON** when Windwalker flight begins, but the game's normal toggle remains functional.
 
-Experimental altitude-speed changes, alternate flight-control mappings, and prototype field-of-view wedges are **not** part of the current baseline.
+A DSP-1 perspective renderer and reduced-yaw experiment looked promising in flight but caused deterministic post-flight Ring/menu graphics corruption. Those implementations were withdrawn rather than carried into 2.0. The detailed test history is preserved in **`README_DSP1_EXPERIMENT.md`**.
+
+Experimental altitude-speed changes and alternate flight-control mappings are also not part of the current baseline.
 
 ## Full-Game QA, Script, Theme, and Friction Pass — **In progress**
 
@@ -216,13 +223,13 @@ The goal is **coverage and polish**, not another architectural rewrite.
 
 Returning to the space station should become an action taken in the flight world rather than a menu-style destination choice.
 
-The intended result is for Omnitopia to feel like a real place the player returns to through Windwalker navigation. The exact approach/trigger presentation will be determined through implementation and testing, but the design goal is straightforward: **fly back to the station instead of selecting it from a menu**.
+The intended result is for Omnitopia to feel like a real place the player returns to through Windwalker navigation. The 2.0 implementation should build on the stable native Mode-7 renderer, using a visible station landmark/approach cue rather than depending on the withdrawn live DSP-1 renderer. The design goal is straightforward: **fly back to the station instead of selecting it from a menu**.
 
 This is the only planned new headline gameplay feature for 2.0.
 
 ---
 
-# 3.0 — New Content and Soundtrack Expansion
+# 3.0 — New Content and Audio Expansion
 
 Where 2.0 finishes the existing game, 3.0 is intended to expand it. The features below belong together because the new quests, combat content, flight-space presentation, and music can be designed as one cohesive addition rather than separate late patches.
 
@@ -243,11 +250,21 @@ The exact challenge ladder, reward economy, opponent structure, and relationship
 
 ## New Music — **Planned**
 
-Add new tracks where the new 3.0 content benefits from distinct music. New music is being held for the content expansion rather than added to 2.0 in isolation so that the soundtrack additions have clear in-game purposes.
+Add new tracks where the new 3.0 content benefits from distinct music. New music is being held for the content expansion rather than added to 2.0 in isolation so that the soundtrack additions have clear in-game purposes. Native song-ID expansion should be engineered and validated separately from the MSU interception layer so the two systems can be debugged independently.
+
+## MSU-1 Support Reimplementation — **Planned**
+
+Reintroduce optional external soundtrack support from the stable v1.30 native-audio baseline rather than reviving the v1.18 interception path.
+
+The replacement backend must treat **"do not change music"** as a first-class behavior, not merely map requested song IDs correctly. Development should begin by tracing native music-change semantics across representative rooms and cutscenes, then choose a hook point where the game has already determined that a real music change is required.
+
+Acceptance will require full-game regression coverage in addition to the familiar one-shot, looping, missing-PCM, partial-pack, and native-SFX tests. The Horace and Nobilia no-change cases that exposed the old bug become permanent regression tests.
+
+See **`README_MSU1_EXPERIMENT.md`** for the preserved findings and requirements.
 
 ## Higher-Quality MSU-1 PCM Set — **Planned**
 
-Produce a substantially higher-quality version of the external MSU-1 soundtrack. Existing track identity and fallback compatibility should be preserved wherever appropriate, while the audio assets themselves receive a quality upgrade.
+Produce a substantially higher-quality version of the external MSU-1 soundtrack **after** the replacement 3.0 backend is stable. The historical 1-70 track identity can be used as a starting point, while the audio assets themselves receive a quality upgrade.
 
 This work naturally pairs with the new 3.0 music so the expanded soundtrack can be treated as one coherent package.
 
@@ -259,7 +276,7 @@ Possible work in this bucket includes clearer landmarks and approach cues, addit
 
 ---
 
-## Retired Experiments / Not Current Roadmap Scope
+## Retired Implementations and Experiments
 
 Casual Run has tried a number of ideas that did not survive testing. Unless deliberately reopened in the future, these should not be treated as planned features.
 
@@ -269,6 +286,8 @@ Casual Run has tried a number of ideas that did not survive testing. Unless deli
 - Faster Windwalker ascent/descent experiments.
 - Alternate Windwalker control remapping experiments.
 - Prototype flight FOV indicators that were not accepted into the current baseline.
+- The v1.27/v1.28 live DSP-1 Windwalker renderer and half-rate yaw implementation; findings are preserved in `README_DSP1_EXPERIMENT.md`.
+- The v1.05/v1.18 Casual Run MSU-1 implementation; MSU-1 itself remains planned for a fresh 3.0 implementation documented in `README_MSU1_EXPERIMENT.md`.
 - Modern boss-HP or numeric-combat overlays and other HUD-heavy presentation changes that conflict with the project's SNES-style design.
 
 A failed prototype may still teach us something, but it is not part of the roadmap simply because code for it once existed.
@@ -283,6 +302,8 @@ Use the release patch associated with the version you want to play and apply it 
 
 For exact base-ROM hashes, patched-ROM hashes, checksums, source build instructions, expansion-space ownership, and other technical validation information, consult the authoritative ASM source included with the project.
 
+Current v1.30 development ROM SHA-256: `c47b4871d7519e9b2a630f356c054b329a62280d152380167d34f1a34d13ccb7`. The v1.30 source validation contract records checksum/complement `$6B43 / $94BC`.
+
 ---
 
 # Credits and Thanks
@@ -294,7 +315,7 @@ Casual Run is cumulative work. Some features directly incorporate earlier patche
 - **FuSoYa** — original *Secret of Evermore* two-player foundation that Casual Run retains and builds around.
 - **Ninakoru** — gameplay balance work and bug fixes selectively incorporated into the Casual Run foundation, including extensive prior research into combat, growth, equipment, formulas, charms, enemies, and related systems.
 - **assassin17** — Silver Sheath fix, Bazooka ammunition fix, and Bazooka level/interface fixes incorporated into the project.
-- **Conn / RedScorpion** — original *Secret of Evermore* MSU-1 implementation and the track numbering, loop policy, and music-mute approach that remain the basis for Casual Run's optional soundtrack support.
+- **Conn / RedScorpion** — original *Secret of Evermore* MSU-1 implementation and historical track numbering/loop-policy research that informed Casual Run's experiments and will remain an important reference for the planned 3.0 reimplementation.
 - **black-sliver / Evermizer** — Tiny's-lair leave/re-entry softlock prevention incorporated into Casual Run, along with a large body of modern *Secret of Evermore* hacking work that has served as valuable reference material.
 
 ## Research, Tools, Documentation, and Community Resources
@@ -312,7 +333,7 @@ Special thanks to the people and projects whose work made the later source recov
 
 ## Casual Run Project Work
 
-The Casual Run project adds the cumulative original work described in this README: control integration, quality-of-life changes, progression and economy tuning, New Game Plus, dialogue and presentation revisions, theme architecture, progression repairs, MSU integration/repair, source recovery and documentation, Windwalker presentation work, and the ongoing 2.0/3.0 roadmap.
+The Casual Run project adds the cumulative original work described in this README: control integration, quality-of-life changes, progression and economy tuning, New Game Plus, dialogue and presentation revisions, theme architecture, progression repairs, source recovery and documentation, Windwalker/minimap work, audio experimentation and rollback documentation, and the ongoing 2.0/3.0 roadmap.
 
 ---
 

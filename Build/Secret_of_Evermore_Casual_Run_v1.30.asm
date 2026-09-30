@@ -1,6 +1,6 @@
 ; =============================================================================
 ; Secret of Evermore — Casual Run
-; AUTHORITATIVE FLAT SOURCE — v1.28 ALWAYS-ON MINIMAP RELEASE
+; AUTHORITATIVE FLAT SOURCE — v1.30 NATIVE AUDIO + STABLE WINDWALKER RELEASE
 ; =============================================================================
 ;
 ; PURPOSE OF THIS FILE
@@ -69,6 +69,17 @@
 ; allocation overlaps the original $C5:6FBB-$C5:77BA graphics source. The native minimap dots,
 ; landing markers, position math, and OAM layout are retained, and the lower-left minimap is
 ; forced visible during flight. No altitude-rate/control experiment is included.
+; v1.29 withdraws the v1.27 DSP-1 flight renderer and half-rate yaw after full post-flight QA
+; demonstrated persistent Ring/menu graphics corruption whenever the custom DSP raster path was
+; used. Windwalker perspective and left/right steering return to the native engine. The repaired
+; v1.28 world-map OBJ graphics relocation remains, while minimap visibility now initializes ON at
+; Windwalker setup and then follows the game's native toggle state normally.
+; v1.30 withdraws all active Casual Run MSU-1 code after full-game QA exposed deterministic
+; unintended music changes in scenes/rooms that normally inherit the currently playing track.
+; Restoring the native music-change routine eliminated the problem; moving existing song pointers
+; back to their native table did not. Production audio therefore returns completely to Secret of
+; Evermore's native SPC path. MSU-1 is deferred to a fresh 3.0 implementation. See
+; README_MSU1_EXPERIMENT.md for the test history, preserved track map, and 3.0 requirements.
 ;
 ; =============================================================================
 ; TABLE OF CONTENTS
@@ -80,7 +91,7 @@
 ;  5. Expansion-space ownership registry
 ;  6. Text engine / v1.04 dialogue-routing architecture
 ;  7. New Game Plus discriminator and behavior context
-;  8. v1.18 MSU-1 architecture and per-request fallback contract
+;  8. v1.30 native audio contract / withdrawn MSU-1 experiment
 ;  9. v1.06 final controls architecture
 ; 10. Important WRAM / controller / Ring state
 ; 11. Current gameplay behavior summary
@@ -172,7 +183,7 @@
 ;   including ordinary NPC/world text and the active mirrored NG+ callbacks. Gameplay,
 ;   controls, event logic, and the v1.16 arena architecture remain otherwise unchanged.
 ;
-; CURRENT v1.18 MSU-1 FALLBACK RELEASE IDENTITY
+; HISTORICAL v1.18 MSU-1 FALLBACK RELEASE IDENTITY
 ;   Size:       4,194,304 bytes
 ;   SHA-256:    87c69e11cc76b11048ddccb5ca97df123c36bf3021240364f278006352ef9390
 ;   Checksum:   $76ED
@@ -235,6 +246,16 @@
 ;   proceeds externally. Barrier positive-status lifetime is 1800 frames (~30s), Atlas is 3600
 ;   frames (~60s), and Crush base might is 61. All v1.25 presentation/theme behavior is retained.
 ;
+; CURRENT v1.30 NATIVE AUDIO / STABLE FLIGHT RELEASE IDENTITY
+;   Size:       4,194,304 bytes
+;   SHA-256:    c47b4871d7519e9b2a630f356c054b329a62280d152380167d34f1a34d13ccb7
+;   Checksum:   $6B43
+;   Complement: $94BC
+;   Functional scope: retains the accepted v1.29 native Windwalker/minimap rollback and removes
+;   every active Casual Run MSU-1 hook/helper/table. Music playback uses the clean game's native
+;   SPC music-change path. Full-game QA identified the v1.18 interception path as the cause of
+;   unintended song changes in no-change scenes; the exact lower-level mechanism remains open.
+;
 ; HISTORICAL VERIFIED OUTPUTS
 ;   v1.03  edf3640f98849916a31f8b9fdc1e126e66dd80b84a9e0ec50bcacc2880fcf899
 ;   v1.04  478886637c565d2ea657f4f5570bacce207ffc593ecd0fa487c80364a14b6ca0
@@ -260,6 +281,10 @@
 ;   v1.24  Semantic helper roster + exact TEXT-offset routing correction checkpoint.
 ;   v1.25  Initial theme standards promoted with table-driven visuals and targeted routing/save fixes.
 ;   v1.26  Alchemy balance release: Barrier ~30s, Atlas ~60s, Crush base might 61.
+;   v1.27  experimental DSP-1 Windwalker perspective + half-rate yaw (withdrawn in v1.29).
+;   v1.28  repaired native world-map OBJ/minimap graphics; first release forced minimap ON.
+;   v1.29  native Windwalker raster/yaw restored; minimap defaults ON but remains toggleable.
+;   v1.30  active MSU-1 integration removed; native SPC music-change path restored for 2.0.
 ;
 ; BUILD-TOOL SYNTAX CONTRACT
 ;   tools/build.py intentionally understands only the source subset used here:
@@ -512,6 +537,28 @@
 ;   3600 frames (~90s -> ~60s); Crush base might changes from 62 to 61. Formula ingredients,
 ;   growth, targeting, status strength, animations, and every other formula remain unchanged.
 ;
+; v1.27
+;   Experimental DSP-1 Windwalker perspective + half-rate yaw release. The in-flight presentation
+;   worked, but later full-game QA found deterministic post-flight Ring/menu graphics corruption.
+;
+; v1.28
+;   Repairs native world-map OBJ/minimap graphics by relocating the clean $0800-byte source block
+;   to $F6:8000-$F6:87FF. Its first release forced the minimap active paths ON while retaining the
+;   v1.27 DSP renderer; that visibility policy is superseded by v1.29.
+;
+; v1.29
+;   Stable Windwalker rollback. Native Mode-7 raster generation and native yaw are restored;
+;   cartridge type returns to vanilla $02. The v1.28 relocated clean minimap graphics remain.
+;   Minimap visibility defaults ON once during Windwalker setup, then remains fully controlled
+;   by the game's native $0B1D toggle state.
+;
+; v1.30
+;   Stable native-audio rollback. Full-game QA found the v1.18 MSU interception could trigger
+;   valid but unintended song changes in scenes/rooms that normally inherit current music.
+;   A hybrid pointer-table diagnostic did not fix the problem; restoring the native music-change
+;   routine did. All active MSU hooks/helpers/tables are removed from the production source.
+;   MSU-1 is moved to the 3.0 roadmap for a fresh implementation from this native baseline.
+;
 ; IMPORTANT WITHDRAWALS — DO NOT RESURRECT BY ACCIDENT
 ;   - v0.12/v0.13 save/load status cleanup: withdrawn after Defend freeze.
 ;   - first fixed-alchemy implementation: rolled back before stable v0.14 implementation.
@@ -521,6 +568,12 @@
 ;   - v1.06-development smart healing / repeat-last-alchemy / auto-target / synthetic
 ;     Ring-transition experiments: dropped after direct native Ring shortcuts proved
 ;     simpler, more flexible, and more reliable.
+;   - v1.27/v1.28 DSP-1 Windwalker renderer + half-rate yaw: withdrawn in v1.29 after
+;     deterministic post-flight Ring/menu graphics corruption. Retained source bytes are
+;     historical/inactive only; see README_DSP1_EXPERIMENT.md before revisiting this path.
+;   - v1.05/v1.18 Casual Run MSU-1 implementations: withdrawn in v1.30 after full-game QA
+;     found unintended song changes in no-change scenes. MSU-1 remains a 3.0 goal, but the old
+;     interception path must not be re-enabled; see README_MSU1_EXPERIMENT.md.
 ;
 ; FINAL-ROM RULE
 ;   Historical notes can describe abandoned experiments. The authoritative source +
@@ -570,12 +623,10 @@
 ;     $F3:0000-$F3:0555  NG+ side of paired text, mirrored offsets vs $F2
 ;     $F4:0000-$F4:001E  central raw-text bank selector
 ;
-;   v1.18 (supersedes the v1.05 MSU allocation)
-;     $F4:0100-$F4:013C  PCM lookup + early loop/control resolution
-;     $F4:013D-$F4:017B  accepted inert bytes retained for Test 3 binary identity
-;     $F4:0180-$F4:01D2  native-load tail + reversible music mute + MSU start
-;     $F4:0240-$F4:0251  one-byte APU mute/unmute component lists
-;     $F4:0300-$F4:034F  retained historical 80-entry MSU loop-policy table
+;   v1.30 retired audio ranges
+;     Former v1.18 MSU ownership at $F4:0100-$F4:034F is intentionally unwritten/zero in
+;     production v1.30. It is not owned by an active subsystem. Future reuse requires a new,
+;     explicit allocation entry; do not treat zero-filled expansion bytes as implicitly free.
 ;
 ;   v1.06
 ;     $F5:0000-$F5:005C  Boy actor field Ring shortcut dispatcher
@@ -603,8 +654,9 @@
 ;         $F7:E900-$F7:E9E5  dedicated helper bodies $02-$18 (23 x 10 bytes)
 ;         $F7:EA00-$F7:EA51  v1.25 table-driven framed-window theme/style bridge
 ;         $F7:EB00-$F7:EBA7  v1.25 helper marker -> visible X/pattern/border style table
-;         $F7:EC00-$F7:ED3B  v1.27 DSP-1 world-map raster generator
-;         $F7:EE00-$F7:EE25  v1.27 half-speed Windwalker heading integrator
+;         $F7:EC00-$F7:ED3B  v1.27 DSP-1 world-map raster generator [retained historical / inactive in v1.29]
+;         $F7:EE00-$F7:EE25  v1.27 half-speed Windwalker heading integrator [retained historical / inactive in v1.29]
+;         $F7:EF40-$F7:EF53  v1.29 Windwalker setup wrapper: default minimap ON, native toggle thereafter
 ;       Native hook $CC:D8EF-$CC:D8F4 calls the bridge before the native pattern store.
 ;     v1.25 Save Game presentation support:
 ;         $F5:1280-$F5:12A8  B CANCEL legend frame
@@ -707,147 +759,53 @@
 ;   in that edge case is harmless and even amusing.
 ;
 ; =============================================================================
-; 8. v1.18 MSU-1 ARCHITECTURE AND PER-REQUEST FALLBACK CONTRACT
+; 8. v1.30 NATIVE AUDIO CONTRACT / WITHDRAWN MSU-1 EXPERIMENT
 ; =============================================================================
 ;
-; SOURCE BASIS
-;   Conn / RedScorpion Secret of Evermore MSU-1 v3 (2017-11-30) supplies the
-;   native/MSU track numbering and historical loop policy. v1.18 replaces the
-;   earlier Casual Run v1.05 dispatcher after runtime testing exposed two flaws:
-;     1. successful MSU requests skipped native SPC song initialization, disturbing SFX;
-;     2. one missing PCM latched the whole session to native music.
+; PRODUCTION AUDIO CONTRACT
+;   v1.30 uses Secret of Evermore's native SPC music-change path. No production hook reads or
+;   writes the MSU-1 register range, no external PCM is required, and no Casual Run helper
+;   intercepts the native song-change routine.
 ;
-; ACCEPTED v1.18 CONTRACT
-;   1. Vanilla zero/same-song guards run first.
-;   2. At a changed song request, preserve the original native/MSU song ID.
-;   3. If MSU-1 is present, select that numeric PCM and wait for lookup/open to finish.
-;   4. If the PCM is missing/error, backend/control state remains $00 (native).
-;   5. If the PCM exists, read its historical loop policy immediately, while the original
-;      song ID is still known-good, and store final control $01 or $03 in $0E40.
-;   6. ALWAYS run the native SPC song-component upload so the native SFX engine receives
-;      its ordinary initialization/state.
-;   7. After the native upload, dynamically patch the SPC700 music-start branch only:
-;        $F0 = vanilla native music allowed
-;        $2F = historical Conn/RedScorpion native-music mute
-;      Native SFX remain active in either case.
-;   8. Issue the normal native post-load command/synchronization.
-;   9. If $0E40 is $01/$03, start the already-opened PCM using that pre-resolved control.
+; WHY THE v1.18 PATH WAS WITHDRAWN
+;   The v1.18 backend passed its targeted MSU regression sequence, but later full-game QA found
+;   deterministic song changes in scenes/rooms that normally preserve the currently playing
+;   music. Two examples were an affected Horace scene starting the short pre-crash descent cue
+;   and the Nobilia takeoff room starting space-station music.
 ;
-; PER-REQUEST STATE
-;   $0E40 low byte is not a session latch in v1.18:
-;     $00 = native SPC owns this request
-;     $01 = MSU owns this request; play once
-;     $03 = MSU owns this request; play + repeat
-;   A missing PCM therefore does NOT disable later MSU tracks. Partial packs work.
+;   Audio QA1 restored existing song IDs to the original native pointer table while retaining a
+;   future-only expansion path. The bug remained, ruling out the relocated existing-song table
+;   as the direct cause.
 ;
-; CRITICAL LOOP-POLICY INVARIANT
-;   Resolve $01/$03 before the native SPC load. Runtime diagnostics proved that both
-;   hard-coded $01 and hard-coded $03 work, while the older post-native-load table lookup
-;   could produce silence on looping cues. Do not move the policy lookup later again.
+;   Audio QA2 restored the clean native music-change routine while the QA1 hybrid pointer-table
+;   diagnostic remained in place, and made the MSU helpers unreachable. The unwanted music
+;   changes disappeared. Therefore the active v1.18 interception path is the confirmed regression
+;   source; the existing-song pointer relocation was not required for the failure. The exact
+;   lower-level semantic mismatch is not yet proven. Do not invent a more specific root cause
+;   without new trace evidence.
 ;
-; APU TRANSFER INVARIANT
-;   Native component uploads require APU command $0E before each transfer. v1.18 lets
-;   vanilla's existing $0E prepare the real song upload, then explicitly sends another
-;   $0E before the one-byte mute/unmute component transfer.
+; SOURCE / ROM INVARIANTS FOR v1.30
+;   - The bytes previously replaced by v1.18 at $CC:8246-$CC:824B and $CC:8275-$CC:828E
+;     must match the clean U.S. ROM exactly.
+;   - $C1:96C2 remains the clean native SPC driver byte.
+;   - Former MSU expansion ranges $F4:0100-$F4:034F are not written by active v1.30 source.
+;   - The temporary future-song/hybrid lookup used during Audio QA1/QA2 is also absent; existing
+;     song IDs use the original native pointer path end to end. Native song-ID expansion moves to 3.0.
+;   - Existing event/room scripts are not patched merely to suppress the two observed symptoms;
+;     restoring native audio behavior is the fix.
+;   - No MSU manifest/PCM set is part of the 2.0 production requirement.
 ;
-; FINAL ALLOCATIONS
-;   $F4:0000-$F4:001E  v1.04 NG+ raw-text selector
-;   $F4:0100-$F4:013C  v1.18 PCM selection + early loop/control resolution
-;   $F4:013D-$F4:017B  accepted inert bytes retained for Test 3 binary identity
-;   $F4:0180-$F4:01D2  native-load tail + reversible music mute + MSU start
-;   $F4:0240-$F4:0248  one-byte APU mute component list
-;   $F4:0249-$F4:0251  one-byte APU unmute component list
-;   $F4:0300-$F4:034F  retained historical 80-entry loop-policy table
+; 3.0 REIMPLEMENTATION BOUNDARY
+;   MSU-1 remains planned for 3.0, but it must be reimplemented from this native baseline rather
+;   than reconnecting the v1.18 hooks. The first task is to trace/categorize native music-change
+;   calls, especially transitions that intentionally inherit current music, and then choose a
+;   hook point that lets the native engine finish deciding WHETHER a music change occurs before
+;   external playback mirrors that confirmed change.
 ;
-; RUNTIME PCM NAMING
-;   Use numeric files beside the ROM/MSU marker:
-;     Secret_of_Evermore_Casual_Run-1.pcm
-;     ...
-;     Secret_of_Evermore_Casual_Run-70.pcm
-;   The canonical titles are retained below in-source so descriptive identity is not lost.
-;
-; MSU TRACK REGISTRY — canonical names retained even though runtime PCM names are numeric.
-; Runtime compatibility rule:
-;   Secret_of_Evermore_Casual_Run-<track>.pcm
-; Example: ID 6 is runtime file Secret_of_Evermore_Casual_Run-6.pcm.
-;
-; The former descriptive manifest filename can always be reconstructed as:
-;   Secret_of_Evermore_Casual_Run-<legacy-label-stem>.pcm
-; Those descriptive names are documentation only; tested SNES9x runtime lookup uses the
-; numeric basename convention above. ID is both the native song index seen by this hook
-; and the external MSU track number.
-;
-; ID  Canonical title                         Mode  Legacy descriptive label stem
-; 01  Main Title                             once  Main_Title
-; 02  Battle with Thraxx                     loop  Battle_with_Thraxx
-; 03  In the Arena                           loop  In_the_Arena
-; 04  Escape from Evermore                   loop  Escape_from_Evermore
-; 05  Return to Podunk                       once  Return_to_Podunk
-; 06  Village on the Plateau                 loop  Village_on_the_Plateau
-; 07  Within the Volcano                     loop  Within_the_Volcano
-; 08  Swamplands                             loop  Swamplands
-; 09  Southern Jungle                        loop  Southern_Jungle
-; 10  Bugmuck Tar Pits                       loop  Bugmuck_Tar_Pits
-; 11  Desert of Doom                         loop  Desert_of_Doom
-; 12  Queen Bluegarden                       loop  Queen_Bluegarden
-; 13  High in the Sky                        loop  High_in_the_Sky
-; 14  Control Room                           loop  Control_Room
-; 15  Hall of Collosia                       loop  Hall_of_Collosia
-; 16  Horace Highwater                       loop  Horace_Highwater
-; 17  Major Enemy                            loop  Major_Enemy
-; 18  Merchant in the Cave                   loop  Merchant_in_the_Cave
-; 19  Elephant Graveyard                     loop  Elephant_Graveyard
-; 20  Pirates of Crustacia                   loop  Pirates_of_Crustacia
-; 21  Lively Nobilia Marketplace             loop  Lively_Nobilia_Marketplace
-; 22  Menu                                   loop  Menu
-; 23  Machinery                              loop  Machinery
-; 24  Game Over                              once  Game_Over
-; 25  Raptor Attack!                         loop  Raptor_Attack
-; 26  Victory Fanfare                        once  Victory_Fanfare
-; 27  Good Night                             once  Good_Night
-; 28  The Seashore                           loop  The_Seashore
-; 29  Many Years Ago...                      once  Many_Years_Ago
-; 30  The Professor's Room                   loop  The_Professors_Room
-; 31  Quiet Plaza                            loop  Quiet_Plaza
-; 32  Omnitopia Surface                      loop  Omnitopia_Surface
-; 33  Storekeepers                           loop  Storekeepers
-; 34  Great Pyramid                          loop  Great_Pyramid
-; 35  Underground Path                       loop  Underground_Path
-; 36  Hidden River                           loop  Hidden_River
-; 37  Staff Roll                             once  Staff_Roll
-; 38  A Boy and His Dog                      once  A_Boy_and_His_Dog
-; 39  Engine Rumble                          loop  Engine_Rumble
-; 40  Explosion                              loop  Explosion
-; 41  Applause                               loop  Applause
-; 42  Palace Fountains                       loop  Palace_Fountains
-; 43  Fire Eyes                              loop  Fire_Eyes
-; 44  Puppet Show                            loop  Puppet_Show
-; 45  Minor Minion                           loop  Minor_Minion
-; 46  Distant Wind                           loop  Distant_Wind
-; 47  Death of a Minotaur                    loop  Death_of_a_Minotaur
-; 48  Fields of Gothica                      loop  Fields_of_Gothica
-; 49  City of Ebony                          loop  City_of_Ebony
-; 50  Over the Waterfall                     loop  Over_the_Waterfall
-; 51  Darkness of the Temple                 loop  Darkness_of_the_Temple
-; 52  Dark Forest                            loop  Dark_Forest
-; 53  City of Ivory                          loop  City_of_Ivory
-; 54  Omnitopia Hallways                     loop  Omnitopia_Hallways
-; 55  Quicksand Fields                       loop  Quicksand_Fields
-; 56  Tinker Tinderbox                       loop  Tinker_Tinderbox
-; 57  Deserted Castle                        loop  Deserted_Castle
-; 58  Dank Dungeon                           loop  Dank_Dungeon
-; 59  Regal Castle                           loop  Regal_Castle
-; 60  Freak Show!!!                          loop  Freak_Show
-; 61  Item Fanfare                           once  Item_Fanfare
-; 62  Northern Jungle                        loop  Northern_Jungle
-; 63  Lonely Halls                           loop  Lonely_Halls
-; 64  Dark Greenhouse                        loop  Dark_Greenhouse
-; 65  Vigor the Indestructible!              once  Vigor_the_Indestructible
-; 66  Racing Pigs!                           loop  Racing_Pigs
-; 67  Collapse of Ivor Tower                 once  Collapse_of_Ivor_Tower
-; 68  Volcano Pipes                          loop  Volcano_Pipes
-; 69  Final Battle ~ Carltron                loop  Final_Battle_Carltron
-; 70  Intruder Alarm                         loop  Intruder_Alarm
+;   Required future regression coverage includes no-change room transitions, cutscene carryover,
+;   one-shot cues, looping cues, missing PCM fallback, later MSU recovery, SFX during MSU-owned
+;   playback, save/load, and a full-game pass. See README_MSU1_EXPERIMENT.md for the detailed
+;   test history and preserved 1-70 track map.
 ;
 ; =============================================================================
 ; 9. v1.06-v1.09 FINAL CONTROLS ARCHITECTURE
@@ -948,8 +906,7 @@
 ;   $7E:2318          Biscuit quantity
 ;   $7E:4F19          Boy remembered Ring page
 ;   $7E:4FC7          Dog remembered Ring page
-;   $0E40             v1.18 per-request MSU control: $00 native, $01 one-shot, $03 loop
-;   $0E4B             game's current/requested song state maintained through MSU handling
+;   $0E4B             game's native current/requested song state; do not repurpose casually
 ;
 ; ACTOR INPUT CONTEXT
 ;   The Boy and Dog have actor input words. FuSoYa can dynamically route P1/P2 into those
@@ -1003,18 +960,25 @@
 ;     pattern $1944; styling stays helper-owned and source/category assignment remains separate.
 ;   - Accessible Boy Ring/menu entry reasserts the Boy pattern/border baseline so native
 ;     system/menu windows cannot inherit the previously speaking NPC's visual state.
+;   - v1.29 Windwalker uses the native Mode-7 perspective and native steering rate.
+;   - The repaired native lower-left minimap starts visible on Windwalker entry but remains
+;     toggleable through the game's original visibility state and controls.
 ;
 ; =============================================================================
 ; 12. CURRENT FUTURE-DEVELOPMENT BOUNDARY
 ; =============================================================================
 ;
 ; ACCEPTED RELEASE BASELINE
-;   v1.25 remains the externally tested presentation/theme baseline. v1.26 is the canonical
-;   gameplay-balance QA branch built directly on it while full-game theme QA proceeds. The v1.18
-;   MSU fallback backend, v1.17 reviewed script, v1.22 event-owned lifecycle cleanup, v1.23
-;   theme-helper foundation, v1.24 exact-offset routing rules, and v1.25 visual standards are
-;   retained unchanged. Theme feedback should be reconciled separately from these three alchemy
-;   values so regressions remain attributable.
+;   v1.30 is the current authoritative development baseline. It retains the v1.17 reviewed script,
+;   v1.22 event-owned lifecycle cleanup, v1.23 theme-helper foundation, v1.24 exact-offset routing
+;   rules, v1.25 visual standards, v1.26 alchemy trim, and the accepted v1.29 Windwalker/minimap
+;   rollback. Music playback is fully native again; the v1.05/v1.18 MSU implementations are not
+;   part of the 2.0 production line.
+;
+;   Full-game script/theme/friction QA remains active 2.0 work. The planned return-to-Omnitopia
+;   flight/space-station approach should be built on the stable native Windwalker renderer.
+;   MSU-1, native-music expansion for new song IDs, and higher-quality external soundtrack work
+;   are explicitly deferred to 3.0 and must start from the v1.30 native-audio contract.
 ;
 ; THEME ASSIGNMENT STATE
 ;   Theme IDs are semantic categories. A TEXT row records source + category only; visual
@@ -1184,8 +1148,8 @@
 ;   - All v1.25 theme/presentation bytes remain unchanged except normal checksum fields.
 ;   - v1.26 was the canonical baseline for isolated post-theme feature work and is superseded by
 ;     the promoted v1.27/v1.28 Windwalker releases below.
-;   - Experimental DSP/MSU/non-release viability branches must remain separate and must never be
-;     folded into this source without an explicit promotion after runtime QA.
+;   - Withdrawn DSP-1 and v1.18 MSU-1 implementations must not be re-enabled in the 2.0 line.
+;     Any future MSU work belongs to 3.0 and must begin from the native v1.30 audio baseline.
 ;
 ; STRUCTURAL INVARIANTS
 ;   - Native Ring page-change routine $CE:ADBC-$CE:ADC3 remains unchanged.
@@ -5392,119 +5356,14 @@ V104_SelectRawTextBank:
 
 
 ; =============================================================================
-; v1.18 — MSU-1 per-request native fallback / SFX-safe playback
+; v1.30 — native audio restoration
 ; =============================================================================
-; Runtime-approved path:
-;   * resolve PCM availability and loop control before native SPC processing;
-;   * always load native SPC song data for sound-effect state;
-;   * dynamically mute/unmute only native music in SPC700 RAM;
-;   * start a valid MSU PCM after native initialization;
-;   * missing PCM falls back for that request only.
+; The v1.18 physical MSU mutation block that previously occupied this position has been removed
+; from active source. Building from the required clean ROM therefore leaves the native music
+; routine and SPC driver bytes untouched, and leaves the former $F4:0100-$F4:034F MSU expansion
+; ranges zero/unwritten. Detailed historical bytes and QA findings are preserved separately in
+; README_MSU1_EXPERIMENT.md rather than kept executable in the production ASM.
 ;
-; Native entry is restored; vanilla zero/same-song guards remain live.
-org $CC8236
-V118_MusicEntry_Restore:
-    db $C2, $30, $AE, $4B
-
-; Hook immediately after vanilla zero/same-song guards.
-org $CC8246
-V118_MusicSelect_Hook:
-    db $5C, $00, $01, $F4
-    db $EA, $EA
-
-; Relocate the native upload/start tail so the post-load mute/unmute can be applied.
-org $CC8275
-V118_NativeMusicTail_Hook:
-    db $5C, $80, $01, $F4
-
-; Same-bank wrappers for RTS-only native APU helpers.
-org $CC8279
-V118_APUUploadWait_Wrapper:
-    db $20, $5B, $80
-    db $20, $D4, $81
-    db $6B
-
-org $CC8280
-V118_APUWait_Wrapper:
-    db $20, $D4, $81
-    db $6B
-
-org $CC8284
-V118_DeadNativeTail:
-    db $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA
-
-; Keep the ROM's SPC driver image vanilla. Runtime component transfer selects
-; $F0 or $2F at APU RAM $1CE2 per request.
-org $C196C2
-V118_NativeDriverMusicBranch:
-    db $F0
-
-; ---------------------------------------------------------------------------
-; $F4:0100 — PCM lookup + EARLY loop-policy resolution.
-;
-; $0E40:
-;   $00 native fallback
-;   $01 MSU one-shot
-;   $03 MSU loop
-;
-; Important: X is loaded from the original request before native SPC processing.
-org $F40100
-V118_MSU_SelectAndResolve:
-    db $8D, $4B, $0E, $08, $C2, $10, $AA, $E2, $20, $9C, $40, $0E, $AD, $02, $20, $C9
-    db $53, $D0, $22, $9C, $07, $20, $9C, $06, $20, $8A, $8D, $04, $20, $9C, $05, $20
-    db $AD, $00, $20, $29, $40, $D0, $F9, $AD, $00, $20, $29, $08, $D0, $07, $BF, $00
-    db $03, $F4, $8D, $40, $0E, $28, $AD, $4B, $0E, $5C, $4C, $82, $CC
-
-; $F4:013D-$F4:017B is unreachable after the v1.18 helper exits at $F4:013C.
-; The accepted Test 3 ROM inherited these 63 bytes from the superseded v1.05
-; dispatcher because the test source overlaid rather than cleared that range.
-; They are retained verbatim as inert compatibility padding so authoritative
-; v1.18 rebuilds remain byte-identical to the runtime-approved test artifact.
-org $F4013D
-V118_AcceptedDeadPadding:
-    db $C9, $31, $D0, $2E, $8A, $8D, $04, $20, $9C, $05, $20, $AD, $00, $20, $29, $40
-    db $D0, $F9, $AD, $00, $20, $29, $08, $D0, $13, $A9, $FF, $8D, $06, $20, $BF, $00
-    db $03, $F4, $8D, $07, $20, $C2, $30, $68, $8D, $4B, $0E, $6B, $9C, $07, $20, $9C
-    db $06, $20, $A9, $FF, $8D, $40, $0E, $C2, $30, $68, $5C, $46, $82, $CC, $6B
-
-; ---------------------------------------------------------------------------
-; $F4:0180 — finish native SPC load, patch native-music branch, start MSU if owned.
-org $F40180
-V118_MSU_PostNativeLoad:
-    db $22, $79, $82, $CC, $A9, $0E, $00, $22, $FD, $81, $8C, $AD, $40, $0E, $29, $FF
-    db $00, $F0, $08, $A2, $40, $02, $A9, $F4, $00, $80, $06, $A2, $49, $02, $A9, $F4
-    db $00, $22, $79, $82, $CC, $A9, $02, $00, $22, $FD, $81, $8C, $22, $80, $82, $CC
-    db $AD, $40, $0E, $29, $FF, $00, $F0, $0F, $E2, $20, $A9, $FF, $8D, $06, $20, $AD
-    db $40, $0E, $8D, $07, $20, $C2, $30, $C2, $30, $AD, $4B, $0E, $29, $FF, $00, $8D
-    db $4B, $0E, $6B
-
-; Mute native music only: copy existing ROM byte $81:9651 == $2F to APU $1CE2.
-org $F40240
-V118_APUMute_ComponentList:
-    db $01, $00
-    db $01, $00
-    db $51, $96, $81
-    db $E2, $1C
-
-; Restore vanilla native music: copy $81:96C2 == $F0 to APU $1CE2.
-org $F40249
-V118_APUUnmute_ComponentList:
-    db $01, $00
-    db $01, $00
-    db $C2, $96, $81
-    db $E2, $1C
-
-; Historical loop-policy table. Index is native/MSU song ID.
-; $03 = play+repeat, $01 = play once. Runtime uses IDs 1-70.
-org $F40300
-V118_MSU_LoopPolicy:
-    db $03, $01, $03, $03, $03, $01, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03
-    db $03, $03, $03, $03, $03, $03, $03, $03, $01, $03, $01, $01, $03, $01, $03, $03
-    db $03, $03, $03, $03, $03, $01, $01, $03, $03, $03, $03, $03, $03, $03, $03, $03
-    db $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $01, $03, $03
-    db $03, $01, $03, $01, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03
-
-
 ; =============================================================================
 ; v1.06 — final control overhaul
 ; =============================================================================
@@ -48718,4 +48577,135 @@ V128_MinimapAlwaysOn_Animator:
 ;     - native $BD minimap heading helper restored before the v1.27 DSP raster generator;
 ;     - three native minimap active-path checks forced ON.
 ;   No experimental altitude-rate or control-remap bytes are present.
+; =============================================================================
+
+
+; =============================================================================
+; v1.29 RELEASE — NATIVE WINDWALKER + DEFAULT-ON, NATIVE-TOGGLEABLE MINIMAP
+; =============================================================================
+; Promoted 2026-09-30 after targeted runtime QA.
+;
+; WHY v1.27/v1.28 DSP-1 FLIGHT WAS WITHDRAWN
+;   The DSP-1 perspective produced the intended in-flight view, but repeated QA isolated a
+;   deterministic post-flight Ring/menu graphics corruption to execution of the custom DSP
+;   raster path. Minimap forcing, temporary WRAM scratch, matrix-buffer cleanup, DSP-stream
+;   cleanup experiments, final native raster regeneration, and native-yaw restoration did not
+;   remove the failure. The exact lower-level mechanism was not proven, so v1.29 returns the
+;   live Windwalker renderer to the original game rather than carrying an unexplained systemic
+;   corruption risk. See README_DSP1_EXPERIMENT.md for the full test history and lessons learned.
+;
+; ACTIVE v1.29 FLIGHT CONTRACT
+;   - Vanilla cartridge type $02; DSP-1 is not required by the production ROM.
+;   - Native Windwalker Mode-7 raster generation at $C0:D934.
+;   - Native Windwalker heading/yaw integration at $C0:CE35.
+;   - v1.28 clean world-map OBJ/minimap graphics remain relocated to $F6:8000-$F6:87FF.
+;   - Native minimap visibility reads are restored at all three render/animation sites.
+;   - Windwalker setup initializes $7E:0B1D = $0001 once, so the minimap starts visible.
+;   - After setup, the game's native toggle owns $0B1D; the minimap is not locked ON.
+;
+; RETAINED HISTORICAL BYTES
+;   The v1.27 DSP raster generator at $F7:EC00 and half-rate yaw helper at $F7:EE00 remain
+;   present only as historical source/recovery material. No active v1.29 hook reaches them.
+;   Do not reconnect them without reproducing and addressing the failures documented in the
+;   DSP experiment README.
+; =============================================================================
+arch 65816
+hirom
+
+; Return cartridge declaration to vanilla/no-coprocessor type.
+org $C0FFD6
+V129_NativeCartridgeType:
+    db $02
+
+; Restore native Windwalker raster.
+org $C0D934
+V129_NativeWindwalkerRaster:
+    db $A5, $BB, $38, $E9
+
+; Restore native Windwalker yaw.
+org $C0CE35
+V129_NativeWindwalkerYaw:
+    db $AD, $B0, $14, $18
+
+; Restore native minimap visibility-state reads.
+org $C0C1EC
+V129_MinimapNativeRead_MainLoopA:
+    db $AD, $1D, $0B
+org $C0C97A
+V129_MinimapNativeRead_MainLoopB:
+    db $AD, $1D, $0B
+org $C0D78E
+V129_MinimapNativeRead_Animator:
+    db $AD, $1D, $0B
+
+; One-time Windwalker setup call: wrap original JSL $80:8F85.
+org $C0C9CE
+V129_WindwalkerSetupHook:
+    db $22, $40, $EF, $F7       ; JSL $F7:EF40
+
+org $F7EF40
+V129_WindwalkerSetup_DefaultMinimapOn:
+    db $22, $85, $8F, $80       ; original JSL $80:8F85
+    db $08                       ; PHP — preserve original return flags
+    db $C2, $20                  ; REP #$20
+    db $48                       ; PHA — preserve full 16-bit accumulator
+    db $A9, $01, $00             ; LDA #$0001
+    db $8D, $1D, $0B             ; STA $0B1D — minimap starts ON
+    db $68                       ; PLA
+    db $28                       ; PLP — restore original flags/width
+    db $6B                       ; RTL
+
+
+; =============================================================================
+; v1.29 RELEASE VALIDATION CONTRACT
+; =============================================================================
+;   Size:       4,194,304 bytes
+;   SHA-256:    32fa349736831a45b200fcb2241dfc0819a0a3a22366cc5fca95e7c6b90ad43e
+;   Checksum:   $C7ED
+;   Complement: $3812
+;   Runtime QA:
+;     - native Windwalker perspective/turning accepted;
+;     - repaired minimap graphics accepted;
+;     - minimap defaults ON and remains toggleable;
+;     - post-flight Ring/menu graphics remain clean.
+;   Withdrawn DSP-1 findings are documented separately in README_DSP1_EXPERIMENT.md.
+; =============================================================================
+
+
+; =============================================================================
+; v1.30 RELEASE — NATIVE AUDIO / 2.0 STABILITY BASELINE
+; =============================================================================
+; Promoted 2026-09-30 after Audio QA2 runtime confirmation.
+;
+; ACTIVE v1.30 AUDIO CONTRACT
+;   - All Casual Run MSU-1 hooks/helpers/tables are removed from active production source.
+;   - The temporary hybrid/native-song expansion diagnostics are also removed from 2.0.
+;   - Native Secret of Evermore music-change logic and existing-song pointer lookup own playback end to end.
+;   - The former MSU expansion ranges are left unwritten/zero.
+;   - No PCM files or MSU manifest are required or used by v1.30.
+;   - MSU-1 is a 3.0 roadmap item and must be reimplemented from the native baseline.
+;
+; RETAINED v1.29 FLIGHT CONTRACT
+;   - native Windwalker Mode-7 perspective and native steering;
+;   - repaired relocated world-map OBJ/minimap graphics;
+;   - minimap defaults ON on Windwalker setup but remains natively toggleable;
+;   - no production DSP-1 requirement.
+;
+; v1.30 RELEASE VALIDATION CONTRACT
+;   Size:       4,194,304 bytes
+;   SHA-256:    c47b4871d7519e9b2a630f356c054b329a62280d152380167d34f1a34d13ccb7
+;   Checksum:   $6B43
+;   Complement: $94BC
+;   Static requirements:
+;     - $CC:8246-$CC:824B matches clean U.S. ROM exactly;
+;     - $CC:8275-$CC:828E matches clean U.S. ROM exactly;
+;     - $C1:96C2 matches clean U.S. ROM exactly;
+;     - $F4:0100-$F4:03FF is all $00 in the final ROM;
+;     - no active V118_MSU_* physical mutation block exists in source;
+;     - v1.29 Windwalker/minimap behavior remains unchanged.
+;   Runtime acceptance inherited from Audio QA2:
+;     - affected Horace scene no longer triggers the wrong short pre-crash descent cue;
+;     - Nobilia takeoff room no longer triggers space-station music;
+;     - those no-change scenes preserve the already-playing music as expected.
+;   Detailed MSU history and 3.0 requirements: README_MSU1_EXPERIMENT.md.
 ; =============================================================================
