@@ -1,6 +1,6 @@
 ; =============================================================================
 ; Secret of Evermore — Casual Run
-; AUTHORITATIVE FLAT SOURCE — v1.30 NATIVE AUDIO + STABLE WINDWALKER RELEASE
+; AUTHORITATIVE FLAT SOURCE — v1.33 RELEASE
 ; =============================================================================
 ;
 ; PURPOSE OF THIS FILE
@@ -80,6 +80,32 @@
 ; back to their native table did not. Production audio therefore returns completely to Secret of
 ; Evermore's native SPC path. MSU-1 is deferred to a fresh 3.0 implementation. See
 ; README_MSU1_EXPERIMENT.md for the test history, preserved track map, and 3.0 requirements.
+; v1.31 promotes the runtime-approved enemy-prize economy redesign. Ordinary remains on 71
+; explicit combat-map profiles now resolve to 7/13 regional cash, 4/13 regional ingredient x2,
+; and 2/13 regional trade good x1. Routine direct healing-item prizes are removed from those
+; profiles while the v1.08 status-aware remains chance remains unchanged.
+; v1.32 replaces the broad occupation/class theme experiment with focused supporting-character
+; identities. Robot remains the one grouped theme. Blimp, Strong Heart, Gomi, Lance, Tinker, and
+; Carltron receive dedicated helpers; old Merchant/Trader, Guard/Authority, generic Alchemist,
+; Inventor, Comedic Relief, and Adventurer assignments fall back to Generic NPC unless the speaker
+; is one of those named characters. Carltron keeps Robot's synthetic styling with standard geometry.
+; The same v1.32 full-game QA cycle then folds in the accepted presentation/script corrections found
+; during play: centered Narration/System uses five-line geometry; all repeated Omnitopia shuttle
+; prompts use System; missed Camellia and late Ruffleberg callsites are themed correctly; Robot TEXT
+; 2866 is one page; NG+ weapon carryover is restricted to Bone Crusher, Neutron Blade, Atom Smasher,
+; and Laser Lance; and Tinker says "I'm always happy to help my lab assis-good friend." only after
+; choosing Yes and completing the native save flow. Shared/global save infrastructure is unchanged.
+; Intermediate save-callback experiments made during this same v1.32 QA cycle are retained only as
+; source-order evidence where needed for exact tested-ROM identity and are explicitly overridden by
+; the final v1.32 corrections near the end of the file; they were never separate release versions.
+; v1.33 promotes the runtime-approved save-dialogue/presentation pass built on that v1.32 baseline.
+; Sting's unrelated duplicate farewell becomes "Stay safe out there."; Pompolonius's Colosseum save
+; stays on his $13 presentation with a bespoke last-words prompt; Cecil's Ebon Keep dialogue remains
+; on $16, his question chain advances directly to fresh pages from each choice, and his save prompt is
+; character-specific. Blimp's hut/cave saves use his $06 mud-pepper-leaf prompt; Professor Ruffleberg's
+; three late-game saves use $0C with a backup joke; Omnitopia/Junkyard terminals use $05 machine-native
+; backup wording. All custom paths still call native $4F for the actual save operation; shared generic
+; save conversation $4E, the Ivor banquet/arrest save, and the accepted v1.32 Tinker flow remain intact.
 ;
 ; =============================================================================
 ; TABLE OF CONTENTS
@@ -95,7 +121,7 @@
 ;  9. v1.06 final controls architecture
 ; 10. Important WRAM / controller / Ring state
 ; 11. Current gameplay behavior summary
-; 12. Current future-development boundary
+; 12. Current v1.33 development boundary
 ; 13. Validation and release requirements
 ; 14. Regional story-script authoring directory
 ; 15. Physical mutation source in CPU-address order
@@ -255,6 +281,35 @@
 ;   every active Casual Run MSU-1 hook/helper/table. Music playback uses the clean game's native
 ;   SPC music-change path. Full-game QA identified the v1.18 interception path as the cause of
 ;   unintended song changes in no-change scenes; the exact lower-level mechanism remains open.
+
+; CURRENT v1.31 ENEMY PRIZE ECONOMY RELEASE IDENTITY
+;   Size:       4,194,304 bytes
+;   SHA-256:    ef1a674e0a1a9f9d523a795aa8c2e98d6c30f02707ea02dd6c1c65445d1a89e8
+;   Checksum:   $57A3
+;   Complement: $A85C
+;   Functional scope: retains the accepted v1.30 native-audio/stable-flight baseline and replaces
+;   routine ordinary-monster healing-item prizes on 71 explicit combat-map profiles with local
+;   7/13 cash, 4/13 ingredient x2, and 2/13 trade-good x1 rewards.
+;
+; CURRENT v1.32 FINAL QA BASELINE IDENTITY
+;   Size:       4,194,304 bytes
+;   SHA-256:    5b6f9ac8c72654e56ab5caea9fc32efefb06e81d962997978b2d8d027b34f4a9
+;   Checksum:   $99F2
+;   Complement: $660D
+;   Functional scope: retains v1.31 gameplay/economy and the v1.30 native-audio / v1.29 stable-flight
+;   baseline, promotes focused supporting-character themes, folds in the accepted full-game QA
+;   presentation/script corrections, applies the four-weapon NG+ carryover filter, and gives Tinker
+;   a Yes-only post-save response while leaving the native/shared save implementation untouched.
+;
+; CURRENT v1.33 CONTEXTUAL SAVE-DIALOGUE RELEASE IDENTITY
+;   Size:       4,194,304 bytes
+;   SHA-256:    66aafecd759c04192cd820c325aae4551c42aaff60f3c3ff7508598d593f32ab
+;   Checksum:   $E61D
+;   Complement: $19E2
+;   Functional scope: retains the accepted v1.32 gameplay/theme baseline while making the audited
+;   named-character and terminal save conversations context-sensitive. Sting/Pompolonius/Cecil
+;   presentation corrections are included; Blimp, Professor Ruffleberg, Omnitopia, and Junkyard
+;   saves use caller-specific dialogue while native $4F remains the actual save operation.
 ;
 ; HISTORICAL VERIFIED OUTPUTS
 ;   v1.03  edf3640f98849916a31f8b9fdc1e126e66dd80b84a9e0ec50bcacc2880fcf899
@@ -285,6 +340,9 @@
 ;   v1.28  repaired native world-map OBJ/minimap graphics; first release forced minimap ON.
 ;   v1.29  native Windwalker raster/yaw restored; minimap defaults ON but remains toggleable.
 ;   v1.30  active MSU-1 integration removed; native SPC music-change path restored for 2.0.
+;   v1.31  71-map ordinary-remains economy profiles: 7/13 cash, 4/13 ingredient x2, 2/13 trade good x1.
+;   v1.32  focused supporting themes + accumulated full-game QA corrections; final SHA above.
+;   v1.33  contextual character/terminal save dialogue + Cecil/Pompolonius/Sting presentation fixes.
 ;
 ; BUILD-TOOL SYNTAX CONTRACT
 ;   tools/build.py intentionally understands only the source subset used here:
@@ -558,6 +616,19 @@
 ;   A hybrid pointer-table diagnostic did not fix the problem; restoring the native music-change
 ;   routine did. All active MSU hooks/helpers/tables are removed from the production source.
 ;   MSU-1 is moved to the 3.0 roadmap for a fresh implementation from this native baseline.
+
+; v1.31
+;   Enemy-prize economy redesign. Seventy-one explicit combat-map profiles replace routine direct
+;   healing-item remains with three local outcomes: 7/13 regional cash, 4/13 ingredient x2, and
+;   2/13 trade good x1. The existing v1.08 status-aware chance determines whether remains appear;
+;   v1.31 changes only their contents. Unlisted maps retain native remains setup.
+;
+; v1.32
+;   Focused supporting-character themes plus accumulated full-game QA corrections. Promotes the
+;   accepted Robot/Blimp/Strong Heart/Gomi/Lance/Tinker/Carltron routing, centered System geometry,
+;   Omnitopia/Camellia/Ruffleberg coverage fixes, one-page Robot TEXT 2866, the four-weapon NG+
+;   carryover filter, and Tinker's Yes-only native-save response. No later release-version promotions were made during this QA cycle; intermediate checkpoints
+;   remain part of the v1.32 development history only.
 ;
 ; IMPORTANT WITHDRAWALS — DO NOT RESURRECT BY ACCIDENT
 ;   - v0.12/v0.13 save/load status cleanup: withdrawn after Defend freeze.
@@ -628,6 +699,29 @@
 ;     production v1.30. It is not owned by an active subsystem. Future reuse requires a new,
 ;     explicit allocation entry; do not treat zero-filled expansion bytes as implicitly free.
 ;
+;   v1.33 contextual save-dialogue / Cecil presentation release
+;     $F4:0100-$F4:01BF  Cecil save prompt + choice-driven TEXT 2230 page-start copy
+;     $F4:0200-$F4:03C1  Blimp / Professor / Omnitopia / Junkyard custom save text
+;       Reclaims documented subsets of the retired/inert v1.18 MSU range above.
+;     $F6:9000-$F6:902E  Cecil Ebon Keep custom save-tail event script
+;     $F6:9200-$F6:92C3  Blimp hut custom save/event tail
+;     $F6:9300-$F6:931A  Blimp cave custom save wrapper
+;     $F6:9400-$F6:9427  Professor common save continuation
+;     $F6:9480-$F6:9498  Professor end-state save continuation
+;     $F6:94C0-$F6:94DA  Omnitopia terminal save wrapper
+;     $F6:9500-$F6:9547  Junkyard final save/transport front half
+;       These event-script ranges were zero-filled/source-unwritten before v1.33 and are entered
+;       only by the explicitly documented caller redirects near the end of this file.
+
+;   v1.31 enemy-prize economy
+;     $F1:6000-$F1:6085  ordinary-remains map-profile helper
+;     $F1:6100-$F1:633F  71 profile records + sentinel (8 bytes each)
+;     $F1:6800-$F1:6813  neutral generic trade-good receipt text
+;     $F1:9000-$F1:91A4  trade-good award dispatcher
+;     $F1:9200-$F1:92B7  trade-good receipt-message dispatcher
+;     Native hooks: $D0:857B-$D0:8586, $D2:A5C6-$D2:A5CA, $D2:B154-$D2:B158,
+;                   plus TEXT 0009 pointer at $D1:D01B-$D1:D01D.
+;
 ;   v1.06
 ;     $F5:0000-$F5:005C  Boy actor field Ring shortcut dispatcher
 ;     $F5:0100-$F5:015C  Dog actor field Ring shortcut dispatcher
@@ -651,7 +745,7 @@
 ;     Rejected Theme Pass 01-04 prototypes once occupied $F7:E900-$F7:ED44 and are not
 ;       authoritative. v1.23 deliberately reuses only an audited subset for the accepted
 ;       helper architecture:
-;         $F7:E900-$F7:E9E5  dedicated helper bodies $02-$18 (23 x 10 bytes)
+;         $F7:E900-$F7:E9E8  dedicated helper bodies $02-$18 (23 x 10-byte bases; shared $18 retained native/global)
 ;         $F7:EA00-$F7:EA51  v1.25 table-driven framed-window theme/style bridge
 ;         $F7:EB00-$F7:EBA7  v1.25 helper marker -> visible X/pattern/border style table
 ;         $F7:EC00-$F7:ED3B  v1.27 DSP-1 world-map raster generator [retained historical / inactive in v1.29]
@@ -926,6 +1020,8 @@
 ;   - Petal heals 80; Nectar heals 200.
 ;   - Common ingredient sniffs/drops give quantity 2.
 ;   - Nobilia replacement vendor sells 5 beads for 75 Jewels.
+;   - v1.31 ordinary remains on 71 combat-map profiles: 7/13 cash, 4/13 ingredient x2,
+;     2/13 trade good x1; routine direct healing-item prizes are removed from those profiles.
 ;
 ; COMBAT / GROWTH
 ;   - Boy Defense growth slightly increased; Dog Attack growth slightly increased.
@@ -969,30 +1065,38 @@
 ; =============================================================================
 ;
 ; ACCEPTED RELEASE BASELINE
-;   v1.30 is the current authoritative development baseline. It retains the v1.17 reviewed script,
+;   v1.33 is the current authoritative development baseline. It retains the v1.17 reviewed script,
 ;   v1.22 event-owned lifecycle cleanup, v1.23 theme-helper foundation, v1.24 exact-offset routing
-;   rules, v1.25 visual standards, v1.26 alchemy trim, and the accepted v1.29 Windwalker/minimap
-;   rollback. Music playback is fully native again; the v1.05/v1.18 MSU implementations are not
-;   part of the 2.0 production line.
+;   rules, v1.25 visual standards, v1.26 alchemy trim, accepted v1.29 Windwalker/minimap rollback,
+;   v1.30 native-audio restoration, v1.31 enemy-prize economy, and the complete v1.32 focused-theme /
+;   full-game QA baseline. v1.33 adds only the runtime-approved contextual save-dialogue and related
+;   speaker/pagination corrections documented below. Music playback remains fully native; the
+;   v1.05/v1.18 MSU implementations are not part of the 2.0 production line.
+;
+; CURRENT v1.33 QA / POLISH SCOPE
+;   v1.32 gameplay, loot, controls, flight, audio, NG+, and theme architecture remain unchanged.
+;   Intentional v1.33 changes are caller-specific save presentation plus the accepted Sting,
+;   Pompolonius, and Cecil dialogue corrections discovered during the continuing full-game QA pass.
 ;
 ;   Full-game script/theme/friction QA remains active 2.0 work. The planned return-to-Omnitopia
 ;   flight/space-station approach should be built on the stable native Windwalker renderer.
 ;   MSU-1, native-music expansion for new song IDs, and higher-quality external soundtrack work
 ;   are explicitly deferred to 3.0 and must start from the v1.30 native-audio contract.
 ;
-; THEME ASSIGNMENT STATE
-;   Theme IDs are semantic categories. A TEXT row records source + category only; visual
-;   style is defined once by its helper and is intentionally not duplicated per text entry.
+; THEME ASSIGNMENT STATE — v1.33
+;   Theme helpers now represent specific recurring speakers rather than occupations/classes.
+;   Robot is the sole intentionally grouped supporting-character theme. Ordinary unnamed NPCs,
+;   service prompts, merchants, guards, formula-givers, and other role-based text use $03.
 ;     $02  Narration / System
 ;     $03  Generic NPC
 ;     $04  Boy
-;     $05  Robot                    — Omnitopia machines/terminals, Carltron, synthetic speakers
-;     $06  Comedic Relief           — Blimp, Gomi, exhibition presenter
-;     $07  Alchemist                — Strong Heart, Madronius family, formula-givers
-;     $08  Merchant / Trader        — merchants, vendors, traders, appraisers, service sellers
-;     $09  Guard / Authority        — guards, soldiers, gatekeepers, Eronio/authority roles
-;     $0A  Inventor                 — Tinker Tinderbox, Naris, Jade
-;     $0B  Adventurer               — Lance and future explorer/adventurer fits
+;     $05  Robot                    — Omnitopia machines/terminals and ordinary robots
+;     $06  Blimp
+;     $07  Strong Heart
+;     $08  Gomi
+;     $09  Lance
+;     $0A  Tinker Tinderbox
+;     $0B  Carltron                 — Robot synthetic pattern/border, standard dialogue geometry
 ;     $0C  Professor Ruffleberg
 ;     $0D  Fire Eyes / Elizabeth
 ;     $0E  Horace Highwater
@@ -1002,30 +1106,32 @@
 ;     $12  Artificial Queen
 ;     $13  Pompolonius / Showman
 ;     $14  Tiny
-;     $15  Gothica King             — real King and king-complex counterpart
+;     $15  Gothica King
 ;     $16  Cecil
-;     $17  Eerie Guide / Supernatural — ghost pirate / desert shuttle captain
-;     $18  Reserved
+;     $17  Eerie Guide / Supernatural
+;     $18  Shared native/global helper — not a presentation identity; not used for Tinker saves
 ;
-;   v1.25 promotes table-driven helper visuals, while routing and styling remain separate:
-;   TEXT/event documentation decides WHO/SOURCE and therefore the semantic helper; the helper
-;   table decides how that category looks. Established pattern semantics remain Podunk $1944,
-;   Evermore-native $19A4, Robot/synthetic $1934, Cecil $1974, with System using $02.
+;   Routing and styling remain separate: TEXT/event documentation decides WHO/SOURCE and therefore
+;   the helper; the helper table decides how that identity looks. Broad occupation/category labels
+;   are not presentation identities in v1.33. Generic reusable NPC/service text must not inherit a
+;   named speaker's appearance merely because one caller is a merchant, guard, alchemist, etc.
 ;
 ; ASSIGNMENT / ROUTING POLICY
 ;   Ordinary framed event beats are routed to the helper belonging to the documented source.
-;   Shared caller fragments inherit the enclosing source; multi-speaker PAGE_MAP payloads and
-;   unresolved SCENE_ACTOR payloads are not forced into one theme. Special $50/$52,
-;   synchronized, title-card, credits, and cinematic paths remain scene-by-scene work.
+;   Unnamed/role-only NPCs route to $03. Robot is the sole grouped exception. Shared caller fragments
+;   that previously carried a broad class helper also fall back to $03 unless the enclosing speaker
+;   is one of the focused identities above. Multi-speaker PAGE_MAP payloads and unresolved
+;   SCENE_ACTOR payloads are not forced into one theme. Special $50/$52, synchronized, title-card,
+;   credits, and cinematic paths remain scene-by-scene work.
 ;   IMPORTANT: a $51/$52 operand is a BYTE OFFSET into the 3-byte TEXT pointer table, so
 ;   TEXT_ID = operand/3. Nearest-address guesses and literal-ID interpretation are forbidden;
 ;   helper rewrites require the decoded TEXT target plus event/speaker context.
 ;
 ; SCRIPT / PRESENTATION RULES
 ;   - Theme helper identity owns the normal box's eventual pattern, border, position, and size.
-;   - Do not infer theme from storage arena or geometry; use the documented source/category row.
-;   - Narration/System uses $02; ordinary fallback NPC dialogue uses $03; role categories use
-;     their permanent IDs above even while some helpers still share placeholder visuals.
+;   - Do not infer theme from storage arena, occupation, or geometry; use documented speaker/source.
+;   - Narration/System uses $02; ordinary unnamed NPC/service dialogue uses $03.
+;   - Dedicated supporting-character themes are reserved for the focused roster above.
 ;   - Menu entry restores Boy baseline rather than relying on new-game initialization.
 ;   - Framed-window lifetime is event-owned: close during meaningful non-dialogue beats and
 ;     reopen immediately before the next text beat that needs a frame.
@@ -1150,6 +1256,56 @@
 ;     the promoted v1.27/v1.28 Windwalker releases below.
 ;   - Withdrawn DSP-1 and v1.18 MSU-1 implementations must not be re-enabled in the 2.0 line.
 ;     Any future MSU work belongs to 3.0 and must begin from the native v1.30 audio baseline.
+;
+; v1.31 ENEMY PRIZE ECONOMY RELEASE VALIDATION CONTRACT
+;   - Build from the exact clean 3 MiB U.S. ROM documented in section 1.
+;   - Output must be 4,194,304 bytes with SHA-256 ef1a674e0a1a9f9d523a795aa8c2e98d6c30f02707ea02dd6c1c65445d1a89e8.
+;   - SNES checksum/complement must be $57A3 / $A85C.
+;   - 71 unique map IDs plus sentinel are encoded; each profile is map/cash/ingredient/trade.
+;   - Every listed map uses fixed weights $0007/$0004/$0002 and quantities cash/x2/x1.
+;   - Prize IDs $0205/$0206 deliberately preserve the native Mud Pepper/Mushroom swap.
+;   - v1.08 $D0:8567 status-aware remains chance hook remains unchanged.
+;   - $D0:8579 BCS no-spoils branch and its $D0:858D destination remain unchanged.
+;   - Unlisted maps reproduce native $0EA2/$0EAC remains assignment.
+;   - Trade-good award/message hooks replace only native unknown-prize fallbacks.
+;   - v1.30 native audio and v1.29 Windwalker/minimap behavior remain unchanged.
+;   - Targeted runtime QA accepted the redesigned enemy drops before promotion to v1.31.
+;   - Release IPS, if generated, must reproduce the exact accepted ROM from the clean base.
+;
+; v1.32 FINAL QA BASELINE VALIDATION CONTRACT
+;   - Build from the exact clean 3 MiB U.S. ROM documented in section 1.
+;   - Output must be 4,194,304 bytes with SHA-256 5b6f9ac8c72654e56ab5caea9fc32efefb06e81d962997978b2d8d027b34f4a9.
+;   - SNES checksum/complement must be $99F2 / $660D.
+;   - v1.31 enemy-prize behavior, v1.30 native audio, and v1.29 Windwalker/minimap behavior remain intact.
+;   - Focused helper routing is Robot=$05, Blimp=$06, Strong Heart=$07, Gomi=$08, Lance=$09,
+;     Tinker=$0A, Carltron=$0B; unnamed/role-only merchant/guard/alchemist/etc. callers use $03.
+;   - Narration/System uses five-line centered geometry; the repeated Omnitopia shuttle prompt uses $02.
+;   - Audited Camellia and Professor Ruffleberg callsites use their dedicated helpers.
+;   - Robot TEXT 2866 is one page.
+;   - NG+ weapon carryover retains only Bone Crusher, Neutron Blade, Atom Smasher, and Laser Lance.
+;   - Tinker uses the game's native $4F save helper unchanged. Choosing No skips the post-save response;
+;     choosing Yes completes the native save flow and then displays "I'm always happy to help my lab
+;     assis-good friend." through Tinker's normal $0A presentation.
+;   - Shared global helper $18 and the generic/native save implementation are not repurposed.
+;   - Release IPS must reproduce this exact v1.32 ROM from the exact clean base.
+;
+; v1.33 CONTEXTUAL SAVE-DIALOGUE RELEASE VALIDATION CONTRACT
+;   - Build from the exact clean 3 MiB U.S. ROM documented in section 1.
+;   - Output must be 4,194,304 bytes with SHA-256 66aafecd759c04192cd820c325aae4551c42aaff60f3c3ff7508598d593f32ab.
+;   - SNES checksum/complement must be $E61D / $19E2.
+;   - Rebuilding this authoritative source must reproduce the exact runtime-approved v1.33 ROM.
+;   - Native save operation $4F and shared generic save conversation $4E remain unchanged.
+;   - Sting TEXT 1639 says "Stay safe out there." and remains unrelated to the save system.
+;   - Pompolonius's Colosseum save retains the native direct $4F path but uses helper $13 and the
+;     accepted last-words prompt.
+;   - Cecil remains on helper $16 through his Ebon Keep dialogue; each answer in his three-question
+;     chain advances directly to a fresh page; only the Cecil/Ebon save uses his custom save prompt.
+;   - Blimp's hut/cave save prompts use helper $06 and the shared mud-pepper-leaf wording.
+;   - Professor Ruffleberg's three late-game save reaches use helper $0C and the accepted backup joke.
+;   - Omnitopia and Junkyard machine saves use helper $05; the ordinary terminal acknowledges a
+;     successful save with "Backup complete." while No bypasses the save/acknowledgement.
+;   - The Ivor banquet/arrest save and the v1.32 Yes-only Tinker save behavior remain unchanged.
+;   - Release IPS must reproduce this exact v1.33 ROM from the exact clean base.
 ;
 ; STRUCTURAL INVARIANTS
 ;   - Native Ring page-change routine $CE:ADBC-$CE:ADC3 remains unchanged.
@@ -9751,7 +9907,7 @@ V116_Text_2278_NGPlus:
 org $F23000
 PAIR_NORMAL_TINKER_GOMI_ROCKET:
 ; TEXT 2316 / $090C
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET / normal mirrored side
 ;   Provenance: $F2:02C0 (raw) -> $F2:3000 raw, 137 bytes
 ;   Text: <$96>Hello again, friend.<PAGE>I trust that my little security measure in the hall didn't give you
@@ -9768,7 +9924,7 @@ V116_Text_2316_Normal:
     db $74, $20, $69, $6E, $74, $72, $6F, $64, $75, $63, $65, $64, $20, $6D, $79, $73
     db $65, $6C, $66, $2E, $80, $B5, $80, $20, $00
 ; TEXT 2317 / $090D
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET / normal mirrored side
 ;   Provenance: $F2:0380 (raw) -> $F2:30A1 raw, 30 bytes
 ;   Text: My name is Tinker Tinderbox.<PAGE><End>
@@ -9781,7 +9937,7 @@ V116_Text_2317_Normal:
 org $F33000
 PAIR_NGPLUS_TINKER_GOMI_ROCKET:
 ; TEXT 2316 / $090C
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET / NG+ mirrored side
 ;   Storage: $F3:3000 raw, 161 bytes including terminator
 ;   Text: <$96>Hello again, <Boy>.<PAGE>I trust that my little security measure in the hall didn't give you
@@ -9801,7 +9957,7 @@ V116_Text_2316_NGPlus:
     db $75, $63, $65, $64, $20, $6D, $79, $73, $65, $6C, $66, $2E, $80, $B5, $80, $20
     db $00
 ; TEXT 2317 / $090D
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET / NG+ mirrored side
 ;   Storage: $F3:30A1 raw, 50 bytes including terminator
 ;   Text: ...No, you haven't. My name is Tinker Tinderbox.<PAGE><End>
@@ -10480,7 +10636,7 @@ V116_Text_0474:
     db $68, $6F, $73, $65, $20, $77, $68, $69, $72, $6C, $70, $6F, $6F, $6C, $73, $2E
     db $85, $00
 ; TEXT 0475 / $01DB
-;   Source/Theme: Acid Rain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Acid Rain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2D37 (compressed) -> $F8:1B0A raw, 76 bytes
 ;   Text: <$96>Hello, boy.<S $3D $80> You look like you'd be good at finding hidden ingredients.<PAGE><End>
@@ -10491,7 +10647,7 @@ V116_Text_0475:
     db $69, $6E, $64, $69, $6E, $67, $20, $68, $69, $64, $64, $65, $6E, $20, $69, $6E
     db $67, $72, $65, $64, $69, $65, $6E, $74, $73, $2E, $86, $00
 ; TEXT 0476 / $01DC
-;   Source/Theme: Acid Rain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Acid Rain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2D5D (compressed) -> $F8:1B56 raw, 159 bytes
 ;   Text: <$96>The bugs and baddies shouldn't bother you as much when you hit them with alchemy.<PAGE>Would you like to equip or unequip your formulas? <S $3D $80><Choice>Sure. <Choice>Not right now.<End>
@@ -10507,7 +10663,7 @@ V116_Text_0476:
     db $6C, $61, $73, $3F, $0A, $80, $3D, $80, $8B, $53, $75, $72, $65, $2E, $0A, $8B
     db $4E, $6F, $74, $20, $72, $69, $67, $68, $74, $20, $6E, $6F, $77, $2E, $00
 ; TEXT 0477 / $01DD
-;   Source/Theme: Acid Rain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Acid Rain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2DAD (compressed) -> $F8:1BF5 raw, 142 bytes
 ;   Text: <$96>Well, you look like you've been through a lot!<PAGE>There are plenty of bugs and baddies out there.<S $B5 $80> They are probably giving you a hard time.<PAGE><End>
@@ -10530,7 +10686,7 @@ V116_Text_0478:
     db $96, $59, $6F, $75, $27, $72, $65, $20, $74, $65, $6C, $6C, $69, $6E, $67, $20
     db $6D, $65, $21, $86, $00
 ; TEXT 0479 / $01DF
-;   Source/Theme: Acid Rain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Acid Rain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2E07 (compressed) -> $F8:1C98 raw, 181 bytes
 ;   Text: <$96>Here's something that should help you out in the sand, tar and lava.<PAGE>It's the Acid Rain Formula.<PAGE>Just mix three parts Water with one part Ash and you'll have a potent concoction.<PAGE><End>
@@ -10548,7 +10704,7 @@ V116_Text_0479:
     db $20, $70, $6F, $74, $65, $6E, $74, $20, $63, $6F, $6E, $63, $6F, $63, $74, $69
     db $6F, $6E, $2E, $86, $00
 ; TEXT 0480 / $01E0
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2E6F (compressed) -> $F8:1D4D raw, 186 bytes
 ;   Text: <$96>You are a brave adventurer indeed.<S $3D $80> Thank you for saving me!<PAGE>I am Strong
@@ -10579,7 +10735,7 @@ V116_Text_0481:
     db $20, $68, $69, $6D, $73, $65, $6C, $66, $20, $6C, $61, $74, $65, $6C, $79, $2E
     db $86, $00
 ; TEXT 0482 / $01E2
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2F04 (compressed) -> $F8:1E49 raw, 180 bytes
 ;   Text: <$96>I'm very happy to meet you both.<PAGE>I was searching for alchemy ingredients when I stumbled upon that monster.<PAGE>If you hadn't come along and saved me, I would have been eaten alive!<PAGE><End>
@@ -10597,7 +10753,7 @@ V116_Text_0482:
     db $20, $62, $65, $65, $6E, $20, $65, $61, $74, $65, $6E, $20, $61, $6C, $69, $76
     db $65, $21, $86, $00
 ; TEXT 0483 / $01E3
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2F66 (compressed) -> $F8:1EFD raw, 20 bytes
 ;   Text: <$87><$96>Good luck,<S $3D $80> <Boy>.<PAGE><End>
@@ -10605,7 +10761,7 @@ V116_Text_0483:
     db $87, $96, $47, $6F, $6F, $64, $20, $6C, $75, $63, $6B, $2C, $80, $3D, $80, $20
     db $81, $2E, $86, $00
 ; TEXT 0484 / $01E4
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2F77 (compressed) -> $F8:1F11 raw, 40 bytes
 ;   Text: <$96>Please take this gift with my thanks.<PAGE><End>
@@ -10622,7 +10778,7 @@ V116_Text_0485:
     db $52, $65, $63, $65, $69, $76, $65, $64, $20, $31, $30, $20, $57, $61, $78, $20
     db $61, $6E, $64, $20, $31, $30, $20, $4F, $69, $6C, $00
 ; TEXT 0486 / $01E6
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:2F9F (compressed) -> $F8:1F54 raw, 43 bytes
 ;   Text: <$96>Please take these talons with my thanks.<PAGE><End>
@@ -10681,7 +10837,7 @@ V116_Text_0492:
     db $73, $20, $67, $61, $74, $65, $20, $6C, $65, $61, $64, $73, $20, $74, $6F, $20
     db $74, $68, $65, $20, $76, $6F, $6C, $63, $61, $6E, $6F, $2E, $86, $00
 ; TEXT 0493 / $01ED
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3026 (compressed) -> $F8:203B raw, 142 bytes
 ;   Text: <$96>Thank you for fighting off those vicious Vipers.<PAGE>They treat this sacred Mammoth Graveyard as nothing more than a source of bones and tusks.<PAGE><End>
@@ -10704,7 +10860,7 @@ V116_Text_0494:
     db $96, $54, $68, $6F, $73, $65, $20, $67, $75, $79, $73, $20, $77, $65, $72, $65
     db $20, $56, $69, $70, $65, $72, $73, $3F, $86, $00
 ; TEXT 0495 / $01EF
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:308A (compressed) -> $F8:20E3 raw, 133 bytes
 ;   Text: <$96>Yes--<S $3D $80>lizard people from the great volcano.<PAGE>They've been coming out in force
@@ -10732,7 +10888,7 @@ V116_Text_0496:
     db $74, $68, $65, $79, $20, $64, $6F, $20, $6D, $6F, $72, $65, $20, $68, $61, $72
     db $6D, $2E, $86, $00
 ; TEXT 0497 / $01F1
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:310A (compressed) -> $F8:21BC raw, 51 bytes
 ;   Text: <$96>Why are you going there?<S $3D $80> It's very dangerous!<PAGE><End>
@@ -10752,7 +10908,7 @@ V116_Text_0498:
     db $68, $65, $20, $76, $6F, $6C, $63, $61, $6E, $6F, $20, $63, $6F, $6F, $6C, $69
     db $6E, $67, $20, $61, $6E, $64, $2E, $2E, $2E, $86, $00
 ; TEXT 0499 / $01F3
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3142 (compressed) -> $F8:222A raw, 228 bytes
 ;   Text: <$96>Fire Eyes?<S $79 $80> Fire Eyes!<S $3D $80> Say no more.<PAGE>If you're a friend of Fire Eyes,<S $3D $80> then I know that I can trust you.<PAGE>You may find a way into the Vipers' domain at the top of the volcano, to the north.<PAGE>I'll let you through the gate.<PAGE><End>
@@ -10773,7 +10929,7 @@ V116_Text_0499:
     db $20, $74, $68, $72, $6F, $75, $67, $68, $20, $74, $68, $65, $20, $67, $61, $74
     db $65, $2E, $86, $00
 ; TEXT 0500 / $01F4
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:31BF (compressed) -> $F8:230E raw, 51 bytes
 ;   Text: <$96>Should I heal your wounds? <$97><Choice>Yes. <Choice>No, that's OK.<End>
@@ -10783,7 +10939,7 @@ V116_Text_0500:
     db $73, $2E, $0A, $8B, $4E, $6F, $2C, $20, $74, $68, $61, $74, $27, $73, $20, $4F
     db $4B, $2E, $00
 ; TEXT 0501 / $01F5
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:31E3 (compressed) -> $F8:2341 raw, 166 bytes
 ;   Text: <$96><$87>Very well.<PAGE>I won't heal you now, but I'll give you a formula so you can heal yourself.<PAGE>You can use it whenever you have at least one part Water and one part Root.<PAGE><End>
@@ -10800,7 +10956,7 @@ V116_Text_0501:
     db $72, $20, $61, $6E, $64, $20, $6F, $6E, $65, $20, $70, $61, $72, $74, $20, $52
     db $6F, $6F, $74, $2E, $86, $00
 ; TEXT 0502 / $01F6
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:324A (compressed) -> $F8:23E7 raw, 69 bytes
 ;   Text: <$96>Here are some extra ingredients that I had lying around the skull.<PAGE><End>
@@ -10827,7 +10983,7 @@ V116_Text_0504:
     db $52, $65, $63, $65, $69, $76, $65, $64, $20, $A3, $20, $70, $61, $72, $74, $73
     db $20, $43, $72, $79, $73, $74, $61, $6C, $00
 ; TEXT 0505 / $01F9
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:328B (compressed) -> $F8:245A raw, 57 bytes
 ;   Text: <$96>You can use these ingredients for your other formulas.<PAGE><End>
@@ -10837,7 +10993,7 @@ V116_Text_0505:
     db $6F, $72, $20, $79, $6F, $75, $72, $20, $6F, $74, $68, $65, $72, $20, $66, $6F
     db $72, $6D, $75, $6C, $61, $73, $2E, $86, $00
 ; TEXT 0506 / $01FA
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:32A3 (compressed) -> $F8:2493 raw, 102 bytes
 ;   Text: <$96>If you need healing later, use the Heal Formula.<PAGE>It only requires one part Water and one part Root.<PAGE><End>
@@ -10858,7 +11014,7 @@ V116_Text_0507:
     db $52, $65, $63, $65, $69, $76, $65, $64, $20, $61, $20, $47, $61, $75, $67, $65
     db $00
 ; TEXT 0508 / $01FC
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3303 (compressed) -> $F8:250A raw, 130 bytes
 ;   Text: <$96>Hmmm<S $0B $80>.<S $0B $80>.<S $0B $80>.<S $0B $80>m<S $0B $80>m<S $0B $80>m<S $0B $80>m<S $0B
@@ -10889,7 +11045,7 @@ V116_Text_0509:
     db $65, $72, $65, $2C, $80, $3D, $80, $20, $77, $6F, $75, $6C, $64, $20, $79, $6F
     db $75, $3F, $86, $00
 ; TEXT 0510 / $01FE
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3395 (compressed) -> $F8:25E0 raw, 82 bytes
 ;   Text: <$96>The volcano?<S $3D $80> No.<S $3D $80> Not unless you'd like to end up as ash and molten bones.<PAGE><End>
@@ -10908,7 +11064,7 @@ V116_Text_0510:
 V116_Text_0511:
     db $96, $50, $61, $72, $64, $6F, $6E, $20, $6D, $65, $3F, $86, $00
 ; TEXT 0512 / $0200
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:33D4 (compressed) -> $F8:263F raw, 166 bytes
 ;   Text: <$96>The only way I know to enter the volcano is straight into the crater.<PAGE>Of course,<S $3D $80> come to think of it,<S $3D $80> you could try the catacombs at the base of the volcano.<PAGE><End>
@@ -10925,7 +11081,7 @@ V116_Text_0512:
     db $62, $61, $73, $65, $20, $6F, $66, $20, $74, $68, $65, $20, $76, $6F, $6C, $63
     db $61, $6E, $6F, $2E, $86, $00
 ; TEXT 0513 / $0201
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3432 (compressed) -> $F8:26E5 raw, 26 bytes
 ;   Text: <$96>I've seen a passage,<S $21 $80> <End>
@@ -10933,7 +11089,7 @@ V116_Text_0513:
     db $96, $49, $27, $76, $65, $20, $73, $65, $65, $6E, $20, $61, $20, $70, $61, $73
     db $73, $61, $67, $65, $2C, $80, $21, $80, $20, $00
 ; TEXT 0514 / $0202
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3442 (compressed) -> $F8:26FF raw, 33 bytes
 ;   Text: but it's blocked by a big rock!<PAGE><End>
@@ -10942,7 +11098,7 @@ V116_Text_0514:
     db $20, $62, $79, $20, $61, $20, $62, $69, $67, $20, $72, $6F, $63, $6B, $21, $86
     db $00
 ; TEXT 0515 / $0203
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:345B (compressed) -> $F8:2720 raw, 133 bytes
 ;   Text: <$96>Levitation!<S $3D $80> That's a good solution!<PAGE>The Levitate Formula can lift rocks and other heavy objects.<PAGE>I'll give it to you right now.<PAGE><End>
@@ -10957,7 +11113,7 @@ V116_Text_0515:
     db $74, $20, $74, $6F, $20, $79, $6F, $75, $20, $72, $69, $67, $68, $74, $20, $6E
     db $6F, $77, $2E, $86, $00
 ; TEXT 0516 / $0204
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:34B0 (compressed) -> $F8:27A5 raw, 46 bytes
 ;   Text: <$96>The formula requires a Mud Pepper and Water.<End>
@@ -10966,7 +11122,7 @@ V116_Text_0516:
     db $75, $69, $72, $65, $73, $20, $61, $20, $4D, $75, $64, $20, $50, $65, $70, $70
     db $65, $72, $20, $61, $6E, $64, $20, $57, $61, $74, $65, $72, $2E, $00
 ; TEXT 0517 / $0205
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:34CA (compressed) -> $F8:27D3 raw, 92 bytes
 ;   Text: <PAGE>Travel to the East from the base of the volcano.<S $79 $80> You'll find Mud Peppers in the
@@ -11002,7 +11158,7 @@ V116_Text_0520:
     db $49, $20, $66, $6F, $75, $6E, $64, $20, $69, $74, $20, $69, $6E, $20, $74, $68
     db $65, $20, $73, $77, $61, $6D, $70, $2E, $86, $00
 ; TEXT 0521 / $0209
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3529 (compressed) -> $F8:2864 raw, 85 bytes
 ;   Text: <$96>Now you can use it with the Levitate Formula to lift heavy objects out of the way.<PAGE><End>
@@ -11014,7 +11170,7 @@ V116_Text_0521:
     db $63, $74, $73, $20, $6F, $75, $74, $20, $6F, $66, $20, $74, $68, $65, $20, $77
     db $61, $79, $2E, $86, $00
 ; TEXT 0522 / $020A
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3560 (compressed) -> $F8:28B9 raw, 77 bytes
 ;   Text: <$96>What a ferocious looking beast you are.<S $3D $80> I'm sure you have a kind heart.<PAGE><End>
@@ -11025,7 +11181,7 @@ V116_Text_0522:
     db $73, $75, $72, $65, $20, $79, $6F, $75, $20, $68, $61, $76, $65, $20, $61, $20
     db $6B, $69, $6E, $64, $20, $68, $65, $61, $72, $74, $2E, $86, $00
 ; TEXT 0523 / $020B
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:358A (compressed) -> $F8:2906 raw, 65 bytes
 ;   Text: <$96>Use the Levitate Formula to lift heavy objects out of the way.<PAGE><End>
@@ -11036,7 +11192,7 @@ V116_Text_0523:
     db $6F, $75, $74, $20, $6F, $66, $20, $74, $68, $65, $20, $77, $61, $79, $2E, $86
     db $00
 ; TEXT 0524 / $020C
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:35B7 (compressed) -> $F8:2947 raw, 77 bytes
 ;   Text: You'll find ingredients in the swamp,<S $3D $80> to the East of the volcano's base.<PAGE><End>
@@ -11047,7 +11203,7 @@ V116_Text_0524:
     db $45, $61, $73, $74, $20, $6F, $66, $20, $74, $68, $65, $20, $76, $6F, $6C, $63
     db $61, $6E, $6F, $27, $73, $20, $62, $61, $73, $65, $2E, $86, $00
 ; TEXT 0525 / $020D
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:35E0 (compressed) -> $F8:2994 raw, 62 bytes
 ;   Text: <$96><$87>Would you like to equip or unequip formulas? <S $3D $80><$97><Choice>Yes. <Choice>No.<End>
@@ -11112,7 +11268,7 @@ V116_Text_0530:
     db $64, $65, $66, $65, $61, $74, $65, $64, $20, $74, $68, $65, $69, $72, $20, $6C
     db $65, $61, $64, $65, $72, $2E, $86, $00
 ; TEXT 0531 / $0213
-;   Source/Theme: Speed alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Speed alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:36B6 (compressed) -> $F8:2B15 raw, 257 bytes
 ;   Text: <$96>Ahh.<S $3D $80> So, you're a couple of heroes, are you?<S $79 $80> Good for you!<PAGE>Let me give you something for the challenges ahead.<PAGE>This is the Speed Formula.<S $79 $80> It will increase your agility in battle.<PAGE>Just mix one part Wax with two parts Water and you're in business.<PAGE><End>
@@ -11135,7 +11291,7 @@ V116_Text_0531:
     db $72, $65, $20, $69, $6E, $20, $62, $75, $73, $69, $6E, $65, $73, $73, $2E, $86
     db $00
 ; TEXT 0532 / $0214
-;   Source/Theme: Speed alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Speed alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3748 (compressed) -> $F8:2C16 raw, 145 bytes
 ;   Text: <$96>Use your ingredients wisely.<S $3D $80> They don't grow on trees, you know.<PAGE>Would you like to equip or unequip your formulas? <S $3D $80><Choice>Sure. <Choice>Not right now.<End>
@@ -11161,7 +11317,7 @@ V116_Text_0533:
     db $6E, $69, $63, $65, $72, $20, $74, $68, $61, $6E, $20, $79, $6F, $75, $20, $6C
     db $6F, $6F, $6B, $2E, $86, $00
 ; TEXT 0534 / $0216
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:37B2 (compressed) -> $F8:2CDD raw, 47 bytes
 ;   Text: <$96>I buy and sell the finest armor in the area.<PAGE><End>
@@ -11170,7 +11326,7 @@ V116_Text_0534:
     db $74, $68, $65, $20, $66, $69, $6E, $65, $73, $74, $20, $61, $72, $6D, $6F, $72
     db $20, $69, $6E, $20, $74, $68, $65, $20, $61, $72, $65, $61, $2E, $86, $00
 ; TEXT 0535 / $0217
-;   Source/Theme: Bugmuck / Hard Ball alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Bugmuck / Hard Ball alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:37CE (compressed) -> $F8:2D0C raw, 111 bytes
 ;   Text: <$96>Hello, friend.<S $3D $80> I don't get many visitors out here in the Bugmuck.<PAGE>I study
@@ -11194,7 +11350,7 @@ V116_Text_0536:
     db $65, $61, $72, $74, $2C, $80, $3D, $80, $20, $61, $72, $65, $20, $79, $6F, $75
     db $3F, $86, $00
 ; TEXT 0537 / $0219
-;   Source/Theme: Bugmuck / Hard Ball alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Bugmuck / Hard Ball alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3822 (compressed) -> $F8:2DAE raw, 63 bytes
 ;   Text: <$96>No.<S $3D $80> But, I know him.<S $3D $80> I saw him only a few days ago.<S $79 $80> <End>
@@ -11204,7 +11360,7 @@ V116_Text_0537:
     db $77, $20, $68, $69, $6D, $20, $6F, $6E, $6C, $79, $20, $61, $20, $66, $65, $77
     db $20, $64, $61, $79, $73, $20, $61, $67, $6F, $2E, $80, $79, $80, $20, $00
 ; TEXT 0538 / $021A
-;   Source/Theme: Bugmuck / Hard Ball alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Bugmuck / Hard Ball alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3850 (compressed) -> $F8:2DED raw, 36 bytes
 ;   Text: He was walking toward the big bug!<PAGE><End>
@@ -11213,7 +11369,7 @@ V116_Text_0538:
     db $6F, $77, $61, $72, $64, $20, $74, $68, $65, $20, $62, $69, $67, $20, $62, $75
     db $67, $21, $86, $00
 ; TEXT 0539 / $021B
-;   Source/Theme: Bugmuck / Hard Ball alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Bugmuck / Hard Ball alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3867 (compressed) -> $F8:2E11 raw, 263 bytes
 ;   Text: <$96>If you're going in after him,<S $3D $80> you should have another alchemy formula.<PAGE>Alchemy
@@ -11239,7 +11395,7 @@ V116_Text_0539:
     db $20, $61, $6E, $20, $65, $66, $66, $65, $63, $74, $69, $76, $65, $20, $77, $65
     db $61, $70, $6F, $6E, $2E, $86, $00
 ; TEXT 0540 / $021C
-;   Source/Theme: Bugmuck / Hard Ball alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Bugmuck / Hard Ball alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:38F5 (compressed) -> $F8:2F18 raw, 68 bytes
 ;   Text: <$96>Just mix 1 part Crystal with 1 part Clay and give it a good toss.<PAGE><End>
@@ -11250,7 +11406,7 @@ V116_Text_0540:
     db $76, $65, $20, $69, $74, $20, $61, $20, $67, $6F, $6F, $64, $20, $74, $6F, $73
     db $73, $2E, $86, $00
 ; TEXT 0541 / $021D
-;   Source/Theme: Bugmuck / Hard Ball alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Bugmuck / Hard Ball alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3925 (compressed) -> $F8:2F5C raw, 68 bytes
 ;   Text: <$96>You're a very tough animal indeed if you can survive the Bugmuck.<PAGE><End>
@@ -11261,7 +11417,7 @@ V116_Text_0541:
     db $72, $76, $69, $76, $65, $20, $74, $68, $65, $20, $42, $75, $67, $6D, $75, $63
     db $6B, $2E, $86, $00
 ; TEXT 0542 / $021E
-;   Source/Theme: Bugmuck / Hard Ball alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Bugmuck / Hard Ball alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3949 (compressed) -> $F8:2FA0 raw, 140 bytes
 ;   Text: <$96>Use your formulas wisely. There are only so many ingredients to go around.<PAGE>Would you like to equip or unequip your formulas? <Choice>Sure. <Choice>Nope.<End>
@@ -11276,7 +11432,7 @@ V116_Text_0542:
     db $6F, $75, $72, $20, $66, $6F, $72, $6D, $75, $6C, $61, $73, $3F, $0A, $8B, $53
     db $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $70, $65, $2E, $00
 ; TEXT 0543 / $021F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3990 (compressed) -> $F8:302C raw, 63 bytes
 ;   Text: <$96>Hello pup.<S $3D $80> Maybe your master will buy you a nice biscuit.<PAGE><End>
@@ -11286,7 +11442,7 @@ V116_Text_0543:
     db $20, $77, $69, $6C, $6C, $20, $62, $75, $79, $20, $79, $6F, $75, $20, $61, $20
     db $6E, $69, $63, $65, $20, $62, $69, $73, $63, $75, $69, $74, $2E, $86, $00
 ; TEXT 0544 / $0220
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:39B1 (compressed) -> $F8:306B raw, 92 bytes
 ;   Text: <$96>Slow travelers are easy prey for those sand whirlpools.<PAGE>You need the speed of the jaguar!<PAGE><End>
@@ -11308,7 +11464,7 @@ V116_Text_0545:
     db $65, $69, $6E, $67, $20, $73, $6F, $61, $6B, $65, $64, $20, $69, $6E, $20, $73
     db $61, $6E, $64, $2E, $86, $00
 ; TEXT 0546 / $0222
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3A17 (compressed) -> $F8:30FD raw, 151 bytes
 ;   Text: <$96>I can provide you with the Jaguar Ring!<PAGE>It lets the wearer run with the speed of the fastest feline.<PAGE>And it's free with any purchase,<S $3D $80> today only!<PAGE><End>
@@ -11324,7 +11480,7 @@ V116_Text_0546:
     db $63, $68, $61, $73, $65, $2C, $80, $3D, $80, $20, $74, $6F, $64, $61, $79, $20
     db $6F, $6E, $6C, $79, $21, $86, $00
 ; TEXT 0547 / $0223
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3A80 (compressed) -> $F8:3194 raw, 79 bytes
 ;   Text: <$96>You can avoid those sand whirlpools if you wait for them to close, then run.<PAGE><End>
@@ -11335,7 +11491,7 @@ V116_Text_0547:
     db $20, $66, $6F, $72, $20, $74, $68, $65, $6D, $20, $74, $6F, $20, $63, $6C, $6F
     db $73, $65, $2C, $20, $74, $68, $65, $6E, $20, $72, $75, $6E, $2E, $86, $00
 ; TEXT 0548 / $0224
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:3AB3 (compressed) -> $F8:31E3 raw, 50 bytes
 ;   Text: <$96>Please take this Jaguar Ring as my gift to you.<PAGE><End>
@@ -11359,7 +11515,7 @@ V116_Text_0549:
 org $F90000
 V116_Arena_PREHISTORIA_VILLAGE_FIRE_EYES:
 ; TEXT 0550 / $0226
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $F7:0000 (raw) -> $F9:0000 raw, 89 bytes
 ;   Text: <$96>Press and hold the B button to walk and focus your energy faster for your next
@@ -11372,7 +11528,7 @@ V116_Text_0550:
     db $72, $20, $66, $6F, $72, $20, $79, $6F, $75, $72, $20, $6E, $65, $78, $74, $20
     db $61, $74, $74, $61, $63, $6B, $2E, $86, $00
 ; TEXT 0551 / $0227
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3B23 (compressed) -> $F9:0059 raw, 96 bytes
 ;   Text: <$96>If you come back later and purchase some of my goods,<S $3D $80> I'll give you the Jaguar
@@ -11385,7 +11541,7 @@ V116_Text_0551:
     db $69, $76, $65, $20, $79, $6F, $75, $20, $74, $68, $65, $20, $4A, $61, $67, $75
     db $61, $72, $20, $52, $69, $6E, $67, $2E, $86, $00
 ; TEXT 0552 / $0228
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3B59 (compressed) -> $F9:00B9 raw, 93 bytes
 ;   Text: <$96>The beasts in these parts are very dangerous.<S $3D $80> You should stock up on life-giving
@@ -11459,7 +11615,7 @@ V116_Text_0558:
     db $69, $65, $73, $20, $66, $6F, $72, $20, $74, $61, $6C, $6F, $6E, $73, $20, $61
     db $74, $20, $61, $6E, $79, $20, $73, $68, $6F, $70, $2E, $86, $00
 ; TEXT 0559 / $022F
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3C4A (compressed) -> $F9:0267 raw, 64 bytes
 ;   Text: <$96>Hey!<S $3D $80> The Sacred Dog! You're quite a celebrity around here!<PAGE><End>
@@ -11469,7 +11625,7 @@ V116_Text_0559:
     db $71, $75, $69, $74, $65, $20, $61, $20, $63, $65, $6C, $65, $62, $72, $69, $74
     db $79, $20, $61, $72, $6F, $75, $6E, $64, $20, $68, $65, $72, $65, $21, $86, $00
 ; TEXT 0560 / $0230
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3C6C (compressed) -> $F9:02A7 raw, 161 bytes
 ;   Text: <$96>Hey!<S $3D $80> You're the kid who saved us from our corrupt, depraved and dishonest former
@@ -11487,7 +11643,7 @@ V116_Text_0560:
     db $77, $69, $74, $68, $20, $6D, $79, $20, $74, $68, $61, $6E, $6B, $73, $2E, $86
     db $00
 ; TEXT 0561 / $0231
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3CC5 (compressed) -> $F9:0348 raw, 102 bytes
 ;   Text: <$96>Just mix Ethanol with Vinegar.<PAGE>You'll drain hit points from your enemies and give them to
@@ -11501,7 +11657,7 @@ V116_Text_0561:
     db $76, $65, $20, $74, $68, $65, $6D, $20, $74, $6F, $20, $79, $6F, $75, $72, $73
     db $65, $6C, $66, $21, $86, $00
 ; TEXT 0562 / $0232
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3D01 (compressed) -> $F9:03AE raw, 155 bytes
 ;   Text: <$96>Hey!<S $3D $80> You saved us from our corrupt, depraved and dishonest former leader.<PAGE>Good
@@ -11518,7 +11674,7 @@ V116_Text_0562:
     db $6E, $20, $46, $6F, $72, $6D, $75, $6C, $61, $20, $77, $69, $74, $68, $20, $6D
     db $79, $20, $74, $68, $61, $6E, $6B, $73, $2E, $86, $00
 ; TEXT 0563 / $0233
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3D54 (compressed) -> $F9:0449 raw, 73 bytes
 ;   Text: <$96>Hey!<S $3D $80> How did you get in here, kid?<S $3D $80> What happened to the
@@ -11538,7 +11694,7 @@ V116_Text_0564:
     db $96, $49, $20, $68, $69, $74, $20, $69, $74, $20, $77, $69, $74, $68, $20, $6D
     db $79, $20, $61, $78, $65, $21, $86, $00
 ; TEXT 0565 / $0235
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3D94 (compressed) -> $F9:04AA raw, 176 bytes
 ;   Text: <$96>So you did!<S $3D $80> That's the Bronze Axe you have there!<S $3D $80> You've been in the
@@ -11557,7 +11713,7 @@ V116_Text_0565:
     db $80, $41, $80, $59, $6F, $75, $20, $6E, $65, $65, $64, $20, $74, $68, $65, $20
     db $44, $72, $61, $69, $6E, $20, $46, $6F, $72, $6D, $75, $6C, $61, $21, $86, $00
 ; TEXT 0566 / $0236
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3DFA (compressed) -> $F9:055A raw, 119 bytes
 ;   Text: <$96>Just mix one part Ethanol with two parts Roots.<PAGE>You'll drain hit points from your enemies
@@ -11572,7 +11728,7 @@ V116_Text_0566:
     db $69, $76, $65, $20, $74, $68, $65, $6D, $20, $74, $6F, $20, $79, $6F, $75, $72
     db $73, $65, $6C, $66, $21, $86, $00
 ; TEXT 0567 / $0237
-;   Source/Theme: Drain / Double Drain alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Drain / Double Drain alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3E3F (compressed) -> $F9:05D1 raw, 90 bytes
 ;   Text: It's nice to see you, kid.<PAGE><$96>Would you like to equip or unequip your formulas? <Choice>Sure.
@@ -11793,7 +11949,7 @@ V116_Text_0587:
     db $6F, $72, $65, $20, $77, $65, $20, $6D, $6F, $76, $65, $20, $6F, $6E, $2E, $86
     db $00
 ; TEXT 0588 / $024C
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:4196 (compressed) -> $F9:0AD9 raw, 69 bytes
 ;   Text: <$96>I guard the hut of Fire Eyes.<S $3D $80> I bet you'd be a good guard, too.<PAGE><End>
@@ -11804,7 +11960,7 @@ V116_Text_0588:
     db $20, $61, $20, $67, $6F, $6F, $64, $20, $67, $75, $61, $72, $64, $2C, $20, $74
     db $6F, $6F, $2E, $86, $00
 ; TEXT 0589 / $024D
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:41BF (compressed) -> $F9:0B1E raw, 73 bytes
 ;   Text: <$96>This is the hut of our leader!<S $3D $80> Please show Fire Eyes your respect.<PAGE><$97><End>
@@ -11815,7 +11971,7 @@ V116_Text_0589:
     db $69, $72, $65, $20, $45, $79, $65, $73, $20, $79, $6F, $75, $72, $20, $72, $65
     db $73, $70, $65, $63, $74, $2E, $86, $97, $00
 ; TEXT 0590 / $024E
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:41E9 (compressed) -> $F9:0B67 raw, 73 bytes
 ;   Text: <$96>This is the hut of our leader!<S $3D $80> Please show Fire Eyes your respect.<PAGE><$97><End>
@@ -11876,7 +12032,7 @@ V116_Text_0595:
     db $6E, $73, $69, $64, $65, $2E, $20, $57, $65, $27, $6C, $6C, $20, $74, $61, $6C
     db $6B, $2E, $97, $86, $00
 ; TEXT 0596 / $0254
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:42C9 (compressed) -> $F9:0C9E raw, 90 bytes
 ;   Text: <$96>No humans or dogs are allowed in the quicksand field without permission from Fire
@@ -11889,7 +12045,7 @@ V116_Text_0596:
     db $72, $6D, $69, $73, $73, $69, $6F, $6E, $20, $66, $72, $6F, $6D, $20, $46, $69
     db $72, $65, $20, $45, $79, $65, $73, $2E, $86, $00
 ; TEXT 0597 / $0255
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:42FF (compressed) -> $F9:0CF8 raw, 83 bytes
 ;   Text: <$96>You should talk to Fire Eyes before you walk into the dangerous quicksand field.<PAGE><End>
@@ -12570,7 +12726,7 @@ V116_Text_0652:
     db $6E, $27, $73, $20, $62, $65, $73, $74, $20, $66, $72, $69, $65, $6E, $64, $2C
     db $20, $79, $6F, $75, $20, $6B, $6E, $6F, $77, $21, $86, $00
 ; TEXT 0653 / $028D
-;   Source/Theme: Retired village alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Retired village alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:4D67 (compressed) -> $F9:1ED6 raw, 85 bytes
 ;   Text: <$96>If you make sure that Strong Heart is safe,<S $5B $80> I will give you one of my
@@ -12583,7 +12739,7 @@ V116_Text_0653:
     db $6F, $6E, $65, $20, $6F, $66, $20, $6D, $79, $20, $66, $6F, $72, $6D, $75, $6C
     db $61, $73, $2E, $86, $00
 ; TEXT 0654 / $028E
-;   Source/Theme: Retired village alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Retired village alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:4D96 (compressed) -> $F9:1F2B raw, 205 bytes
 ;   Text: <$96>I used to be the village alchemist, but now I've retired.<PAGE>I passed the practice on to my
@@ -12604,7 +12760,7 @@ V116_Text_0654:
     db $67, $6F, $2C, $20, $61, $6E, $64, $20, $68, $65, $20, $68, $61, $73, $6E, $27
     db $74, $20, $72, $65, $74, $75, $72, $6E, $65, $64, $2E, $86, $00
 ; TEXT 0655 / $028F
-;   Source/Theme: Retired village alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Retired village alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:4E03 (compressed) -> $F9:1FF8 raw, 206 bytes
 ;   Text: <$96>Alchemy is the practice of combining ingredients for powerful and often magical
@@ -12625,7 +12781,7 @@ V116_Text_0655:
     db $77, $68, $65, $6E, $20, $79, $6F, $75, $20, $75, $73, $65, $20, $66, $6F, $72
     db $6D, $75, $6C, $61, $73, $20, $6F, $66, $74, $65, $6E, $2E, $86, $00
 ; TEXT 0656 / $0290
-;   Source/Theme: Retired village alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Retired village alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:4E7F (compressed) -> $F9:20C6 raw, 79 bytes
 ;   Text: <$96>Dogs don't have any need for alchemy.<S $3D $80> They have their own special powers.<PAGE><End>
@@ -12636,7 +12792,7 @@ V116_Text_0656:
     db $61, $76, $65, $20, $74, $68, $65, $69, $72, $20, $6F, $77, $6E, $20, $73, $70
     db $65, $63, $69, $61, $6C, $20, $70, $6F, $77, $65, $72, $73, $2E, $86, $00
 ; TEXT 0657 / $0291
-;   Source/Theme: Retired village alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Retired village alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:4EA8 (compressed) -> $F9:2115 raw, 150 bytes
 ;   Text: <$96>You have proven yourself to be a great warrior by saving Strong Heart.<PAGE>Thank you for your
@@ -12842,7 +12998,7 @@ V116_Text_0673:
     db $62, $65, $63, $61, $75, $73, $65, $20, $6F, $66, $20, $6D, $65, $2E, $80, $E1
     db $81, $00
 ; TEXT 0674 / $02A2
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:51BE (compressed) -> $F9:2672 raw, 111 bytes
 ;   Text: <$96><$87><$93>Fire Eyes…<S $29 $80> Elizabeth…<S $3D $80> Don't talk like this! The ground has
@@ -12897,7 +13053,7 @@ V116_Text_0678:
     db $62, $65, $20, $73, $6F, $20, $68, $61, $72, $64, $2E, $2E, $2E, $80, $69, $81
     db $00
 ; TEXT 0679 / $02A7
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $F1:0AB0 (raw) -> $F9:27BF raw, 105 bytes
 ;   Text: <$96><$87><$93>I know,<S $29 $80> little one.<S $3D $80> I know.<S $5B $80><$93>But you should go
@@ -12911,7 +13067,7 @@ V116_Text_0679:
     db $20, $6F, $75, $74, $20, $74, $68, $65, $72, $65, $2C, $20, $6E, $6F, $74, $20
     db $68, $65, $72, $65, $2E, $80, $69, $81, $00
 ; TEXT 0680 / $02A8
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:52E1 (compressed) -> $F9:2828 raw, 54 bytes
 ;   Text: <$96><$87><$93>You will always have a home here… <S $8D $80>Fire Eyes!<S $F1 $80><End>
@@ -12930,7 +13086,7 @@ V116_Text_0681:
     db $74, $27, $73, $20, $67, $6F, $20, $74, $61, $6C, $6B, $20, $74, $6F, $20, $46
     db $69, $72, $65, $20, $45, $79, $65, $73, $2E, $86, $00
 ; TEXT 0682 / $02AA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5321 (compressed) -> $F9:2889 raw, 56 bytes
 ;   Text: <$96>You look tough.<S $3D $80> You probably don't need any armor.<PAGE><End>
@@ -12940,7 +13096,7 @@ V116_Text_0682:
     db $20, $64, $6F, $6E, $27, $74, $20, $6E, $65, $65, $64, $20, $61, $6E, $79, $20
     db $61, $72, $6D, $6F, $72, $2E, $86, $00
 ; TEXT 0683 / $02AB
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5340 (compressed) -> $F9:28C1 raw, 80 bytes
 ;   Text: <$96>But you might like a nice leather collar!<PAGE>Your master should buy one for you.<PAGE><End>
@@ -12951,7 +13107,7 @@ V116_Text_0683:
     db $6D, $61, $73, $74, $65, $72, $20, $73, $68, $6F, $75, $6C, $64, $20, $62, $75
     db $79, $20, $6F, $6E, $65, $20, $66, $6F, $72, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 0684 / $02AC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:536A (compressed) -> $F9:2911 raw, 59 bytes
 ;   Text: <$96>I recently crafted some new armor.<S $79 $80> It's quite strong.<PAGE><End>
@@ -12961,7 +13117,7 @@ V116_Text_0684:
     db $6F, $72, $2E, $80, $79, $80, $20, $49, $74, $27, $73, $20, $71, $75, $69, $74
     db $65, $20, $73, $74, $72, $6F, $6E, $67, $2E, $86, $00
 ; TEXT 0685 / $02AD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5390 (compressed) -> $F9:294C raw, 81 bytes
 ;   Text: <$96>An adventurer needs protection in the field.<S $3D $80> I deal in strong armor.<PAGE><End>
@@ -13004,7 +13160,7 @@ V116_Text_0688:
     db $72, $20, $66, $6F, $72, $20, $79, $6F, $75, $72, $20, $6E, $65, $78, $74, $20
     db $61, $74, $74, $61, $63, $6B, $2E, $86, $00
 ; TEXT 0689 / $02B1
-;   Source/Theme: Jade -> $0A Inventor [fixed]
+;   Source/Theme: Jade -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $FA:0000 (raw) -> $F9:2A59 raw, 37 bytes
 ;   Text: <$96>It worked! Naris will be so proud!<PAGE><End>
@@ -13013,7 +13169,7 @@ V116_Text_0689:
     db $73, $20, $77, $69, $6C, $6C, $20, $62, $65, $20, $73, $6F, $20, $70, $72, $6F
     db $75, $64, $21, $86, $00
 ; TEXT 0690 / $02B2
-;   Source/Theme: Jade -> $0A Inventor [fixed]
+;   Source/Theme: Jade -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $FA:0025 (raw) -> $F9:2A7E raw, 50 bytes
 ;   Text: <$96>Do you believe Time Travel is possible? <Choice>No <Choice>Yes<End>
@@ -13023,7 +13179,7 @@ V116_Text_0690:
     db $6F, $73, $73, $69, $62, $6C, $65, $3F, $0A, $8B, $4E, $6F, $0A, $8B, $59, $65
     db $73, $00
 ; TEXT 0691 / $02B3
-;   Source/Theme: Jade -> $0A Inventor [fixed]
+;   Source/Theme: Jade -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $FA:0057 (raw) -> $F9:2AB0 raw, 46 bytes
 ;   Text: <$96>Want to help me with an experiment? <Choice>No <Choice>Yes<End>
@@ -13032,7 +13188,7 @@ V116_Text_0691:
     db $20, $77, $69, $74, $68, $20, $61, $6E, $20, $65, $78, $70, $65, $72, $69, $6D
     db $65, $6E, $74, $3F, $0A, $8B, $4E, $6F, $0A, $8B, $59, $65, $73, $00
 ; TEXT 0692 / $02B4
-;   Source/Theme: Jade -> $0A Inventor [fixed]
+;   Source/Theme: Jade -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $FA:0085 (raw) -> $F9:2ADE raw, 33 bytes
 ;   Text: <$96>Perhaps someday I can prove it.<End>
@@ -13195,7 +13351,7 @@ V116_Text_0703:
     db $62, $79, $20, $68, $65, $6C, $70, $69, $6E, $67, $20, $75, $73, $20, $69, $6E
     db $20, $73, $6F, $6D, $65, $20, $77, $61, $79, $2E, $86, $00
 ; TEXT 0704 / $02C0
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:571C (compressed) -> $F9:2FAA raw, 53 bytes
 ;   Text: <$96>You look pooped, pooch.<S $3D $80> You could use some rest.<PAGE><End>
@@ -13205,7 +13361,7 @@ V116_Text_0704:
     db $63, $6F, $75, $6C, $64, $20, $75, $73, $65, $20, $73, $6F, $6D, $65, $20, $72
     db $65, $73, $74, $2E, $86, $00
 ; TEXT 0705 / $02C1
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:573C (compressed) -> $F9:2FDF raw, 113 bytes
 ;   Text: <$96>Since you've recovered from your injuries,<S $3D $80> you can continue your quest.<PAGE>Stop by
@@ -13220,7 +13376,7 @@ V116_Text_0705:
     db $6F, $75, $20, $6E, $65, $65, $64, $20, $61, $20, $72, $65, $73, $74, $2E, $86
     db $00
 ; TEXT 0706 / $02C2
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:577D (compressed) -> $F9:3050 raw, 39 bytes
 ;   Text: <$96>Hello, friend. <S $3D $80>Welcome to my inn.<PAGE><End>
@@ -13229,7 +13385,7 @@ V116_Text_0706:
     db $80, $3D, $80, $57, $65, $6C, $63, $6F, $6D, $65, $20, $74, $6F, $20, $6D, $79
     db $20, $69, $6E, $6E, $2E, $86, $00
 ; TEXT 0707 / $02C3
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5792 (compressed) -> $F9:3077 raw, 59 bytes
 ;   Text: Would you like to rest for 10 talons? <$97><Choice>Sure. <Choice>No, thanks.<End>
@@ -13239,7 +13395,7 @@ V116_Text_0707:
     db $6C, $6F, $6E, $73, $3F, $0A, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E
     db $6F, $2C, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 0708 / $02C4
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:57B8 (compressed) -> $F9:30B2 raw, 31 bytes
 ;   Text: <$87><$96>I hope you had a good rest.<PAGE><End>
@@ -13247,7 +13403,7 @@ V116_Text_0708:
     db $87, $96, $49, $20, $68, $6F, $70, $65, $20, $79, $6F, $75, $20, $68, $61, $64
     db $20, $61, $20, $67, $6F, $6F, $64, $20, $72, $65, $73, $74, $2E, $86, $00
 ; TEXT 0709 / $02C5
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:57CC (compressed) -> $F9:30D1 raw, 61 bytes
 ;   Text: <$96><$87>You can exchange other currencies for talons at any shop.<PAGE><End>
@@ -13257,7 +13413,7 @@ V116_Text_0709:
     db $69, $65, $73, $20, $66, $6F, $72, $20, $74, $61, $6C, $6F, $6E, $73, $20, $61
     db $74, $20, $61, $6E, $79, $20, $73, $68, $6F, $70, $2E, $86, $00
 ; TEXT 0710 / $02C6
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:57EA (compressed) -> $F9:310E raw, 58 bytes
 ;   Text: <$96>Are you OK, kid?<S $3D $80> You took quite a beating out there!<PAGE><End>
@@ -13275,7 +13431,7 @@ V116_Text_0711:
     db $96, $57, $68, $6F, $61, $21, $80, $3D, $80, $20, $57, $68, $61, $74, $20, $68
     db $61, $70, $70, $65, $6E, $65, $64, $3F, $86, $00
 ; TEXT 0712 / $02C8
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5822 (compressed) -> $F9:3162 raw, 61 bytes
 ;   Text: <$96>The raptors got you!<S $79 $80> They're a tricky lot,<S $3D $80> they are!<PAGE><End>
@@ -13285,7 +13441,7 @@ V116_Text_0712:
     db $20, $61, $20, $74, $72, $69, $63, $6B, $79, $20, $6C, $6F, $74, $2C, $80, $3D
     db $80, $0A, $74, $68, $65, $79, $20, $61, $72, $65, $21, $86, $00
 ; TEXT 0713 / $02C9
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:584A (compressed) -> $F9:319F raw, 54 bytes
 ;   Text: <$96>Thanks to this wild animal here,<S $3D $80> you were saved!<PAGE><End>
@@ -13313,7 +13469,7 @@ V116_Text_0715:
     db $20, $68, $69, $6D, $73, $65, $6C, $66, $20, $72, $69, $67, $68, $74, $20, $6E
     db $6F, $77, $2E, $86, $00
 ; TEXT 0716 / $02CC
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5895 (compressed) -> $F9:3223 raw, 116 bytes
 ;   Text: <$96>Well,<S $3D $80> now that you're both safe in our friendly village…<PAGE>…you can save your
@@ -13336,14 +13492,14 @@ V116_Text_0717:
     db $46, $69, $72, $65, $20, $45, $79, $65, $73, $27, $20, $56, $69, $6C, $6C, $61
     db $67, $65, $00
 ; TEXT 0718 / $02CE
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:58E5 (compressed) -> $F9:32AA raw, 16 bytes
 ;   Text: <$87><$96>OK,<S $3D $80> fine.<PAGE><End>
 V116_Text_0718:
     db $87, $96, $4F, $4B, $2C, $80, $3D, $80, $20, $66, $69, $6E, $65, $2E, $86, $00
 ; TEXT 0719 / $02CF
-;   Source/Theme: Innkeeper -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:58F1 (compressed) -> $F9:32BA raw, 134 bytes
 ;   Text: <$96>Feel free to take items from the gourds in this village.<PAGE>We know that you'll return the
@@ -13497,7 +13653,7 @@ V116_Text_0728:
     db $20, $77, $68, $6F, $20, $6B, $6E, $6F, $77, $20, $61, $6C, $63, $68, $65, $6D
     db $79, $20, $66, $6F, $72, $6D, $75, $6C, $61, $73, $2E, $86, $00
 ; TEXT 0729 / $02D9
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5BA8 (compressed) -> $F9:37C9 raw, 64 bytes
 ;   Text: <$96>Hello, traveler.<S $79 $80> I'm the source for goods in this village.<PAGE><End>
@@ -13507,7 +13663,7 @@ V116_Text_0729:
     db $72, $63, $65, $20, $66, $6F, $72, $20, $67, $6F, $6F, $64, $73, $20, $69, $6E
     db $20, $74, $68, $69, $73, $20, $76, $69, $6C, $6C, $61, $67, $65, $2E, $86, $00
 ; TEXT 0730 / $02DA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5BC9 (compressed) -> $F9:3809 raw, 78 bytes
 ;   Text: <$96>You should have this Jaguar Ring.<S $3D $80> It will allow you to run faster.<PAGE><End>
@@ -13526,7 +13682,7 @@ V116_Text_0731:
     db $52, $65, $63, $65, $69, $76, $65, $64, $20, $4A, $61, $67, $75, $61, $72, $20
     db $52, $69, $6E, $67, $00
 ; TEXT 0732 / $02DC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $F7:0000 (raw) -> $F9:386C raw, 89 bytes
 ;   Text: <$96>Press and hold the B button to walk and focus your energy faster for your next
@@ -13539,7 +13695,7 @@ V116_Text_0732:
     db $72, $20, $66, $6F, $72, $20, $79, $6F, $75, $72, $20, $6E, $65, $78, $74, $20
     db $61, $74, $74, $61, $63, $6B, $2E, $86, $00
 ; TEXT 0733 / $02DD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5C45 (compressed) -> $F9:38C5 raw, 83 bytes
 ;   Text: <$96>You'd probably like some dog treats.<S $3D $80> Maybe your master will buy some for
@@ -14834,7 +14990,7 @@ V116_Text_0848:
     db $67, $20, $73, $6B, $69, $6C, $6C, $73, $3F, $80, $79, $80, $20, $59, $6F, $75
     db $27, $72, $65, $20, $67, $6F, $6F, $64, $21, $86, $00
 ; TEXT 0849 / $0351
-;   Source/Theme: Defend alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Defend alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6F65 (compressed) -> $F9:5805 raw, 150 bytes
 ;   Text: <$96>I hope that you are using your alchemy skills for the good of the village.<PAGE>Would you like to
@@ -14851,7 +15007,7 @@ V116_Text_0849:
     db $80, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $74, $20, $72, $69, $67
     db $68, $74, $20, $6E, $6F, $77, $2E, $00
 ; TEXT 0850 / $0352
-;   Source/Theme: Defend alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Defend alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6FB1 (compressed) -> $F9:589B raw, 32 bytes
 ;   Text: <$87><$96>Good luck,<S $3D $80> young warrior.<PAGE><End>
@@ -14859,7 +15015,7 @@ V116_Text_0850:
     db $87, $96, $47, $6F, $6F, $64, $20, $6C, $75, $63, $6B, $2C, $80, $3D, $80, $20
     db $79, $6F, $75, $6E, $67, $20, $77, $61, $72, $72, $69, $6F, $72, $2E, $86, $00
 ; TEXT 0851 / $0353
-;   Source/Theme: Defend alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Defend alchemist -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6FC7 (compressed) -> $F9:58BB raw, 258 bytes
 ;   Text: <$96>You saved Strong Heart in the Bugmuck!<S $79 $80> Well done!<S $79 $80> Nice save!<PAGE>I can
@@ -15000,7 +15156,7 @@ V116_Text_0859:
 org $F84000
 V116_Arena_ANTIQUA_CRUSTACIA_APPROACH:
 ; TEXT 0860 / $035C
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:726B (compressed) -> $F8:4000 raw, 45 bytes
 ;   Text: <$96>I wish you luck in your future adventures.<PAGE><End>
@@ -15009,7 +15165,7 @@ V116_Text_0860:
     db $20, $69, $6E, $20, $79, $6F, $75, $72, $20, $66, $75, $74, $75, $72, $65, $20
     db $61, $64, $76, $65, $6E, $74, $75, $72, $65, $73, $2E, $86, $00
 ; TEXT 0861 / $035D
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7285 (compressed) -> $F8:402D raw, 253 bytes
 ;   Text: <$96>Hello, <Boy>!<S $3D $80> I'm back in business after that terrible experience in the Bugmuck.<PAGE>Thanks to you, I'm not a big bug's dinner!<PAGE>Please take this Cure Formula.<S $B5 $80> It will cure you of poison and other ills.<PAGE>The formula requires 2 parts Root and 1 part Oil.<PAGE><End>
@@ -15031,7 +15187,7 @@ V116_Text_0861:
     db $20, $70, $61, $72, $74, $73, $20, $52, $6F, $6F, $74, $20, $61, $6E, $64, $20
     db $31, $20, $70, $61, $72, $74, $20, $4F, $69, $6C, $2E, $86, $00
 ; TEXT 0862 / $035E
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:730F (compressed) -> $F8:412A raw, 125 bytes
 ;   Text: <$96>I hope that you use your alchemy formulas well.<PAGE>Would you like to equip or unequip your formulas? <S $3D $80><Choice>Sure. <Choice>Not right now.<End>
@@ -15493,7 +15649,7 @@ V116_Text_0899:
     db $6F, $6B, $73, $20, $6C, $69, $6B, $65, $20, $6F, $6E, $65, $20, $6F, $66, $20
     db $68, $69, $73, $20, $72, $6F, $63, $6B, $73, $2E, $85, $00
 ; TEXT 0900 / $0384
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7A6A (compressed) -> $F8:4D7F raw, 60 bytes
 ;   Text: <$96>That was quite a fall!<S $3D $80> I hope that you're OK now, kid.<PAGE><End>
@@ -15555,7 +15711,7 @@ V116_Text_0906:
 V116_Text_0907:
     db $20, $62, $65, $20, $61, $6C, $6C, $20, $72, $69, $67, $68, $74, $2E, $86, $00
 ; TEXT 0908 / $038C
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7AD1 (compressed) -> $F8:4E15 raw, 48 bytes
 ;   Text: <$96>I'm glad to see you survived the big washout.<PAGE><End>
@@ -15577,7 +15733,7 @@ V116_Text_0909:
     db $64, $20, $6F, $76, $65, $72, $20, $74, $68, $65, $20, $66, $61, $6C, $6C, $73
     db $5F, $86, $00
 ; TEXT 0910 / $038E
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7B28 (compressed) -> $F8:4E98 raw, 102 bytes
 ;   Text: <$96>Ahh!<S $3D $80> Well done!<PAGE>I escaped by floating down with swamp flowers full of the
@@ -15591,7 +15747,7 @@ V116_Text_0910:
     db $73, $65, $6E, $63, $65, $20, $6F, $66, $20, $4D, $75, $64, $20, $50, $65, $70
     db $70, $65, $72, $21, $86, $00
 ; TEXT 0911 / $038F
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7B6D (compressed) -> $F8:4EFE raw, 96 bytes
 ;   Text: <$96>You're a good little trooper.<PAGE>I'm glad you haven't let that Sacred Dog stuff go to your
@@ -15604,7 +15760,7 @@ V116_Text_0911:
     db $72, $65, $64, $20, $44, $6F, $67, $20, $73, $74, $75, $66, $66, $20, $67, $6F
     db $20, $74, $6F, $20, $79, $6F, $75, $72, $20, $68, $65, $61, $64, $2E, $86, $00
 ; TEXT 0912 / $0390
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7B9D (compressed) -> $F8:4F5E raw, 68 bytes
 ;   Text: <$96>You and your dog are brave adventurers.<S $3D $80> I'm very proud of you.<PAGE><End>
@@ -15615,7 +15771,7 @@ V116_Text_0912:
     db $76, $65, $72, $79, $20, $70, $72, $6F, $75, $64, $20, $6F, $66, $20, $79, $6F
     db $75, $2E, $86, $00
 ; TEXT 0913 / $0391
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7BC0 (compressed) -> $F8:4FA2 raw, 220 bytes
 ;   Text: <$96>You found your dog!<S $3D $80> And he's in one piece, too!<S $79 $80> Well done!<PAGE>Here's something that can bring him back if his energy is depleted.<PAGE>It's the Revive Formula.<PAGE>Mix three parts Root with one part Bone to revive your dog.<PAGE><End>
@@ -15635,7 +15791,7 @@ V116_Text_0913:
     db $74, $20, $42, $6F, $6E, $65, $20, $74, $6F, $20, $72, $65, $76, $69, $76, $65
     db $20, $79, $6F, $75, $72, $20, $64, $6F, $67, $2E, $86, $00
 ; TEXT 0914 / $0392
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7C4E (compressed) -> $F8:507E raw, 79 bytes
 ;   Text: <$96>You can use my bridge to cross over to the desert and search for your pooch.<PAGE><End>
@@ -15646,7 +15802,7 @@ V116_Text_0914:
     db $72, $74, $20, $61, $6E, $64, $20, $73, $65, $61, $72, $63, $68, $20, $66, $6F
     db $72, $20, $79, $6F, $75, $72, $20, $70, $6F, $6F, $63, $68, $2E, $86, $00
 ; TEXT 0915 / $0393
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7C80 (compressed) -> $F8:50CD raw, 61 bytes
 ;   Text: <$96>Hello friend!<S $3D $80> Glad to see you survived the big washout.<PAGE><End>
@@ -15669,7 +15825,7 @@ V116_Text_0916:
     db $64, $20, $6F, $76, $65, $72, $20, $74, $68, $65, $20, $66, $61, $6C, $6C, $73
     db $5F, $86, $00
 ; TEXT 0917 / $0395
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7CDD (compressed) -> $F8:515D raw, 102 bytes
 ;   Text: <$96>Ahh!<S $3D $80> Well done!<PAGE>I escaped by floating down with swamp flowers full of the
@@ -15683,7 +15839,7 @@ V116_Text_0917:
     db $73, $65, $6E, $63, $65, $20, $6F, $66, $20, $4D, $75, $64, $20, $50, $65, $70
     db $70, $65, $72, $21, $86, $00
 ; TEXT 0918 / $0396
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7D22 (compressed) -> $F8:51C3 raw, 82 bytes
 ;   Text: <$96>Have you seen this world?<S $B5 $80> It's much different from the world on the
@@ -15739,7 +15895,7 @@ V116_Text_1142:
     db $69, $65, $73, $20, $66, $6F, $72, $20, $6A, $65, $77, $65, $6C, $73, $20, $61
     db $74, $20, $61, $6E, $79, $20, $73, $68, $6F, $70, $2E, $86, $00
 ; TEXT 1143 / $0477
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:237E (compressed) -> $F4:$0494 raw, 82 bytes
 ;   Text: <$96>You're the Sacred Dog!<S $3D $80> It's a pleasure to have you in my warehouse
@@ -15752,7 +15908,7 @@ V116_Text_1143:
     db $65, $68, $6F, $75, $73, $65, $20, $65, $6D, $70, $6F, $72, $69, $75, $6D, $2E
     db $86, $00
 ; TEXT 1144 / $0478
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:23AC (compressed) -> $F4:$04E6 raw, 174 bytes
 ;   Text: <$96>Hello, Buddy.<S $3D $80> Welcome to my warehouse emporium.<PAGE>I offer a huge selection of
@@ -15771,7 +15927,7 @@ V116_Text_1144:
     db $6F, $6C, $75, $6D, $65, $21, $0A, $80, $3D, $80, $56, $6F, $6C, $75, $6D, $65
     db $21, $0A, $80, $3D, $80, $56, $6F, $6C, $75, $6D, $65, $21, $86, $00
 ; TEXT 1145 / $0479
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2424 (compressed) -> $F4:$0594 raw, 61 bytes
 ;   Text: <$96>What's the meaning of this?<S $3D $80> Why do you disturb my rest?<PAGE><End>
@@ -15781,7 +15937,7 @@ V116_Text_1145:
     db $57, $68, $79, $20, $64, $6F, $20, $79, $6F, $75, $20, $64, $69, $73, $74, $75
     db $72, $62, $20, $6D, $79, $20, $72, $65, $73, $74, $3F, $86, $00
 ; TEXT 1146 / $047A
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2446 (compressed) -> $F4:$05D1 raw, 37 bytes
 ;   Text: <$96>I…<S $3D $80> I'm sorry…<S $3D $80> I didn't know…<PAGE><End>
@@ -15790,7 +15946,7 @@ V116_Text_1146:
     db $5F, $80, $3D, $80, $20, $49, $20, $64, $69, $64, $6E, $27, $74, $20, $6B, $6E
     db $6F, $77, $5F, $86, $00
 ; TEXT 1147 / $047B
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:245C (compressed) -> $F4:$05F6 raw, 79 bytes
 ;   Text: <$96>You're a skinny little guy, aren't you?<S $3D $80> You need some meat on your bones.<PAGE><End>
@@ -15801,7 +15957,7 @@ V116_Text_1147:
     db $6E, $65, $65, $64, $20, $73, $6F, $6D, $65, $20, $6D, $65, $61, $74, $20, $6F
     db $6E, $20, $79, $6F, $75, $72, $20, $62, $6F, $6E, $65, $73, $2E, $86, $00
 ; TEXT 1148 / $047C
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2483 (compressed) -> $F4:$0645 raw, 26 bytes
 ;   Text: You need brute strength!<PAGE><End>
@@ -15809,7 +15965,7 @@ V116_Text_1148:
     db $59, $6F, $75, $20, $6E, $65, $65, $64, $20, $62, $72, $75, $74, $65, $20, $73
     db $74, $72, $65, $6E, $67, $74, $68, $21, $86, $00
 ; TEXT 1149 / $047D
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2493 (compressed) -> $F4:$065F raw, 58 bytes
 ;   Text: <$96>I've got just the thing for you!<S $3D $80> The power of Atlas!<PAGE><End>
@@ -15819,7 +15975,7 @@ V116_Text_1149:
     db $21, $80, $3D, $80, $20, $54, $68, $65, $20, $70, $6F, $77, $65, $72, $20, $6F
     db $66, $20, $41, $74, $6C, $61, $73, $21, $86, $00
 ; TEXT 1150 / $047E
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:24B7 (compressed) -> $F4:$0699 raw, 84 bytes
 ;   Text: <$96>Of course, in order to use this Atlas Formula,<S $3D $80> you'll need an Atlas
@@ -15832,7 +15988,7 @@ V116_Text_1150:
     db $6E, $20, $41, $74, $6C, $61, $73, $20, $4D, $65, $64, $61, $6C, $6C, $69, $6F
     db $6E, $2E, $86, $00
 ; TEXT 1151 / $047F
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:24EA (compressed) -> $F4:$06ED raw, 85 bytes
 ;   Text: <$96>What's the<S $15 $80>.<S $15 $80>.<S $15 $80>. Oh, it's you!<S $3D $80> Have you come back for
@@ -15845,7 +16001,7 @@ V116_Text_1151:
     db $61, $6E, $20, $41, $74, $6C, $61, $73, $20, $4D, $65, $64, $61, $6C, $6C, $69
     db $6F, $6E, $3F, $86, $00
 ; TEXT 1152 / $0480
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2523 (compressed) -> $F4:$0742 raw, 72 bytes
 ;   Text: <$96>I can offer one to you for <Item> jewels.<PAGE>Is it a deal? <S $3D $80><$97><Choice>Sure.
@@ -15857,7 +16013,7 @@ V116_Text_1152:
     db $61, $6C, $3F, $0A, $80, $3D, $80, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B
     db $4E, $6F, $20, $77, $61, $79, $2E, $00
 ; TEXT 1153 / $0481
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2551 (compressed) -> $F4:$078A raw, 30 bytes
 ;   Text: <$96><$87>Use your medallion wisely!<PAGE><End>
@@ -15865,7 +16021,7 @@ V116_Text_1153:
     db $96, $87, $55, $73, $65, $20, $79, $6F, $75, $72, $20, $6D, $65, $64, $61, $6C
     db $6C, $69, $6F, $6E, $20, $77, $69, $73, $65, $6C, $79, $21, $86, $00
 ; TEXT 1154 / $0482
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2566 (compressed) -> $F4:$07A8 raw, 60 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You can't afford it.<S $79 $80> Maybe some other time.<PAGE><End>
@@ -15875,14 +16031,14 @@ V116_Text_1154:
     db $80, $79, $80, $20, $4D, $61, $79, $62, $65, $20, $73, $6F, $6D, $65, $20, $6F
     db $74, $68, $65, $72, $20, $74, $69, $6D, $65, $2E, $86, $00
 ; TEXT 1155 / $0483
-;   Source/Theme: Atlas alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2585 (compressed) -> $F4:$07E4 raw, 13 bytes
 ;   Text: <$96><$87>OK, fine.<PAGE><End>
 V116_Text_1155:
     db $96, $87, $4F, $4B, $2C, $20, $66, $69, $6E, $65, $2E, $86, $00
 ; TEXT 1156 / $0484
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2590 (compressed) -> $F4:$07F1 raw, 70 bytes
 ;   Text: <$96>No more trading today.<S $79 $80> There's a big meeting in the City Square.<PAGE><End>
@@ -15893,7 +16049,7 @@ V116_Text_1156:
     db $20, $69, $6E, $20, $74, $68, $65, $20, $43, $69, $74, $79, $20, $53, $71, $75
     db $61, $72, $65, $2E, $86, $00
 ; TEXT 1157 / $0485
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:25B9 (compressed) -> $F4:$0837 raw, 86 bytes
 ;   Text: <$96>We're packing up to attend the big meeting.<S $5B $80> We'll be open for business
@@ -15906,7 +16062,7 @@ V116_Text_1157:
     db $72, $20, $62, $75, $73, $69, $6E, $65, $73, $73, $20, $74, $6F, $6D, $6F, $72
     db $72, $6F, $77, $2E, $86, $00
 ; TEXT 1158 / $0486
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:25EE (compressed) -> $F4:$088D raw, 78 bytes
 ;   Text: <$96>The big meeting in the City Square is about to happen.<S $79 $80> Everyone's going.<PAGE><End>
@@ -15917,7 +16073,7 @@ V116_Text_1158:
     db $68, $61, $70, $70, $65, $6E, $2E, $80, $79, $80, $20, $45, $76, $65, $72, $79
     db $6F, $6E, $65, $27, $73, $20, $67, $6F, $69, $6E, $67, $2E, $86, $00
 ; TEXT 1159 / $0487
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:261B (compressed) -> $F4:$08DB raw, 88 bytes
 ;   Text: <$96>We're not trading anymore today.<S $5B $80> All of the citizens are going to the City
@@ -15930,7 +16086,7 @@ V116_Text_1159:
     db $6E, $67, $20, $74, $6F, $20, $74, $68, $65, $20, $43, $69, $74, $79, $20, $53
     db $71, $75, $61, $72, $65, $2E, $86, $00
 ; TEXT 1160 / $0488
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2652 (compressed) -> $F4:$0933 raw, 79 bytes
 ;   Text: <$96>Business is closed for the day on account of the meeting in the City Square.<PAGE><End>
@@ -15941,7 +16097,7 @@ V116_Text_1160:
     db $65, $20, $6D, $65, $65, $74, $69, $6E, $67, $20, $69, $6E, $20, $74, $68, $65
     db $20, $43, $69, $74, $79, $20, $53, $71, $75, $61, $72, $65, $2E, $86, $00
 ; TEXT 1161 / $0489
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2682 (compressed) -> $F4:$0982 raw, 79 bytes
 ;   Text: <$96>Sorry.<S $3D $80> We're not trading anymore today.<S $79 $80> The meeting is about to
@@ -15953,7 +16109,7 @@ V116_Text_1161:
     db $68, $65, $20, $6D, $65, $65, $74, $69, $6E, $67, $20, $69, $73, $20, $61, $62
     db $6F, $75, $74, $20, $74, $6F, $20, $62, $65, $67, $69, $6E, $2E, $86, $00
 ; TEXT 1162 / $048A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:26B1 (compressed) -> $F4:$09D1 raw, 42 bytes
 ;   Text: <$96><$87>Kids…<S $3D $80> Always looking, never buying.<PAGE><End>
@@ -15962,7 +16118,7 @@ V116_Text_1162:
     db $73, $20, $6C, $6F, $6F, $6B, $69, $6E, $67, $2C, $20, $6E, $65, $76, $65, $72
     db $20, $62, $75, $79, $69, $6E, $67, $2E, $86, $00
 ; TEXT 1163 / $048B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:26CF (compressed) -> $F4:$09FB raw, 33 bytes
 ;   Text: <$96><$87>How can you pass up my deals?<PAGE><End>
@@ -15971,7 +16127,7 @@ V116_Text_1163:
     db $73, $73, $20, $75, $70, $20, $6D, $79, $20, $64, $65, $61, $6C, $73, $3F, $86
     db $00
 ; TEXT 1164 / $048C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:26E5 (compressed) -> $F4:$0A1C raw, 23 bytes
 ;   Text: <$96><$87>Yeesh…<S $3D $80> Tourists!<PAGE><End>
@@ -15979,7 +16135,7 @@ V116_Text_1164:
     db $96, $87, $59, $65, $65, $73, $68, $5F, $80, $3D, $80, $20, $54, $6F, $75, $72
     db $69, $73, $74, $73, $21, $86, $00
 ; TEXT 1165 / $048D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:26F7 (compressed) -> $F4:$0A33 raw, 29 bytes
 ;   Text: <$96><$87>Fine.<S $3D $80> Have a nice day!<PAGE><End>
@@ -15987,7 +16143,7 @@ V116_Text_1165:
     db $96, $87, $46, $69, $6E, $65, $2E, $80, $3D, $80, $20, $48, $61, $76, $65, $20
     db $61, $20, $6E, $69, $63, $65, $20, $64, $61, $79, $21, $86, $00
 ; TEXT 1166 / $048E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:270B (compressed) -> $F4:$0A50 raw, 30 bytes
 ;   Text: <$87><$96>OK. Maybe some other time.<PAGE><End>
@@ -15995,7 +16151,7 @@ V116_Text_1166:
     db $87, $96, $4F, $4B, $2E, $20, $4D, $61, $79, $62, $65, $20, $73, $6F, $6D, $65
     db $20, $6F, $74, $68, $65, $72, $20, $74, $69, $6D, $65, $2E, $86, $00
 ; TEXT 1167 / $048F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:271D (compressed) -> $F4:$0A6E raw, 46 bytes
 ;   Text: <$96><$87>Now please make room for paying customers.<PAGE><End>
@@ -16004,7 +16160,7 @@ V116_Text_1167:
     db $65, $20, $72, $6F, $6F, $6D, $20, $66, $6F, $72, $20, $70, $61, $79, $69, $6E
     db $67, $20, $63, $75, $73, $74, $6F, $6D, $65, $72, $73, $2E, $86, $00
 ; TEXT 1168 / $0490
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:273E (compressed) -> $F4:$0A9C raw, 52 bytes
 ;   Text: <$87><$96>I make a living selling, not talking.<S $3D $80> Now go!<PAGE><End>
@@ -16014,7 +16170,7 @@ V116_Text_1168:
     db $61, $6C, $6B, $69, $6E, $67, $2E, $80, $3D, $80, $20, $4E, $6F, $77, $20, $67
     db $6F, $21, $86, $00
 ; TEXT 1169 / $0491
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2762 (compressed) -> $F4:$0AD0 raw, 23 bytes
 ;   Text: <$96><$87>Yeesh…<S $3D $80> Tourists!<PAGE><End>
@@ -16022,7 +16178,7 @@ V116_Text_1169:
     db $96, $87, $59, $65, $65, $73, $68, $5F, $80, $3D, $80, $20, $54, $6F, $75, $72
     db $69, $73, $74, $73, $21, $86, $00
 ; TEXT 1170 / $0492
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2774 (compressed) -> $F4:$0AE7 raw, 50 bytes
 ;   Text: <$87><$96>Fine.<S $3D $80> No deal.<S $3D $80> Don't bother me any more.<PAGE><End>
@@ -16032,7 +16188,7 @@ V116_Text_1170:
     db $68, $65, $72, $20, $6D, $65, $20, $61, $6E, $79, $20, $6D, $6F, $72, $65, $2E
     db $86, $00
 ; TEXT 1171 / $0493
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:278F (compressed) -> $F4:$0B19 raw, 104 bytes
 ;   Text: <$96>The new leader's advisor has called a meeting in the city square.<PAGE>We'll be closing down in
@@ -16046,7 +16202,7 @@ V116_Text_1171:
     db $69, $6E, $67, $20, $64, $6F, $77, $6E, $20, $69, $6E, $20, $A2, $20, $6D, $69
     db $6E, $75, $74, $65, $73, $2E, $86, $00
 ; TEXT 1172 / $0494
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:27CE (compressed) -> $F4:$0B81 raw, 85 bytes
 ;   Text: <$96>The big meeting is going to happen in <Item> minutes.<S $3D $80> That's when the market
@@ -16059,7 +16215,7 @@ V116_Text_1172:
     db $20, $74, $68, $65, $20, $6D, $61, $72, $6B, $65, $74, $20, $63, $6C, $6F, $73
     db $65, $73, $2E, $86, $00
 ; TEXT 1173 / $0495
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:27FF (compressed) -> $F4:$0BD6 raw, 53 bytes
 ;   Text: <$96>We'll be closing for the big meeting in <Item> minutes.<PAGE><End>
@@ -16069,7 +16225,7 @@ V116_Text_1173:
     db $65, $74, $69, $6E, $67, $20, $69, $6E, $20, $A2, $20, $6D, $69, $6E, $75, $74
     db $65, $73, $2E, $86, $00
 ; TEXT 1174 / $0496
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2822 (compressed) -> $F4:$0C0B raw, 67 bytes
 ;   Text: <$96>The market is going to close any minute now for the big meeting.<PAGE><End>
@@ -16080,7 +16236,7 @@ V116_Text_1174:
     db $20, $74, $68, $65, $20, $62, $69, $67, $20, $6D, $65, $65, $74, $69, $6E, $67
     db $2E, $86, $00
 ; TEXT 1175 / $0497
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2848 (compressed) -> $F4:$0C4E raw, 152 bytes
 ;   Text: <$96>I am a dealer of fine spices.<S $79 $80> I'll give you a jar of spice for 4 bags of rice or 4
@@ -16098,7 +16254,7 @@ V116_Text_1175:
     db $65, $74, $27, $73, $20, $74, $72, $61, $64, $65, $2E, $0A, $8B, $4E, $6F, $20
     db $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1176 / $0498
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:28A4 (compressed) -> $F4:$0CE6 raw, 54 bytes
 ;   Text: <$87><$96>Will you trade away rice or pots?<S $3D $80> <Choice><$97>Rice. <Choice>Pots.<End>
@@ -16108,7 +16264,7 @@ V116_Text_1176:
     db $74, $73, $3F, $80, $3D, $80, $0A, $8B, $97, $52, $69, $63, $65, $2E, $0A, $8B
     db $50, $6F, $74, $73, $2E, $00
 ; TEXT 1177 / $0499
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:28CD (compressed) -> $F4:$0D1C raw, 40 bytes
 ;   Text: <$87><$96>How many jars?<S $3D $80> <Choice><$97>One. <Choice>Five. <Choice>Ten.<End>
@@ -16117,7 +16273,7 @@ V116_Text_1177:
     db $80, $3D, $80, $0A, $8B, $97, $4F, $6E, $65, $2E, $0A, $8B, $46, $69, $76, $65
     db $2E, $0A, $8B, $54, $65, $6E, $2E, $00
 ; TEXT 1178 / $049A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:28F0 (compressed) -> $F4:$0D44 raw, 34 bytes
 ;   Text: <$96><$87>It's a deal. Enjoy your spice.<PAGE><End>
@@ -16126,7 +16282,7 @@ V116_Text_1178:
     db $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $73, $70, $69, $63, $65, $2E
     db $86, $00
 ; TEXT 1179 / $049B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2904 (compressed) -> $F4:$0D66 raw, 34 bytes
 ;   Text: <$96><$87>It's a deal. Enjoy your spice.<PAGE><End>
@@ -16135,7 +16291,7 @@ V116_Text_1179:
     db $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $73, $70, $69, $63, $65, $2E
     db $86, $00
 ; TEXT 1180 / $049C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2918 (compressed) -> $F4:$0D88 raw, 46 bytes
 ;   Text: <$96>My delicious rice is only 3 Jewels per bag.<PAGE><End>
@@ -16144,7 +16300,7 @@ V116_Text_1180:
     db $63, $65, $20, $69, $73, $20, $6F, $6E, $6C, $79, $20, $33, $20, $4A, $65, $77
     db $65, $6C, $73, $20, $70, $65, $72, $20, $62, $61, $67, $2E, $86, $00
 ; TEXT 1181 / $049D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2938 (compressed) -> $F4:$0DB6 raw, 63 bytes
 ;   Text: Would you like to purchase some rice?<S $3D $80> <$97><Choice>OK. <Choice>Not right now.<End>
@@ -16154,7 +16310,7 @@ V116_Text_1181:
     db $72, $69, $63, $65, $3F, $80, $3D, $80, $0A, $97, $8B, $4F, $4B, $2E, $0A, $8B
     db $4E, $6F, $74, $20, $72, $69, $67, $68, $74, $20, $6E, $6F, $77, $2E, $00
 ; TEXT 1182 / $049E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:295D (compressed) -> $F4:$0DF5 raw, 39 bytes
 ;   Text: <$87><$96>How many bags? <Choice>Five. <Choice>Ten. <Choice>Twenty.<End>
@@ -16163,7 +16319,7 @@ V116_Text_1182:
     db $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B, $54, $65, $6E, $2E, $0A, $8B, $54
     db $77, $65, $6E, $74, $79, $2E, $00
 ; TEXT 1183 / $049F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:297F (compressed) -> $F4:$0E1C raw, 36 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your rice.<PAGE><End>
@@ -16172,7 +16328,7 @@ V116_Text_1183:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $72, $69, $63
     db $65, $2E, $86, $00
 ; TEXT 1184 / $04A0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2995 (compressed) -> $F4:$0E40 raw, 70 bytes
 ;   Text: <$96>Would you like a fish?<PAGE>They cure you instantly and give you energy!<PAGE><End>
@@ -16183,7 +16339,7 @@ V116_Text_1184:
     db $61, $6E, $64, $20, $67, $69, $76, $65, $20, $79, $6F, $75, $20, $65, $6E, $65
     db $72, $67, $79, $21, $86, $00
 ; TEXT 1185 / $04A1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:29BA (compressed) -> $F4:$0E86 raw, 60 bytes
 ;   Text: <$96>And they only cost 30 Jewels! <$97><Choice>I'll take one. <Choice>I'll pass.<End>
@@ -16193,21 +16349,21 @@ V116_Text_1185:
     db $8B, $49, $27, $6C, $6C, $20, $74, $61, $6B, $65, $20, $6F, $6E, $65, $2E, $0A
     db $8B, $49, $27, $6C, $6C, $20, $70, $61, $73, $73, $2E, $00
 ; TEXT 1186 / $04A2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:29E2 (compressed) -> $F4:$0EC2 raw, 16 bytes
 ;   Text: <$96><$87>Good choice.<PAGE><End>
 V116_Text_1186:
     db $96, $87, $47, $6F, $6F, $64, $20, $63, $68, $6F, $69, $63, $65, $2E, $86, $00
 ; TEXT 1187 / $04A3
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:29EF (compressed) -> $F4:$0ED2 raw, 14 bytes
 ;   Text: Ate the fish.<End>
 V116_Text_1187:
     db $41, $74, $65, $20, $74, $68, $65, $20, $66, $69, $73, $68, $2E, $00
 ; TEXT 1188 / $04A4
-;   Source/Theme: Cure alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Cure alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:29F9 (compressed) -> $F4:$0EE0 raw, 139 bytes
 ;   Text: <$96><$87>You could cure yourself of poison and other maladies if you knew the Cure Formula.<PAGE>I can offer it to you for 150 Jewels. <Choice>OK <Choice>No thanks.<End>
@@ -16222,14 +16378,14 @@ V116_Text_1188:
     db $35, $30, $20, $4A, $65, $77, $65, $6C, $73, $2E, $0A, $8B, $4F, $4B, $0A, $8B
     db $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1189 / $04A5
-;   Source/Theme: Cure alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Cure alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2A46 (compressed) -> $F4:$0F6B raw, 16 bytes
 ;   Text: <$96><$87>Good choice.<PAGE><End>
 V116_Text_1189:
     db $96, $87, $47, $6F, $6F, $64, $20, $63, $68, $6F, $69, $63, $65, $2E, $86, $00
 ; TEXT 1190 / $04A6
-;   Source/Theme: Cure alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Cure alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2A53 (compressed) -> $F4:$0F7B raw, 58 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You don't have enough cash to make the deal.<PAGE><End>
@@ -16239,7 +16395,7 @@ V116_Text_1190:
     db $68, $20, $63, $61, $73, $68, $20, $74, $6F, $20, $6D, $61, $6B, $65, $20, $74
     db $68, $65, $20, $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 1191 / $04A7
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $FB:0039 (raw) -> $F4:$0FB5 raw, 66 bytes
 ;   Text: <$96>Five beads for 75 Jewels. Interested? <Choice>Buy them. <Choice>Not right now.<End>
@@ -16250,7 +16406,7 @@ V116_Text_1191:
     db $2E, $0A, $8B, $4E, $6F, $74, $20, $72, $69, $67, $68, $74, $20, $6E, $6F, $77
     db $2E, $00
 ; TEXT 1192 / $04A8
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $FB:007B (raw) -> $F4:$0FF7 raw, 34 bytes
 ;   Text: <$96><$87>It's a deal. Enjoy your beads.<PAGE><End>
@@ -16259,7 +16415,7 @@ V116_Text_1192:
     db $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $62, $65, $61, $64, $73, $2E
     db $86, $00
 ; TEXT 1193 / $04A9
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2AAF (compressed) -> $F4:$1019 raw, 36 bytes
 ;   Text: <$87><$96>How many bags? <Choice>One. <Choice>Five. <Choice>Ten.<End>
@@ -16268,7 +16424,7 @@ V116_Text_1193:
     db $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B, $54
     db $65, $6E, $2E, $00
 ; TEXT 1194 / $04AA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2ACF (compressed) -> $F4:$103D raw, 36 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your rice.<PAGE><End>
@@ -16277,7 +16433,7 @@ V116_Text_1194:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $72, $69, $63
     db $65, $2E, $86, $00
 ; TEXT 1195 / $04AB
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2AE5 (compressed) -> $F4:$1061 raw, 172 bytes
 ;   Text: <$96>Let me show you something that you'll really like.<PAGE>It's a finely crafted souvenir spoon from the misplaced city of Constagando.<PAGE>I might part with it for 2 jars of spice.<PAGE><End>
@@ -16294,7 +16450,7 @@ V116_Text_1195:
     db $74, $68, $20, $69, $74, $20, $66, $6F, $72, $20, $32, $20, $6A, $61, $72, $73
     db $20, $6F, $66, $20, $73, $70, $69, $63, $65, $2E, $86, $00
 ; TEXT 1196 / $04AC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2B47 (compressed) -> $F4:$110D raw, 80 bytes
 ;   Text: <$96>I have a fabulous souvenir spoon which I might part with for 2 jars of spice.<PAGE><End>
@@ -16305,7 +16461,7 @@ V116_Text_1196:
     db $70, $61, $72, $74, $20, $77, $69, $74, $68, $20, $66, $6F, $72, $20, $32, $20
     db $6A, $61, $72, $73, $20, $6F, $66, $20, $73, $70, $69, $63, $65, $2E, $86, $00
 ; TEXT 1197 / $04AD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2B7C (compressed) -> $F4:$115D raw, 60 bytes
 ;   Text: What do you say?<S $3D $80> <$97><Choice>I'll take one! <Choice>It's just not for me.<End>
@@ -16315,7 +16471,7 @@ V116_Text_1197:
     db $6F, $6E, $65, $21, $0A, $8B, $49, $74, $27, $73, $20, $6A, $75, $73, $74, $20
     db $6E, $6F, $74, $20, $66, $6F, $72, $20, $6D, $65, $2E, $00
 ; TEXT 1198 / $04AE
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2BA0 (compressed) -> $F4:$1199 raw, 37 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your spoon.<PAGE><End>
@@ -16324,7 +16480,7 @@ V116_Text_1198:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $73, $70, $6F
     db $6F, $6E, $2E, $86, $00
 ; TEXT 1199 / $04AF
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2BB7 (compressed) -> $F4:$11BE raw, 101 bytes
 ;   Text: <$96>I have the best price on spice in the market.<S $79 $80> I can give you a jar of spice for only
@@ -16338,7 +16494,7 @@ V116_Text_1199:
     db $66, $6F, $72, $20, $6F, $6E, $6C, $79, $20, $32, $30, $20, $6A, $65, $77, $65
     db $6C, $73, $2E, $86, $00
 ; TEXT 1200 / $04B0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2BF0 (compressed) -> $F4:$1223 raw, 17 bytes
 ;   Text: It's a bargain!<PAGE><End>
@@ -16346,7 +16502,7 @@ V116_Text_1200:
     db $49, $74, $27, $73, $20, $61, $20, $62, $61, $72, $67, $61, $69, $6E, $21, $86
     db $00
 ; TEXT 1201 / $04B1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2BFA (compressed) -> $F4:$1234 raw, 63 bytes
 ;   Text: <$96>What do you say?<S $3D $80> <$97><Choice>I'll buy some spice. <Choice>I'm just looking.<End>
@@ -16356,7 +16512,7 @@ V116_Text_1201:
     db $73, $6F, $6D, $65, $20, $73, $70, $69, $63, $65, $2E, $0A, $8B, $49, $27, $6D
     db $20, $6A, $75, $73, $74, $20, $6C, $6F, $6F, $6B, $69, $6E, $67, $2E, $00
 ; TEXT 1202 / $04B2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2C1E (compressed) -> $F4:$1273 raw, 36 bytes
 ;   Text: <$87><$96>How many jars? <Choice>One. <Choice>Five. <Choice>Ten.<End>
@@ -16365,7 +16521,7 @@ V116_Text_1202:
     db $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B, $54
     db $65, $6E, $2E, $00
 ; TEXT 1203 / $04B3
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2C3E (compressed) -> $F4:$1297 raw, 37 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your spice.<PAGE><End>
@@ -16374,7 +16530,7 @@ V116_Text_1203:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $73, $70, $69
     db $63, $65, $2E, $86, $00
 ; TEXT 1204 / $04B4
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2C54 (compressed) -> $F4:$12BC raw, 74 bytes
 ;   Text: <$96>I'm all out of spice, but I do have something even better to trade you.<PAGE><End>
@@ -16385,7 +16541,7 @@ V116_Text_1204:
     db $76, $65, $6E, $20, $62, $65, $74, $74, $65, $72, $20, $74, $6F, $20, $74, $72
     db $61, $64, $65, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1205 / $04B5
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2C7B (compressed) -> $F4:$1306 raw, 127 bytes
 ;   Text: <$96>No one knows the value of this precious magic gourd…<PAGE>…but I would be willing to part with
@@ -16400,7 +16556,7 @@ V116_Text_1205:
     db $72, $20, $74, $68, $65, $20, $65, $67, $67, $20, $6F, $66, $20, $61, $6E, $20
     db $61, $6E, $63, $69, $65, $6E, $74, $20, $62, $69, $72, $64, $2E, $86, $00
 ; TEXT 1206 / $04B6
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2CC9 (compressed) -> $F4:$1385 raw, 100 bytes
 ;   Text: <$96>You've come back for the magic gourd!<PAGE>I can give it to you if you give me the Egg of the
@@ -16414,7 +16570,7 @@ V116_Text_1206:
     db $67, $67, $20, $6F, $66, $20, $74, $68, $65, $20, $43, $68, $6F, $63, $6F, $62
     db $6F, $2E, $86, $00
 ; TEXT 1207 / $04B7
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2D05 (compressed) -> $F4:$13E9 raw, 56 bytes
 ;   Text: Is it a deal?<S $3D $80> <$97><Choice>It's a deal! <Choice>It's tempting but… no.<End>
@@ -16424,7 +16580,7 @@ V116_Text_1207:
     db $8B, $49, $74, $27, $73, $20, $74, $65, $6D, $70, $74, $69, $6E, $67, $20, $62
     db $75, $74, $5F, $20, $6E, $6F, $2E, $00
 ; TEXT 1208 / $04B8
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2D29 (compressed) -> $F4:$1421 raw, 65 bytes
 ;   Text: <$96><$87>I'm sorry. You don't have the Egg of the Chocobo.<S $3D $80> No deal.<PAGE><End>
@@ -16435,7 +16591,7 @@ V116_Text_1208:
     db $62, $6F, $2E, $80, $3D, $80, $20, $4E, $6F, $20, $64, $65, $61, $6C, $2E, $86
     db $00
 ; TEXT 1209 / $04B9
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2D50 (compressed) -> $F4:$1462 raw, 36 bytes
 ;   Text: <$96><$87>Well done!<S $1F $80> Here's your gourd!<PAGE><End>
@@ -16444,7 +16600,7 @@ V116_Text_1209:
     db $48, $65, $72, $65, $27, $73, $20, $79, $6F, $75, $72, $20, $67, $6F, $75, $72
     db $64, $21, $86, $00
 ; TEXT 1210 / $04BA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2D68 (compressed) -> $F4:$1486 raw, 90 bytes
 ;   Text: <$96>Sorry.<S $3D $80> You already have my only magic gourd.<S $3D $80> I don't have anything else
@@ -16457,7 +16613,7 @@ V116_Text_1210:
     db $20, $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65, $6C, $73, $65, $20, $74
     db $6F, $20, $74, $72, $61, $64, $65, $2E, $86, $00
 ; TEXT 1211 / $04BB
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2D97 (compressed) -> $F4:$14E0 raw, 70 bytes
 ;   Text: <$96>Would you like some ceramic pots? They're only 2 bags of rice each.<PAGE><End>
@@ -16468,7 +16624,7 @@ V116_Text_1211:
     db $32, $20, $62, $61, $67, $73, $20, $6F, $66, $20, $72, $69, $63, $65, $20, $65
     db $61, $63, $68, $2E, $86, $00
 ; TEXT 1212 / $04BC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2DC3 (compressed) -> $F4:$1526 raw, 136 bytes
 ;   Text: <$96>What you need, my friend, is ceramic pots.<PAGE>They're a classic design, very durable and
@@ -16484,7 +16640,7 @@ V116_Text_1212:
     db $20, $62, $61, $67, $73, $20, $6F, $66, $20, $72, $69, $63, $65, $20, $70, $65
     db $72, $20, $70, $6F, $74, $2E, $86, $00
 ; TEXT 1213 / $04BD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2E19 (compressed) -> $F4:$15AE raw, 45 bytes
 ;   Text: <$96>What do you say?<S $3D $80> <$97><Choice>I'm sold! <Choice>I'll pass.<End>
@@ -16493,7 +16649,7 @@ V116_Text_1213:
     db $3F, $80, $3D, $80, $0A, $97, $8B, $49, $27, $6D, $20, $73, $6F, $6C, $64, $21
     db $0A, $8B, $49, $27, $6C, $6C, $20, $70, $61, $73, $73, $2E, $00
 ; TEXT 1214 / $04BE
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2E38 (compressed) -> $F4:$15DB raw, 31 bytes
 ;   Text: <$87><$96>How many? <Choice>One. <Choice>Five. <Choice>Ten.<End>
@@ -16501,7 +16657,7 @@ V116_Text_1214:
     db $87, $96, $48, $6F, $77, $20, $6D, $61, $6E, $79, $3F, $0A, $8B, $4F, $6E, $65
     db $2E, $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B, $54, $65, $6E, $2E, $00
 ; TEXT 1215 / $04BF
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2E54 (compressed) -> $F4:$15FA raw, 40 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Thank you very much.<PAGE><End>
@@ -16510,7 +16666,7 @@ V116_Text_1215:
     db $80, $20, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $20, $76, $65, $72, $79
     db $20, $6D, $75, $63, $68, $2E, $86, $00
 ; TEXT 1216 / $04C0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2E6A (compressed) -> $F4:$1622 raw, 54 bytes
 ;   Text: <$96>Hey! One of these ceramic pots has something in it!<PAGE><End>
@@ -16551,7 +16707,7 @@ V116_Text_1220:
     db $46, $6F, $75, $6E, $64, $20, $35, $30, $20, $4A, $65, $77, $65, $6C, $73, $2E
     db $00
 ; TEXT 1221 / $04C5
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2EBC (compressed) -> $F4:$16A1 raw, 223 bytes
 ;   Text: <$96>If you only go home with one souvenir from our fine marketplace,<S $79 $80> let it be a golden
@@ -16574,7 +16730,7 @@ V116_Text_1221:
     db $53, $75, $72, $65, $2E, $20, $4C, $65, $74, $27, $73, $20, $74, $72, $61, $64
     db $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1222 / $04C6
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2F3E (compressed) -> $F4:$1780 raw, 65 bytes
 ;   Text: <$87><$96>Do you have spice or chickens to trade?<S $3D $80> <Choice><$97>Spice.
@@ -16586,7 +16742,7 @@ V116_Text_1222:
     db $70, $69, $63, $65, $2E, $0A, $8B, $43, $68, $69, $63, $6B, $65, $6E, $73, $2E
     db $00
 ; TEXT 1223 / $04C7
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2F68 (compressed) -> $F4:$17C1 raw, 44 bytes
 ;   Text: <$96><$87>Well done.<S $3D $80> Here's your golden jackal.<PAGE><End>
@@ -16595,7 +16751,7 @@ V116_Text_1223:
     db $48, $65, $72, $65, $27, $73, $20, $79, $6F, $75, $72, $20, $67, $6F, $6C, $64
     db $65, $6E, $20, $6A, $61, $63, $6B, $61, $6C, $2E, $86, $00
 ; TEXT 1224 / $04C8
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2F85 (compressed) -> $F4:$17ED raw, 44 bytes
 ;   Text: <$96><$87>The deal is sealed.<S $3D $80> Thanks a million.<PAGE><End>
@@ -16604,7 +16760,7 @@ V116_Text_1224:
     db $61, $6C, $65, $64, $2E, $80, $3D, $80, $20, $54, $68, $61, $6E, $6B, $73, $20
     db $61, $20, $6D, $69, $6C, $6C, $69, $6F, $6E, $2E, $86, $00
 ; TEXT 1225 / $04C9
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2F9D (compressed) -> $F4:$1819 raw, 80 bytes
 ;   Text: <$96>You're too shrewd.<S $3D $80> If I deal with you anymore,<S $3D $80> I'll go out of
@@ -16616,7 +16772,7 @@ V116_Text_1225:
     db $65, $2C, $80, $3D, $80, $20, $49, $27, $6C, $6C, $20, $67, $6F, $20, $6F, $75
     db $74, $20, $6F, $66, $20, $62, $75, $73, $69, $6E, $65, $73, $73, $2E, $86, $00
 ; TEXT 1226 / $04CA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2FC9 (compressed) -> $F4:$1869 raw, 56 bytes
 ;   Text: <$96>Would you like to purchase an Amulet of Annihilation?<PAGE><End>
@@ -16626,7 +16782,7 @@ V116_Text_1226:
     db $6D, $75, $6C, $65, $74, $20, $6F, $66, $20, $41, $6E, $6E, $69, $68, $69, $6C
     db $61, $74, $69, $6F, $6E, $3F, $86, $00
 ; TEXT 1227 / $04CB
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2FE0 (compressed) -> $F4:$18A1 raw, 123 bytes
 ;   Text: <$96>Hey buddy,<S $3D $80> how'd you like an all-powerful amulet of annihilation?<PAGE>You'll
@@ -16641,7 +16797,7 @@ V116_Text_1227:
     db $73, $20, $61, $6E, $64, $20, $66, $72, $69, $67, $68, $74, $65, $6E, $20, $79
     db $6F, $75, $72, $20, $66, $6F, $65, $73, $21, $86, $00
 ; TEXT 1228 / $04CC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3024 (compressed) -> $F4:$191C raw, 79 bytes
 ;   Text: It's all yours for a mere 30 bags of rice.<PAGE><$87><$96>Is it a deal?<S $3D $80>
@@ -16653,7 +16809,7 @@ V116_Text_1228:
     db $69, $74, $20, $61, $20, $64, $65, $61, $6C, $3F, $80, $3D, $80, $0A, $8B, $97
     db $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $77, $61, $79, $2E, $00
 ; TEXT 1229 / $04CD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3056 (compressed) -> $F4:$196B raw, 75 bytes
 ;   Text: <$87><$96>You're shrewd.<S $5B $80> How about 15 bags of rice? <S $3D $80><$97><Choice>OK. <Choice>I
@@ -16665,7 +16821,7 @@ V116_Text_1229:
     db $3D, $80, $97, $8B, $4F, $4B, $2E, $0A, $8B, $49, $20, $64, $6F, $6E, $27, $74
     db $20, $74, $68, $69, $6E, $6B, $20, $73, $6F, $2E, $00
 ; TEXT 1230 / $04CE
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3089 (compressed) -> $F4:$19B6 raw, 71 bytes
 ;   Text: <$87><$96>Five bags of rice and not a grain less. <S $3D $80><$97><Choice>I'll take it. <Choice>No
@@ -16677,7 +16833,7 @@ V116_Text_1230:
     db $27, $6C, $6C, $20, $74, $61, $6B, $65, $20, $69, $74, $2E, $0A, $8B, $4E, $6F
     db $20, $64, $65, $61, $6C, $2E, $00
 ; TEXT 1231 / $04CF
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:30B8 (compressed) -> $F4:$19FD raw, 76 bytes
 ;   Text: <$87><$96>Playing hard ball, huh? How about 3 bags? <S $3D $80><Choice>You've convinced me.
@@ -16689,7 +16845,7 @@ V116_Text_1231:
     db $59, $6F, $75, $27, $76, $65, $20, $63, $6F, $6E, $76, $69, $6E, $63, $65, $64
     db $20, $6D, $65, $2E, $0A, $8B, $4E, $6F, $70, $65, $2E, $00
 ; TEXT 1232 / $04D0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:30F2 (compressed) -> $F4:$1A49 raw, 22 bytes
 ;   Text: <$87><$96>One? <S $3D $80><$97><Choice>Yes. <Choice>No.<End>
@@ -16697,7 +16853,7 @@ V116_Text_1232:
     db $87, $96, $4F, $6E, $65, $3F, $0A, $80, $3D, $80, $97, $8B, $59, $65, $73, $2E
     db $0A, $8B, $4E, $6F, $2E, $00
 ; TEXT 1233 / $04D1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3107 (compressed) -> $F4:$1A5F raw, 77 bytes
 ;   Text: <$87><$96>How about 3 amulets for 1 bag of rice? <S $3D $80><Choice><$97>I'll take it. <Choice>I
@@ -16709,7 +16865,7 @@ V116_Text_1233:
     db $6C, $6C, $20, $74, $61, $6B, $65, $20, $69, $74, $2E, $0A, $8B, $49, $20, $64
     db $6F, $6E, $27, $74, $20, $6B, $6E, $6F, $77, $2E, $2E, $2E, $00
 ; TEXT 1234 / $04D2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:313D (compressed) -> $F4:$1AAC raw, 28 bytes
 ;   Text: <$96><$87>Thanks for the business.<PAGE><End>
@@ -16717,7 +16873,7 @@ V116_Text_1234:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65
     db $20, $62, $75, $73, $69, $6E, $65, $73, $73, $2E, $86, $00
 ; TEXT 1235 / $04D3
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:314A (compressed) -> $F4:$1AC8 raw, 28 bytes
 ;   Text: <$96><$87>Thanks for the business.<PAGE><End>
@@ -16725,7 +16881,7 @@ V116_Text_1235:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65
     db $20, $62, $75, $73, $69, $6E, $65, $73, $73, $2E, $86, $00
 ; TEXT 1236 / $04D4
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3157 (compressed) -> $F4:$1AE4 raw, 94 bytes
 ;   Text: <$96>You've already traded for my best piece of armor.<PAGE>I don't have anything else that you
@@ -16738,7 +16894,7 @@ V116_Text_1236:
     db $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65, $6C, $73, $65, $20, $74, $68
     db $61, $74, $20, $79, $6F, $75, $20, $6E, $65, $65, $64, $2E, $86, $00
 ; TEXT 1237 / $04D5
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3186 (compressed) -> $F4:$1B42 raw, 196 bytes
 ;   Text: <$96>If you really want to stop the slings and arrows of outrageous fortune…<PAGE>…you need a Centurion Cape.<PAGE>I can provide one for you,<S $3D $80> if you bring me the Jade Disk.<PAGE>Is it a deal? <S $3D $80><$97><Choice>Sure. <Choice>No way.<End>
@@ -16757,7 +16913,7 @@ V116_Text_1237:
     db $80, $3D, $80, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $77
     db $61, $79, $2E, $00
 ; TEXT 1238 / $04D6
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3201 (compressed) -> $F4:$1C06 raw, 36 bytes
 ;   Text: <$96><$87>Excellent! Thanks for the trade!<PAGE><End>
@@ -16766,7 +16922,7 @@ V116_Text_1238:
     db $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65, $20, $74, $72, $61, $64
     db $65, $21, $86, $00
 ; TEXT 1239 / $04D7
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3216 (compressed) -> $F4:$1C2A raw, 55 bytes
 ;   Text: <$96><$87>Sorry.<S $1F $80> You don't have the Jade Disk.<S $3D $80> No deal.<PAGE><End>
@@ -16776,7 +16932,7 @@ V116_Text_1239:
     db $61, $64, $65, $20, $44, $69, $73, $6B, $2E, $80, $3D, $80, $20, $4E, $6F, $20
     db $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 1240 / $04D8
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3237 (compressed) -> $F4:$1C61 raw, 136 bytes
 ;   Text: <$96>I deal in strong armor.<S $3D $80> What you need is a Stone Vest.<PAGE>I can trade one to you for a Jeweled Scarab.<PAGE>OK?<S $3D $80> <$97><Choice>Let's do it. <Choice>No deal.<End>
@@ -16791,7 +16947,7 @@ V116_Text_1240:
     db $8B, $4C, $65, $74, $27, $73, $20, $64, $6F, $20, $69, $74, $2E, $0A, $8B, $4E
     db $6F, $20, $64, $65, $61, $6C, $2E, $00
 ; TEXT 1241 / $04D9
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3291 (compressed) -> $F4:$1CE9 raw, 36 bytes
 ;   Text: <$96><$87>Excellent! Thanks for the trade!<PAGE><End>
@@ -16800,7 +16956,7 @@ V116_Text_1241:
     db $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65, $20, $74, $72, $61, $64
     db $65, $21, $86, $00
 ; TEXT 1242 / $04DA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:32A6 (compressed) -> $F4:$1D0D raw, 58 bytes
 ;   Text: <$96><$87>Sorry.<S $1F $80> You don't have a Jeweled Scarab.<S $3D $80> No deal.<PAGE><End>
@@ -16810,7 +16966,7 @@ V116_Text_1242:
     db $65, $6C, $65, $64, $20, $53, $63, $61, $72, $61, $62, $2E, $80, $3D, $80, $20
     db $4E, $6F, $20, $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 1243 / $04DB
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:32CA (compressed) -> $F4:$1D47 raw, 72 bytes
 ;   Text: <$96>I can trade you my Silver Sheath for your Armor Polish and 75 Jewels.<PAGE><End>
@@ -16821,7 +16977,7 @@ V116_Text_1243:
     db $20, $50, $6F, $6C, $69, $73, $68, $20, $61, $6E, $64, $20, $37, $35, $20, $4A
     db $65, $77, $65, $6C, $73, $2E, $86, $00
 ; TEXT 1244 / $04DC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:32F4 (compressed) -> $F4:$1D8F raw, 37 bytes
 ;   Text: Is it a deal?<S $3D $80> <Choice><$97>Sure. <Choice>No thanks.<End>
@@ -16830,7 +16986,7 @@ V116_Text_1244:
     db $0A, $8B, $97, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 1245 / $04DD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:330B (compressed) -> $F4:$1DB4 raw, 25 bytes
 ;   Text: <$96><$87>Thanks for the trade!<PAGE><End>
@@ -16838,7 +16994,7 @@ V116_Text_1245:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65
     db $20, $74, $72, $61, $64, $65, $21, $86, $00
 ; TEXT 1246 / $04DE
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3317 (compressed) -> $F4:$1DCD raw, 72 bytes
 ;   Text: <$96>I can trade you my Armor Polish for your Silver Sheath and 75 Jewels.<PAGE><End>
@@ -16849,7 +17005,7 @@ V116_Text_1246:
     db $20, $53, $68, $65, $61, $74, $68, $20, $61, $6E, $64, $20, $37, $35, $20, $4A
     db $65, $77, $65, $6C, $73, $2E, $86, $00
 ; TEXT 1247 / $04DF
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3341 (compressed) -> $F4:$1E15 raw, 37 bytes
 ;   Text: Is it a deal?<S $3D $80> <Choice><$97>Sure. <Choice>No thanks.<End>
@@ -16858,7 +17014,7 @@ V116_Text_1247:
     db $0A, $8B, $97, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 1248 / $04E0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3358 (compressed) -> $F4:$1E3A raw, 25 bytes
 ;   Text: <$96><$87>Thanks for the trade!<PAGE><End>
@@ -16866,7 +17022,7 @@ V116_Text_1248:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65
     db $20, $74, $72, $61, $64, $65, $21, $86, $00
 ; TEXT 1249 / $04E1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3364 (compressed) -> $F4:$1E53 raw, 169 bytes
 ;   Text: <$96>My Armor Polish will give a nice sheen to your body armor and make it more powerful,
@@ -16885,7 +17041,7 @@ V116_Text_1249:
     db $4C, $65, $74, $27, $73, $20, $74, $72, $61, $64, $65, $21, $0A, $8B, $4E, $6F
     db $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1250 / $04E2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:33C1 (compressed) -> $F4:$1EFC raw, 34 bytes
 ;   Text: <$96><$87>Very nice. Come back any time!<PAGE><End>
@@ -16894,7 +17050,7 @@ V116_Text_1250:
     db $65, $20, $62, $61, $63, $6B, $20, $61, $6E, $79, $20, $74, $69, $6D, $65, $21
     db $86, $00
 ; TEXT 1251 / $04E3
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:33D8 (compressed) -> $F4:$1F1E raw, 59 bytes
 ;   Text: <$96><$87>Sorry.<S $1F $80> You don't have the Silver Sheath.<S $3D $80> No deal.<PAGE><End>
@@ -16904,7 +17060,7 @@ V116_Text_1251:
     db $69, $6C, $76, $65, $72, $20, $53, $68, $65, $61, $74, $68, $2E, $80, $3D, $80
     db $0A, $4E, $6F, $20, $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 1252 / $04E4
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:33F6 (compressed) -> $F4:$1F59 raw, 122 bytes
 ;   Text: <$96>I challenge you to find a better deal on rice.<PAGE>I'm willing to sacrifice profits and offer
@@ -16919,7 +17075,7 @@ V116_Text_1252:
     db $20, $79, $6F, $75, $20, $66, $6F, $72, $20, $39, $20, $4A, $65, $77, $65, $6C
     db $73, $20, $61, $20, $62, $61, $67, $2E, $86, $00
 ; TEXT 1253 / $04E5
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:343D (compressed) -> $F4:$1FD3 raw, 25 bytes
 ;   Text: OK?<S $3D $80> <$97><Choice>OK. <Choice>No thanks.<End>
@@ -16927,7 +17083,7 @@ V116_Text_1253:
     db $4F, $4B, $3F, $80, $3D, $80, $0A, $97, $8B, $4F, $4B, $2E, $0A, $8B, $4E, $6F
     db $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1254 / $04E6
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3450 (compressed) -> $F4:$1FEC raw, 36 bytes
 ;   Text: <$87><$96>How many bags? <Choice>One. <Choice>Five. <Choice>Ten.<End>
@@ -16936,7 +17092,7 @@ V116_Text_1254:
     db $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B, $54
     db $65, $6E, $2E, $00
 ; TEXT 1255 / $04E7
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3470 (compressed) -> $F4:$2010 raw, 36 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your rice.<PAGE><End>
@@ -16945,7 +17101,7 @@ V116_Text_1255:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $72, $69, $63
     db $65, $2E, $86, $00
 ; TEXT 1256 / $04E8
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3486 (compressed) -> $F4:$2034 raw, 63 bytes
 ;   Text: <$96>My beads make for a fine bargain<S $29 $80>--<S $3D $80>only 12 Jewels each.<PAGE><End>
@@ -16955,7 +17111,7 @@ V116_Text_1256:
     db $6E, $80, $29, $80, $2D, $2D, $80, $3D, $80, $6F, $6E, $6C, $79, $20, $31, $32
     db $20, $4A, $65, $77, $65, $6C, $73, $20, $65, $61, $63, $68, $2E, $86, $00
 ; TEXT 1257 / $04E9
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:34B2 (compressed) -> $F4:$2073 raw, 162 bytes
 ;   Text: <$96>You look like a savvy trader, so I will give you my best deal right away.<PAGE>I am willing to trade you these fabulous, high-quality beads for only 12 Jewels each.<PAGE><End>
@@ -16972,7 +17128,7 @@ V116_Text_1257:
     db $20, $31, $32, $20, $4A, $65, $77, $65, $6C, $73, $20, $65, $61, $63, $68, $2E
     db $86, $00
 ; TEXT 1258 / $04EA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:350D (compressed) -> $F4:$2115 raw, 27 bytes
 ;   Text: Deal?<S $3D $80> <$97><Choice>OK. <Choice>No thanks.<End>
@@ -16980,7 +17136,7 @@ V116_Text_1258:
     db $44, $65, $61, $6C, $3F, $80, $3D, $80, $0A, $97, $8B, $4F, $4B, $2E, $0A, $8B
     db $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1259 / $04EB
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3521 (compressed) -> $F4:$2130 raw, 37 bytes
 ;   Text: <$87><$96>How many beads? <Choice>One. <Choice>Five. <Choice>Ten.<End>
@@ -16989,7 +17145,7 @@ V116_Text_1259:
     db $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B
     db $54, $65, $6E, $2E, $00
 ; TEXT 1260 / $04EC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3540 (compressed) -> $F4:$2155 raw, 37 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your beads.<PAGE><End>
@@ -16998,7 +17154,7 @@ V116_Text_1260:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $62, $65, $61
     db $64, $73, $2E, $86, $00
 ; TEXT 1261 / $04ED
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3556 (compressed) -> $F4:$217A raw, 202 bytes
 ;   Text: <$96>I have a nice assortment of rugs and wall hangings.<PAGE>My finest piece is a tapestry that
@@ -17019,7 +17175,7 @@ V116_Text_1261:
     db $74, $65, $64, $3F, $80, $3D, $80, $0A, $97, $8B, $4F, $4B, $2E, $0A, $8B, $4E
     db $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1262 / $04EE
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:35DC (compressed) -> $F4:$2244 raw, 43 bytes
 ;   Text: <$87><$96>How many tapestries? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -17028,7 +17184,7 @@ V116_Text_1262:
     db $74, $72, $69, $65, $73, $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77
     db $6F, $2E, $0A, $8B, $54, $68, $72, $65, $65, $2E, $00
 ; TEXT 1263 / $04EF
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:35FD (compressed) -> $F4:$226F raw, 28 bytes
 ;   Text: <$96><$87>Very good.<S $3D $80> Thank you.<PAGE><End>
@@ -17036,7 +17192,7 @@ V116_Text_1263:
     db $96, $87, $56, $65, $72, $79, $20, $67, $6F, $6F, $64, $2E, $80, $3D, $80, $20
     db $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1264 / $04F0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:360E (compressed) -> $F4:$228B raw, 132 bytes
 ;   Text: <$96>My perfumes are the finest, and such a good bargain--<S $3D $80>only 3 jars of spice per
@@ -17052,7 +17208,7 @@ V116_Text_1264:
     db $0A, $8B, $49, $20, $64, $6F, $6E, $27, $74, $20, $74, $68, $69, $6E, $6B, $20
     db $73, $6F, $2E, $00
 ; TEXT 1265 / $04F1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3660 (compressed) -> $F4:$230F raw, 40 bytes
 ;   Text: <$87><$96>How many bottles? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -17061,7 +17217,7 @@ V116_Text_1265:
     db $65, $73, $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77, $6F, $2E, $0A
     db $8B, $54, $68, $72, $65, $65, $2E, $00
 ; TEXT 1266 / $04F2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3684 (compressed) -> $F4:$2337 raw, 37 bytes
 ;   Text: <$96><$87>Well done.<S $3D $80> Enjoy your perfume.<PAGE><End>
@@ -17070,7 +17226,7 @@ V116_Text_1266:
     db $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $70, $65, $72, $66, $75
     db $6D, $65, $2E, $86, $00
 ; TEXT 1267 / $04F3
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3699 (compressed) -> $F4:$235C raw, 133 bytes
 ;   Text: <$96>Fine spices are my specialty.<S $79 $80> I can give you a jar of spice for 2 beads or 3 ceramic
@@ -17086,7 +17242,7 @@ V116_Text_1267:
     db $0A, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 1268 / $04F4
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:36E9 (compressed) -> $F4:$23E1 raw, 56 bytes
 ;   Text: <$87><$96>Will you trade away beads or pots?<S $3D $80> <Choice><$97>Beads. <Choice>Pots.<End>
@@ -17096,7 +17252,7 @@ V116_Text_1268:
     db $6F, $74, $73, $3F, $80, $3D, $80, $0A, $8B, $97, $42, $65, $61, $64, $73, $2E
     db $0A, $8B, $50, $6F, $74, $73, $2E, $00
 ; TEXT 1269 / $04F5
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3710 (compressed) -> $F4:$2419 raw, 40 bytes
 ;   Text: <$87><$96>How many jars?<S $3D $80> <Choice><$97>One. <Choice>Five. <Choice>Ten.<End>
@@ -17105,7 +17261,7 @@ V116_Text_1269:
     db $80, $3D, $80, $0A, $8B, $97, $4F, $6E, $65, $2E, $0A, $8B, $46, $69, $76, $65
     db $2E, $0A, $8B, $54, $65, $6E, $2E, $00
 ; TEXT 1270 / $04F6
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3733 (compressed) -> $F4:$2441 raw, 37 bytes
 ;   Text: <$96><$87>It's a deal.<S $3D $80> Enjoy your spice.<PAGE><End>
@@ -17114,7 +17270,7 @@ V116_Text_1270:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $73, $70, $69
     db $63, $65, $2E, $86, $00
 ; TEXT 1271 / $04F7
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3748 (compressed) -> $F4:$2466 raw, 34 bytes
 ;   Text: <$96><$87>It's a deal. Enjoy your spice.<PAGE><End>
@@ -17123,7 +17279,7 @@ V116_Text_1271:
     db $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $73, $70, $69, $63, $65, $2E
     db $86, $00
 ; TEXT 1272 / $04F8
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:375C (compressed) -> $F4:$2488 raw, 53 bytes
 ;   Text: <$96>As much as I hate to part with one of my chickens…<PAGE><End>
@@ -17133,7 +17289,7 @@ V116_Text_1272:
     db $6F, $6E, $65, $20, $6F, $66, $20, $6D, $79, $20, $63, $68, $69, $63, $6B, $65
     db $6E, $73, $5F, $86, $00
 ; TEXT 1273 / $04F9
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3778 (compressed) -> $F4:$24BD raw, 56 bytes
 ;   Text: <$96>Especially to a low-down chicken-taunter such as you…<PAGE><End>
@@ -17143,7 +17299,7 @@ V116_Text_1273:
     db $6E, $2D, $74, $61, $75, $6E, $74, $65, $72, $20, $73, $75, $63, $68, $20, $61
     db $73, $20, $79, $6F, $75, $5F, $86, $00
 ; TEXT 1274 / $04FA
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:37A0 (compressed) -> $F4:$24F5 raw, 116 bytes
 ;   Text: <$96>…I would be willing to trade them for a jar of spice and 2 bags of rice each.<PAGE>Is it a
@@ -17158,7 +17314,7 @@ V116_Text_1274:
     db $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E
     db $6B, $73, $2E, $00
 ; TEXT 1275 / $04FB
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:37E5 (compressed) -> $F4:$2569 raw, 41 bytes
 ;   Text: <$87><$96>How many chickens? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -17167,7 +17323,7 @@ V116_Text_1275:
     db $65, $6E, $73, $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77, $6F, $2E
     db $0A, $8B, $54, $68, $72, $65, $65, $2E, $00
 ; TEXT 1276 / $04FC
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3806 (compressed) -> $F4:$2592 raw, 28 bytes
 ;   Text: <$96><$87>Very good.<S $3D $80> Thank you.<PAGE><End>
@@ -17175,7 +17331,7 @@ V116_Text_1276:
     db $96, $87, $56, $65, $72, $79, $20, $67, $6F, $6F, $64, $2E, $80, $3D, $80, $20
     db $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1277 / $04FD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3817 (compressed) -> $F4:$25AE raw, 50 bytes
 ;   Text: I'm sorry. The exchange booth is for humans only.<End>
@@ -17185,7 +17341,7 @@ V116_Text_1277:
     db $20, $66, $6F, $72, $20, $68, $75, $6D, $61, $6E, $73, $20, $6F, $6E, $6C, $79
     db $2E, $00
 ; TEXT 1278 / $04FE
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3833 (compressed) -> $F4:$25E0 raw, 84 bytes
 ;   Text: <$96>We're closing for the day. The big meeting is about to happen in the City Square.<PAGE><End>
@@ -17197,7 +17353,7 @@ V116_Text_1278:
     db $6E, $20, $74, $68, $65, $20, $43, $69, $74, $79, $20, $53, $71, $75, $61, $72
     db $65, $2E, $86, $00
 ; TEXT 1279 / $04FF
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3866 (compressed) -> $F4:$2634 raw, 114 bytes
 ;   Text: <$96>I provide Jewels in exchange for other types of money.<PAGE>Would you like to exchange
@@ -17212,7 +17368,7 @@ V116_Text_1279:
     db $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73
     db $2E, $00
 ; TEXT 1280 / $0500
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:38A0 (compressed) -> $F4:$26A6 raw, 113 bytes
 ;   Text: <$96>My beads are perfect for your decorating and trading needs…<PAGE>…and they're only 1 bag of
@@ -17227,7 +17383,7 @@ V116_Text_1280:
     db $20, $33, $20, $4A, $65, $77, $65, $6C, $73, $20, $65, $61, $63, $68, $2E, $86
     db $00
 ; TEXT 1281 / $0501
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:38E6 (compressed) -> $F4:$2717 raw, 28 bytes
 ;   Text: Interested?<S $3D $80> <$97><Choice>Sure. <Choice>No.<End>
@@ -17235,7 +17391,7 @@ V116_Text_1281:
     db $49, $6E, $74, $65, $72, $65, $73, $74, $65, $64, $3F, $80, $3D, $80, $0A, $97
     db $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $2E, $00
 ; TEXT 1282 / $0502
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:38FD (compressed) -> $F4:$2733 raw, 44 bytes
 ;   Text: <$87><$96>How many will you buy? <Choice>One. <Choice>Five. <Choice>Ten.<End>
@@ -17244,7 +17400,7 @@ V116_Text_1282:
     db $79, $6F, $75, $20, $62, $75, $79, $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B
     db $46, $69, $76, $65, $2E, $0A, $8B, $54, $65, $6E, $2E, $00
 ; TEXT 1283 / $0503
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3920 (compressed) -> $F4:$275F raw, 40 bytes
 ;   Text: <$96><$87>Thanks very much. Please come again.<PAGE><End>
@@ -17253,7 +17409,7 @@ V116_Text_1283:
     db $63, $68, $2E, $20, $50, $6C, $65, $61, $73, $65, $20, $63, $6F, $6D, $65, $20
     db $61, $67, $61, $69, $6E, $2E, $86, $00
 ; TEXT 1284 / $0504
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3935 (compressed) -> $F4:$2787 raw, 74 bytes
 ;   Text: I've given you the only Jade Disk I had.<S $3D $80> I hope you're using it well.<PAGE><End>
@@ -17264,7 +17420,7 @@ V116_Text_1284:
     db $70, $65, $20, $79, $6F, $75, $27, $72, $65, $20, $75, $73, $69, $6E, $67, $20
     db $69, $74, $20, $77, $65, $6C, $6C, $2E, $86, $00
 ; TEXT 1285 / $0505
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3963 (compressed) -> $F4:$27D1 raw, 195 bytes
 ;   Text: <$96>This item is an import from a faraway land.<PAGE>The Jade Disk of Emperor Qi helps to ensure victory in battle.<PAGE>And it's all yours for only 3 chickens and 3 beads.<PAGE>Is it a deal?<S $3D $80> <$97><Choice>OK. <Choice>No thanks.<End>
@@ -17283,7 +17439,7 @@ V116_Text_1285:
     db $0A, $97, $8B, $4F, $4B, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B
     db $73, $2E, $00
 ; TEXT 1286 / $0506
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:39DE (compressed) -> $F4:$2894 raw, 39 bytes
 ;   Text: <$96><$87>Wise choice.<S $3D $80> Please use it well.<PAGE><End>
@@ -17292,7 +17448,7 @@ V116_Text_1286:
     db $80, $20, $50, $6C, $65, $61, $73, $65, $20, $75, $73, $65, $20, $69, $74, $20
     db $77, $65, $6C, $6C, $2E, $86, $00
 ; TEXT 1287 / $0507
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:39F9 (compressed) -> $F4:$28BB raw, 66 bytes
 ;   Text: <$96>I can trade you my Moxa Stick for your Ruby Heart and <Count> Jewels.<PAGE><End>
@@ -17303,7 +17459,7 @@ V116_Text_1287:
     db $72, $74, $20, $61, $6E, $64, $20, $A1, $20, $4A, $65, $77, $65, $6C, $73, $2E
     db $86, $00
 ; TEXT 1288 / $0508
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3A1F (compressed) -> $F4:$28FD raw, 37 bytes
 ;   Text: Is it a deal?<S $3D $80> <Choice><$97>Sure. <Choice>No thanks.<End>
@@ -17312,7 +17468,7 @@ V116_Text_1288:
     db $0A, $8B, $97, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 1289 / $0509
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3A36 (compressed) -> $F4:$2922 raw, 25 bytes
 ;   Text: <$96><$87>Thanks for the trade!<PAGE><End>
@@ -17320,7 +17476,7 @@ V116_Text_1289:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65
     db $20, $74, $72, $61, $64, $65, $21, $86, $00
 ; TEXT 1290 / $050A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3A42 (compressed) -> $F4:$293B raw, 82 bytes
 ;   Text: <$96>I would be willing to trade you my Ruby Heart for your Moxa Stick and <Count> Jewels.<PAGE><End>
@@ -17332,7 +17488,7 @@ V116_Text_1290:
     db $63, $6B, $20, $61, $6E, $64, $20, $A1, $20, $4A, $65, $77, $65, $6C, $73, $2E
     db $86, $00
 ; TEXT 1291 / $050B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3A70 (compressed) -> $F4:$298D raw, 37 bytes
 ;   Text: Is it a deal?<S $3D $80> <Choice><$97>Sure. <Choice>No thanks.<End>
@@ -17341,7 +17497,7 @@ V116_Text_1291:
     db $0A, $8B, $97, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 1292 / $050C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3A87 (compressed) -> $F4:$29B2 raw, 24 bytes
 ;   Text: <$96>Thanks for the trade!<PAGE><End>
@@ -17349,7 +17505,7 @@ V116_Text_1292:
     db $96, $54, $68, $61, $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65, $20
     db $74, $72, $61, $64, $65, $21, $86, $00
 ; TEXT 1293 / $050D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3A92 (compressed) -> $F4:$29CA raw, 186 bytes
 ;   Text: <$96>The ancient Ruby Heart will decrease the power of your enemies.<PAGE>I'll trade it for the Moxa
@@ -17369,7 +17525,7 @@ V116_Text_1293:
     db $73, $74, $65, $64, $3F, $80, $3D, $80, $0A, $97, $8B, $53, $75, $72, $65, $21
     db $0A, $8B, $4E, $6F, $20, $77, $61, $79, $2E, $00
 ; TEXT 1294 / $050E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3B05 (compressed) -> $F4:$2A84 raw, 78 bytes
 ;   Text: <$96><$87>Will you trade the Moxa Stick or other goods? <S $3D $80><Choice>Moxa Stick. <Choice>Other
@@ -17381,7 +17537,7 @@ V116_Text_1294:
     db $80, $3D, $80, $8B, $4D, $6F, $78, $61, $20, $53, $74, $69, $63, $6B, $2E, $0A
     db $8B, $4F, $74, $68, $65, $72, $20, $67, $6F, $6F, $64, $73, $2E, $00
 ; TEXT 1295 / $050F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3B33 (compressed) -> $F4:$2AD2 raw, 34 bytes
 ;   Text: <$96><$87>Very nice. Come back any time!<PAGE><End>
@@ -17390,7 +17546,7 @@ V116_Text_1295:
     db $65, $20, $62, $61, $63, $6B, $20, $61, $6E, $79, $20, $74, $69, $6D, $65, $21
     db $86, $00
 ; TEXT 1296 / $0510
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3B4A (compressed) -> $F4:$2AF4 raw, 56 bytes
 ;   Text: <$96><$87>Sorry.<S $1F $80> You don't have the Moxa Stick.<S $3D $80> No deal.<PAGE><End>
@@ -17400,7 +17556,7 @@ V116_Text_1296:
     db $6F, $78, $61, $20, $53, $74, $69, $63, $6B, $2E, $80, $3D, $80, $0A, $4E, $6F
     db $20, $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 1297 / $0511
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3B69 (compressed) -> $F4:$2B2C raw, 51 bytes
 ;   Text: <$96><$87>You're on!<S $3D $80> Take good care of the Ruby Heart.<PAGE><End>
@@ -17410,7 +17566,7 @@ V116_Text_1297:
     db $66, $20, $74, $68, $65, $20, $52, $75, $62, $79, $20, $48, $65, $61, $72, $74
     db $2E, $86, $00
 ; TEXT 1298 / $0512
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3B86 (compressed) -> $F4:$2B5F raw, 70 bytes
 ;   Text: <$96>My booth is closed right now.<S $3D $80> I've got to evaluate my inventory.<PAGE><End>
@@ -17421,7 +17577,7 @@ V116_Text_1298:
     db $61, $6C, $75, $61, $74, $65, $20, $6D, $79, $20, $69, $6E, $76, $65, $6E, $74
     db $6F, $72, $79, $2E, $86, $00
 ; TEXT 1299 / $0513
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3BB5 (compressed) -> $F4:$2BA5 raw, 86 bytes
 ;   Text: <$96>You have already traded for my best helmet.<S $3D $80> I can't help you with anything
@@ -17434,7 +17590,7 @@ V116_Text_1299:
     db $20, $77, $69, $74, $68, $20, $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65
     db $6C, $73, $65, $2E, $86, $00
 ; TEXT 1300 / $0514
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3BE2 (compressed) -> $F4:$2BFB raw, 216 bytes
 ;   Text: <$96>The Centurion Helmet is the finest piece of headgear I've ever had the pleasure of seeing.<PAGE>I can provide you with this fine item for 10 jars of spice and a golden jackal statuette.<PAGE>Is it a deal? <S $3D $80><$97><Choice>Sure. <Choice>No way.<End>
@@ -17454,7 +17610,7 @@ V116_Text_1300:
     db $61, $6C, $3F, $0A, $80, $3D, $80, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B
     db $4E, $6F, $20, $77, $61, $79, $2E, $00
 ; TEXT 1301 / $0515
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3C61 (compressed) -> $F4:$2CD3 raw, 24 bytes
 ;   Text: <$96><$87>Thanks! Use it well.<PAGE><End>
@@ -17462,7 +17618,7 @@ V116_Text_1301:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $21, $20, $55, $73, $65, $20, $69, $74
     db $20, $77, $65, $6C, $6C, $2E, $86, $00
 ; TEXT 1302 / $0516
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3C71 (compressed) -> $F4:$2CEB raw, 166 bytes
 ;   Text: <$96>Helmets are my trade and I have just the one that you need.<PAGE>I can trade the Obsidian
@@ -17481,7 +17637,7 @@ V116_Text_1302:
     db $65, $74, $27, $73, $20, $64, $6F, $20, $69, $74, $2E, $0A, $8B, $4E, $6F, $20
     db $64, $65, $61, $6C, $2E, $00
 ; TEXT 1303 / $0517
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3CCE (compressed) -> $F4:$2D91 raw, 36 bytes
 ;   Text: <$96><$87>Excellent! Thanks for the trade!<PAGE><End>
@@ -17490,7 +17646,7 @@ V116_Text_1303:
     db $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65, $20, $74, $72, $61, $64
     db $65, $21, $86, $00
 ; TEXT 1304 / $0518
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3CE3 (compressed) -> $F4:$2DB5 raw, 99 bytes
 ;   Text: <$96>Hello, friend.<S $3D $80> We haven't had much business around here today.<S $3D $80> I'm glad
@@ -17504,7 +17660,7 @@ V116_Text_1304:
     db $6F, $75, $20, $63, $6F, $75, $6C, $64, $20, $6D, $61, $6B, $65, $20, $69, $74
     db $2E, $86, $00
 ; TEXT 1305 / $0519
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3D16 (compressed) -> $F4:$2E18 raw, 188 bytes
 ;   Text: <$96>I have something that you really need--<S $3D $80>a jeweled scarab.<PAGE>And it will only set
@@ -17524,7 +17680,7 @@ V116_Text_1305:
     db $64, $73, $20, $67, $6F, $6F, $64, $2E, $0A, $8B, $49, $20, $64, $6F, $6E, $27
     db $74, $20, $74, $68, $69, $6E, $6B, $20, $73, $6F, $2E, $00
 ; TEXT 1306 / $051A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3D80 (compressed) -> $F4:$2ED4 raw, 32 bytes
 ;   Text: <$87><$96>How many? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -17532,7 +17688,7 @@ V116_Text_1306:
     db $87, $96, $48, $6F, $77, $20, $6D, $61, $6E, $79, $3F, $0A, $8B, $4F, $6E, $65
     db $2E, $0A, $8B, $54, $77, $6F, $2E, $0A, $8B, $54, $68, $72, $65, $65, $2E, $00
 ; TEXT 1307 / $051B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3D9E (compressed) -> $F4:$2EF4 raw, 38 bytes
 ;   Text: <$96><$87>Well done.<S $3D $80> Thank you very much.<PAGE><End>
@@ -17541,7 +17697,7 @@ V116_Text_1307:
     db $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $20, $76, $65, $72, $79, $20, $6D
     db $75, $63, $68, $2E, $86, $00
 ; TEXT 1308 / $051C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3DB3 (compressed) -> $F4:$2F1A raw, 99 bytes
 ;   Text: <$96>Hello, friend.<S $3D $80> We haven't had much business around here today.<S $3D $80> I'm glad
@@ -17555,7 +17711,7 @@ V116_Text_1308:
     db $6F, $75, $20, $63, $6F, $75, $6C, $64, $20, $6D, $61, $6B, $65, $20, $69, $74
     db $2E, $86, $00
 ; TEXT 1309 / $051D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3DE6 (compressed) -> $F4:$2F7D raw, 155 bytes
 ;   Text: <$96>These limestone tablets are authentic artifacts from ancient ruins.<PAGE>I can part with them
@@ -17572,7 +17728,7 @@ V116_Text_1309:
     db $4F, $4B, $3F, $80, $3D, $80, $0A, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B
     db $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1310 / $051E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3E47 (compressed) -> $F4:$3018 raw, 40 bytes
 ;   Text: <$87><$96>How many tablets? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -17581,14 +17737,14 @@ V116_Text_1310:
     db $74, $73, $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77, $6F, $2E, $0A
     db $8B, $54, $68, $72, $65, $65, $2E, $00
 ; TEXT 1311 / $051F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3E6B (compressed) -> $F4:$3040 raw, 14 bytes
 ;   Text: <$96><$87>Thank you.<PAGE><End>
 V116_Text_1311:
     db $96, $87, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1312 / $0520
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3E74 (compressed) -> $F4:$304E raw, 92 bytes
 ;   Text: <$96>You want beads?<S $3D $80> I can give you beads for only 10 Jewels each.<S $5B $80> It's a
@@ -17601,7 +17757,7 @@ V116_Text_1312:
     db $2E, $80, $5B, $80, $20, $49, $74, $27, $73, $20, $61, $20, $66, $61, $62, $75
     db $6C, $6F, $75, $73, $20, $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 1313 / $0521
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3EAA (compressed) -> $F4:$30AA raw, 36 bytes
 ;   Text: What d'ya say?<S $3D $80> <$97><Choice>OK. <Choice>No thanks.<End>
@@ -17610,7 +17766,7 @@ V116_Text_1313:
     db $80, $0A, $97, $8B, $4F, $4B, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E
     db $6B, $73, $2E, $00
 ; TEXT 1314 / $0522
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3EC4 (compressed) -> $F4:$30CE raw, 37 bytes
 ;   Text: <$87><$96>How many beads? <Choice>One. <Choice>Five. <Choice>Ten.<End>
@@ -17619,7 +17775,7 @@ V116_Text_1314:
     db $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B
     db $54, $65, $6E, $2E, $00
 ; TEXT 1315 / $0523
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3EE3 (compressed) -> $F4:$30F3 raw, 37 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your beads.<PAGE><End>
@@ -17628,7 +17784,7 @@ V116_Text_1315:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $62, $65, $61
     db $64, $73, $2E, $86, $00
 ; TEXT 1316 / $0524
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3EF9 (compressed) -> $F4:$3118 raw, 84 bytes
 ;   Text: <$96>You already traded for the Sun Stone.<S $3D $80> I don't have anything else to offer
@@ -17641,7 +17797,7 @@ V116_Text_1316:
     db $65, $6C, $73, $65, $20, $74, $6F, $20, $6F, $66, $66, $65, $72, $20, $79, $6F
     db $75, $2E, $86, $00
 ; TEXT 1317 / $0525
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3F23 (compressed) -> $F4:$316C raw, 179 bytes
 ;   Text: <$96>With the Sun Stone in your possession, you will have more power for the battles ahead.<PAGE>I
@@ -17661,14 +17817,14 @@ V116_Text_1317:
     db $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B
     db $73, $2E, $00
 ; TEXT 1318 / $0526
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3F8B (compressed) -> $F4:$321F raw, 14 bytes
 ;   Text: <$96><$87>Thank you.<PAGE><End>
 V116_Text_1318:
     db $96, $87, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1319 / $0527
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3F94 (compressed) -> $F4:$322D raw, 77 bytes
 ;   Text: <$96>I gave you my only Moxa Stick.<S $3D $80> I don't have anything else to offer you.<PAGE><End>
@@ -17679,7 +17835,7 @@ V116_Text_1319:
     db $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65, $6C, $73, $65, $20, $74, $6F
     db $20, $6F, $66, $66, $65, $72, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1320 / $0528
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3FBF (compressed) -> $F4:$327A raw, 188 bytes
 ;   Text: <$96>You may heal your wounds more effectively when you possess the Moxa Stick.<PAGE>I can offer it
@@ -17699,7 +17855,7 @@ V116_Text_1320:
     db $80, $0A, $97, $8B, $59, $65, $73, $2E, $0A, $8B, $49, $20, $64, $6F, $6E, $27
     db $74, $20, $74, $68, $69, $6E, $6B, $20, $73, $6F, $2E, $00
 ; TEXT 1321 / $0529
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4034 (compressed) -> $F4:$3336 raw, 48 bytes
 ;   Text: <$96><$87>Thanks. May your wounds always heal quickly.<PAGE><End>
@@ -17708,7 +17864,7 @@ V116_Text_1321:
     db $75, $72, $20, $77, $6F, $75, $6E, $64, $73, $20, $61, $6C, $77, $61, $79, $73
     db $20, $68, $65, $61, $6C, $20, $71, $75, $69, $63, $6B, $6C, $79, $2E, $86, $00
 ; TEXT 1322 / $052A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4052 (compressed) -> $F4:$3366 raw, 66 bytes
 ;   Text: <$96>I would appraise your valuables, but you don't seem to have any.<End>
@@ -17719,7 +17875,7 @@ V116_Text_1322:
     db $73, $65, $65, $6D, $20, $74, $6F, $20, $68, $61, $76, $65, $20, $61, $6E, $79
     db $2E, $00
 ; TEXT 1323 / $052B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:407D (compressed) -> $F4:$33A8 raw, 84 bytes
 ;   Text: <$96>The market is closing.<S $79 $80> I'll appraise your valuables if you come back
@@ -17732,7 +17888,7 @@ V116_Text_1323:
     db $6F, $6D, $65, $20, $62, $61, $63, $6B, $20, $74, $6F, $6D, $6F, $72, $72, $6F
     db $77, $2E, $86, $00
 ; TEXT 1324 / $052C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:40B0 (compressed) -> $F4:$33FC raw, 83 bytes
 ;   Text: <$96>I appraise and purchase items from the market.<PAGE>My fee is 5 jewels per
@@ -17745,7 +17901,7 @@ V116_Text_1324:
     db $6C, $73, $20, $70, $65, $72, $20, $61, $70, $70, $72, $61, $69, $73, $61, $6C
     db $2E, $86, $00
 ; TEXT 1325 / $052D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:40E0 (compressed) -> $F4:$344F raw, 64 bytes
 ;   Text: Would you like me to look at your items?<S $3D $80> <$97><Choice>Sure. <Choice>No thanks.<End>
@@ -17755,7 +17911,7 @@ V116_Text_1325:
     db $72, $20, $69, $74, $65, $6D, $73, $3F, $80, $3D, $80, $0A, $97, $8B, $53, $75
     db $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1326 / $052E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4105 (compressed) -> $F4:$348F raw, 64 bytes
 ;   Text: <$87><$96>I'm sorry.<S $3D $80> You don't have enough Jewels to cover the fee.<PAGE><End>
@@ -17765,7 +17921,7 @@ V116_Text_1326:
     db $6E, $6F, $75, $67, $68, $20, $4A, $65, $77, $65, $6C, $73, $20, $74, $6F, $20
     db $63, $6F, $76, $65, $72, $20, $74, $68, $65, $20, $66, $65, $65, $2E, $86, $00
 ; TEXT 1327 / $052F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4126 (compressed) -> $F4:$34CF raw, 58 bytes
 ;   Text: <$96>Would you like another appraisal?<S $3D $80> <$97><Choice>Sure. <Choice>No thanks.<End>
@@ -17775,7 +17931,7 @@ V116_Text_1327:
     db $6C, $3F, $80, $3D, $80, $0A, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E
     db $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1328 / $0530
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4148 (compressed) -> $F4:$3509 raw, 39 bytes
 ;   Text: <$96>You don't have anything to appraise.<PAGE><End>
@@ -17784,7 +17940,7 @@ V116_Text_1328:
     db $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $74, $6F, $20, $61, $70, $70, $72
     db $61, $69, $73, $65, $2E, $86, $00
 ; TEXT 1329 / $0531
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:415D (compressed) -> $F4:$3530 raw, 26 bytes
 ;   Text: <$96>What should I appraise?<$97><End>
@@ -17792,21 +17948,21 @@ V116_Text_1329:
     db $96, $57, $68, $61, $74, $20, $73, $68, $6F, $75, $6C, $64, $20, $49, $20, $61
     db $70, $70, $72, $61, $69, $73, $65, $3F, $97, $00
 ; TEXT 1330 / $0532
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:416F (raw) -> $F4:$354A raw, 8 bytes
 ;   Text:  <Choice>Rice.<End>
 V116_Text_1330:
     db $0A, $8B, $52, $69, $63, $65, $2E, $00
 ; TEXT 1331 / $0533
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:417F (raw) -> $F4:$3552 raw, 9 bytes
 ;   Text:  <Choice>Spice.<End>
 V116_Text_1331:
     db $0A, $8B, $53, $70, $69, $63, $65, $2E, $00
 ; TEXT 1332 / $0534
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4191 (compressed) -> $F4:$355B raw, 19 bytes
 ;   Text:  <Choice>Souvenir Spoons.<End>
@@ -17814,35 +17970,35 @@ V116_Text_1332:
     db $0A, $8B, $53, $6F, $75, $76, $65, $6E, $69, $72, $20, $53, $70, $6F, $6F, $6E
     db $73, $2E, $00
 ; TEXT 1333 / $0535
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41A1 (compressed) -> $F4:$356E raw, 9 bytes
 ;   Text:  <Choice>Beads.<End>
 V116_Text_1333:
     db $0A, $8B, $42, $65, $61, $64, $73, $2E, $00
 ; TEXT 1334 / $0536
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41A8 (compressed) -> $F4:$3577 raw, 11 bytes
 ;   Text:  <Choice>Perfume.<End>
 V116_Text_1334:
     db $0A, $8B, $50, $65, $72, $66, $75, $6D, $65, $2E, $00
 ; TEXT 1335 / $0537
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41B2 (compressed) -> $F4:$3582 raw, 12 bytes
 ;   Text:  <Choice>Chickens.<End>
 V116_Text_1335:
     db $0A, $8B, $43, $68, $69, $63, $6B, $65, $6E, $73, $2E, $00
 ; TEXT 1336 / $0538
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41BE (compressed) -> $F4:$358E raw, 14 bytes
 ;   Text:  <Choice>Tapestries.<End>
 V116_Text_1336:
     db $0A, $8B, $54, $61, $70, $65, $73, $74, $72, $69, $65, $73, $2E, $00
 ; TEXT 1337 / $0539
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41CB (compressed) -> $F4:$359C raw, 18 bytes
 ;   Text:  <Choice>Golden Jackals.<End>
@@ -17850,14 +18006,14 @@ V116_Text_1337:
     db $0A, $8B, $47, $6F, $6C, $64, $65, $6E, $20, $4A, $61, $63, $6B, $61, $6C, $73
     db $2E, $00
 ; TEXT 1338 / $053A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41DB (compressed) -> $F4:$35AE raw, 16 bytes
 ;   Text:  <Choice>Ceramic Pots.<End>
 V116_Text_1338:
     db $0A, $8B, $43, $65, $72, $61, $6D, $69, $63, $20, $50, $6F, $74, $73, $2E, $00
 ; TEXT 1339 / $053B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41EB (compressed) -> $F4:$35BE raw, 19 bytes
 ;   Text:  <Choice>Jeweled Scarabs.<End>
@@ -17865,7 +18021,7 @@ V116_Text_1339:
     db $0A, $8B, $4A, $65, $77, $65, $6C, $65, $64, $20, $53, $63, $61, $72, $61, $62
     db $73, $2E, $00
 ; TEXT 1340 / $053C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:41FD (compressed) -> $F4:$35D1 raw, 21 bytes
 ;   Text:  <Choice>Limestone Tablets.<End>
@@ -17873,7 +18029,7 @@ V116_Text_1340:
     db $0A, $8B, $4C, $69, $6D, $65, $73, $74, $6F, $6E, $65, $20, $54, $61, $62, $6C
     db $65, $74, $73, $2E, $00
 ; TEXT 1341 / $053D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:420B (compressed) -> $F4:$35E6 raw, 24 bytes
 ;   Text:  <Choice>Annihilation Amulets.<End>
@@ -17881,56 +18037,56 @@ V116_Text_1341:
     db $0A, $8B, $41, $6E, $6E, $69, $68, $69, $6C, $61, $74, $69, $6F, $6E, $20, $41
     db $6D, $75, $6C, $65, $74, $73, $2E, $00
 ; TEXT 1342 / $053E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4215 (compressed) -> $F4:$35FE raw, 15 bytes
 ;   Text:  <Choice>Magic Gourd.<End>
 V116_Text_1342:
     db $0A, $8B, $4D, $61, $67, $69, $63, $20, $47, $6F, $75, $72, $64, $2E, $00
 ; TEXT 1343 / $053F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4224 (compressed) -> $F4:$360D raw, 15 bytes
 ;   Text:  <Choice>Chocobo Egg.<End>
 V116_Text_1343:
     db $0A, $8B, $43, $68, $6F, $63, $6F, $62, $6F, $20, $45, $67, $67, $2E, $00
 ; TEXT 1344 / $0540
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4233 (compressed) -> $F4:$361C raw, 16 bytes
 ;   Text:  <Choice>Armor Polish.<End>
 V116_Text_1344:
     db $0A, $8B, $41, $72, $6D, $6F, $72, $20, $50, $6F, $6C, $69, $73, $68, $2E, $00
 ; TEXT 1345 / $0541
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4242 (compressed) -> $F4:$362C raw, 14 bytes
 ;   Text:  <Choice>Ruby Heart.<End>
 V116_Text_1345:
     db $0A, $8B, $52, $75, $62, $79, $20, $48, $65, $61, $72, $74, $2E, $00
 ; TEXT 1346 / $0542
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:424D (compressed) -> $F4:$363A raw, 13 bytes
 ;   Text:  <Choice>Jade Disk.<End>
 V116_Text_1346:
     db $0A, $8B, $4A, $61, $64, $65, $20, $44, $69, $73, $6B, $2E, $00
 ; TEXT 1347 / $0543
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:425A (compressed) -> $F4:$3647 raw, 13 bytes
 ;   Text:  <Choice>Sun Stone.<End>
 V116_Text_1347:
     db $0A, $8B, $53, $75, $6E, $20, $53, $74, $6F, $6E, $65, $2E, $00
 ; TEXT 1348 / $0544
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4264 (compressed) -> $F4:$3654 raw, 14 bytes
 ;   Text:  <Choice>Moxa Stick.<End>
 V116_Text_1348:
     db $0A, $8B, $4D, $6F, $78, $61, $20, $53, $74, $69, $63, $6B, $2E, $00
 ; TEXT 1349 / $0545
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:426F (compressed) -> $F4:$3662 raw, 17 bytes
 ;   Text:  <Choice>Silver Sheath.<End>
@@ -17938,14 +18094,14 @@ V116_Text_1349:
     db $0A, $8B, $53, $69, $6C, $76, $65, $72, $20, $53, $68, $65, $61, $74, $68, $2E
     db $00
 ; TEXT 1350 / $0546
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4279 (compressed) -> $F4:$3673 raw, 8 bytes
 ;   Text:  <Choice>…more<End>
 V116_Text_1350:
     db $0A, $8B, $5F, $6D, $6F, $72, $65, $00
 ; TEXT 1351 / $0547
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:427F (compressed) -> $F4:$367B raw, 26 bytes
 ;   Text: <$87><$97>What should I appraise?<End>
@@ -17953,7 +18109,7 @@ V116_Text_1351:
     db $87, $97, $57, $68, $61, $74, $20, $73, $68, $6F, $75, $6C, $64, $20, $49, $20
     db $61, $70, $70, $72, $61, $69, $73, $65, $3F, $00
 ; TEXT 1352 / $0548
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4291 (compressed) -> $F4:$3695 raw, 27 bytes
 ;   Text: <$96>You have <Count> bags of rice.<PAGE><End>
@@ -17961,7 +18117,7 @@ V116_Text_1352:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $62, $61, $67, $73
     db $20, $6F, $66, $20, $72, $69, $63, $65, $2E, $86, $00
 ; TEXT 1353 / $0549
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:42A3 (compressed) -> $F4:$36B0 raw, 26 bytes
 ;   Text: <$96>You have a bag of rice.<PAGE><End>
@@ -17969,7 +18125,7 @@ V116_Text_1353:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $61, $20, $62, $61, $67, $20
     db $6F, $66, $20, $72, $69, $63, $65, $2E, $86, $00
 ; TEXT 1354 / $054A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:42B2 (compressed) -> $F4:$36CA raw, 89 bytes
 ;   Text: Rice can be exchanged for spice, ceramic pots, chickens, beads and various other items.<PAGE><End>
@@ -17981,7 +18137,7 @@ V116_Text_1354:
     db $6E, $64, $20, $76, $61, $72, $69, $6F, $75, $73, $20, $6F, $74, $68, $65, $72
     db $20, $69, $74, $65, $6D, $73, $2E, $86, $00
 ; TEXT 1355 / $054B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:42E2 (compressed) -> $F4:$3723 raw, 28 bytes
 ;   Text: <$96>You have <Count> jars of spice.<PAGE><End>
@@ -17989,7 +18145,7 @@ V116_Text_1355:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $6A, $61, $72, $73
     db $20, $6F, $66, $20, $73, $70, $69, $63, $65, $2E, $86, $00
 ; TEXT 1356 / $054C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:42F4 (compressed) -> $F4:$373F raw, 27 bytes
 ;   Text: <$96>You have a jar of spice.<PAGE><End>
@@ -17997,7 +18153,7 @@ V116_Text_1356:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $61, $20, $6A, $61, $72, $20
     db $6F, $66, $20, $73, $70, $69, $63, $65, $2E, $86, $00
 ; TEXT 1357 / $054D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4304 (compressed) -> $F4:$375A raw, 86 bytes
 ;   Text: Spice can be exchanged for souvenir spoons, golden jackals, perfume and other items.<PAGE><End>
@@ -18009,14 +18165,14 @@ V116_Text_1357:
     db $75, $6D, $65, $20, $61, $6E, $64, $20, $6F, $74, $68, $65, $72, $20, $69, $74
     db $65, $6D, $73, $2E, $86, $00
 ; TEXT 1358 / $054E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4336 (compressed) -> $F4:$37B0 raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1358:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1359 / $054F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4340 (compressed) -> $F4:$37BD raw, 94 bytes
 ;   Text: .<PAGE>Souvenir spoons are not extremely useful, but they are nice to have if you're a
@@ -18029,14 +18185,14 @@ V116_Text_1359:
     db $20, $68, $61, $76, $65, $20, $69, $66, $20, $79, $6F, $75, $27, $72, $65, $20
     db $61, $20, $63, $6F, $6C, $6C, $65, $63, $74, $6F, $72, $2E, $86, $00
 ; TEXT 1360 / $0550
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:437B (compressed) -> $F4:$381B raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1360:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1361 / $0551
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4385 (compressed) -> $F4:$3828 raw, 92 bytes
 ;   Text: .<PAGE>Beads can be exchanged for tapestries, spice, limestone tablets and various other
@@ -18049,7 +18205,7 @@ V116_Text_1361:
     db $73, $20, $61, $6E, $64, $20, $76, $61, $72, $69, $6F, $75, $73, $20, $6F, $74
     db $68, $65, $72, $20, $67, $6F, $6F, $64, $73, $2E, $86, $00
 ; TEXT 1362 / $0552
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:43AF (compressed) -> $F4:$3884 raw, 33 bytes
 ;   Text: <$96>You have <Count> bottles of perfume.<PAGE><End>
@@ -18058,7 +18214,7 @@ V116_Text_1362:
     db $6C, $65, $73, $20, $6F, $66, $20, $70, $65, $72, $66, $75, $6D, $65, $2E, $86
     db $00
 ; TEXT 1363 / $0553
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:43C3 (compressed) -> $F4:$38A5 raw, 32 bytes
 ;   Text: <$96>You have a bottle of perfume.<PAGE><End>
@@ -18066,7 +18222,7 @@ V116_Text_1363:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $61, $20, $62, $6F, $74, $74
     db $6C, $65, $20, $6F, $66, $20, $70, $65, $72, $66, $75, $6D, $65, $2E, $86, $00
 ; TEXT 1364 / $0554
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:43D5 (compressed) -> $F4:$38C5 raw, 89 bytes
 ;   Text: Perfume is not only pleasant to the nose, but it can be exchanged for a jeweled scarab.<PAGE><End>
@@ -18078,14 +18234,14 @@ V116_Text_1364:
     db $64, $20, $66, $6F, $72, $20, $61, $20, $6A, $65, $77, $65, $6C, $65, $64, $20
     db $73, $63, $61, $72, $61, $62, $2E, $86, $00
 ; TEXT 1365 / $0555
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:440D (compressed) -> $F4:$391E raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1365:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1366 / $0556
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4417 (compressed) -> $F4:$392B raw, 91 bytes
 ;   Text: .<PAGE>Chickens, along with other goods, can be exchanged for the Jade Disk or the Moxa
@@ -18098,14 +18254,14 @@ V116_Text_1366:
     db $65, $20, $44, $69, $73, $6B, $20, $6F, $72, $20, $74, $68, $65, $20, $4D, $6F
     db $78, $61, $20, $53, $74, $69, $63, $6B, $2E, $86, $00
 ; TEXT 1367 / $0557
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:444B (compressed) -> $F4:$3986 raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1367:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1368 / $0558
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4455 (compressed) -> $F4:$3993 raw, 91 bytes
 ;   Text: .<PAGE>The tapestries show mummified cats and they're playing poker!<S $3D $80> Now,<S $1F $80>
@@ -18118,14 +18274,14 @@ V116_Text_1368:
     db $3D, $80, $20, $4E, $6F, $77, $2C, $80, $1F, $80, $20, $74, $68, $61, $74, $27
     db $73, $20, $63, $6F, $6D, $65, $64, $79, $21, $86, $00
 ; TEXT 1369 / $0559
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:448C (compressed) -> $F4:$39EE raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1369:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1370 / $055A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4496 (compressed) -> $F4:$39FB raw, 89 bytes
 ;   Text: .<PAGE>Golden jackal statuettes can be exchanged for a powerful helmet or the Silver
@@ -18138,14 +18294,14 @@ V116_Text_1370:
     db $74, $20, $6F, $72, $20, $74, $68, $65, $20, $53, $69, $6C, $76, $65, $72, $20
     db $53, $68, $65, $61, $74, $68, $2E, $86, $00
 ; TEXT 1371 / $055B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:44C3 (compressed) -> $F4:$3A54 raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1371:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1372 / $055C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:44CD (compressed) -> $F4:$3A61 raw, 86 bytes
 ;   Text: .<PAGE>Ceramic pots sometimes contain valuable items.<S $79 $80> They can be exchanged for
@@ -18158,14 +18314,14 @@ V116_Text_1372:
     db $65, $78, $63, $68, $61, $6E, $67, $65, $64, $20, $66, $6F, $72, $20, $73, $70
     db $69, $63, $65, $2E, $86, $00
 ; TEXT 1373 / $055D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:44FF (compressed) -> $F4:$3AB7 raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1373:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1374 / $055E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4509 (compressed) -> $F4:$3AC4 raw, 51 bytes
 ;   Text: .<PAGE>A jeweled scarab can be traded for heavy armor.<PAGE><End>
@@ -18175,14 +18331,14 @@ V116_Text_1374:
     db $20, $66, $6F, $72, $20, $68, $65, $61, $76, $79, $20, $61, $72, $6D, $6F, $72
     db $2E, $86, $00
 ; TEXT 1375 / $055F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4527 (compressed) -> $F4:$3AF7 raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1375:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1376 / $0560
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4531 (compressed) -> $F4:$3B04 raw, 145 bytes
 ;   Text: .<PAGE>Limestone tablets sometimes contain secrets in their writing.<PAGE>Along with other goods, they can be traded for the Ruby Heart or the Sun Stone.<PAGE><End>
@@ -18198,14 +18354,14 @@ V116_Text_1376:
     db $20, $74, $68, $65, $20, $53, $75, $6E, $20, $53, $74, $6F, $6E, $65, $2E, $86
     db $00
 ; TEXT 1377 / $0561
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4582 (compressed) -> $F4:$3B95 raw, 13 bytes
 ;   Text: <$96>You have <Count> <End>
 V116_Text_1377:
     db $96, $59, $6F, $75, $20, $68, $61, $76, $65, $20, $A1, $20, $00
 ; TEXT 1378 / $0562
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:458C (compressed) -> $F4:$3BA2 raw, 78 bytes
 ;   Text: .<PAGE>This is a piece of junk.<S $3D $80> If you paid more than 2 Jewels, you got taken.<PAGE><End>
@@ -18216,7 +18372,7 @@ V116_Text_1378:
     db $68, $61, $6E, $20, $32, $20, $4A, $65, $77, $65, $6C, $73, $2C, $20, $79, $6F
     db $75, $20, $67, $6F, $74, $20, $74, $61, $6B, $65, $6E, $2E, $86, $00
 ; TEXT 1379 / $0563
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:45BE (compressed) -> $F4:$3BF0 raw, 40 bytes
 ;   Text: <$96>I'd be willing to offer you <Count> Jewels.<PAGE><End>
@@ -18225,7 +18381,7 @@ V116_Text_1379:
     db $74, $6F, $20, $6F, $66, $66, $65, $72, $20, $79, $6F, $75, $20, $A1, $20, $4A
     db $65, $77, $65, $6C, $73, $2E, $86, $00
 ; TEXT 1380 / $0564
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:45D6 (compressed) -> $F4:$3C18 raw, 27 bytes
 ;   Text: <$96>I can offer you 1 Jewel.<PAGE><End>
@@ -18233,7 +18389,7 @@ V116_Text_1380:
     db $96, $49, $20, $63, $61, $6E, $20, $6F, $66, $66, $65, $72, $20, $79, $6F, $75
     db $20, $31, $20, $4A, $65, $77, $65, $6C, $2E, $86, $00
 ; TEXT 1381 / $0565
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:45EC (compressed) -> $F4:$3C33 raw, 37 bytes
 ;   Text: <$87>Is it a deal?<S $3D $80> <Choice>Sure. <Choice>No thanks.<End>
@@ -18242,14 +18398,14 @@ V116_Text_1381:
     db $80, $0A, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 1382 / $0566
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4603 (compressed) -> $F4:$3C58 raw, 10 bytes
 ;   Text: <$87>Thanks.<PAGE><End>
 V116_Text_1382:
     db $87, $54, $68, $61, $6E, $6B, $73, $2E, $86, $00
 ; TEXT 1383 / $0567
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4608 (compressed) -> $F4:$3C62 raw, 96 bytes
 ;   Text: <$96>Hmmm… this is quite intriguing.<S $3D $80> I'm not sure what powers it has, but it could be
@@ -18262,7 +18418,7 @@ V116_Text_1383:
     db $68, $61, $73, $2C, $20, $62, $75, $74, $20, $69, $74, $20, $63, $6F, $75, $6C
     db $64, $20, $62, $65, $20, $76, $61, $6C, $75, $61, $62, $6C, $65, $2E, $86, $00
 ; TEXT 1384 / $0568
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4645 (compressed) -> $F4:$3CC2 raw, 93 bytes
 ;   Text: <$96>Interesting.<S $3D $80> This appears to be from a faraway land.<S $3D $80> But<S $1F $80> it is not of much value.<PAGE><End>
@@ -18274,7 +18430,7 @@ V116_Text_1384:
     db $1F, $80, $20, $69, $74, $20, $69, $73, $20, $6E, $6F, $74, $20, $6F, $66, $20
     db $6D, $75, $63, $68, $20, $76, $61, $6C, $75, $65, $2E, $86, $00
 ; TEXT 1385 / $0569
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4682 (compressed) -> $F4:$3D1F raw, 87 bytes
 ;   Text: <$96>Armor Polish gives body armor extra strength.<S $79 $80> It's quite useful out on the field.<PAGE><End>
@@ -18286,7 +18442,7 @@ V116_Text_1385:
     db $66, $75, $6C, $20, $6F, $75, $74, $20, $6F, $6E, $20, $74, $68, $65, $20, $66
     db $69, $65, $6C, $64, $2E, $86, $00
 ; TEXT 1386 / $056A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:46BC (compressed) -> $F4:$3D76 raw, 75 bytes
 ;   Text: <$96>The Ruby Heart is a mysterious jewel.<S $79 $80> It has power over your enemies.<PAGE><End>
@@ -18297,7 +18453,7 @@ V116_Text_1386:
     db $20, $70, $6F, $77, $65, $72, $20, $6F, $76, $65, $72, $20, $79, $6F, $75, $72
     db $20, $65, $6E, $65, $6D, $69, $65, $73, $2E, $86, $00
 ; TEXT 1387 / $056B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:46EC (compressed) -> $F4:$3DC1 raw, 74 bytes
 ;   Text: <$96>The Jade Disk will help to ensure that you will always hit your target.<PAGE><End>
@@ -18308,7 +18464,7 @@ V116_Text_1387:
     db $20, $61, $6C, $77, $61, $79, $73, $20, $68, $69, $74, $20, $79, $6F, $75, $72
     db $20, $74, $61, $72, $67, $65, $74, $2E, $86, $00
 ; TEXT 1388 / $056C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4718 (compressed) -> $F4:$3E0B raw, 49 bytes
 ;   Text: <$96>The Sun Stone will give you more attack power.<PAGE><End>
@@ -18318,7 +18474,7 @@ V116_Text_1388:
     db $65, $20, $61, $74, $74, $61, $63, $6B, $20, $70, $6F, $77, $65, $72, $2E, $86
     db $00
 ; TEXT 1389 / $056D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4734 (compressed) -> $F4:$3E3C raw, 75 bytes
 ;   Text: <$96>When you possess the Moxa Stick, your wounds will heal more efficiently.<PAGE><End>
@@ -18329,7 +18485,7 @@ V116_Text_1389:
     db $6C, $6C, $20, $68, $65, $61, $6C, $20, $6D, $6F, $72, $65, $20, $65, $66, $66
     db $69, $63, $69, $65, $6E, $74, $6C, $79, $2E, $86, $00
 ; TEXT 1390 / $056E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4761 (compressed) -> $F4:$3E87 raw, 53 bytes
 ;   Text: <$96>The Silver Sheath gives your sword extra strength.<PAGE><End>
@@ -18339,7 +18495,7 @@ V116_Text_1390:
     db $6F, $72, $64, $20, $65, $78, $74, $72, $61, $20, $73, $74, $72, $65, $6E, $67
     db $74, $68, $2E, $86, $00
 ; TEXT 1391 / $056F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:477D (compressed) -> $F4:$3EBC raw, 52 bytes
 ;   Text: <$96>I would be willing to offer you <Item> Jewels for your <End>
@@ -18349,7 +18505,7 @@ V116_Text_1391:
     db $20, $A2, $20, $4A, $65, $77, $65, $6C, $73, $20, $66, $6F, $72, $20, $79, $6F
     db $75, $72, $20, $00
 ; TEXT 1392 / $0570
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:479A (compressed) -> $F4:$3EF0 raw, 51 bytes
 ;   Text: <$96>I would be willing to offer you 1 Jewel for your <End>
@@ -18359,7 +18515,7 @@ V116_Text_1392:
     db $20, $31, $20, $4A, $65, $77, $65, $6C, $20, $66, $6F, $72, $20, $79, $6F, $75
     db $72, $20, $00
 ; TEXT 1393 / $0571
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:47BA (compressed) -> $F4:$3F23 raw, 32 bytes
 ;   Text: .<PAGE>Is it a deal?<S $3D $80> <Choice>OK <Choice>No way.<End>
@@ -18367,14 +18523,14 @@ V116_Text_1393:
     db $2E, $86, $49, $73, $20, $69, $74, $20, $61, $20, $64, $65, $61, $6C, $3F, $80
     db $3D, $80, $0A, $8B, $4F, $4B, $0A, $8B, $4E, $6F, $20, $77, $61, $79, $2E, $00
 ; TEXT 1394 / $0572
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:47D1 (compressed) -> $F4:$3F43 raw, 10 bytes
 ;   Text: <$87>Thanks.<PAGE><End>
 V116_Text_1394:
     db $87, $54, $68, $61, $6E, $6B, $73, $2E, $86, $00
 ; TEXT 1395 / $0573
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:47D6 (compressed) -> $F4:$3F4D raw, 90 bytes
 ;   Text: <$96>You've already traded for my most valuable item.<S $3D $80> I don't have anything else for
@@ -18387,7 +18543,7 @@ V116_Text_1395:
     db $65, $20, $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65, $6C, $73, $65, $20
     db $66, $6F, $72, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1396 / $0574
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4805 (compressed) -> $F4:$3FA7 raw, 175 bytes
 ;   Text: <$96>The Silver Sheath will give your sword more strength.<PAGE>I will trade it to you for the Sun
@@ -18406,7 +18562,7 @@ V116_Text_1396:
     db $61, $20, $64, $65, $61, $6C, $3F, $80, $3D, $80, $0A, $97, $8B, $53, $75, $72
     db $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1397 / $0575
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4868 (compressed) -> $F4:$4056 raw, 77 bytes
 ;   Text: <$87><$96>Will you trade the Sun Stone or other goods?<S $3D $80> <Choice><$97>Sun Stone.
@@ -18418,7 +18574,7 @@ V116_Text_1397:
     db $80, $0A, $8B, $97, $53, $75, $6E, $20, $53, $74, $6F, $6E, $65, $2E, $0A, $8B
     db $4F, $74, $68, $65, $72, $20, $67, $6F, $6F, $64, $73, $2E, $00
 ; TEXT 1398 / $0576
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4895 (compressed) -> $F4:$40A3 raw, 55 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You don't have the Sun Stone.<S $3D $80> No deal.<PAGE><End>
@@ -18428,7 +18584,7 @@ V116_Text_1398:
     db $75, $6E, $20, $53, $74, $6F, $6E, $65, $2E, $80, $3D, $80, $20, $4E, $6F, $20
     db $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 1399 / $0577
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:48B2 (compressed) -> $F4:$40DA raw, 47 bytes
 ;   Text: <$96><$87>It's a deal.<S $3D $80> Use the Silver Sheath well.<PAGE><End>
@@ -18437,7 +18593,7 @@ V116_Text_1399:
     db $80, $20, $55, $73, $65, $20, $74, $68, $65, $20, $53, $69, $6C, $76, $65, $72
     db $20, $53, $68, $65, $61, $74, $68, $20, $77, $65, $6C, $6C, $2E, $86, $00
 ; TEXT 1400 / $0578
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:48CC (compressed) -> $F4:$4109 raw, 47 bytes
 ;   Text: <$96><$87>It's a deal.<S $3D $80> Use the Silver Sheath well.<PAGE><End>
@@ -18446,7 +18602,7 @@ V116_Text_1400:
     db $80, $20, $55, $73, $65, $20, $74, $68, $65, $20, $53, $69, $6C, $76, $65, $72
     db $20, $53, $68, $65, $61, $74, $68, $20, $77, $65, $6C, $6C, $2E, $86, $00
 ; TEXT 1401 / $0579
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:48E6 (compressed) -> $F4:$4138 raw, 68 bytes
 ;   Text: <$96>I traded my best item to you already. I don't have anything else.<PAGE><End>
@@ -18457,7 +18613,7 @@ V116_Text_1401:
     db $61, $76, $65, $20, $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65, $6C, $73
     db $65, $2E, $86, $00
 ; TEXT 1402 / $057A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:490B (compressed) -> $F4:$417C raw, 178 bytes
 ;   Text: <$96>What you need, my friend, is the Gloves of Ra for power and protection in your arms.<PAGE>I
@@ -18477,7 +18633,7 @@ V116_Text_1402:
     db $61, $6C, $3F, $0A, $80, $3D, $80, $97, $8B, $4F, $4B, $2E, $0A, $8B, $4E, $6F
     db $2E, $00
 ; TEXT 1403 / $057B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4972 (compressed) -> $F4:$422E raw, 26 bytes
 ;   Text: <$96><$87>Thanks! Use them well.<PAGE><End>
@@ -18485,7 +18641,7 @@ V116_Text_1403:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $21, $20, $55, $73, $65, $20, $74, $68
     db $65, $6D, $20, $77, $65, $6C, $6C, $2E, $86, $00
 ; TEXT 1404 / $057C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4983 (compressed) -> $F4:$4248 raw, 188 bytes
 ;   Text: <$96>You can increase the protection and power of your arms with a Bronze Gauntlet.<PAGE>I'll trade
@@ -18505,7 +18661,7 @@ V116_Text_1404:
     db $0A, $97, $8B, $49, $74, $27, $73, $20, $61, $20, $64, $65, $61, $6C, $2E, $0A
     db $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 1405 / $057D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:49E7 (compressed) -> $F4:$4304 raw, 36 bytes
 ;   Text: <$96><$87>Excellent! Thanks for the trade!<PAGE><End>
@@ -18533,7 +18689,7 @@ V116_Text_1406:
     db $65, $74, $20, $77, $69, $6C, $6C, $20, $73, $6F, $6F, $6E, $20, $62, $65, $20
     db $65, $6D, $70, $74, $79, $2E, $86, $00
 ; TEXT 1407 / $057F
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_SQUARE
 ;   Provenance: $C1:4A30 (compressed) -> $FA:0158 raw, 66 bytes
 ;   Text: <$96>You may enter our city by the authority of our fearless leader.<PAGE><End>
@@ -20169,7 +20325,7 @@ V116_Text_1551:
     db $6B, $65, $20, $74, $68, $61, $74, $2E, $86, $43, $6F, $6D, $65, $20, $6F, $6E
     db $2C, $20, $82, $21, $00
 ; TEXT 1552 / $0610
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6294 (compressed) -> $FA:3C1F raw, 65 bytes
 ;   Text: <$96>Not so fast, kid.<S $3D $80> Our boss wants you to stay where you are.<PAGE><End>
@@ -20189,7 +20345,7 @@ V116_Text_1553:
     db $6D, $79, $20, $64, $6F, $67, $20, $62, $65, $68, $69, $6E, $64, $21, $80, $B5
     db $80, $20, $20, $00
 ; TEXT 1554 / $0612
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:62D8 (compressed) -> $FA:3C84 raw, 67 bytes
 ;   Text: <$96><$93>You can't go up this way.<S $8D $80> It's much too steep for you, buddy.<End>
@@ -20877,7 +21033,7 @@ V116_Text_1619:
     db $6F, $67, $20, $73, $74, $61, $74, $75, $65, $73, $20, $69, $6E, $20, $4E, $6F
     db $62, $69, $6C, $69, $61, $2E, $00
 ; TEXT 1620 / $0654
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6E27 (compressed) -> $FA:4C29 raw, 371 bytes
 ;   Text: <$96>It sounds like you've had a very interesting adventure indeed.<PAGE>I am Madronius, the
@@ -20911,7 +21067,7 @@ V116_Text_1620:
     db $63, $72, $6F, $73, $73, $20, $74, $68, $65, $73, $65, $20, $70, $69, $74, $73
     db $2E, $86, $00
 ; TEXT 1621 / $0655
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6EF0 (compressed) -> $FA:4D9C raw, 60 bytes
 ;   Text: <$96>We're counting on you to save the treasures of our world.<PAGE><End>
@@ -20921,7 +21077,7 @@ V116_Text_1621:
     db $68, $65, $20, $74, $72, $65, $61, $73, $75, $72, $65, $73, $20, $6F, $66, $20
     db $6F, $75, $72, $20, $77, $6F, $72, $6C, $64, $2E, $86, $00
 ; TEXT 1622 / $0656
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6F11 (compressed) -> $FA:4DD8 raw, 81 bytes
 ;   Text: <$96>Horace has left the camp.<S $3D $80> You might find him on the west bank of the
@@ -20934,7 +21090,7 @@ V116_Text_1622:
     db $6B, $20, $6F, $66, $20, $74, $68, $65, $20, $72, $69, $76, $65, $72, $2E, $86
     db $00
 ; TEXT 1623 / $0657
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6F40 (compressed) -> $FA:4E29 raw, 167 bytes
 ;   Text: <$96>I trust you're doing all you can to find the Diamond Eyes.<PAGE><$96>Here is the Escape Formula.<PAGE>It will allow you to leave underground areas and other interiors in a hurry.<PAGE><End>
@@ -20951,7 +21107,7 @@ V116_Text_1623:
     db $69, $6E, $74, $65, $72, $69, $6F, $72, $73, $20, $69, $6E, $20, $61, $20, $68
     db $75, $72, $72, $79, $2E, $86, $00
 ; TEXT 1624 / $0658
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6FA9 (compressed) -> $FA:4ED0 raw, 65 bytes
 ;   Text: <$96>The Escape Formula requires one part Wax and one part Vinegar.<PAGE><End>
@@ -20962,7 +21118,7 @@ V116_Text_1624:
     db $65, $20, $70, $61, $72, $74, $20, $56, $69, $6E, $65, $67, $61, $72, $2E, $86
     db $00
 ; TEXT 1625 / $0659
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6FD1 (compressed) -> $FA:4F11 raw, 60 bytes
 ;   Text: <$96>I hope that you're using your alchemy ingredients wisely.<PAGE><End>
@@ -20972,7 +21128,7 @@ V116_Text_1625:
     db $6C, $63, $68, $65, $6D, $79, $20, $69, $6E, $67, $72, $65, $64, $69, $65, $6E
     db $74, $73, $20, $77, $69, $73, $65, $6C, $79, $2E, $86, $00
 ; TEXT 1626 / $065A
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6FEC (compressed) -> $FA:4F4D raw, 144 bytes
 ;   Text: <$96>My brother is an alchemist as well.<S $3D $80> He has a hiding place in the Hall of
@@ -20988,7 +21144,7 @@ V116_Text_1626:
     db $75, $20, $66, $69, $6E, $64, $20, $68, $69, $6D, $2C, $20, $68, $65, $20, $6D
     db $69, $67, $68, $74, $20, $68, $65, $6C, $70, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 1627 / $065B
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:7040 (compressed) -> $FA:4FDD raw, 18 bytes
 ;   Text: <$96>Good luck, kid.<PAGE><End>
@@ -20996,7 +21152,7 @@ V116_Text_1627:
     db $96, $47, $6F, $6F, $64, $20, $6C, $75, $63, $6B, $2C, $20, $6B, $69, $64, $2E
     db $86, $00
 ; TEXT 1628 / $065C
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:7050 (compressed) -> $FA:4FEF raw, 19 bytes
 ;   Text: <$96><$96>Good luck, kid.<PAGE><End>
@@ -21097,7 +21253,7 @@ V116_Text_1637:
     db $52, $65, $63, $65, $69, $76, $65, $64, $20, $53, $70, $69, $6B, $79, $20, $43
     db $6F, $6C, $6C, $61, $72, $00
 ; TEXT 1638 / $0666
-;   Source/Theme: Sting alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Sting alchemist -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:7197 (compressed) -> $FA:521E raw, 56 bytes
 ;   Text: <$96>I hope that you are using your alchemy formulas well.<PAGE><End>
@@ -21107,7 +21263,7 @@ V116_Text_1638:
     db $61, $6C, $63, $68, $65, $6D, $79, $20, $66, $6F, $72, $6D, $75, $6C, $61, $73
     db $20, $77, $65, $6C, $6C, $2E, $86, $00
 ; TEXT 1639 / $0667
-;   Source/Theme: Sting alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Sting alchemist -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:71B3 (compressed) -> $FA:5256 raw, 18 bytes
 ;   Text: <$96><$87>See you later!<PAGE><End>
@@ -21115,7 +21271,7 @@ V116_Text_1639:
     db $96, $87, $53, $65, $65, $20, $79, $6F, $75, $20, $6C, $61, $74, $65, $72, $21
     db $86, $00
 ; TEXT 1640 / $0668
-;   Source/Theme: Sting alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Sting alchemist -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:71BF (compressed) -> $FA:5268 raw, 217 bytes
 ;   Text: <$96>It's a hot one today, isn't it?<S $79 $80> And the bad bugs are out, too!<PAGE>What you need is
@@ -21216,14 +21372,14 @@ V116_Text_0922:
     db $65, $20, $66, $6F, $72, $20, $74, $68, $61, $74, $20, $72, $6F, $63, $6B, $20
     db $74, $6F, $20, $66, $61, $6C, $6C, $21, $86, $00
 ; TEXT 0923 / $039B
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C0:7DC0 (compressed) -> $F7:$0196 raw, 16 bytes
 ;   Text: <$96>Well, friend…<PAGE><End>
 V116_Text_0923:
     db $96, $57, $65, $6C, $6C, $2C, $20, $66, $72, $69, $65, $6E, $64, $5F, $86, $00
 ; TEXT 0924 / $039C
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C0:7DCA (compressed) -> $F7:$01A6 raw, 399 bytes
 ;   Text: <$96>It's time for you to find your pooch and for me to continue my studies of things lighter than air.<PAGE>I hear that there's a great city on the other side of the desert, to the north.<PAGE>You might have luck looking for your dog there.<PAGE>You can cross over to the desert on my new bridge!<PAGE>Before you take off,<S $3D $80> I want you to have this Crush Formula.<PAGE>You can mix Limestone and Wax for enemy crushing power.<PAGE><End>
@@ -21652,7 +21808,7 @@ V116_Text_0956:
     db $65, $72, $20, $77, $69, $6C, $6C, $20, $62, $75, $79, $20, $79, $6F, $75, $20
     db $61, $20, $74, $72, $65, $61, $74, $2E, $86, $00
 ; TEXT 0957 / $03BD
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:052E (compressed) -> $F7:$0E43 raw, 88 bytes
 ;   Text: <$96>I have a variety of items for sale.<S $3D $80> I can offer them to you for a very fair
@@ -21665,7 +21821,7 @@ V116_Text_0957:
     db $66, $6F, $72, $20, $61, $20, $76, $65, $72, $79, $20, $66, $61, $69, $72, $20
     db $70, $72, $69, $63, $65, $2E, $86, $00
 ; TEXT 0958 / $03BE
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:0562 (compressed) -> $F7:$0E9B raw, 82 bytes
 ;   Text: <$96>Hello, little buddy.<S $3D $80> I'm sorry.<S $3D $80> I don't have any armor that you can
@@ -21678,7 +21834,7 @@ V116_Text_0958:
     db $61, $74, $20, $79, $6F, $75, $20, $63, $61, $6E, $20, $77, $65, $61, $72, $2E
     db $86, $00
 ; TEXT 0959 / $03BF
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:058B (compressed) -> $F7:$0EED raw, 80 bytes
 ;   Text: <$96>Hello, matey.<S $3D $80> You'll be wanting to buy some of my armor.<S $3D $80> It's the
@@ -21690,7 +21846,7 @@ V116_Text_0959:
     db $6F, $66, $20, $6D, $79, $20, $61, $72, $6D, $6F, $72, $2E, $80, $3D, $80, $20
     db $49, $74, $27, $73, $20, $74, $68, $65, $20, $62, $65, $73, $74, $2E, $86, $00
 ; TEXT 0960 / $03C0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:05B4 (compressed) -> $F7:$0F3D raw, 18 bytes
 ;   Text: Pssst… over here.<End>
@@ -21698,7 +21854,7 @@ V116_Text_0960:
     db $50, $73, $73, $73, $74, $5F, $20, $6F, $76, $65, $72, $20, $68, $65, $72, $65
     db $2E, $00
 ; TEXT 0961 / $03C1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:05C1 (compressed) -> $F7:$0F4F raw, 29 bytes
 ;   Text: Over here. Near the big box.<End>
@@ -21706,7 +21862,7 @@ V116_Text_0961:
     db $4F, $76, $65, $72, $20, $68, $65, $72, $65, $2E, $20, $4E, $65, $61, $72, $20
     db $74, $68, $65, $20, $62, $69, $67, $20, $62, $6F, $78, $2E, $00
 ; TEXT 0962 / $03C2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:05D4 (compressed) -> $F7:$0F6C raw, 62 bytes
 ;   Text: <$96>I can offer you this Amulet of Annihilation for 500 Jewels.<PAGE><End>
@@ -21716,7 +21872,7 @@ V116_Text_0962:
     db $41, $6E, $6E, $69, $68, $69, $6C, $61, $74, $69, $6F, $6E, $20, $66, $6F, $72
     db $20, $35, $30, $30, $20, $4A, $65, $77, $65, $6C, $73, $2E, $86, $00
 ; TEXT 0963 / $03C3
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:05F7 (compressed) -> $F7:$0FAA raw, 128 bytes
 ;   Text: <$96>Hello, my friend.<S $3D $80> Have I got a deal for you.<PAGE>I can offer you this rare and powerful Amulet of Annihilation for 500 Jewels.<PAGE><End>
@@ -21730,7 +21886,7 @@ V116_Text_0963:
     db $66, $20, $41, $6E, $6E, $69, $68, $69, $6C, $61, $74, $69, $6F, $6E, $20, $66
     db $6F, $72, $20, $35, $30, $30, $20, $4A, $65, $77, $65, $6C, $73, $2E, $86, $00
 ; TEXT 0964 / $03C4
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:0639 (compressed) -> $F7:$102A raw, 35 bytes
 ;   Text: <$96>Is it a deal? <S $3D $80><$97><Choice>Sure. <Choice>No way.<End>
@@ -21739,14 +21895,14 @@ V116_Text_0964:
     db $3D, $80, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $77, $61
     db $79, $2E, $00
 ; TEXT 0965 / $03C5
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:0652 (compressed) -> $F7:$104D raw, 16 bytes
 ;   Text: <$87><$96>OK,<S $3D $80> fine.<PAGE><End>
 V116_Text_0965:
     db $87, $96, $4F, $4B, $2C, $80, $3D, $80, $20, $66, $69, $6E, $65, $2E, $86, $00
 ; TEXT 0966 / $03C6
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:065E (compressed) -> $F7:$105D raw, 34 bytes
 ;   Text: <$87><$96>Are you sure? <Choice>Yes. <Choice>Forget it.<End>
@@ -21755,7 +21911,7 @@ V116_Text_0966:
     db $8B, $59, $65, $73, $2E, $0A, $8B, $46, $6F, $72, $67, $65, $74, $20, $69, $74
     db $2E, $00
 ; TEXT 0967 / $03C7
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:0678 (compressed) -> $F7:$107F raw, 34 bytes
 ;   Text: <$87><$96>It's probably better that way.<PAGE><End>
@@ -21764,7 +21920,7 @@ V116_Text_0967:
     db $62, $65, $74, $74, $65, $72, $20, $74, $68, $61, $74, $20, $77, $61, $79, $2E
     db $86, $00
 ; TEXT 0968 / $03C8
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:0689 (compressed) -> $F7:$10A1 raw, 285 bytes
 ;   Text: <$87><$96>Wow!<S $3D $80> I didn't think anyone would ever come up with the cash!<PAGE>I mean, you had to fight a lot of spiders and thieves to get that kind of money!<PAGE>Since you went to so much trouble to buy this basically worthless piece of<S $79 $80> c<S $8D $80>r<S $8D $80>a<S $C9 $80>ss jewelry.<PAGE>I'm going to throw in a free gift!<PAGE><End>
@@ -22523,7 +22679,7 @@ V116_Text_1043:
     db $68, $61, $76, $65, $20, $61, $20, $76, $69, $73, $69, $74, $6F, $72, $2E, $80
     db $F1, $80, $00
 ; TEXT 1044 / $0414
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $F1:34F0 (raw) -> $F7:$2065 raw, 54 bytes
 ;   Text: <$96><$93>Have you found the Diamond Eyes yet, Number Two?<S $2D $81><End>
@@ -22547,7 +22703,7 @@ V116_Text_1045:
     db $76, $65, $6E, $74, $75, $72, $65, $72, $73, $20, $61, $6C, $6F, $6E, $67, $20
     db $74, $68, $65, $20, $72, $69, $76, $65, $72, $2E, $80, $A5, $81, $00
 ; TEXT 1046 / $0416
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $F1:35A0 (raw) -> $F7:$2109 raw, 136 bytes
 ;   Text: <$96><$93>You entrusted this task to those unkempt primitives?<S $E1 $81><$87><S $21 $80><$93>Their
@@ -22592,7 +22748,7 @@ V116_Text_1048:
     db $6F, $72, $20, $68, $69, $6D, $20, $61, $6E, $64, $20, $68, $69, $73, $20, $64
     db $6F, $67, $2E, $80, $59, $82, $00
 ; TEXT 1049 / $0419
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $F1:3720 (raw) -> $F7:$2276 raw, 170 bytes
 ;   Text: <$96><$93>He has already disrupted one operation on the plateau.<S $1D $82><$87><S $21 $80><$93>Do
@@ -22643,7 +22799,7 @@ V116_Text_1052:
     db $6E, $64, $20, $74, $68, $6F, $73, $65, $20, $4F, $67, $6C, $69, $6E, $73, $21
     db $86, $00
 ; TEXT 1053 / $041D
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1319 (compressed) -> $F7:$23E0 raw, 44 bytes
 ;   Text: <$96>By Gum!<S $3D $80> It's my young friends <Boy> and <Dog>.<PAGE><End>
@@ -22652,7 +22808,7 @@ V116_Text_1053:
     db $20, $6D, $79, $20, $79, $6F, $75, $6E, $67, $20, $66, $72, $69, $65, $6E, $64
     db $73, $20, $81, $20, $61, $6E, $64, $20, $82, $2E, $86, $00
 ; TEXT 1054 / $041E
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1335 (compressed) -> $F7:$240C raw, 132 bytes
 ;   Text: I'm afraid I have unpleasant news to share with you.<PAGE>Tiny has set himself up as leader of the
@@ -22668,7 +22824,7 @@ V116_Text_1054:
     db $68, $73, $20, $6F, $66, $20, $74, $68, $65, $20, $70, $79, $72, $61, $6D, $69
     db $64, $2E, $86, $00
 ; TEXT 1055 / $041F
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1387 (compressed) -> $F7:$2490 raw, 101 bytes
 ;   Text: I fear the power has gone to his head.<PAGE>Should you try to talk some sense into him, be very
@@ -22682,7 +22838,7 @@ V116_Text_1055:
     db $6D, $2C, $20, $62, $65, $20, $76, $65, $72, $79, $20, $63, $61, $72, $65, $66
     db $75, $6C, $21, $86, $00
 ; TEXT 1056 / $0420
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:13BF (compressed) -> $F7:$24F5 raw, 107 bytes
 ;   Text: I discovered a formula in the palace library that may help you.<PAGE>It requires 1 Limestone and 2 parts Bone.<PAGE><End>
@@ -22730,7 +22886,7 @@ V116_Text_1059:
 V116_Text_1060:
     db $46, $6F, $75, $6E, $64, $20, $43, $61, $6C, $6C, $20, $42, $65, $61, $64, $00
 ; TEXT 1061 / $0425
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:145C (compressed) -> $F7:$25FB raw, 80 bytes
 ;   Text: <$96>Okay,<S $51 $80> sometimes we let people into the palace--sometimes even Sacred
@@ -22742,7 +22898,7 @@ V116_Text_1061:
     db $65, $2D, $2D, $73, $6F, $6D, $65, $74, $69, $6D, $65, $73, $20, $65, $76, $65
     db $6E, $20, $53, $61, $63, $72, $65, $64, $20, $44, $6F, $67, $73, $2E, $86, $00
 ; TEXT 1062 / $0426
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:148D (compressed) -> $F7:$264B raw, 73 bytes
 ;   Text: <$96>Uh…<S $3D $80> kid… <S $3D $80> sorry about that vowel crack. Come and go as you
@@ -22754,7 +22910,7 @@ V116_Text_1062:
     db $6F, $6D, $65, $20, $61, $6E, $64, $20, $67, $6F, $20, $61, $73, $20, $79, $6F
     db $75, $20, $77, $69, $73, $68, $2E, $86, $00
 ; TEXT 1063 / $0427
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:14BE (compressed) -> $F7:$2694 raw, 68 bytes
 ;   Text: <$96>OK, but watch it! <S $3D $80>I've got a level 3 axe with your name on it.<PAGE><End>
@@ -22765,7 +22921,7 @@ V116_Text_1063:
     db $68, $20, $79, $6F, $75, $72, $20, $6E, $61, $6D, $65, $20, $6F, $6E, $20, $69
     db $74, $2E, $86, $00
 ; TEXT 1064 / $0428
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:14EB (compressed) -> $F7:$26D8 raw, 29 bytes
 ;   Text: <$96>You may enter if you wish.<PAGE><End>
@@ -22773,7 +22929,7 @@ V116_Text_1064:
     db $96, $59, $6F, $75, $20, $6D, $61, $79, $20, $65, $6E, $74, $65, $72, $20, $69
     db $66, $20, $79, $6F, $75, $20, $77, $69, $73, $68, $2E, $86, $00
 ; TEXT 1065 / $0429
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:14FC (compressed) -> $F7:$26F5 raw, 60 bytes
 ;   Text: <$96>No one is admitted into the palace--not even Sacred Dogs.<PAGE><End>
@@ -22783,7 +22939,7 @@ V116_Text_1065:
     db $61, $63, $65, $2D, $2D, $6E, $6F, $74, $20, $65, $76, $65, $6E, $20, $53, $61
     db $63, $72, $65, $64, $20, $44, $6F, $67, $73, $2E, $86, $00
 ; TEXT 1066 / $042A
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1521 (compressed) -> $F7:$2731 raw, 93 bytes
 ;   Text: <$96>Hey, kid.<S $3D $80> The palace is closed.<S $3D $80> Get a clue.<S $79 $80> Buy a vowel.<S $3D
@@ -22796,7 +22952,7 @@ V116_Text_1066:
     db $6C, $2E, $80, $3D, $80, $20, $59, $6F, $75, $27, $72, $65, $20, $6E, $6F, $74
     db $20, $63, $6F, $6D, $69, $6E, $67, $20, $69, $6E, $2E, $86, $00
 ; TEXT 1067 / $042B
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:155D (compressed) -> $F7:$278E raw, 40 bytes
 ;   Text: <$96>You may not enter the palace grounds.<PAGE><End>
@@ -22805,7 +22961,7 @@ V116_Text_1067:
     db $65, $72, $20, $74, $68, $65, $20, $70, $61, $6C, $61, $63, $65, $20, $67, $72
     db $6F, $75, $6E, $64, $73, $2E, $86, $00
 ; TEXT 1068 / $042C
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1574 (compressed) -> $F7:$27B6 raw, 51 bytes
 ;   Text: <$96>What a nice Sacred Dog!<S $3D $80> Go on in if you want.<PAGE><End>
@@ -22815,7 +22971,7 @@ V116_Text_1068:
     db $6E, $20, $69, $6E, $20, $69, $66, $20, $79, $6F, $75, $20, $77, $61, $6E, $74
     db $2E, $86, $00
 ; TEXT 1069 / $042D
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1592 (compressed) -> $F7:$27E9 raw, 85 bytes
 ;   Text: <$96>It's OK to go through this gate.<S $3D $80> I mean it.<S $3D $80> I really do.<S $3D $80> I'm
@@ -22828,7 +22984,7 @@ V116_Text_1069:
     db $3D, $80, $20, $49, $27, $6D, $20, $6E, $6F, $74, $20, $6B, $69, $64, $64, $69
     db $6E, $67, $2E, $86, $00
 ; TEXT 1070 / $042E
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:15C3 (compressed) -> $F7:$283E raw, 84 bytes
 ;   Text: <$96>Sorry.<S $3D $80> We can't let anyone into the palace<S $3D $80> by order of our fearless leader.<PAGE><End>
@@ -22840,7 +22996,7 @@ V116_Text_1070:
     db $72, $20, $66, $65, $61, $72, $6C, $65, $73, $73, $20, $6C, $65, $61, $64, $65
     db $72, $2E, $86, $00
 ; TEXT 1071 / $042F
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:15F2 (compressed) -> $F7:$2892 raw, 41 bytes
 ;   Text: <$96>Don't you have something better to do?<PAGE><End>
@@ -22849,7 +23005,7 @@ V116_Text_1071:
     db $73, $6F, $6D, $65, $74, $68, $69, $6E, $67, $20, $62, $65, $74, $74, $65, $72
     db $20, $74, $6F, $20, $64, $6F, $3F, $86, $00
 ; TEXT 1072 / $0430
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1605 (compressed) -> $F7:$28BB raw, 75 bytes
 ;   Text: <$96>No one goes through this gate unless we say it's OK.<S $B5 $80> And it's not OK.<PAGE><End>
@@ -22860,7 +23016,7 @@ V116_Text_1072:
     db $73, $20, $4F, $4B, $2E, $80, $B5, $80, $20, $41, $6E, $64, $20, $69, $74, $27
     db $73, $20, $6E, $6F, $74, $20, $4F, $4B, $2E, $86, $00
 ; TEXT 1073 / $0431
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1634 (compressed) -> $F7:$2906 raw, 77 bytes
 ;   Text: <$96>Hey!<S $3D $80> You look a lot like this statue.<S $3D $80> Is there some connection
@@ -22872,7 +23028,7 @@ V116_Text_1073:
     db $74, $68, $65, $72, $65, $20, $73, $6F, $6D, $65, $20, $63, $6F, $6E, $6E, $65
     db $63, $74, $69, $6F, $6E, $20, $68, $65, $72, $65, $3F, $86, $00
 ; TEXT 1074 / $0432
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:165E (compressed) -> $F7:$2953 raw, 57 bytes
 ;   Text: <$96>Please do not play on or around the Sacred Dog statue.<PAGE><End>
@@ -22882,7 +23038,7 @@ V116_Text_1074:
     db $20, $74, $68, $65, $20, $53, $61, $63, $72, $65, $64, $20, $44, $6F, $67, $20
     db $73, $74, $61, $74, $75, $65, $2E, $86, $00
 ; TEXT 1075 / $0433
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:167A (compressed) -> $F7:$298C raw, 63 bytes
 ;   Text: <$96>Hey!<S $3D $80> You look like this statue.<S $3D $80> You're the Sacred Dog!<PAGE><End>
@@ -22892,7 +23048,7 @@ V116_Text_1075:
     db $75, $65, $2E, $80, $3D, $80, $20, $59, $6F, $75, $27, $72, $65, $20, $74, $68
     db $65, $20, $53, $61, $63, $72, $65, $64, $20, $44, $6F, $67, $21, $86, $00
 ; TEXT 1076 / $0434
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:169A (compressed) -> $F7:$29CB raw, 84 bytes
 ;   Text: <$96>I protect the statue.<S $79 $80> It's a very important job.<S $79 $80> I used to protect a
@@ -22905,7 +23061,7 @@ V116_Text_1076:
     db $6F, $20, $70, $72, $6F, $74, $65, $63, $74, $20, $61, $20, $73, $68, $72, $75
     db $62, $2E, $86, $00
 ; TEXT 1077 / $0435
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:16CF (compressed) -> $F7:$2A1F raw, 109 bytes
 ;   Text: <$96>We're not supposed to allow dogs on the grounds.<PAGE>But<S $5B $80> since you're the Sacred Dog,<S $5B $80> I guess you're OK.<PAGE><End>
@@ -22918,7 +23074,7 @@ V116_Text_1077:
     db $20, $44, $6F, $67, $2C, $80, $5B, $80, $20, $49, $20, $67, $75, $65, $73, $73
     db $20, $79, $6F, $75, $27, $72, $65, $20, $4F, $4B, $2E, $86, $00
 ; TEXT 1078 / $0436
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1714 (compressed) -> $F7:$2A8C raw, 475 bytes
 ;   Text: <$96>Please adhere to the following rules of the city square:<PAGE><$87>No swimming.<S $6F $80><$87>No swearing.<S $6F $80><$87>No laughing.<S $6F $80><$87>No crying.<S $5B $80><$87>No talking out of turn.<S $5B $80><$87>No line dancing.<S $5B $80><$87>No moose calling.<S $5B $80><$87>No swordplay.<S $5B $80><$87>No pumpkin carving.<S $5B $80><$87>No mummified cat juggling.<S $5B $80><$87>No wallowing in your own self-pity.<S $65 $80><$87>No circumstantial evidence.<S $5B $80><$87>No walking on the grass.<S $51 $80><$87>No pancakes on Monday.<S $51 $80><$87>No dessert until you eat your vegetables.<S $51 $80><$87>No slapstick comedy.<S $47 $80><$87>No balloon animals.<S $47 $80><End>
@@ -22954,7 +23110,7 @@ V116_Text_1078:
     db $80, $47, $80, $87, $4E, $6F, $20, $62, $61, $6C, $6C, $6F, $6F, $6E, $20, $61
     db $6E, $69, $6D, $61, $6C, $73, $2E, $80, $47, $80, $00
 ; TEXT 1079 / $0437
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1872 (compressed) -> $F7:$2C67 raw, 79 bytes
 ;   Text: <$87>And absolutely,<S $3D $80> positively,<S $3D $80> no playing in the crater.<S $79 $80> It
@@ -22966,7 +23122,7 @@ V116_Text_1079:
     db $20, $74, $68, $65, $20, $63, $72, $61, $74, $65, $72, $2E, $80, $79, $80, $0A
     db $49, $74, $20, $75, $70, $73, $65, $74, $73, $20, $6D, $65, $2E, $86, $00
 ; TEXT 1080 / $0438
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:18AC (compressed) -> $F7:$2CB6 raw, 77 bytes
 ;   Text: <$87>And absolutely,<S $3D $80> positively,<S $3D $80> no barking like a seal.<S $79 $80> It upsets
@@ -22978,7 +23134,7 @@ V116_Text_1080:
     db $6B, $65, $20, $61, $20, $73, $65, $61, $6C, $2E, $80, $79, $80, $20, $49, $74
     db $20, $75, $70, $73, $65, $74, $73, $20, $6D, $65, $2E, $86, $00
 ; TEXT 1081 / $0439
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:18E2 (compressed) -> $F7:$2D03 raw, 149 bytes
 ;   Text: <$96>No one is allowed onto the palace grounds--<S $3D $80> not even the Sacred Dog.<PAGE><$96>Don't
@@ -22995,7 +23151,7 @@ V116_Text_1081:
     db $69, $63, $6B, $2C, $20, $6C, $69, $6B, $65, $20, $74, $68, $65, $20, $77, $69
     db $6E, $64, $2E, $86, $00
 ; TEXT 1082 / $043A
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:1937 (compressed) -> $F7:$2D98 raw, 111 bytes
 ;   Text: <$96>Don't try to get around me and enter the palace grounds.<PAGE>I'm warning you, I'm quick--<S
@@ -23009,7 +23165,7 @@ V116_Text_1082:
     db $75, $69, $63, $6B, $2D, $2D, $80, $3D, $80, $71, $75, $69, $63, $6B, $20, $6C
     db $69, $6B, $65, $20, $74, $68, $65, $20, $77, $69, $6E, $64, $2E, $86, $00
 ; TEXT 1083 / $043B
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:197A (compressed) -> $F7:$2E07 raw, 105 bytes
 ;   Text: <$96>Your statue used to be right here.<S $3D $80> Now it's not.<PAGE>I am rewarded well for my keen
@@ -23023,7 +23179,7 @@ V116_Text_1083:
     db $65, $65, $6E, $20, $73, $65, $6E, $73, $65, $20, $6F, $66, $20, $61, $77, $61
     db $72, $65, $6E, $65, $73, $73, $2E, $86, $00
 ; TEXT 1084 / $043C
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:19B6 (compressed) -> $F7:$2E70 raw, 75 bytes
 ;   Text: <$96>I used to protect the Sacred Dog statue.<S $79 $80> Now I protect this big hole.<PAGE><End>
@@ -23034,7 +23190,7 @@ V116_Text_1084:
     db $20, $49, $20, $70, $72, $6F, $74, $65, $63, $74, $20, $74, $68, $69, $73, $20
     db $62, $69, $67, $20, $68, $6F, $6C, $65, $2E, $86, $00
 ; TEXT 1085 / $043D
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:19E6 (compressed) -> $F7:$2EBB raw, 34 bytes
 ;   Text: <$96>There are worse jobs than mine.<$85><End>
@@ -23583,7 +23739,7 @@ V116_Text_1132:
     db $61, $79, $2C, $20, $74, $68, $65, $20, $77, $6F, $72, $73, $65, $20, $69, $74
     db $20, $77, $69, $6C, $6C, $20, $67, $65, $74, $21, $80, $F1, $80, $00
 ; TEXT 1133 / $046D
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $F1:1E40 (raw) -> $F7:$3CF3 raw, 60 bytes
 ;   Text: <$96>Horace, if the boy is right, you should leave immediately.<End>
@@ -23614,7 +23770,7 @@ V116_Text_1135:
     db $61, $6E, $2C, $20, $4D, $61, $64, $72, $6F, $6E, $69, $75, $73, $2E, $80, $05
     db $81, $00
 ; TEXT 1136 / $0470
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:22B2 (compressed) -> $F7:$3DA7 raw, 37 bytes
 ;   Text: <$93><$96><$87>As are you, Horace Highwater.<S $B5 $80> <End>
@@ -23623,7 +23779,7 @@ V116_Text_1136:
     db $6F, $72, $61, $63, $65, $20, $48, $69, $67, $68, $77, $61, $74, $65, $72, $2E
     db $80, $B5, $80, $20, $00
 ; TEXT 1137 / $0471
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:22CC (compressed) -> $F7:$3DCC raw, 39 bytes
 ;   Text: <$93><$96>It has been an honor knowing you.<S $2D $81><End>
@@ -25398,7 +25554,7 @@ V116_Text_1857:
     db $65, $20, $68, $69, $64, $65, $6F, $75, $73, $20, $74, $68, $61, $6E, $20, $7B
     db $54, $68, $65, $20, $42, $6C, $6F, $62, $7D, $21, $86, $00
 ; TEXT 1858 / $0742
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7A73 (compressed) -> $FB:11DF raw, 79 bytes
 ;   Text: <$96>What a relief!<S $79 $80><$87>That beast was about to suck up my hut,<S $79 $80> and me with
@@ -25410,7 +25566,7 @@ V116_Text_1858:
     db $75, $70, $20, $6D, $79, $20, $68, $75, $74, $2C, $80, $79, $80, $20, $61, $6E
     db $64, $20, $6D, $65, $20, $77, $69, $74, $68, $20, $69, $74, $21, $86, $00
 ; TEXT 1859 / $0743
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7AA8 (compressed) -> $FB:122E raw, 53 bytes
 ;   Text: <$96>Thanks to you,<S $3D $80> it's sunk for sure!<S $3D $80> Good job!<PAGE><End>
@@ -25428,7 +25584,7 @@ V116_Text_1860:
     db $96, $55, $68, $2C, $80, $1F, $80, $20, $6E, $6F, $20, $70, $72, $6F, $62, $6C
     db $65, $6D, $2E, $86, $00
 ; TEXT 1861 / $0745
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7ADD (compressed) -> $FB:1278 raw, 67 bytes
 ;   Text: <$96>You can call me `Blimp.'<S $3D $80> I work with Swamp Gas and Fume Bugs.<PAGE><End>
@@ -25448,7 +25604,7 @@ V116_Text_1862:
     db $6C, $61, $69, $6E, $73, $20, $74, $68, $65, $20, $73, $74, $65, $6E, $63, $68
     db $21, $86, $00
 ; TEXT 1863 / $0747
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7B28 (compressed) -> $FB:12DE raw, 86 bytes
 ;   Text: <$96>Hmm<S $0B $80>.<S $0B $80>.<S $0B $80>.<S $0B $80>I haven't noticed.<S $3D $80> Come on in,
@@ -25469,7 +25625,7 @@ V116_Text_1864:
     db $73, $68, $6F, $75, $6C, $64, $20, $6E, $6F, $74, $20, $73, $65, $65, $20, $74
     db $68, $69, $73, $00
 ; TEXT 1865 / $0749
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7B68 (compressed) -> $FB:1348 raw, 79 bytes
 ;   Text: <$96>Hey, kid!<S $3D $80> Give me a hand with this snake!<S $3D $80> It's getting out of
@@ -25631,7 +25787,7 @@ V116_Text_1880:
     db $96, $4D, $61, $64, $72, $6F, $6E, $69, $75, $73, $3F, $80, $3D, $80, $20, $49
     db $73, $20, $74, $68, $61, $74, $20, $79, $6F, $75, $3F, $86, $00
 ; TEXT 1881 / $0759
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7DA4 (compressed) -> $FB:16D2 raw, 70 bytes
 ;   Text: <$96>I'm not Madronius,<S $3D $80> but I am his brother.<S $3D $80> How do you know him?<PAGE><End>
@@ -25655,7 +25811,7 @@ V116_Text_1882:
     db $61, $6E, $64, $20, $66, $69, $6E, $64, $20, $74, $68, $65, $20, $44, $69, $61
     db $6D, $6F, $6E, $64, $20, $45, $79, $65, $73, $2E, $86, $00
 ; TEXT 1883 / $075B
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7DFC (compressed) -> $FB:1774 raw, 52 bytes
 ;   Text: <$96>It's a good idea to collect the Diamond Eyes now.<PAGE><End>
@@ -25665,7 +25821,7 @@ V116_Text_1883:
     db $20, $44, $69, $61, $6D, $6F, $6E, $64, $20, $45, $79, $65, $73, $20, $6E, $6F
     db $77, $2E, $86, $00
 ; TEXT 1884 / $075C
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7E17 (compressed) -> $FB:17A8 raw, 53 bytes
 ;   Text: I hear that there are others looking for them, too.<PAGE><End>
@@ -25675,7 +25831,7 @@ V116_Text_1884:
     db $6B, $69, $6E, $67, $20, $66, $6F, $72, $20, $74, $68, $65, $6D, $2C, $20, $74
     db $6F, $6F, $2E, $86, $00
 ; TEXT 1885 / $075D
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7E32 (compressed) -> $FB:17DD raw, 60 bytes
 ;   Text: I can help you on your journey with this Fireball Formula.<PAGE><End>
@@ -25685,7 +25841,7 @@ V116_Text_1885:
     db $69, $74, $68, $20, $74, $68, $69, $73, $20, $46, $69, $72, $65, $62, $61, $6C
     db $6C, $20, $46, $6F, $72, $6D, $75, $6C, $61, $2E, $86, $00
 ; TEXT 1886 / $075E
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7E50 (compressed) -> $FB:1819 raw, 80 bytes
 ;   Text: <$96>You'll need one part Brimstone and two parts Ash in order to use the formula.<PAGE><End>
@@ -25696,7 +25852,7 @@ V116_Text_1886:
     db $68, $20, $69, $6E, $20, $6F, $72, $64, $65, $72, $20, $74, $6F, $20, $75, $73
     db $65, $20, $74, $68, $65, $20, $66, $6F, $72, $6D, $75, $6C, $61, $2E, $86, $00
 ; TEXT 1887 / $075F
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7E80 (compressed) -> $FB:1869 raw, 68 bytes
 ;   Text: <$96>You're a fine dog,<S $3D $80> and you've got good hunting instincts, too!<PAGE><End>
@@ -25707,7 +25863,7 @@ V116_Text_1887:
     db $6E, $67, $20, $69, $6E, $73, $74, $69, $6E, $63, $74, $73, $2C, $20, $74, $6F
     db $6F, $21, $86, $00
 ; TEXT 1888 / $0760
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7EA4 (compressed) -> $FB:18AD raw, 78 bytes
 ;   Text: <$96>Here's a nice collar for you.<S $3D $80> It'll protect you in difficult situations.<PAGE><End>
@@ -25726,7 +25882,7 @@ V116_Text_1889:
     db $52, $65, $63, $65, $69, $76, $65, $64, $20, $53, $70, $69, $6B, $79, $20, $43
     db $6F, $6C, $6C, $61, $72, $00
 ; TEXT 1890 / $0762
-;   Source/Theme: Madronius's brother -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius's brother -> $03 Generic NPC [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7EE4 (compressed) -> $FB:1911 raw, 89 bytes
 ;   Text: <$96>I hope that you are using your ingredients wisely.<S $3D $80> They're hard to come by in
@@ -26007,7 +26163,7 @@ V116_Text_1917:
 V116_Text_1918:
     db $96, $49, $27, $6D, $20, $6E, $6F, $74, $20, $73, $75, $72, $65, $2E, $00
 ; TEXT 1919 / $077F
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_FINALE
 ;   Provenance: $C2:02D6 (compressed) -> $FB:25E3 raw, 51 bytes
 ;   Text: <$96>Horace!<S $3D $80> We have important news from the camp!<PAGE><End>
@@ -26026,7 +26182,7 @@ V116_Text_1920:
     db $61, $64, $72, $6F, $6E, $69, $75, $73, $2E, $80, $3D, $80, $20, $57, $68, $61
     db $74, $20, $69, $73, $20, $69, $74, $3F, $86, $00
 ; TEXT 1921 / $0781
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 ;   Arena: HORACE_FINALE
 ;   Provenance: $C2:0307 (compressed) -> $FB:2640 raw, 145 bytes
 ;   Text: <$96>The explosion just north of the camp opened up an entrance to a very large tunnel!<PAGE>This tunnel may lead to unexplored territories of Evermore!<PAGE><End>
@@ -26318,7 +26474,7 @@ V116_Text_1950:
 V116_Text_1951:
     db $47, $61, $76, $65, $20, $61, $77, $61, $79, $20, $4B, $65, $79, $00
 ; TEXT 1952 / $07A0
-;   Source/Theme: Gothica formula-giver -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica formula-giver -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:06A9 (compressed) -> $FB:3372 raw, 113 bytes
 ;   Text: <$96>Well, thank you very much indeed!<S $3D $80> You're very helpful!<PAGE>I can help you with a
@@ -26333,7 +26489,7 @@ V116_Text_1952:
     db $6C, $63, $68, $65, $6D, $79, $20, $66, $6F, $72, $6D, $75, $6C, $61, $2E, $86
     db $00
 ; TEXT 1953 / $07A1
-;   Source/Theme: Gothica formula-giver -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica formula-giver -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:06E2 (compressed) -> $FB:33E3 raw, 60 bytes
 ;   Text: <$96>It requires 1 part Brimstone and 1 Feather for every use.<PAGE><End>
@@ -26762,7 +26918,7 @@ V116_Text_1990:
     db $96, $47, $6F, $20, $61, $77, $61, $79, $2C, $20, $79, $6F, $75, $20, $70, $75
     db $74, $72, $69, $64, $20, $70, $75, $70, $21, $86, $00
 ; TEXT 1991 / $07C7
-;   Source/Theme: Eronio -> $09 Guard / Authority [fixed]
+;   Source/Theme: Eronio -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0D34 (compressed) -> $FB:3E64 raw, 61 bytes
 ;   Text: <$96><$87>Your Majesty.<S $51 $80> I've brought the prisoners as requested.<PAGE><End>
@@ -26772,7 +26928,7 @@ V116_Text_1991:
     db $74, $68, $65, $20, $70, $72, $69, $73, $6F, $6E, $65, $72, $73, $20, $61, $73
     db $20, $72, $65, $71, $75, $65, $73, $74, $65, $64, $2E, $86, $00
 ; TEXT 1992 / $07C8
-;   Source/Theme: Eronio -> $09 Guard / Authority [fixed]
+;   Source/Theme: Eronio -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0D5C (compressed) -> $FB:3EA1 raw, 17 bytes
 ;   Text: <$96>Your Highness.<$85><End>
@@ -26797,7 +26953,7 @@ V116_Text_1994:
     db $20, $61, $6E, $64, $20, $68, $69, $73, $2E, $2E, $2E, $20, $70, $69, $67, $64
     db $6F, $67, $3F, $86, $00
 ; TEXT 1995 / $07CB
-;   Source/Theme: Eronio -> $09 Guard / Authority [fixed]
+;   Source/Theme: Eronio -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $F1:4040 (raw) -> $FB:3EF6 raw, 51 bytes
 ;   Text: <$96>I've sent them across the ravine, Your Highness.<$85><End>
@@ -26815,7 +26971,7 @@ V116_Text_1996:
     db $96, $41, $6E, $64, $20, $69, $66, $20, $74, $68, $65, $79, $20, $72, $65, $61
     db $63, $68, $20, $45, $62, $6F, $6E, $20, $4B, $65, $65, $70, $3F, $85, $00
 ; TEXT 1997 / $07CD
-;   Source/Theme: Eronio -> $09 Guard / Authority [fixed]
+;   Source/Theme: Eronio -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $F1:40A0 (raw) -> $FB:3F48 raw, 46 bytes
 ;   Text: <$96>The dragons should take care of them first.<PAGE><End>
@@ -26824,7 +26980,7 @@ V116_Text_1997:
     db $75, $6C, $64, $20, $74, $61, $6B, $65, $20, $63, $61, $72, $65, $20, $6F, $66
     db $20, $74, $68, $65, $6D, $20, $66, $69, $72, $73, $74, $2E, $86, $00
 ; TEXT 1998 / $07CE
-;   Source/Theme: Eronio -> $09 Guard / Authority [fixed]
+;   Source/Theme: Eronio -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $F1:40D0 (raw) -> $FB:3F76 raw, 56 bytes
 ;   Text: If they survive, I'll deal with them when they return.<$85><End>
@@ -26874,7 +27030,7 @@ V116_Text_2002:
     db $87, $96, $4F, $68, $20, $6E, $6F, $21, $80, $3D, $80, $20, $41, $20, $47, $75
     db $61, $72, $64, $21, $85, $00
 ; TEXT 2003 / $07D3
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0EED (compressed) -> $FB:407A raw, 44 bytes
 ;   Text: <$87><$96>Stay right where you are, little mister!<PAGE><End>
@@ -26883,7 +27039,7 @@ V116_Text_2003:
     db $72, $65, $20, $79, $6F, $75, $20, $61, $72, $65, $2C, $20, $6C, $69, $74, $74
     db $6C, $65, $20, $6D, $69, $73, $74, $65, $72, $21, $86, $00
 ; TEXT 2004 / $07D4
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0F05 (compressed) -> $FB:40A6 raw, 95 bytes
 ;   Text: <$87><$96>Thought you could escape?<S $51 $80> Didn't you?<PAGE><$87><$96>Well, I've got orders to bring you to the queen.<PAGE><End>
@@ -26895,7 +27051,7 @@ V116_Text_2004:
     db $72, $73, $20, $74, $6F, $20, $62, $72, $69, $6E, $67, $20, $79, $6F, $75, $20
     db $74, $6F, $20, $74, $68, $65, $20, $71, $75, $65, $65, $6E, $2E, $86, $00
 ; TEXT 2005 / $07D5
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0F48 (compressed) -> $FB:4105 raw, 74 bytes
 ;   Text: <$87><$96>You're coming with me!<S $65 $80> Sniff… <S $3D $80>Sniff… <S $3D $80> Do you smell
@@ -26960,7 +27116,7 @@ V116_Text_2010:
     db $57, $68, $65, $77, $21, $20, $80, $3D, $80, $54, $68, $61, $74, $20, $77, $61
     db $73, $20, $63, $6C, $6F, $73, $65, $21, $85, $00
 ; TEXT 2011 / $07DB
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:1064 (compressed) -> $FB:4277 raw, 51 bytes
 ;   Text: <$96>I hate my job enough without dealing with mutts!<$85><End>
@@ -26970,7 +27126,7 @@ V116_Text_2011:
     db $61, $6C, $69, $6E, $67, $20, $77, $69, $74, $68, $20, $6D, $75, $74, $74, $73
     db $21, $85, $00
 ; TEXT 2012 / $07DC
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:1083 (compressed) -> $FB:42AA raw, 53 bytes
 ;   Text: <$96>I'm so lonely. I wish my brother George were here.<$85><End>
@@ -26980,7 +27136,7 @@ V116_Text_2012:
     db $72, $20, $47, $65, $6F, $72, $67, $65, $20, $77, $65, $72, $65, $20, $68, $65
     db $72, $65, $2E, $85, $00
 ; TEXT 2013 / $07DD
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:10A4 (compressed) -> $FB:42DF raw, 99 bytes
 ;   Text: <$96>So what if I sleep on the job! I'm guarding rubble. Rubble, I say!<S $65 $80> Oh, the shame… the
@@ -26994,7 +27150,7 @@ V116_Text_2013:
     db $68, $61, $6D, $65, $5F, $20, $74, $68, $65, $20, $73, $68, $61, $6D, $65, $5F
     db $20, $85, $00
 ; TEXT 2014 / $07DE
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:10E9 (compressed) -> $FB:4342 raw, 147 bytes
 ;   Text: <$96>Boy, I tell you.<S $51 $80> You goof one assignment and they send you off to guard
@@ -27060,7 +27216,7 @@ V116_Text_2020:
     db $68, $69, $73, $20, $68, $6F, $6C, $65, $20, $69, $6E, $20, $74, $68, $65, $20
     db $77, $61, $6C, $6C, $21, $86, $00
 ; TEXT 2021 / $07E5
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:11AE (compressed) -> $FB:4477 raw, 58 bytes
 ;   Text: <$96>OK, boys. Welcome to your new home. <PAGE>Now, get in there!<PAGE><End>
@@ -27070,7 +27226,7 @@ V116_Text_2021:
     db $6F, $6D, $65, $2E, $20, $86, $4E, $6F, $77, $2C, $20, $67, $65, $74, $20, $69
     db $6E, $20, $74, $68, $65, $72, $65, $21, $86, $00
 ; TEXT 2022 / $07E6
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:11D4 (compressed) -> $FB:44B1 raw, 62 bytes
 ;   Text: <$96>Make yourselves comfy. You're going to be here a long time.<PAGE><End>
@@ -27087,7 +27243,7 @@ V116_Text_2022:
 V116_Text_2023:
     db $54, $6F, $6F, $20, $53, $6C, $69, $70, $70, $65, $72, $79, $00
 ; TEXT 2024 / $07E8
-;   Source/Theme: Gothica formula-giver -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica formula-giver -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:1204 (compressed) -> $FB:44FC raw, 47 bytes
 ;   Text: <$96>Thank you very much for visiting an old man!<PAGE><End>
@@ -27096,7 +27252,7 @@ V116_Text_2024:
     db $6D, $75, $63, $68, $20, $66, $6F, $72, $20, $76, $69, $73, $69, $74, $69, $6E
     db $67, $20, $61, $6E, $20, $6F, $6C, $64, $20, $6D, $61, $6E, $21, $86, $00
 ; TEXT 2025 / $07E9
-;   Source/Theme: Gothica formula-giver -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica formula-giver -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:121F (compressed) -> $FB:452B raw, 87 bytes
 ;   Text: I can teach you a powerful alchemy formula.<PAGE>It requires 1 Mushroom and 3 parts
@@ -27109,7 +27265,7 @@ V116_Text_2025:
     db $6F, $6D, $20, $61, $6E, $64, $20, $33, $20, $70, $61, $72, $74, $73, $20, $57
     db $61, $74, $65, $72, $2E, $86, $00
 ; TEXT 2026 / $07EA
-;   Source/Theme: Gothica formula-giver -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica formula-giver -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:1250 (compressed) -> $FB:4582 raw, 74 bytes
 ;   Text: Would you like to equip or unequip your formulas? <S $3D $80><Choice>Sure. <Choice>Maybe later.<End>
@@ -27637,7 +27793,7 @@ V116_Text_2066:
     db $6F, $6D, $65, $20, $6F, $74, $68, $65, $72, $20, $74, $69, $6D, $65, $2E, $86
     db $00
 ; TEXT 2067 / $0813
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1ACF (compressed) -> $F5:2140 raw, 90 bytes
 ;   Text: <$96>I can offer finely crafted beads to you for the incredible price of 15 Gold Coins
@@ -27650,7 +27806,7 @@ V116_Text_2067:
     db $65, $20, $6F, $66, $20, $31, $35, $20, $47, $6F, $6C, $64, $20, $43, $6F, $69
     db $6E, $73, $20, $65, $61, $63, $68, $2E, $86, $00
 ; TEXT 2068 / $0814
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1B08 (compressed) -> $F5:219A raw, 51 bytes
 ;   Text: Would you like to make a purchase?<S $3D $80> <$97><Choice>Sure. <Choice>No.<End>
@@ -27660,7 +27816,7 @@ V116_Text_2068:
     db $65, $3F, $80, $3D, $80, $0A, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E
     db $6F, $2E, $00
 ; TEXT 2069 / $0815
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1B27 (compressed) -> $F5:21CD raw, 38 bytes
 ;   Text: <$87><$96>How many beads? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -27669,7 +27825,7 @@ V116_Text_2069:
     db $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77, $6F, $2E, $0A, $8B, $54
     db $68, $72, $65, $65, $2E, $00
 ; TEXT 2070 / $0816
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1B48 (compressed) -> $F5:21F3 raw, 37 bytes
 ;   Text: <$96><$87>It's a deal.<S $1F $80> Enjoy your beads.<PAGE><End>
@@ -27678,7 +27834,7 @@ V116_Text_2070:
     db $80, $20, $45, $6E, $6A, $6F, $79, $20, $79, $6F, $75, $72, $20, $62, $65, $61
     db $64, $73, $2E, $86, $00
 ; TEXT 2071 / $0817
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1B5E (compressed) -> $F5:2218 raw, 74 bytes
 ;   Text: <$96>Good for trading and cooking, my spices are only 12 Gold Coins per jar.<PAGE><End>
@@ -27689,7 +27845,7 @@ V116_Text_2071:
     db $79, $20, $31, $32, $20, $47, $6F, $6C, $64, $20, $43, $6F, $69, $6E, $73, $20
     db $70, $65, $72, $20, $6A, $61, $72, $2E, $86, $00
 ; TEXT 2072 / $0818
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1B8C (compressed) -> $F5:2262 raw, 47 bytes
 ;   Text: What do you say? <$97><Choice>I'll take some. <Choice>I'll pass.<End>
@@ -27698,7 +27854,7 @@ V116_Text_2072:
     db $0A, $97, $8B, $49, $27, $6C, $6C, $20, $74, $61, $6B, $65, $20, $73, $6F, $6D
     db $65, $2E, $0A, $8B, $49, $27, $6C, $6C, $20, $70, $61, $73, $73, $2E, $00
 ; TEXT 2073 / $0819
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1BA9 (compressed) -> $F5:2291 raw, 37 bytes
 ;   Text: <$87><$96>How many jars? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -27707,7 +27863,7 @@ V116_Text_2073:
     db $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77, $6F, $2E, $0A, $8B, $54, $68
     db $72, $65, $65, $2E, $00
 ; TEXT 2074 / $081A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1BCB (compressed) -> $F5:22B6 raw, 25 bytes
 ;   Text: <$96><$87>Good deal!<S $3D $80> Thanks.<PAGE><End>
@@ -27715,7 +27871,7 @@ V116_Text_2074:
     db $96, $87, $47, $6F, $6F, $64, $20, $64, $65, $61, $6C, $21, $80, $3D, $80, $20
     db $54, $68, $61, $6E, $6B, $73, $2E, $86, $00
 ; TEXT 2075 / $081B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1BD8 (compressed) -> $F5:22CF raw, 73 bytes
 ;   Text: <$96>If you want some real firepower, you should load up on Bazooka Shells.<PAGE><End>
@@ -27726,7 +27882,7 @@ V116_Text_2075:
     db $64, $20, $75, $70, $20, $6F, $6E, $20, $42, $61, $7A, $6F, $6F, $6B, $61, $20
     db $53, $68, $65, $6C, $6C, $73, $2E, $86, $00
 ; TEXT 2076 / $081C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1C06 (compressed) -> $F5:2318 raw, 68 bytes
 ;   Text: I can offer Thunderball Shells for 10 Coins. <Choice>I'll buy! <Choice>No thanks.<End>
@@ -27737,7 +27893,7 @@ V116_Text_2076:
     db $6C, $6C, $20, $62, $75, $79, $21, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E
     db $6B, $73, $2E, $00
 ; TEXT 2077 / $081D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1C32 (compressed) -> $F5:235C raw, 42 bytes
 ;   Text: <$87><$96>How many shells? <Choice>Five. <Choice>Ten. <Choice>Fifteen.<End>
@@ -27746,7 +27902,7 @@ V116_Text_2077:
     db $73, $3F, $0A, $8B, $46, $69, $76, $65, $2E, $0A, $8B, $54, $65, $6E, $2E, $0A
     db $8B, $46, $69, $66, $74, $65, $65, $6E, $2E, $00
 ; TEXT 2078 / $081E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1C55 (compressed) -> $F5:2386 raw, 25 bytes
 ;   Text: <$96><$87>Good deal!<S $3D $80> Thanks.<PAGE><End>
@@ -27754,7 +27910,7 @@ V116_Text_2078:
     db $96, $87, $47, $6F, $6F, $64, $20, $64, $65, $61, $6C, $21, $80, $3D, $80, $20
     db $54, $68, $61, $6E, $6B, $73, $2E, $86, $00
 ; TEXT 2079 / $081F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1C62 (compressed) -> $F5:239F raw, 46 bytes
 ;   Text: <$96>We're sold out!<S $3D $80> You got the last ticket!<PAGE><End>
@@ -27763,7 +27919,7 @@ V116_Text_2079:
     db $80, $3D, $80, $20, $59, $6F, $75, $20, $67, $6F, $74, $20, $74, $68, $65, $20
     db $6C, $61, $73, $74, $20, $74, $69, $63, $6B, $65, $74, $21, $86, $00
 ; TEXT 2080 / $0820
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1C7E (compressed) -> $F5:23CD raw, 225 bytes
 ;   Text: <$96>You have not seen anything until you've seen Perceval Plank's Exhibition of Oddities.<PAGE>A
@@ -27786,7 +27942,7 @@ V116_Text_2080:
     db $53, $6F, $6D, $65, $20, $6F, $74, $68, $65, $72, $20, $74, $69, $6D, $65, $2E
     db $00
 ; TEXT 2081 / $0821
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1D01 (compressed) -> $F5:24AE raw, 104 bytes
 ;   Text: <$87><$96>Thank you very much.<S $3D $80> The exhibition is at the north end of the alley to the
@@ -27800,7 +27956,7 @@ V116_Text_2081:
     db $20, $77, $65, $73, $74, $2E, $86, $45, $6E, $6A, $6F, $79, $20, $74, $68, $65
     db $20, $73, $68, $6F, $77, $21, $86, $00
 ; TEXT 2082 / $0822
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1D39 (compressed) -> $F5:2516 raw, 121 bytes
 ;   Text: <$87><$96>Uh, pardon me?<S $3D $80> Do I look like a sucker?<PAGE>You don't have an Amulet of
@@ -27815,7 +27971,7 @@ V116_Text_2082:
     db $6F, $20, $41, $6D, $75, $6C, $65, $74, $2C, $80, $79, $80, $20, $6E, $6F, $20
     db $74, $69, $63, $6B, $65, $74, $2E, $86, $00
 ; TEXT 2083 / $0823
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1D7D (compressed) -> $F5:258F raw, 78 bytes
 ;   Text: <$96>You already traded for my best item.<S $3D $80> I don't have anything else for you.<PAGE><End>
@@ -27826,7 +27982,7 @@ V116_Text_2083:
     db $20, $68, $61, $76, $65, $20, $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65
     db $6C, $73, $65, $20, $66, $6F, $72, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 2084 / $0824
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1DA3 (compressed) -> $F5:25DD raw, 244 bytes
 ;   Text: <$96>The Oracle Bone can make people say things that they would not otherwise say.<PAGE>The person
@@ -27850,7 +28006,7 @@ V116_Text_2084:
     db $6C, $3F, $0A, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $77
     db $61, $79, $2E, $00
 ; TEXT 2085 / $0825
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1E37 (compressed) -> $F5:26D1 raw, 77 bytes
 ;   Text: <$87><$96>Thank you.<S $3D $80> May you learn much from your possession of the Oracle
@@ -27862,7 +28018,7 @@ V116_Text_2085:
     db $73, $65, $73, $73, $69, $6F, $6E, $20, $6F, $66, $20, $74, $68, $65, $20, $4F
     db $72, $61, $63, $6C, $65, $20, $42, $6F, $6E, $65, $2E, $86, $00
 ; TEXT 2086 / $0826
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1E66 (compressed) -> $F5:271E raw, 72 bytes
 ;   Text: <$87><$96>I'm sorry.<S $3D $80> You don't have the items that I require for the trade.<PAGE><End>
@@ -27873,7 +28029,7 @@ V116_Text_2086:
     db $72, $65, $71, $75, $69, $72, $65, $20, $66, $6F, $72, $20, $74, $68, $65, $20
     db $74, $72, $61, $64, $65, $2E, $86, $00
 ; TEXT 2087 / $0827
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1E8C (compressed) -> $F5:2766 raw, 88 bytes
 ;   Text: <$96>Sorry, kid.<S $3D $80> You have the Thug's Cloak already.<PAGE>I don't have anything else for
@@ -27886,7 +28042,7 @@ V116_Text_2087:
     db $61, $6E, $79, $74, $68, $69, $6E, $67, $20, $65, $6C, $73, $65, $20, $66, $6F
     db $72, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 2088 / $0828
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1EBF (compressed) -> $F5:27BE raw, 194 bytes
 ;   Text: <$96>With the Thug's Cloak in your possession, you'll be able to evade attacks more
@@ -27907,7 +28063,7 @@ V116_Text_2088:
     db $49, $20, $64, $6F, $6E, $27, $74, $20, $74, $68, $69, $6E, $6B, $20, $73, $6F
     db $2E, $00
 ; TEXT 2089 / $0829
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1F3C (compressed) -> $F5:2880 raw, 59 bytes
 ;   Text: <$87><$96>Good choice.<S $3D $80> The Thug's Cloak will help you greatly.<PAGE><End>
@@ -27917,7 +28073,7 @@ V116_Text_2089:
     db $61, $6B, $20, $77, $69, $6C, $6C, $20, $68, $65, $6C, $70, $20, $79, $6F, $75
     db $20, $67, $72, $65, $61, $74, $6C, $79, $2E, $86, $00
 ; TEXT 2090 / $082A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1F65 (compressed) -> $F5:28BB raw, 60 bytes
 ;   Text: <$87><$96>You don't have enough goods to swing the deal.<S $3D $80> Sorry.<PAGE><End>
@@ -27927,7 +28083,7 @@ V116_Text_2090:
     db $20, $73, $77, $69, $6E, $67, $20, $74, $68, $65, $20, $64, $65, $61, $6C, $2E
     db $80, $3D, $80, $20, $53, $6F, $72, $72, $79, $2E, $86, $00
 ; TEXT 2091 / $082B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1F83 (compressed) -> $F5:28F7 raw, 55 bytes
 ;   Text: <$96>I'm sorry.<S $3D $80> I only exchange Gold Coins for humans.<PAGE><End>
@@ -27937,7 +28093,7 @@ V116_Text_2091:
     db $6F, $6C, $64, $20, $43, $6F, $69, $6E, $73, $20, $66, $6F, $72, $20, $68, $75
     db $6D, $61, $6E, $73, $2E, $86, $00
 ; TEXT 2092 / $082C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1FA2 (compressed) -> $F5:292E raw, 118 bytes
 ;   Text: <$96>I provide Gold Coins in exchange for other types of money.<PAGE>Would you like to exchange
@@ -27952,7 +28108,7 @@ V116_Text_2092:
     db $73, $3F, $0A, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68
     db $61, $6E, $6B, $73, $2E, $00
 ; TEXT 2093 / $082D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:1FDF (compressed) -> $F5:29A4 raw, 164 bytes
 ;   Text: <$96>You will absolutely love this beautifully scented perfume.<PAGE>I can give it to you for only
@@ -27970,7 +28126,7 @@ V116_Text_2093:
     db $20, $74, $72, $61, $64, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E
     db $6B, $73, $2E, $00
 ; TEXT 2094 / $082E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:203E (compressed) -> $F5:2A48 raw, 40 bytes
 ;   Text: <$87><$96>How many bottles? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -27979,7 +28135,7 @@ V116_Text_2094:
     db $65, $73, $3F, $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77, $6F, $2E, $0A
     db $8B, $54, $68, $72, $65, $65, $2E, $00
 ; TEXT 2095 / $082F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2062 (compressed) -> $F5:2A70 raw, 34 bytes
 ;   Text: <$96><$87>The deal is sealed.<S $3D $80> Thanks.<PAGE><End>
@@ -27988,7 +28144,7 @@ V116_Text_2095:
     db $61, $6C, $65, $64, $2E, $80, $3D, $80, $20, $54, $68, $61, $6E, $6B, $73, $2E
     db $86, $00
 ; TEXT 2096 / $0830
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2074 (compressed) -> $F5:2A92 raw, 138 bytes
 ;   Text: <$96>You're not allowed in the castle.<S $79 $80> Only the queen and other important people may
@@ -28004,7 +28160,7 @@ V116_Text_2096:
     db $64, $69, $65, $73, $20, $6C, $69, $6B, $65, $20, $79, $6F, $75, $20, $73, $74
     db $61, $79, $20, $61, $77, $61, $79, $2E, $86, $00
 ; TEXT 2097 / $0831
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:20BC (compressed) -> $F5:2B1C raw, 145 bytes
 ;   Text: <$96>The queen has a more {open-door} policy than her evil robot twin had.<PAGE>I think it's for the
@@ -28021,7 +28177,7 @@ V116_Text_2097:
     db $69, $67, $68, $74, $20, $73, $68, $69, $70, $2C, $20, $74, $6F, $6F, $21, $86
     db $00
 ; TEXT 2098 / $0832
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:211C (compressed) -> $F5:2BAD raw, 96 bytes
 ;   Text: <$96>The queen said that you could enter the castle.<S $79 $80> But make sure to wipe your feet
@@ -28034,7 +28190,7 @@ V116_Text_2098:
     db $65, $20, $74, $6F, $20, $77, $69, $70, $65, $20, $79, $6F, $75, $72, $20, $66
     db $65, $65, $74, $20, $66, $69, $72, $73, $74, $2C, $20, $4F, $4B, $3F, $86, $00
 ; TEXT 2099 / $0833
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2155 (compressed) -> $F5:2C0D raw, 71 bytes
 ;   Text: <$96>Uh,<S $3D $80> excuse me.<S $79 $80> There are no dogs allowed in the castle,<S $79 $80>
@@ -28046,7 +28202,7 @@ V116_Text_2099:
     db $69, $6E, $20, $74, $68, $65, $20, $63, $61, $73, $74, $6C, $65, $2C, $80, $79
     db $80, $20, $4F, $4B, $3F, $86, $00
 ; TEXT 2100 / $0834
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2182 (compressed) -> $F5:2C54 raw, 77 bytes
 ;   Text: <$96>You and your master may enter the castle.<S $79 $80> But don't touch anything, OK?<PAGE><End>
@@ -28416,7 +28572,7 @@ V116_Text_2128:
     db $46, $6F, $75, $6E, $64, $20, $41, $6D, $75, $6C, $65, $74, $20, $6F, $66, $20
     db $41, $6E, $6E, $69, $68, $69, $6C, $61, $74, $69, $6F, $6E, $00
 ; TEXT 2129 / $0851
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2774 (compressed) -> $F5:369F raw, 116 bytes
 ;   Text: <$96>Well, hello, friend.<S $3D $80> My name's Lance.<S $3D $80> I live here.<PAGE>You're not messing
@@ -28446,7 +28602,7 @@ V116_Text_2130:
     db $75, $74, $20, $79, $6F, $75, $72, $20, $70, $65, $72, $6D, $69, $73, $73, $69
     db $6F, $6E, $2E, $86, $00
 ; TEXT 2131 / $0853
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:27F5 (compressed) -> $F5:3788 raw, 60 bytes
 ;   Text: <$96>That's good!<S $3D $80> You're a nice kid!<S $3D $80> Where are you from?<PAGE><End>
@@ -28465,7 +28621,7 @@ V116_Text_2132:
     db $65, $20, $6F, $6E, $20, $61, $6E, $20, $61, $64, $76, $65, $6E, $74, $75, $72
     db $65, $2E, $86, $00
 ; TEXT 2133 / $0855
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2824 (compressed) -> $F5:37E8 raw, 24 bytes
 ;   Text: <$96>That's the spirit!<S $79 $80> <End>
@@ -28473,7 +28629,7 @@ V116_Text_2133:
     db $96, $54, $68, $61, $74, $27, $73, $20, $74, $68, $65, $20, $73, $70, $69, $72
     db $69, $74, $21, $80, $79, $80, $20, $00
 ; TEXT 2134 / $0856
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2833 (compressed) -> $F5:3800 raw, 51 bytes
 ;   Text: I like to go out into uncharted territory myself.<PAGE><End>
@@ -28483,7 +28639,7 @@ V116_Text_2134:
     db $74, $65, $72, $72, $69, $74, $6F, $72, $79, $20, $6D, $79, $73, $65, $6C, $66
     db $2E, $86, $00
 ; TEXT 2135 / $0857
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:2856 (compressed) -> $F5:3833 raw, 45 bytes
 ;   Text: <$96>I've found quite a few treasures that way.<PAGE><End>
@@ -28492,7 +28648,7 @@ V116_Text_2135:
     db $65, $20, $61, $20, $66, $65, $77, $20, $74, $72, $65, $61, $73, $75, $72, $65
     db $73, $20, $74, $68, $61, $74, $20, $77, $61, $79, $2E, $86, $00
 ; TEXT 2136 / $0858
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:286E (compressed) -> $F5:3860 raw, 110 bytes
 ;   Text: <$96>Say!<S $79 $80> Here's something that you might appreciate.<PAGE>It's my very own alchemy
@@ -28506,7 +28662,7 @@ V116_Text_2136:
     db $72, $6D, $75, $6C, $61, $2E, $80, $79, $80, $20, $49, $20, $63, $61, $6C, $6C
     db $20, $69, $74, $20, $7B, $4C, $61, $6E, $63, $65, $2E, $7D, $86, $00
 ; TEXT 2137 / $0859
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:28AB (compressed) -> $F5:38CE raw, 78 bytes
 ;   Text: <$96>Just mix Iron with Acorn and you'll hit mean creatures with a sharp attack.<PAGE><End>
@@ -28517,7 +28673,7 @@ V116_Text_2137:
     db $65, $61, $74, $75, $72, $65, $73, $20, $77, $69, $74, $68, $20, $61, $20, $73
     db $68, $61, $72, $70, $20, $61, $74, $74, $61, $63, $6B, $2E, $86, $00
 ; TEXT 2138 / $085A
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:28D9 (compressed) -> $F5:391C raw, 109 bytes
 ;   Text: <$96>Feel free to look through my treasure chests.<PAGE>You might find something that you can use on
@@ -28531,7 +28687,7 @@ V116_Text_2138:
     db $20, $63, $61, $6E, $20, $75, $73, $65, $20, $6F, $6E, $20, $79, $6F, $75, $72
     db $20, $61, $64, $76, $65, $6E, $74, $75, $72, $65, $2E, $86, $00
 ; TEXT 2139 / $085B
-;   Source/Theme: Lance -> $0B Adventurer [fixed]
+;   Source/Theme: Lance -> $09 Lance [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:290D (compressed) -> $F5:3989 raw, 80 bytes
 ;   Text: <$96>You don't look like the adventuring sort, pup.<S $3D $80> But looks can be
@@ -29384,7 +29540,7 @@ V116_Text_2203:
     db $20, $68, $69, $6D, $20, $69, $6E, $20, $61, $20, $77, $68, $69, $6C, $65, $2E
     db $86, $00
 ; TEXT 2204 / $089C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3779 (compressed) -> $F5:51FD raw, 56 bytes
 ;   Text: <$96>Sorry, pup.<S $79 $80> I only deal with two-legged creatures.<PAGE><End>
@@ -29394,7 +29550,7 @@ V116_Text_2204:
     db $20, $74, $77, $6F, $2D, $6C, $65, $67, $67, $65, $64, $20, $63, $72, $65, $61
     db $74, $75, $72, $65, $73, $2E, $86, $00
 ; TEXT 2205 / $089D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:379A (compressed) -> $F5:5235 raw, 26 bytes
 ;   Text: <$96>No.<S $3D $80> That won't work.<PAGE><End>
@@ -29402,7 +29558,7 @@ V116_Text_2205:
     db $96, $4E, $6F, $2E, $80, $3D, $80, $20, $54, $68, $61, $74, $20, $77, $6F, $6E
     db $27, $74, $20, $77, $6F, $72, $6B, $2E, $86, $00
 ; TEXT 2206 / $089E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:37AC (compressed) -> $F5:524F raw, 90 bytes
 ;   Text: <$96>I sell the finest armor and goods in town.<PAGE>You'll not find a better deal anywhere
@@ -29415,7 +29571,7 @@ V116_Text_2206:
     db $74, $74, $65, $72, $20, $64, $65, $61, $6C, $20, $61, $6E, $79, $77, $68, $65
     db $72, $65, $20, $65, $6C, $73, $65, $21, $86, $00
 ; TEXT 2207 / $089F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:37DF (compressed) -> $F5:52A9 raw, 84 bytes
 ;   Text: <$96><$87>What can I do for you?<S $5B $80> <$87><$97><Choice>Buy items. <Choice>Sell items.
@@ -29428,14 +29584,14 @@ V116_Text_2207:
     db $6F, $6E, $65, $79, $2E, $0A, $8B, $4E, $65, $76, $65, $72, $20, $6D, $69, $6E
     db $64, $2E, $96, $00
 ; TEXT 2208 / $08A0
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:381B (compressed) -> $F5:52FD raw, 14 bytes
 ;   Text: <$87>Come again.<PAGE><End>
 V116_Text_2208:
     db $87, $43, $6F, $6D, $65, $20, $61, $67, $61, $69, $6E, $2E, $86, $00
 ; TEXT 2209 / $08A1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3824 (compressed) -> $F5:530B raw, 65 bytes
 ;   Text: <$96><$87>What can I do for you? <$97><Choice>Buy items. <Choice>Sell items.
@@ -29447,7 +29603,7 @@ V116_Text_2209:
     db $73, $2E, $0A, $8B, $4E, $65, $76, $65, $72, $20, $6D, $69, $6E, $64, $2E, $96
     db $00
 ; TEXT 2210 / $08A2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3851 (compressed) -> $F5:534C raw, 52 bytes
 ;   Text: <$96><$87>Will you purchase armor or goods? <Choice>Armor. <Choice>Goods.<End>
@@ -29457,7 +29613,7 @@ V116_Text_2210:
     db $64, $73, $3F, $0A, $8B, $41, $72, $6D, $6F, $72, $2E, $0A, $8B, $47, $6F, $6F
     db $64, $73, $2E, $00
 ; TEXT 2211 / $08A3
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3872 (compressed) -> $F5:5380 raw, 48 bytes
 ;   Text: <$96><$87>Will you sell armor or goods? <Choice>Armor. <Choice>Goods.<End>
@@ -29528,7 +29684,7 @@ V116_Text_2217:
     db $69, $65, $73, $20, $66, $6F, $72, $20, $43, $6F, $69, $6E, $73, $20, $61, $74
     db $20, $74, $68, $65, $20, $73, $68, $6F, $70, $2E, $86, $00
 ; TEXT 2218 / $08AA
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:397C (compressed) -> $F5:552B raw, 61 bytes
 ;   Text: <$96>You look {dog-tired.} Ha! That's a little innkeeper humor!<PAGE><End>
@@ -29538,7 +29694,7 @@ V116_Text_2218:
     db $73, $20, $61, $20, $6C, $69, $74, $74, $6C, $65, $20, $69, $6E, $6E, $6B, $65
     db $65, $70, $65, $72, $20, $68, $75, $6D, $6F, $72, $21, $86, $00
 ; TEXT 2219 / $08AB
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:39A5 (compressed) -> $F5:5568 raw, 64 bytes
 ;   Text: <$96>Good luck.<S $3D $80> I hope that your adventure is a successful one.<PAGE><End>
@@ -29548,7 +29704,7 @@ V116_Text_2219:
     db $61, $64, $76, $65, $6E, $74, $75, $72, $65, $20, $69, $73, $20, $61, $20, $73
     db $75, $63, $63, $65, $73, $73, $66, $75, $6C, $20, $6F, $6E, $65, $2E, $86, $00
 ; TEXT 2220 / $08AC
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:39CB (compressed) -> $F5:55A8 raw, 38 bytes
 ;   Text: <$96>Hello, <Boy>.<S $3D $80> Nice to see you again.<PAGE><End>
@@ -29557,7 +29713,7 @@ V116_Text_2220:
     db $63, $65, $20, $74, $6F, $20, $73, $65, $65, $20, $79, $6F, $75, $20, $61, $67
     db $61, $69, $6E, $2E, $86, $00
 ; TEXT 2221 / $08AD
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:39E4 (compressed) -> $F5:55CE raw, 94 bytes
 ;   Text: <$96><$87>I'm handling business on both sides of the building because of the lack of people in
@@ -29570,7 +29726,7 @@ V116_Text_2221:
     db $20, $74, $68, $65, $20, $6C, $61, $63, $6B, $20, $6F, $66, $20, $70, $65, $6F
     db $70, $6C, $65, $20, $69, $6E, $20, $74, $6F, $77, $6E, $2E, $86, $00
 ; TEXT 2222 / $08AE
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3A1D (compressed) -> $F5:562C raw, 29 bytes
 ;   Text: <$96>Would you like to stay? <S $3D $80><End>
@@ -29578,7 +29734,7 @@ V116_Text_2222:
     db $96, $57, $6F, $75, $6C, $64, $20, $79, $6F, $75, $20, $6C, $69, $6B, $65, $20
     db $74, $6F, $20, $73, $74, $61, $79, $3F, $20, $80, $3D, $80, $00
 ; TEXT 2223 / $08AF
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3A2F (compressed) -> $F5:5649 raw, 53 bytes
 ;   Text: The rate is 50 Gold Coins. <$97><Choice>We'll stay. <Choice>No thanks.<End>
@@ -29588,7 +29744,7 @@ V116_Text_2223:
     db $6C, $6C, $20, $73, $74, $61, $79, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 2224 / $08B0
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3A53 (compressed) -> $F5:567E raw, 31 bytes
 ;   Text: <$87><$96>I hope you had a good rest.<PAGE><End>
@@ -29596,7 +29752,7 @@ V116_Text_2224:
     db $87, $96, $49, $20, $68, $6F, $70, $65, $20, $79, $6F, $75, $20, $68, $61, $64
     db $20, $61, $20, $67, $6F, $6F, $64, $20, $72, $65, $73, $74, $2E, $86, $00
 ; TEXT 2225 / $08B1
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3A67 (compressed) -> $F5:569D raw, 60 bytes
 ;   Text: <$96><$87>You can exchange other currencies for Coins at the shop.<PAGE><End>
@@ -29606,7 +29762,7 @@ V116_Text_2225:
     db $69, $65, $73, $20, $66, $6F, $72, $20, $43, $6F, $69, $6E, $73, $20, $61, $74
     db $20, $74, $68, $65, $20, $73, $68, $6F, $70, $2E, $86, $00
 ; TEXT 2226 / $08B2
-;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Cecil -> $16 Cecil [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3A83 (compressed) -> $F5:56D9 raw, 74 bytes
 ;   Text: <$96>Hello, fluffy pup.<S $3D $80> I'm sure that you're a lot tougher than you look.<PAGE><End>
@@ -29828,7 +29984,7 @@ V116_Text_2243:
     db $52, $65, $63, $65, $69, $76, $65, $64, $20, $54, $68, $75, $6E, $64, $65, $72
     db $62, $61, $6C, $6C, $20, $70, $72, $6F, $6A, $65, $63, $74, $69, $6C, $65, $00
 ; TEXT 2244 / $08C4
-;   Source/Theme: Gothica alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica alchemist -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3E00 (compressed) -> $F5:5CC1 raw, 69 bytes
 ;   Text: <$96>You're that nice young man who helped our town! Thank you so much!<PAGE><End>
@@ -29839,7 +29995,7 @@ V116_Text_2244:
     db $20, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $20, $73, $6F, $20, $6D, $75
     db $63, $68, $21, $86, $00
 ; TEXT 2245 / $08C5
-;   Source/Theme: Gothica alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica alchemist -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3E25 (compressed) -> $F5:5D06 raw, 73 bytes
 ;   Text: <$96>My alchemy business has all but dried up. <S $51 $80>I'm thinking of retiring.<PAGE><End>
@@ -29850,7 +30006,7 @@ V116_Text_2245:
     db $6D, $20, $74, $68, $69, $6E, $6B, $69, $6E, $67, $20, $6F, $66, $20, $72, $65
     db $74, $69, $72, $69, $6E, $67, $2E, $86, $00
 ; TEXT 2246 / $08C6
-;   Source/Theme: Gothica alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica alchemist -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3E52 (compressed) -> $F5:5D4F raw, 107 bytes
 ;   Text: You're such a cutie!<S $51 $80> Let me teach you a useful alchemy formula.<PAGE>It requires 1 Acorn
@@ -29864,7 +30020,7 @@ V116_Text_2246:
     db $20, $41, $63, $6F, $72, $6E, $20, $61, $6E, $64, $20, $32, $20, $70, $61, $72
     db $74, $73, $20, $57, $61, $74, $65, $72, $2E, $86, $00
 ; TEXT 2247 / $08C7
-;   Source/Theme: Gothica alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Gothica alchemist -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3E92 (compressed) -> $F5:5DBA raw, 74 bytes
 ;   Text: Would you like to equip or unequip your formulas? <S $3D $80><Choice>Sure. <Choice>Maybe later.<End>
@@ -29902,21 +30058,21 @@ V116_Text_2249:
 org $F61400
 V116_Arena_CAMELLIA_EBON_KEEP:
 ; TEXT 2250 / $08CA
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3EFA (compressed) -> $F6:1400 raw, 11 bytes
 ;   Text: <$96>Halt!<S $3D $80> <End>
 V116_Text_2250:
     db $96, $48, $61, $6C, $74, $21, $80, $3D, $80, $20, $00
 ; TEXT 2251 / $08CB
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3F03 (compressed) -> $F6:140B raw, 16 bytes
 ;   Text: Stop!<S $3D $80> Wait!<PAGE><End>
 V116_Text_2251:
     db $53, $74, $6F, $70, $21, $80, $3D, $80, $20, $57, $61, $69, $74, $21, $86, $00
 ; TEXT 2252 / $08CC
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3F0F (compressed) -> $F6:141B raw, 36 bytes
 ;   Text: <$96>Who are you?<S $79 $80> What do you want?<PAGE><End>
@@ -29953,7 +30109,7 @@ V116_Text_2255:
     db $73, $20, $74, $6F, $20, $6F, $70, $65, $6E, $20, $74, $68, $65, $20, $64, $72
     db $61, $77, $62, $72, $69, $64, $67, $65, $21, $86, $00
 ; TEXT 2256 / $08D0
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3F74 (compressed) -> $F6:14C2 raw, 34 bytes
 ;   Text: <$96>That imposter sent you here!<S $79 $80> <End>
@@ -29962,7 +30118,7 @@ V116_Text_2256:
     db $65, $6E, $74, $20, $79, $6F, $75, $20, $68, $65, $72, $65, $21, $80, $79, $80
     db $20, $00
 ; TEXT 2257 / $08D1
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3F86 (compressed) -> $F6:14E4 raw, 69 bytes
 ;   Text: <$96>And she wants you to open our drawbridge?<PAGE>Oh!<S $79 $80> This won't do!<S $79 $80> <End>
@@ -29973,7 +30129,7 @@ V116_Text_2257:
     db $80, $20, $54, $68, $69, $73, $20, $77, $6F, $6E, $27, $74, $20, $64, $6F, $21
     db $80, $79, $80, $20, $00
 ; TEXT 2258 / $08D2
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3FB1 (compressed) -> $F6:1529 raw, 21 bytes
 ;   Text: We can't have this!<PAGE><End>
@@ -29981,7 +30137,7 @@ V116_Text_2258:
     db $57, $65, $20, $63, $61, $6E, $27, $74, $20, $68, $61, $76, $65, $20, $74, $68
     db $69, $73, $21, $86, $00
 ; TEXT 2259 / $08D3
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3FBC (compressed) -> $F6:153E raw, 77 bytes
 ;   Text: <$96>Please,<S $3D $80> I implore you,<S $3D $80> before you do anything rash,<S $79 $80> come with
@@ -29993,7 +30149,7 @@ V116_Text_2259:
     db $68, $69, $6E, $67, $20, $72, $61, $73, $68, $2C, $80, $79, $80, $20, $63, $6F
     db $6D, $65, $20, $77, $69, $74, $68, $20, $6D, $65, $21, $86, $00
 ; TEXT 2260 / $08D4
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:3FE7 (compressed) -> $F6:158B raw, 39 bytes
 ;   Text: <$96>There is someone that you must meet!<PAGE><End>
@@ -30126,7 +30282,7 @@ V116_Text_2272:
     db $07, $80, $68, $65, $80, $07, $80, $20, $63, $80, $07, $80, $61, $73, $80, $07
     db $80, $74, $6C, $80, $07, $80, $65, $21, $80, $DD, $80, $00
 ; TEXT 2273 / $08E1
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:4335 (compressed) -> $F6:17DC raw, 56 bytes
 ;   Text: <$96>Please follow these stairs and speak to Her Highness.<PAGE><End>
@@ -30551,7 +30707,7 @@ V116_Text_2315:
     db $65, $20, $69, $6E, $20, $74, $68, $65, $20, $67, $6C, $61, $73, $73, $2E, $86
     db $00
 ; TEXT 2318 / $090E
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4A1C (compressed) -> $F6:2431 raw, 82 bytes
 ;   Text: <$96>I deal with scientific matters--<S $3D $80> mechanical inventions,<S $3D $80> alchemy
@@ -30564,7 +30720,7 @@ V116_Text_2318:
     db $6C, $63, $68, $65, $6D, $79, $20, $66, $6F, $72, $6D, $75, $6C, $61, $73, $5F
     db $86, $00
 ; TEXT 2319 / $090F
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4A4A (compressed) -> $F6:2483 raw, 72 bytes
 ;   Text: <$96>I trust that the queen has told you about our imposter in Ivor Tower?<PAGE><End>
@@ -30592,7 +30748,7 @@ V116_Text_2321:
     db $69, $6E, $73, $20, $65, $76, $65, $72, $20, $73, $69, $6E, $63, $65, $20, $77
     db $65, $20, $6C, $65, $66, $74, $20, $50, $6F, $64, $75, $6E, $6B, $21, $86, $00
 ; TEXT 2322 / $0912
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4AA2 (compressed) -> $F6:2516 raw, 63 bytes
 ;   Text: <$96>Oh!<S $3D $80> You're from the same place that our queen hails from!<PAGE><End>
@@ -30681,7 +30837,7 @@ V116_Text_2328:
     db $68, $65, $72, $65, $20, $65, $76, $65, $72, $20, $73, $69, $6E, $63, $65, $2E
     db $86, $00
 ; TEXT 2329 / $0919
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4C21 (compressed) -> $F6:2797 raw, 59 bytes
 ;   Text: <$96>I think I know of this place in space that you speak of!<PAGE><End>
@@ -30691,7 +30847,7 @@ V116_Text_2329:
     db $20, $73, $70, $61, $63, $65, $20, $74, $68, $61, $74, $20, $79, $6F, $75, $20
     db $73, $70, $65, $61, $6B, $20, $6F, $66, $21, $86, $00
 ; TEXT 2330 / $091A
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4C44 (compressed) -> $F6:27D2 raw, 37 bytes
 ;   Text: <$96>I've seen it through my telescope!<PAGE><End>
@@ -30700,7 +30856,7 @@ V116_Text_2330:
     db $72, $6F, $75, $67, $68, $20, $6D, $79, $20, $74, $65, $6C, $65, $73, $63, $6F
     db $70, $65, $21, $86, $00
 ; TEXT 2331 / $091B
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4C5C (compressed) -> $F6:27F7 raw, 125 bytes
 ;   Text: <$96>If you want to go back to Podunk,<S $B5 $80> you'll probably find the way up there!<PAGE>And I
@@ -30715,7 +30871,7 @@ V116_Text_2331:
     db $68, $6F, $77, $20, $79, $6F, $75, $20, $63, $61, $6E, $20, $67, $65, $74, $20
     db $74, $68, $65, $72, $65, $2C, $20, $74, $6F, $6F, $21, $86, $00
 ; TEXT 2332 / $091C
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4CA4 (compressed) -> $F6:2874 raw, 52 bytes
 ;   Text: <$96>But first,<S $3D $80> there's the matter of the imposter…<PAGE><End>
@@ -30725,7 +30881,7 @@ V116_Text_2332:
     db $72, $20, $6F, $66, $20, $74, $68, $65, $20, $69, $6D, $70, $6F, $73, $74, $65
     db $72, $5F, $86, $00
 ; TEXT 2333 / $091D
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4CC5 (compressed) -> $F6:28A8 raw, 91 bytes
 ;   Text: <$96>The queen wants us to go back to Ivor Tower and stop her twin from causing more
@@ -30738,7 +30894,7 @@ V116_Text_2333:
     db $72, $6F, $6D, $20, $63, $61, $75, $73, $69, $6E, $67, $20, $6D, $6F, $72, $65
     db $20, $74, $72, $6F, $75, $62, $6C, $65, $2E, $86, $00
 ; TEXT 2334 / $091E
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4CF7 (compressed) -> $F6:2903 raw, 81 bytes
 ;   Text: <$96>That sounds like a good idea.<S $79 $80> The imposter is scheming at this very
@@ -30751,7 +30907,7 @@ V116_Text_2334:
     db $69, $73, $20, $76, $65, $72, $79, $20, $6D, $6F, $6D, $65, $6E, $74, $21, $86
     db $00
 ; TEXT 2335 / $091F
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4D21 (compressed) -> $F6:2954 raw, 15 bytes
 ;   Text: <$96>Take a look!<PAGE><End>
@@ -30766,7 +30922,7 @@ V116_Text_2336:
     db $96, $57, $6F, $77, $21, $80, $3D, $80, $20, $53, $68, $65, $27, $73, $20, $6D
     db $65, $61, $6E, $21, $86, $00
 ; TEXT 2337 / $0921
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4D3C (compressed) -> $F6:2979 raw, 50 bytes
 ;   Text: <$96>Yes!<S $3D $80> She has to be dealt with<S $3D $80> in a hurry!<PAGE><End>
@@ -30776,7 +30932,7 @@ V116_Text_2337:
     db $68, $80, $3D, $80, $20, $69, $6E, $20, $61, $20, $68, $75, $72, $72, $79, $21
     db $86, $00
 ; TEXT 2338 / $0922
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4D5A (compressed) -> $F6:29AB raw, 69 bytes
 ;   Text: <$96>Crossing the chessboard would not be a good idea at this point.<S $F1 $80> <End>
@@ -30787,7 +30943,7 @@ V116_Text_2338:
     db $61, $20, $61, $74, $20, $74, $68, $69, $73, $20, $70, $6F, $69, $6E, $74, $2E
     db $80, $F1, $80, $20, $00
 ; TEXT 2339 / $0923
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4D7F (compressed) -> $F6:29F0 raw, 34 bytes
 ;   Text: Her troops will be expecting it.<PAGE><End>
@@ -30796,7 +30952,7 @@ V116_Text_2339:
     db $62, $65, $20, $65, $78, $70, $65, $63, $74, $69, $6E, $67, $20, $69, $74, $2E
     db $86, $00
 ; TEXT 2340 / $0924
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4D96 (compressed) -> $F6:2A12 raw, 266 bytes
 ;   Text: <$96>I recommend that you go to the north and visit my brother,<S $3D $80> Gomi.<S $F1 $80> He'll
@@ -30822,7 +30978,7 @@ V116_Text_2340:
     db $69, $74, $20, $69, $6E, $20, $6D, $79, $20, $74, $72, $65, $61, $73, $75, $72
     db $65, $20, $63, $68, $65, $73, $74, $2E, $86, $00
 ; TEXT 2341 / $0925
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4E2C (compressed) -> $F6:2B1C raw, 68 bytes
 ;   Text: <$96><$87>Would you like me to record your progress? <$97><Choice>OK. <Choice>Not right
@@ -30834,7 +30990,7 @@ V116_Text_2341:
     db $4B, $2E, $0A, $8B, $4E, $6F, $74, $20, $72, $69, $67, $68, $74, $20, $6E, $6F
     db $77, $2E, $96, $00
 ; TEXT 2342 / $0926
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4E5A (compressed) -> $F6:2B60 raw, 96 bytes
 ;   Text: <$96><$87>Come back after you've dispatched the imposter.<S $B5 $80> I'll help you return to that
@@ -30974,7 +31130,7 @@ V116_Text_2357:
     db $47, $61, $76, $65, $20, $61, $77, $61, $79, $20, $74, $68, $65, $20, $44, $69
     db $61, $6D, $6F, $6E, $64, $20, $45, $79, $65, $73, $00
 ; TEXT 2358 / $0936
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4FB0 (compressed) -> $F6:2DA0 raw, 51 bytes
 ;   Text: <$96>Hi, <Boy>.<S $3D $80> Do you have the last item that I need?<PAGE><End>
@@ -30984,7 +31140,7 @@ V116_Text_2358:
     db $69, $74, $65, $6D, $20, $74, $68, $61, $74, $20, $49, $20, $6E, $65, $65, $64
     db $3F, $86, $00
 ; TEXT 2359 / $0937
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4FD1 (compressed) -> $F6:2DD3 raw, 47 bytes
 ;   Text: <$96>Hi, <Boy>.<S $3D $80> Do you have the items that I need?<PAGE><End>
@@ -31000,7 +31156,7 @@ V116_Text_2359:
 V116_Text_2360:
     db $96, $49, $20, $73, $75, $72, $65, $20, $64, $6F, $21, $86, $00
 ; TEXT 2361 / $0939
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4FF8 (compressed) -> $F6:2E0F raw, 35 bytes
 ;   Text: <$96>Very good.<S $3D $80> Very good, indeed!<PAGE><End>
@@ -31009,7 +31165,7 @@ V116_Text_2361:
     db $65, $72, $79, $20, $67, $6F, $6F, $64, $2C, $20, $69, $6E, $64, $65, $65, $64
     db $21, $86, $00
 ; TEXT 2362 / $093A
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:500F (compressed) -> $F6:2E32 raw, 190 bytes
 ;   Text: <$96>Let's see here.<S $3D $80> I have to make sure the pieces are all in order.<PAGE>Now,<S $3D
@@ -31030,7 +31186,7 @@ V116_Text_2362:
     db $20, $77, $69, $74, $68, $20, $74, $68, $69, $73, $20, $67, $69, $7A, $6D, $6F
     db $80, $15, $80, $2E, $80, $15, $80, $2E, $80, $15, $80, $2E, $86, $00
 ; TEXT 2363 / $093B
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5096 (compressed) -> $F6:2EF0 raw, 29 bytes
 ;   Text: <$96>I think we're ready to go!<PAGE><End>
@@ -31038,7 +31194,7 @@ V116_Text_2363:
     db $96, $49, $20, $74, $68, $69, $6E, $6B, $20, $77, $65, $27, $72, $65, $20, $72
     db $65, $61, $64, $79, $20, $74, $6F, $20, $67, $6F, $21, $86, $00
 ; TEXT 2364 / $093C
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:50A8 (compressed) -> $F6:2F0D raw, 79 bytes
 ;   Text: <$96>If you can bring me a Pressure Gauge, I'll be able to complete my invention.<PAGE><End>
@@ -31049,7 +31205,7 @@ V116_Text_2364:
     db $62, $6C, $65, $20, $74, $6F, $20, $63, $6F, $6D, $70, $6C, $65, $74, $65, $20
     db $6D, $79, $20, $69, $6E, $76, $65, $6E, $74, $69, $6F, $6E, $2E, $86, $00
 ; TEXT 2365 / $093D
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:50D4 (compressed) -> $F6:2F5C raw, 76 bytes
 ;   Text: <$96>If you can bring me a Valve Wheel, I'll be able to complete my invention.<PAGE><End>
@@ -31060,7 +31216,7 @@ V116_Text_2365:
     db $20, $74, $6F, $20, $63, $6F, $6D, $70, $6C, $65, $74, $65, $20, $6D, $79, $20
     db $69, $6E, $76, $65, $6E, $74, $69, $6F, $6E, $2E, $86, $00
 ; TEXT 2366 / $093E
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:50FE (compressed) -> $F6:2FA8 raw, 79 bytes
 ;   Text: <$96>If you can bring me the Diamond Eyes, I'll be able to complete my invention.<PAGE><End>
@@ -31071,7 +31227,7 @@ V116_Text_2366:
     db $62, $6C, $65, $20, $74, $6F, $20, $63, $6F, $6D, $70, $6C, $65, $74, $65, $20
     db $6D, $79, $20, $69, $6E, $76, $65, $6E, $74, $69, $6F, $6E, $2E, $86, $00
 ; TEXT 2367 / $093F
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5123 (compressed) -> $F6:2FF7 raw, 73 bytes
 ;   Text: <$96>My invention will be complete with a Valve Wheel and the Diamond Eyes.<PAGE><End>
@@ -31082,7 +31238,7 @@ V116_Text_2367:
     db $6C, $20, $61, $6E, $64, $20, $74, $68, $65, $20, $44, $69, $61, $6D, $6F, $6E
     db $64, $20, $45, $79, $65, $73, $2E, $86, $00
 ; TEXT 2368 / $0940
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5145 (compressed) -> $F6:3040 raw, 76 bytes
 ;   Text: <$96>My invention will be complete with a Pressure Gauge and the Diamond Eyes.<PAGE><End>
@@ -31093,7 +31249,7 @@ V116_Text_2368:
     db $61, $75, $67, $65, $20, $61, $6E, $64, $20, $74, $68, $65, $20, $44, $69, $61
     db $6D, $6F, $6E, $64, $20, $45, $79, $65, $73, $2E, $86, $00
 ; TEXT 2369 / $0941
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5169 (compressed) -> $F6:308C raw, 73 bytes
 ;   Text: <$96>My invention will be complete with a Valve Wheel and a Pressure Gauge.<PAGE><End>
@@ -31104,7 +31260,7 @@ V116_Text_2369:
     db $6C, $20, $61, $6E, $64, $20, $61, $20, $50, $72, $65, $73, $73, $75, $72, $65
     db $20, $47, $61, $75, $67, $65, $2E, $86, $00
 ; TEXT 2370 / $0942
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5192 (compressed) -> $F6:30D5 raw, 59 bytes
 ;   Text: <$96>You're a brave animal to be on such a dangerous mission.<PAGE><End>
@@ -31114,7 +31270,7 @@ V116_Text_2370:
     db $73, $75, $63, $68, $20, $61, $20, $64, $61, $6E, $67, $65, $72, $6F, $75, $73
     db $20, $6D, $69, $73, $73, $69, $6F, $6E, $2E, $86, $00
 ; TEXT 2371 / $0943
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:51B1 (compressed) -> $F6:3110 raw, 156 bytes
 ;   Text: <$96>Oh, ho! <S $3D $80>I see you have one of those Energy Core doohickeys.<PAGE>I hear tell they
@@ -31131,7 +31287,7 @@ V116_Text_2371:
     db $65, $20, $49, $27, $6D, $20, $6E, $6F, $20, $65, $78, $70, $65, $72, $74, $2C
     db $20, $79, $6F, $75, $20, $6B, $6E, $6F, $77, $2E, $86, $00
 ; TEXT 2372 / $0944
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:521D (compressed) -> $F6:31AC raw, 131 bytes
 ;   Text: <$96>My young friend, <Boy>. <PAGE>There's talk that an Energy Core gizmo may be beneath the
@@ -31147,7 +31303,7 @@ V116_Text_2372:
     db $6F, $20, $73, $70, $72, $65, $61, $64, $20, $61, $20, $72, $75, $6D, $6F, $72
     db $2E, $86, $00
 ; TEXT 2373 / $0945
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:526B (compressed) -> $F6:322F raw, 403 bytes
 ;   Text: <$96>In order to make my new invention fly, I'm going to need some special parts.<PAGE>And I'm
@@ -31183,7 +31339,7 @@ V116_Text_2373:
     db $20, $61, $67, $61, $69, $6E, $20, $6D, $61, $79, $62, $65, $20, $6E, $6F, $74
     db $2E, $86, $00
 ; TEXT 2374 / $0946
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:534B (compressed) -> $F6:33C2 raw, 63 bytes
 ;   Text: <$96>Hi, <Boy>!<S $3D $80> I see that you brought back <Item> of the rocket parts.<PAGE><End>
@@ -31193,7 +31349,7 @@ V116_Text_2374:
     db $74, $20, $62, $61, $63, $6B, $20, $A2, $20, $6F, $66, $20, $74, $68, $65, $20
     db $72, $6F, $63, $6B, $65, $74, $20, $70, $61, $72, $74, $73, $2E, $86, $00
 ; TEXT 2375 / $0947
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5376 (compressed) -> $F6:3401 raw, 324 bytes
 ;   Text: <$96>We're counting on you to go to Ivor Tower and fight the imposter.<PAGE>Go through the dungeon
@@ -31223,7 +31379,7 @@ V116_Text_2375:
     db $73, $20, $6E, $6F, $6E, $65, $20, $74, $6F, $6F, $20, $62, $72, $69, $67, $68
     db $74, $2E, $86, $00
 ; TEXT 2376 / $0948
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:542D (compressed) -> $F6:3545 raw, 68 bytes
 ;   Text: <$96><$87>Would you like me to record your progress? <$97><Choice>OK. <Choice>Not right
@@ -31235,7 +31391,7 @@ V116_Text_2376:
     db $4B, $2E, $0A, $8B, $4E, $6F, $74, $20, $72, $69, $67, $68, $74, $20, $6E, $6F
     db $77, $2E, $96, $00
 ; TEXT 2377 / $0949
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:545B (compressed) -> $F6:3589 raw, 128 bytes
 ;   Text: <$96><$87>Come back after you've dispatched the imposter.<S $79 $80> I'll help you return to that
@@ -31250,7 +31406,7 @@ V116_Text_2377:
     db $6F, $75, $72, $73, $65, $20, $74, $68, $61, $74, $27, $73, $20, $69, $66, $20
     db $79, $6F, $75, $20, $63, $6F, $6D, $65, $20, $62, $61, $63, $6B, $2E, $86, $00
 ; TEXT 2378 / $094A
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:549C (compressed) -> $F6:3609 raw, 86 bytes
 ;   Text: <$96>Wait!<S $3D $80> Stop!<S $3D $80> Stop!<S $79 $80> Fun is fun,<S $3D $80> but I don't want to
@@ -31271,7 +31427,7 @@ V116_Text_2379:
     db $96, $55, $68, $2C, $80, $3D, $80, $20, $74, $68, $61, $6E, $6B, $73, $2E, $86
     db $00
 ; TEXT 2380 / $094C
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:54E2 (compressed) -> $F6:3670 raw, 78 bytes
 ;   Text: <$96>My name's {Gomi,} Son.<S $3D $80> I'm a junk collector and a friend of the dragons.<PAGE><End>
@@ -31282,7 +31438,7 @@ V116_Text_2380:
     db $61, $6E, $64, $20, $61, $20, $66, $72, $69, $65, $6E, $64, $20, $6F, $66, $20
     db $74, $68, $65, $20, $64, $72, $61, $67, $6F, $6E, $73, $2E, $86, $00
 ; TEXT 2381 / $094D
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5519 (compressed) -> $F6:36BE raw, 56 bytes
 ;   Text: <$96>This is my latest attempt at the great Gomi Tower.<S $B5 $80> <End>
@@ -31292,7 +31448,7 @@ V116_Text_2381:
     db $65, $20, $67, $72, $65, $61, $74, $20, $47, $6F, $6D, $69, $20, $54, $6F, $77
     db $65, $72, $2E, $80, $B5, $80, $20, $00
 ; TEXT 2382 / $094E
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:553E (compressed) -> $F6:36F6 raw, 29 bytes
 ;   Text: <$96>It's going to be fabulous.<PAGE><End>
@@ -31300,7 +31456,7 @@ V116_Text_2382:
     db $96, $49, $74, $27, $73, $20, $67, $6F, $69, $6E, $67, $20, $74, $6F, $20, $62
     db $65, $20, $66, $61, $62, $75, $6C, $6F, $75, $73, $2E, $86, $00
 ; TEXT 2383 / $094F
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5550 (compressed) -> $F6:3713 raw, 70 bytes
 ;   Text: <$96>You may ask, {Gomi,<S $3D $80> why do you want to build such a tall tower?}<PAGE><End>
@@ -31311,7 +31467,7 @@ V116_Text_2383:
     db $20, $73, $75, $63, $68, $20, $61, $20, $74, $61, $6C, $6C, $20, $74, $6F, $77
     db $65, $72, $3F, $7D, $86, $00
 ; TEXT 2384 / $0950
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5584 (compressed) -> $F6:3759 raw, 48 bytes
 ;   Text: <$96>{Aren't you happy being bound to the ground?}<PAGE><End>
@@ -31320,7 +31476,7 @@ V116_Text_2384:
     db $70, $79, $20, $62, $65, $69, $6E, $67, $20, $62, $6F, $75, $6E, $64, $20, $74
     db $6F, $20, $74, $68, $65, $20, $67, $72, $6F, $75, $6E, $64, $3F, $7D, $86, $00
 ; TEXT 2385 / $0951
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:55A6 (compressed) -> $F6:3789 raw, 64 bytes
 ;   Text: <$96>{Don't you think you can do something better with your time?}<PAGE><End>
@@ -31330,7 +31486,7 @@ V116_Text_2385:
     db $65, $74, $68, $69, $6E, $67, $20, $62, $65, $74, $74, $65, $72, $20, $77, $69
     db $74, $68, $20, $79, $6F, $75, $72, $20, $74, $69, $6D, $65, $3F, $7D, $86, $00
 ; TEXT 2386 / $0952
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:55C5 (compressed) -> $F6:37C9 raw, 24 bytes
 ;   Text: <$96>To that, I say, {No!}<PAGE><End>
@@ -31338,7 +31494,7 @@ V116_Text_2386:
     db $96, $54, $6F, $20, $74, $68, $61, $74, $2C, $20, $49, $20, $73, $61, $79, $2C
     db $20, $7B, $4E, $6F, $21, $7D, $86, $00
 ; TEXT 2387 / $0953
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:55DA (compressed) -> $F6:37E1 raw, 57 bytes
 ;   Text: <$96>I am a child of the sky and I want to reach higher,<S $B5 $80> <End>
@@ -31348,7 +31504,7 @@ V116_Text_2387:
     db $61, $6E, $74, $20, $74, $6F, $20, $72, $65, $61, $63, $68, $20, $68, $69, $67
     db $68, $65, $72, $2C, $80, $B5, $80, $20, $00
 ; TEXT 2388 / $0954
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5603 (compressed) -> $F6:381A raw, 35 bytes
 ;   Text: <$96>like my friends,<S $3D $80> the dragons.<PAGE><End>
@@ -31357,7 +31513,7 @@ V116_Text_2388:
     db $2C, $80, $3D, $80, $20, $74, $68, $65, $20, $64, $72, $61, $67, $6F, $6E, $73
     db $2E, $86, $00
 ; TEXT 2389 / $0955
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5616 (compressed) -> $F6:383D raw, 42 bytes
 ;   Text: <$96>So, what brings you up to my structure?<PAGE><End>
@@ -31376,7 +31532,7 @@ V116_Text_2390:
     db $77, $61, $79, $20, $74, $6F, $20, $67, $65, $74, $20, $74, $6F, $20, $49, $76
     db $6F, $72, $20, $54, $6F, $77, $65, $72, $2E, $86, $00
 ; TEXT 2391 / $0957
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5656 (compressed) -> $F6:38A2 raw, 75 bytes
 ;   Text: <$96>Oh!<S $3D $80> You don't want to go there!<PAGE>That queen acts so nice and
@@ -31388,7 +31544,7 @@ V116_Text_2391:
     db $63, $74, $73, $20, $73, $6F, $20, $6E, $69, $63, $65, $20, $61, $6E, $64, $20
     db $66, $72, $69, $65, $6E, $64, $6C, $79, $5F, $86, $00
 ; TEXT 2392 / $0958
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5680 (compressed) -> $F6:38ED raw, 47 bytes
 ;   Text: <$96>…but she's really very mean,<S $79 $80> and devious!<PAGE><End>
@@ -31420,14 +31576,14 @@ V116_Text_2394:
     db $6C, $64, $20, $73, $68, $6F, $77, $20, $75, $73, $20, $74, $68, $65, $20, $77
     db $61, $79, $21, $86, $00
 ; TEXT 2395 / $095B
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:56EE (compressed) -> $F6:39B1 raw, 13 bytes
 ;   Text: <$96>Tinker?<S $79 $80> <End>
 V116_Text_2395:
     db $96, $54, $69, $6E, $6B, $65, $72, $3F, $80, $79, $80, $20, $00
 ; TEXT 2396 / $095C
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:56F9 (compressed) -> $F6:39BE raw, 25 bytes
 ;   Text: <$96>My brother, Tinker?<S $79 $80> <End>
@@ -31435,7 +31591,7 @@ V116_Text_2396:
     db $96, $4D, $79, $20, $62, $72, $6F, $74, $68, $65, $72, $2C, $20, $54, $69, $6E
     db $6B, $65, $72, $3F, $80, $79, $80, $20, $00
 ; TEXT 2397 / $095D
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:570A (compressed) -> $F6:39D7 raw, 136 bytes
 ;   Text: <$96>Why didn't you say that he sent you?<PAGE>Of course I'll help!<PAGE><$96>Here's an alchemy
@@ -31451,7 +31607,7 @@ V116_Text_2397:
     db $65, $6E, $74, $75, $72, $65, $73, $20, $69, $6E, $20, $74, $68, $65, $20, $63
     db $6C, $6F, $75, $64, $73, $2E, $86, $00
 ; TEXT 2398 / $095E
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:574F (compressed) -> $F6:3A5F raw, 31 bytes
 ;   Text: <$96>I call it {Lightning Storm.}<PAGE><End>
@@ -31469,7 +31625,7 @@ V116_Text_2399:
     db $20, $74, $6F, $20, $49, $76, $6F, $72, $20, $54, $6F, $77, $65, $72, $20, $66
     db $72, $6F, $6D, $20, $68, $65, $72, $65, $3F, $86, $00
 ; TEXT 2400 / $0960
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:578D (compressed) -> $F6:3AB9 raw, 28 bytes
 ;   Text: <$96>That's no problem at all!<PAGE><End>
@@ -31477,7 +31633,7 @@ V116_Text_2400:
     db $96, $54, $68, $61, $74, $27, $73, $20, $6E, $6F, $20, $70, $72, $6F, $62, $6C
     db $65, $6D, $20, $61, $74, $20, $61, $6C, $6C, $21, $86, $00
 ; TEXT 2401 / $0961
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:579F (compressed) -> $F6:3AD5 raw, 74 bytes
 ;   Text: <$96>Sterling!<S $3D $80> Come here!<S $79 $80> Come on, Sterling!<S $79 $80> It was all in fun,
@@ -31489,7 +31645,7 @@ V116_Text_2401:
     db $80, $20, $49, $74, $20, $77, $61, $73, $20, $61, $6C, $6C, $20, $69, $6E, $20
     db $66, $75, $6E, $2C, $20, $65, $68, $3F, $86, $00
 ; TEXT 2402 / $0962
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:57D4 (compressed) -> $F6:3B1F raw, 44 bytes
 ;   Text: <$96>My friend, Sterling, will give us a ride!<PAGE><End>
@@ -31498,7 +31654,7 @@ V116_Text_2402:
     db $6C, $69, $6E, $67, $2C, $20, $77, $69, $6C, $6C, $20, $67, $69, $76, $65, $20
     db $75, $73, $20, $61, $20, $72, $69, $64, $65, $21, $86, $00
 ; TEXT 2403 / $0963
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:57F1 (compressed) -> $F6:3B4B raw, 58 bytes
 ;   Text: <$96>You're going to take us to Ivor Tower.<S $79 $80> OK, Sterling?<PAGE><End>
@@ -31508,7 +31664,7 @@ V116_Text_2403:
     db $20, $54, $6F, $77, $65, $72, $2E, $80, $79, $80, $20, $4F, $4B, $2C, $20, $53
     db $74, $65, $72, $6C, $69, $6E, $67, $3F, $86, $00
 ; TEXT 2404 / $0964
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5814 (compressed) -> $F6:3B85 raw, 86 bytes
 ;   Text: <$96>This is pretty tough territory for little puffy dogs.<PAGE>I'd be careful if I were
@@ -31521,7 +31677,7 @@ V116_Text_2404:
     db $72, $65, $66, $75, $6C, $20, $69, $66, $20, $49, $20, $77, $65, $72, $65, $20
     db $79, $6F, $75, $21, $85, $00
 ; TEXT 2765 / $0ACD
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Narration/System -> $02 Narration / System [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0C5C (compressed) -> $F6:3BDB raw, 46 bytes
 ;   Text: <S $79 $80> Is your destination Omnitopia? <Choice>Yes. <Choice>No.<End>
@@ -31530,7 +31686,7 @@ V116_Text_2765:
     db $69, $6E, $61, $74, $69, $6F, $6E, $20, $4F, $6D, $6E, $69, $74, $6F, $70, $69
     db $61, $3F, $0A, $8B, $59, $65, $73, $2E, $0A, $8B, $4E, $6F, $2E, $00
 ; TEXT 2766 / $0ACE
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0C79 (compressed) -> $F6:3C09 raw, 20 bytes
 ;   Text: <$96>This is it,<S $3D $80> <Boy>!<PAGE><End>
@@ -31538,7 +31694,7 @@ V116_Text_2766:
     db $96, $54, $68, $69, $73, $20, $69, $73, $20, $69, $74, $2C, $80, $3D, $80, $20
     db $81, $21, $86, $00
 ; TEXT 2767 / $0ACF
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0C88 (compressed) -> $F6:3C1D raw, 50 bytes
 ;   Text: You're going to go where no one has gone before!<$85><End>
@@ -31557,21 +31713,21 @@ V116_Text_2768:
     db $62, $65, $65, $6E, $20, $74, $68, $65, $72, $65, $20, $62, $65, $66, $6F, $72
     db $65, $2E, $86, $00
 ; TEXT 2769 / $0AD1
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0CB6 (compressed) -> $F6:3C73 raw, 6 bytes
 ;   Text: <$96>Oh.<PAGE><End>
 V116_Text_2769:
     db $96, $4F, $68, $2E, $86, $00
 ; TEXT 2770 / $0AD2
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0CBC (compressed) -> $F6:3C79 raw, 11 bytes
 ;   Text: <$96>Well,<S $3D $80> <End>
 V116_Text_2770:
     db $96, $57, $65, $6C, $6C, $2C, $80, $3D, $80, $20, $00
 ; TEXT 2771 / $0AD3
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0CC4 (compressed) -> $F6:3C84 raw, 81 bytes
 ;   Text: <$96>you've never been shot out of a turret with only a minimal chance of survival!<PAGE><End>
@@ -31590,7 +31746,7 @@ V116_Text_2771:
 V116_Text_2772:
     db $96, $54, $68, $61, $74, $27, $73, $20, $74, $72, $75, $65, $2E, $86, $00
 ; TEXT 2773 / $0AD5
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0D00 (compressed) -> $F6:3CE4 raw, 22 bytes
 ;   Text: <$96>O<S $1F $80>K!<S $3D $80> Let's go!<PAGE><End>
@@ -31612,7 +31768,7 @@ V116_Text_2774:
 V116_Text_2775:
     db $87, $30, $80, $79, $80, $00
 ; TEXT 2776 / $0AD8
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0D29 (raw) -> $F6:3D06 raw, 9 bytes
 ;   Text: <$96>Hi, <Boy>!<PAGE><End>
@@ -31629,7 +31785,7 @@ V116_Text_2777:
     db $79, $6F, $75, $27, $76, $65, $20, $67, $6F, $74, $20, $74, $68, $65, $72, $65
     db $21, $86, $00
 ; TEXT 2778 / $0ADA
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0D58 (compressed) -> $F6:3D42 raw, 77 bytes
 ;   Text: <$96>This invention of mine has allowed me to see the lands beyond our kingdom.<PAGE><End>
@@ -31640,7 +31796,7 @@ V116_Text_2778:
     db $65, $20, $6C, $61, $6E, $64, $73, $20, $62, $65, $79, $6F, $6E, $64, $20, $6F
     db $75, $72, $20, $6B, $69, $6E, $67, $64, $6F, $6D, $2E, $86, $00
 ; TEXT 2779 / $0ADB
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0D81 (compressed) -> $F6:3D8F raw, 23 bytes
 ;   Text: <$96>It's quite exciting!<PAGE><End>
@@ -31664,7 +31820,7 @@ V116_Text_2780:
     db $6E, $64, $20, $6F, $75, $72, $20, $77, $61, $79, $20, $68, $6F, $6D, $65, $21
     db $86, $00
 ; TEXT 2781 / $0ADD
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0DDC (compressed) -> $F6:3E28 raw, 17 bytes
 ;   Text: <$96>Ah!<S $3D $80> Yes!<S $3D $80> <End>
@@ -31672,7 +31828,7 @@ V116_Text_2781:
     db $96, $41, $68, $21, $80, $3D, $80, $20, $59, $65, $73, $21, $80, $3D, $80, $20
     db $00
 ; TEXT 2782 / $0ADE
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0DE9 (compressed) -> $F6:3E39 raw, 41 bytes
 ;   Text: I think that I have a solution for you!<PAGE><End>
@@ -31681,7 +31837,7 @@ V116_Text_2782:
     db $61, $76, $65, $20, $61, $20, $73, $6F, $6C, $75, $74, $69, $6F, $6E, $20, $66
     db $6F, $72, $20, $79, $6F, $75, $21, $86, $00
 ; TEXT 2783 / $0ADF
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0E01 (compressed) -> $F6:3E62 raw, 55 bytes
 ;   Text: <$96>Now that I've mastered flight with my Windwalker, <S $79 $80><End>
@@ -31691,7 +31847,7 @@ V116_Text_2783:
     db $69, $74, $68, $20, $6D, $79, $20, $57, $69, $6E, $64, $77, $61, $6C, $6B, $65
     db $72, $2C, $20, $80, $79, $80, $00
 ; TEXT 2784 / $0AE0
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0E24 (compressed) -> $F6:3E99 raw, 35 bytes
 ;   Text: <$96>I'm ready for bigger challenges.<PAGE><End>
@@ -31700,7 +31856,7 @@ V116_Text_2784:
     db $69, $67, $67, $65, $72, $20, $63, $68, $61, $6C, $6C, $65, $6E, $67, $65, $73
     db $2E, $86, $00
 ; TEXT 2785 / $0AE1
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0E3B (compressed) -> $F6:3EBC raw, 42 bytes
 ;   Text: <$96>I think that I can send you into space!<PAGE><End>
@@ -31709,7 +31865,7 @@ V116_Text_2785:
     db $63, $61, $6E, $20, $73, $65, $6E, $64, $20, $79, $6F, $75, $20, $69, $6E, $74
     db $6F, $20, $73, $70, $61, $63, $65, $21, $86, $00
 ; TEXT 2786 / $0AE2
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0E54 (compressed) -> $F6:3EE6 raw, 47 bytes
 ;   Text: <$96>But there are some things that I need first!<PAGE><End>
@@ -31718,7 +31874,7 @@ V116_Text_2786:
     db $6F, $6D, $65, $20, $74, $68, $69, $6E, $67, $73, $20, $74, $68, $61, $74, $20
     db $49, $20, $6E, $65, $65, $64, $20, $66, $69, $72, $73, $74, $21, $86, $00
 ; TEXT 2787 / $0AE3
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0E6F (compressed) -> $F6:3F15 raw, 66 bytes
 ;   Text: <$96>Not long ago,<S $3D $80> a volcano erupted on the plateau to the north.<PAGE><End>
@@ -31737,7 +31893,7 @@ V116_Text_2788:
     db $96, $49, $20, $6B, $6E, $6F, $77, $21, $80, $3D, $80, $20, $57, $65, $20, $77
     db $65, $72, $65, $20, $74, $68, $65, $72, $65, $21, $86, $00
 ; TEXT 2789 / $0AE5
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0EA7 (compressed) -> $F6:3F73 raw, 66 bytes
 ;   Text: <$96>Then you must have seen the machine at the core of the volcano.<PAGE><End>
@@ -31748,7 +31904,7 @@ V116_Text_2789:
     db $20, $6F, $66, $20, $74, $68, $65, $20, $76, $6F, $6C, $63, $61, $6E, $6F, $2E
     db $86, $00
 ; TEXT 2790 / $0AE6
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0EC4 (compressed) -> $F6:3FB5 raw, 75 bytes
 ;   Text: <$96>I saw pieces of it on the ground surrounding the volcano when I flew by.<PAGE><End>
@@ -31759,7 +31915,7 @@ V116_Text_2790:
     db $65, $20, $76, $6F, $6C, $63, $61, $6E, $6F, $20, $77, $68, $65, $6E, $20, $49
     db $20, $66, $6C, $65, $77, $20, $62, $79, $2E, $86, $00
 ; TEXT 2791 / $0AE7
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0EF0 (compressed) -> $F6:4000 raw, 108 bytes
 ;   Text: <$96>There are two pieces that I need for my new invention.<PAGE>They are a valve wheel and a round
@@ -31781,7 +31937,7 @@ V116_Text_2792:
     db $96, $54, $68, $61, $74, $20, $73, $6F, $75, $6E, $64, $73, $20, $72, $65, $61
     db $73, $6F, $6E, $61, $62, $6C, $65, $2E, $86, $00
 ; TEXT 2793 / $0AE9
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0F3F (compressed) -> $F6:4086 raw, 40 bytes
 ;   Text: <$96>And we'll need an energy source, too!<PAGE><End>
@@ -31790,7 +31946,7 @@ V116_Text_2793:
     db $61, $6E, $20, $65, $6E, $65, $72, $67, $79, $20, $73, $6F, $75, $72, $63, $65
     db $2C, $20, $74, $6F, $6F, $21, $86, $00
 ; TEXT 2794 / $0AEA
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0F59 (compressed) -> $F6:40AE raw, 101 bytes
 ;   Text: <$96>When the statue in the city to the east exploded…<PAGE>…there were two jewels that acted as a
@@ -31804,7 +31960,7 @@ V116_Text_2794:
     db $63, $74, $65, $64, $20, $61, $73, $20, $61, $20, $63, $61, $74, $61, $6C, $79
     db $73, $74, $2E, $86, $00
 ; TEXT 2795 / $0AEB
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0F95 (compressed) -> $F6:4113 raw, 53 bytes
 ;   Text: <$96>That's right-- the Diamond Eyes of the Dog Statue!<PAGE><End>
@@ -31814,7 +31970,7 @@ V116_Text_2795:
     db $20, $6F, $66, $20, $74, $68, $65, $20, $44, $6F, $67, $20, $53, $74, $61, $74
     db $75, $65, $21, $86, $00
 ; TEXT 2796 / $0AEC
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0FB2 (compressed) -> $F6:4148 raw, 149 bytes
 ;   Text: <$96>Well then,<S $3D $80> you know exactly what I'm after!<PAGE>If you can bring me those
@@ -31831,7 +31987,7 @@ V116_Text_2796:
     db $65, $6E, $64, $20, $79, $6F, $75, $20, $69, $6E, $74, $6F, $20, $73, $70, $61
     db $63, $65, $21, $86, $00
 ; TEXT 2797 / $0AED
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:1005 (compressed) -> $F6:41DD raw, 46 bytes
 ;   Text: <$96>You can take my Windwalker on your journey.<PAGE><End>
@@ -31847,7 +32003,7 @@ V116_Text_2797:
 V116_Text_2798:
     db $96, $43, $6F, $6F, $6C, $21, $85, $00
 ; TEXT 2799 / $0AEF
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:102E (compressed) -> $F6:4213 raw, 64 bytes
 ;   Text: <$96>It can land wherever there is one of these special fire pits.<PAGE><End>
@@ -31857,7 +32013,7 @@ V116_Text_2799:
     db $6E, $65, $20, $6F, $66, $20, $74, $68, $65, $73, $65, $20, $73, $70, $65, $63
     db $69, $61, $6C, $20, $66, $69, $72, $65, $20, $70, $69, $74, $73, $2E, $86, $00
 ; TEXT 2800 / $0AF0
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:1050 (compressed) -> $F6:4253 raw, 27 bytes
 ;   Text: <$96>Just look for the light.<PAGE><End>
@@ -31865,7 +32021,7 @@ V116_Text_2800:
     db $96, $4A, $75, $73, $74, $20, $6C, $6F, $6F, $6B, $20, $66, $6F, $72, $20, $74
     db $68, $65, $20, $6C, $69, $67, $68, $74, $2E, $86, $00
 ; TEXT 2801 / $0AF1
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:1065 (compressed) -> $F6:426E raw, 129 bytes
 ;   Text: <$96>Visit me in my lab when you have all of the items.<PAGE>I'll use them to complete my invention
@@ -31931,7 +32087,7 @@ V116_Text_2408:
     db $65, $20, $74, $68, $69, $73, $20, $6D, $61, $70, $20, $34, $20, $53, $6F, $75
     db $74, $68, $00
 ; TEXT 2409 / $0969
-;   Source/Theme: One Up alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: One Up alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:58DC (compressed) -> $F6:4CEA raw, 31 bytes
 ;   Text: <$96>Hiya, pup.<S $79 $80> You look lost.<PAGE><End>
@@ -31939,7 +32095,7 @@ V116_Text_2409:
     db $96, $48, $69, $79, $61, $2C, $20, $70, $75, $70, $2E, $80, $79, $80, $20, $59
     db $6F, $75, $20, $6C, $6F, $6F, $6B, $20, $6C, $6F, $73, $74, $2E, $86, $00
 ; TEXT 2410 / $096A
-;   Source/Theme: One Up alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: One Up alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:58F3 (compressed) -> $F6:4D09 raw, 344 bytes
 ;   Text: <$96>You're quite adventurous to wander so deep into the forest.<PAGE>I hate to tell you,<S $3D $80>
@@ -31971,7 +32127,7 @@ V116_Text_2410:
     db $6C, $20, $70, $6F, $77, $65, $72, $2E, $80, $B5, $80, $20, $4E, $69, $63, $65
     db $2C, $20, $68, $75, $68, $3F, $85, $00
 ; TEXT 2411 / $096B
-;   Source/Theme: One Up alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: One Up alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:59C4 (compressed) -> $F6:4E61 raw, 59 bytes
 ;   Text: <$96>The formula requires a Feather and a Root for every use.<PAGE><End>
@@ -31981,7 +32137,7 @@ V116_Text_2411:
     db $61, $6E, $64, $20, $61, $20, $52, $6F, $6F, $74, $20, $66, $6F, $72, $20, $65
     db $76, $65, $72, $79, $20, $75, $73, $65, $2E, $86, $00
 ; TEXT 2412 / $096C
-;   Source/Theme: One Up alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: One Up alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:59E3 (compressed) -> $F6:4E9C raw, 98 bytes
 ;   Text: <$96>You're not going to get any deeper into the Dark Forest than this.<PAGE>We're talking Dead End
@@ -32237,7 +32393,7 @@ V116_Text_2436:
     db $96, $4E, $69, $63, $65, $20, $64, $6F, $67, $67, $79, $2E, $80, $79, $80, $20
     db $43, $75, $74, $65, $20, $68, $61, $69, $72, $2E, $85, $00
 ; TEXT 2437 / $0985
-;   Source/Theme: Force Field / Stop alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Force Field / Stop alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:5D75 (compressed) -> $F6:5411 raw, 115 bytes
 ;   Text: <$96>Welcome, my friend.<S $79 $80>   I don't get many visitors down here.<PAGE>That annoying
@@ -32252,7 +32408,7 @@ V116_Text_2437:
     db $73, $63, $61, $72, $65, $73, $20, $74, $68, $65, $6D, $20, $61, $77, $61, $79
     db $2E, $86, $00
 ; TEXT 2438 / $0986
-;   Source/Theme: Force Field / Stop alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Force Field / Stop alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:5DBC (compressed) -> $F6:5484 raw, 103 bytes
 ;   Text: <$96>Oh!<S $3D $80> You have the Oracle Bone!<PAGE><$96>I can give you two alchemy formulas that
@@ -32266,7 +32422,7 @@ V116_Text_2438:
     db $6C, $6C, $20, $66, $69, $6E, $64, $20, $71, $75, $69, $74, $65, $20, $75, $73
     db $65, $66, $75, $6C, $2E, $86, $00
 ; TEXT 2439 / $0987
-;   Source/Theme: Force Field / Stop alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Force Field / Stop alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:5DF6 (compressed) -> $F6:54EB raw, 65 bytes
 ;   Text: <$96>I've got an alchemy formula that you should find quite useful.<PAGE><End>
@@ -32277,7 +32433,7 @@ V116_Text_2439:
     db $64, $20, $71, $75, $69, $74, $65, $20, $75, $73, $65, $66, $75, $6C, $2E, $86
     db $00
 ; TEXT 2440 / $0988
-;   Source/Theme: Force Field / Stop alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Force Field / Stop alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:5E17 (compressed) -> $F6:552C raw, 55 bytes
 ;   Text: <$96>Force Field will fend off an enemy's strongest blow.<PAGE><End>
@@ -32287,7 +32443,7 @@ V116_Text_2440:
     db $65, $6D, $79, $27, $73, $20, $73, $74, $72, $6F, $6E, $67, $65, $73, $74, $20
     db $62, $6C, $6F, $77, $2E, $86, $00
 ; TEXT 2441 / $0989
-;   Source/Theme: Force Field / Stop alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Force Field / Stop alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:5E3C (compressed) -> $F6:5563 raw, 44 bytes
 ;   Text: <$96>And use Stop to keep your enemies at bay.<PAGE><End>
@@ -32296,7 +32452,7 @@ V116_Text_2441:
     db $20, $6B, $65, $65, $70, $20, $79, $6F, $75, $72, $20, $65, $6E, $65, $6D, $69
     db $65, $73, $20, $61, $74, $20, $62, $61, $79, $2E, $86, $00
 ; TEXT 2442 / $098A
-;   Source/Theme: Force Field / Stop alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Force Field / Stop alchemist -> $03 Generic NPC [fixed]
 ;   Arena: DARK_FOREST
 ;   Provenance: $C2:5E5D (compressed) -> $F6:558F raw, 100 bytes
 ;   Text: <$96>Good to see you again.<PAGE>Would you like to equip or unequip your formulas? <S $3D
@@ -33356,7 +33512,7 @@ V116_Text_2564:
     db $74, $73, $20, $66, $6F, $72, $20, $79, $6F, $75, $20, $74, $6F, $64, $61, $79
     db $2E, $86, $00
 ; TEXT 2565 / $0A05
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:6FB7 (compressed) -> $FE:0C34 raw, 84 bytes
 ;   Text: <$96>Hey! You already got my most valuable item.<S $3D $80> What else could you possibly
@@ -33369,7 +33525,7 @@ V116_Text_2565:
     db $79, $6F, $75, $20, $70, $6F, $73, $73, $69, $62, $6C, $79, $20, $77, $61, $6E
     db $74, $3F, $86, $00
 ; TEXT 2566 / $0A06
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:6FEC (compressed) -> $FE:0C88 raw, 189 bytes
 ;   Text: <$96>The Egg of the Chocobo gives those who possess it an increased ability to take damage.<PAGE>I
@@ -33389,7 +33545,7 @@ V116_Text_2566:
     db $65, $3F, $0A, $97, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $54, $6F, $6F, $20
     db $6D, $75, $63, $68, $20, $66, $6F, $72, $20, $6D, $65, $2E, $00
 ; TEXT 2567 / $0A07
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7062 (compressed) -> $FE:0D45 raw, 35 bytes
 ;   Text: <$87><$96>You will not regret this trade.<PAGE><End>
@@ -33398,7 +33554,7 @@ V116_Text_2567:
     db $65, $67, $72, $65, $74, $20, $74, $68, $69, $73, $20, $74, $72, $61, $64, $65
     db $2E, $86, $00
 ; TEXT 2568 / $0A08
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7074 (compressed) -> $FE:0D68 raw, 50 bytes
 ;   Text: <$87><$96>You don't have enough goods to make the trade.<PAGE><End>
@@ -33408,7 +33564,7 @@ V116_Text_2568:
     db $20, $6D, $61, $6B, $65, $20, $74, $68, $65, $20, $74, $72, $61, $64, $65, $2E
     db $86, $00
 ; TEXT 2569 / $0A09
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:708D (compressed) -> $FE:0D9A raw, 65 bytes
 ;   Text: <$96>I'm sorry. We don't trade with animals. <S $3D $80>It's market policy.<PAGE><End>
@@ -33419,7 +33575,7 @@ V116_Text_2569:
     db $20, $6D, $61, $72, $6B, $65, $74, $20, $70, $6F, $6C, $69, $63, $79, $2E, $86
     db $00
 ; TEXT 2570 / $0A0A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:70AF (compressed) -> $FE:0DDB raw, 47 bytes
 ;   Text: <$96>I offer the best price on spice in town--<S $B5 $80> <End>
@@ -33428,7 +33584,7 @@ V116_Text_2570:
     db $74, $20, $70, $72, $69, $63, $65, $20, $6F, $6E, $20, $73, $70, $69, $63, $65
     db $20, $69, $6E, $20, $74, $6F, $77, $6E, $2D, $2D, $80, $B5, $80, $20, $00
 ; TEXT 2571 / $0A0B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:70CE (compressed) -> $FE:0E0A raw, 62 bytes
 ;   Text: only 8 Gold Coins per jar.<PAGE>Will you deal? <$97><Choice>Sure. <Choice>No thanks.<End>
@@ -33438,7 +33594,7 @@ V116_Text_2571:
     db $79, $6F, $75, $20, $64, $65, $61, $6C, $3F, $0A, $97, $8B, $53, $75, $72, $65
     db $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 2572 / $0A0C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:70F5 (compressed) -> $FE:0E48 raw, 37 bytes
 ;   Text: <$87><$96>How many jars? <Choice>One. <Choice>Two. <Choice>Three.<End>
@@ -33447,7 +33603,7 @@ V116_Text_2572:
     db $0A, $8B, $4F, $6E, $65, $2E, $0A, $8B, $54, $77, $6F, $2E, $0A, $8B, $54, $68
     db $72, $65, $65, $2E, $00
 ; TEXT 2573 / $0A0D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7117 (compressed) -> $FE:0E6D raw, 28 bytes
 ;   Text: <$96><$87>Thanks for the business.<PAGE><End>
@@ -33455,7 +33611,7 @@ V116_Text_2573:
     db $96, $87, $54, $68, $61, $6E, $6B, $73, $20, $66, $6F, $72, $20, $74, $68, $65
     db $20, $62, $75, $73, $69, $6E, $65, $73, $73, $2E, $86, $00
 ; TEXT 2574 / $0A0E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7124 (compressed) -> $FE:0E89 raw, 65 bytes
 ;   Text: <$96>Sorry.<S $3D $80> This booth is closed.<S $3D $80> I've sold all of my charms.<PAGE><End>
@@ -33466,7 +33622,7 @@ V116_Text_2574:
     db $6C, $20, $6F, $66, $20, $6D, $79, $20, $63, $68, $61, $72, $6D, $73, $2E, $86
     db $00
 ; TEXT 2575 / $0A0F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:714E (compressed) -> $FE:0ECA raw, 158 bytes
 ;   Text: <$96>Insect Incense keeps insects and arachnids from hurting the one who possesses it.<PAGE>It's
@@ -33483,7 +33639,7 @@ V116_Text_2575:
     db $64, $73, $2E, $86, $49, $73, $20, $69, $74, $20, $61, $20, $64, $65, $61, $6C
     db $3F, $0A, $97, $8B, $59, $65, $73, $2E, $0A, $8B, $4E, $6F, $2E, $00
 ; TEXT 2576 / $0A10
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:71B5 (compressed) -> $FE:0F68 raw, 58 bytes
 ;   Text: <$87><$96>Well done!<S $3D $80> You're obviously a very good adventurer.<PAGE><End>
@@ -33493,7 +33649,7 @@ V116_Text_2576:
     db $20, $61, $20, $76, $65, $72, $79, $20, $67, $6F, $6F, $64, $20, $61, $64, $76
     db $65, $6E, $74, $75, $72, $65, $72, $2E, $86, $00
 ; TEXT 2577 / $0A11
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:71D1 (compressed) -> $FE:0FA2 raw, 66 bytes
 ;   Text: <$87><$96>You don't have enough goods to make the trade.<S $3D $80> Maybe later.<PAGE><End>
@@ -33504,7 +33660,7 @@ V116_Text_2577:
     db $80, $3D, $80, $20, $4D, $61, $79, $62, $65, $20, $6C, $61, $74, $65, $72, $2E
     db $86, $00
 ; TEXT 2578 / $0A12
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:71F2 (compressed) -> $FE:0FE4 raw, 211 bytes
 ;   Text: <$96>The Staff of Life will increase your ability to defend against enemy attacks.<PAGE>It's a very
@@ -33526,7 +33682,7 @@ V116_Text_2578:
     db $74, $72, $61, $64, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61, $6E, $6B
     db $73, $2E, $00
 ; TEXT 2579 / $0A13
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7273 (compressed) -> $FE:10B7 raw, 75 bytes
 ;   Text: <$87><$96>Thank you very much.<S $3D $80> May the Staff protect you through many battles.<PAGE><End>
@@ -33537,7 +33693,7 @@ V116_Text_2579:
     db $79, $6F, $75, $20, $74, $68, $72, $6F, $75, $67, $68, $20, $6D, $61, $6E, $79
     db $20, $62, $61, $74, $74, $6C, $65, $73, $2E, $86, $00
 ; TEXT 2580 / $0A14
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:72A1 (compressed) -> $FE:1102 raw, 65 bytes
 ;   Text: <$87><$96>You don't have enough rice to make the trade.<S $3D $80> Maybe later.<PAGE><End>
@@ -33548,7 +33704,7 @@ V116_Text_2580:
     db $3D, $80, $20, $4D, $61, $79, $62, $65, $20, $6C, $61, $74, $65, $72, $2E, $86
     db $00
 ; TEXT 2581 / $0A15
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:72C2 (compressed) -> $FE:1143 raw, 85 bytes
 ;   Text: <$96><$87>I can offer you the Sun Stone for 300 Gold Coins.<PAGE>Is it a deal? <Choice>Sure.
@@ -33561,7 +33717,7 @@ V116_Text_2581:
     db $3F, $0A, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 2582 / $0A16
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:72F6 (compressed) -> $FE:1198 raw, 24 bytes
 ;   Text: <$96><$87>Thank you very much!<PAGE><End>
@@ -33569,7 +33725,7 @@ V116_Text_2582:
     db $96, $87, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $20, $76, $65, $72, $79
     db $20, $6D, $75, $63, $68, $21, $86, $00
 ; TEXT 2583 / $0A17
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7304 (compressed) -> $FE:11B0 raw, 85 bytes
 ;   Text: <$96><$87>I can offer you the Jade Disk for 300 Gold Coins.<PAGE>Is it a deal? <Choice>Sure.
@@ -33582,7 +33738,7 @@ V116_Text_2583:
     db $3F, $0A, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68, $61
     db $6E, $6B, $73, $2E, $00
 ; TEXT 2584 / $0A18
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:733B (compressed) -> $FE:1205 raw, 24 bytes
 ;   Text: <$96><$87>Thank you very much!<PAGE><End>
@@ -33590,7 +33746,7 @@ V116_Text_2584:
     db $96, $87, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $20, $76, $65, $72, $79
     db $20, $6D, $75, $63, $68, $21, $86, $00
 ; TEXT 2585 / $0A19
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7349 (compressed) -> $FE:121D raw, 89 bytes
 ;   Text: <$96><$87>I can offer you the Silver Sheath for 300 Gold Coins.<PAGE>Is it a deal? <Choice>Sure.
@@ -33603,7 +33759,7 @@ V116_Text_2585:
     db $64, $65, $61, $6C, $3F, $0A, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F
     db $20, $74, $68, $61, $6E, $6B, $73, $2E, $00
 ; TEXT 2586 / $0A1A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:737D (compressed) -> $FE:1276 raw, 24 bytes
 ;   Text: <$96><$87>Thank you very much!<PAGE><End>
@@ -33611,7 +33767,7 @@ V116_Text_2586:
     db $96, $87, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $20, $76, $65, $72, $79
     db $20, $6D, $75, $63, $68, $21, $86, $00
 ; TEXT 2587 / $0A1B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:738B (compressed) -> $FE:128E raw, 86 bytes
 ;   Text: <$96><$87>I can offer you the Moxa Stick for 300 Gold Coins.<PAGE>Is it a deal? <Choice>Sure.
@@ -33624,7 +33780,7 @@ V116_Text_2587:
     db $6C, $3F, $0A, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $20, $74, $68
     db $61, $6E, $6B, $73, $2E, $00
 ; TEXT 2588 / $0A1C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:73C0 (compressed) -> $FE:12E4 raw, 24 bytes
 ;   Text: <$96><$87>Thank you very much!<PAGE><End>
@@ -33632,7 +33788,7 @@ V116_Text_2588:
     db $96, $87, $54, $68, $61, $6E, $6B, $20, $79, $6F, $75, $20, $76, $65, $72, $79
     db $20, $6D, $75, $63, $68, $21, $86, $00
 ; TEXT 2589 / $0A1D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:73CE (compressed) -> $FE:12FC raw, 74 bytes
 ;   Text: <$96>You shouldn't really be here, you know.<S $5B $80> We don't trade with animals.<PAGE><End>
@@ -33643,7 +33799,7 @@ V116_Text_2589:
     db $6F, $6E, $27, $74, $20, $74, $72, $61, $64, $65, $20, $77, $69, $74, $68, $20
     db $61, $6E, $69, $6D, $61, $6C, $73, $2E, $86, $00
 ; TEXT 2590 / $0A1E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:73F1 (compressed) -> $FE:1346 raw, 54 bytes
 ;   Text: Hello, friend.<S $3D $80> I deal in previously owned charms.<PAGE><End>
@@ -33653,7 +33809,7 @@ V116_Text_2590:
     db $69, $6F, $75, $73, $6C, $79, $20, $6F, $77, $6E, $65, $64, $20, $63, $68, $61
     db $72, $6D, $73, $2E, $86, $00
 ; TEXT 2591 / $0A1F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7412 (compressed) -> $FE:137C raw, 76 bytes
 ;   Text: <$96>Hello, friend.<S $3D $80> I deal in previously owned charms.<PAGE>What's your pleasure?<End>
@@ -33664,21 +33820,21 @@ V116_Text_2591:
     db $61, $72, $6D, $73, $2E, $86, $57, $68, $61, $74, $27, $73, $20, $79, $6F, $75
     db $72, $20, $70, $6C, $65, $61, $73, $75, $72, $65, $3F, $00
 ; TEXT 2592 / $0A20
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:743E (compressed) -> $FE:13C8 raw, 13 bytes
 ;   Text:  <Choice>Sun Stone.<End>
 V116_Text_2592:
     db $0A, $8B, $53, $75, $6E, $20, $53, $74, $6F, $6E, $65, $2E, $00
 ; TEXT 2593 / $0A21
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7448 (compressed) -> $FE:13D5 raw, 13 bytes
 ;   Text:  <Choice>Jade Disk.<End>
 V116_Text_2593:
     db $0A, $8B, $4A, $61, $64, $65, $20, $44, $69, $73, $6B, $2E, $00
 ; TEXT 2594 / $0A22
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7455 (compressed) -> $FE:13E2 raw, 17 bytes
 ;   Text:  <Choice>Silver Sheath.<End>
@@ -33686,14 +33842,14 @@ V116_Text_2594:
     db $0A, $8B, $53, $69, $6C, $76, $65, $72, $20, $53, $68, $65, $61, $74, $68, $2E
     db $00
 ; TEXT 2595 / $0A23
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:745F (compressed) -> $FE:13F3 raw, 14 bytes
 ;   Text:  <Choice>Moxa Stick.<End>
 V116_Text_2595:
     db $0A, $8B, $4D, $6F, $78, $61, $20, $53, $74, $69, $63, $6B, $2E, $00
 ; TEXT 2596 / $0A24
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:746A (compressed) -> $FE:1401 raw, 58 bytes
 ;   Text: <$96>Hello, friend. I'm sorry I don't have anything for you.<PAGE><End>
@@ -33703,7 +33859,7 @@ V116_Text_2596:
     db $74, $20, $68, $61, $76, $65, $20, $61, $6E, $79, $74, $68, $69, $6E, $67, $20
     db $66, $6F, $72, $20, $79, $6F, $75, $2E, $86, $00
 ; TEXT 2597 / $0A25
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7485 (compressed) -> $FE:143B raw, 98 bytes
 ;   Text: <$96>I deal in fine armor.<PAGE>What would you like? <Choice>A helmet. <Choice>Body armor.
@@ -33717,7 +33873,7 @@ V116_Text_2597:
     db $69, $6F, $6E, $2E, $0A, $8B, $4E, $65, $76, $65, $72, $20, $6D, $69, $6E, $64
     db $2E, $00
 ; TEXT 2598 / $0A26
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:74C3 (compressed) -> $FE:149D raw, 36 bytes
 ;   Text: <$96>Sorry.<S $3D $80> I'm all out of helmets.<PAGE><End>
@@ -33726,7 +33882,7 @@ V116_Text_2598:
     db $6C, $6C, $20, $6F, $75, $74, $20, $6F, $66, $20, $68, $65, $6C, $6D, $65, $74
     db $73, $2E, $86, $00
 ; TEXT 2599 / $0A27
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:74DB (compressed) -> $FE:14C1 raw, 113 bytes
 ;   Text: <$96>I can offer you a fine helmet,<S $3D $80> made from the scales of a dragon.<PAGE>It's more
@@ -33741,7 +33897,7 @@ V116_Text_2599:
     db $20, $54, $69, $74, $61, $6E, $27, $73, $20, $43, $72, $6F, $77, $6E, $2E, $86
     db $00
 ; TEXT 2600 / $0A28
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7520 (compressed) -> $FE:1532 raw, 98 bytes
 ;   Text: <$96>And it will only cost you an Amulet of Annihilation and 700 Gold Coins.<PAGE>Is it a deal?
@@ -33755,7 +33911,7 @@ V116_Text_2600:
     db $20, $64, $65, $61, $6C, $3F, $0A, $8B, $59, $65, $73, $2E, $0A, $8B, $4E, $6F
     db $2E, $00
 ; TEXT 2601 / $0A29
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7558 (compressed) -> $FE:1594 raw, 58 bytes
 ;   Text: <$96><$87>The Dragon Helmet is yours.<S $79 $80> Wear it in good health.<PAGE><End>
@@ -33765,7 +33921,7 @@ V116_Text_2601:
     db $20, $57, $65, $61, $72, $20, $69, $74, $20, $69, $6E, $20, $67, $6F, $6F, $64
     db $20, $68, $65, $61, $6C, $74, $68, $2E, $86, $00
 ; TEXT 2602 / $0A2A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:757B (compressed) -> $FE:15CE raw, 69 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You've got the cash,<S $3D $80> but not the Amulet.<S $79 $80> No
@@ -33777,7 +33933,7 @@ V116_Text_2602:
     db $41, $6D, $75, $6C, $65, $74, $2E, $80, $79, $80, $20, $4E, $6F, $20, $64, $65
     db $61, $6C, $2E, $86, $00
 ; TEXT 2603 / $0A2B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:75A2 (compressed) -> $FE:1613 raw, 39 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You don't have enough cash<End>
@@ -33786,14 +33942,14 @@ V116_Text_2603:
     db $64, $6F, $6E, $27, $74, $20, $68, $61, $76, $65, $20, $65, $6E, $6F, $75, $67
     db $68, $20, $63, $61, $73, $68, $00
 ; TEXT 2604 / $0A2C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:75B7 (compressed) -> $FE:163A raw, 3 bytes
 ;   Text: .<PAGE><End>
 V116_Text_2604:
     db $2E, $86, $00
 ; TEXT 2605 / $0A2D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:75BA (compressed) -> $FE:163D raw, 28 bytes
 ;   Text:  or an Amulet.<S $3D $80> No deal.<PAGE><End>
@@ -33801,7 +33957,7 @@ V116_Text_2605:
     db $20, $6F, $72, $20, $61, $6E, $20, $41, $6D, $75, $6C, $65, $74, $2E, $80, $3D
     db $80, $20, $4E, $6F, $20, $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 2606 / $0A2E
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:75C9 (compressed) -> $FE:1659 raw, 39 bytes
 ;   Text: <$96>Sorry.<S $3D $80> I'm all out of body armor.<PAGE><End>
@@ -33810,7 +33966,7 @@ V116_Text_2606:
     db $6C, $6C, $20, $6F, $75, $74, $20, $6F, $66, $20, $62, $6F, $64, $79, $20, $61
     db $72, $6D, $6F, $72, $2E, $86, $00
 ; TEXT 2607 / $0A2F
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:75E1 (compressed) -> $FE:1680 raw, 70 bytes
 ;   Text: <$96>I can offer you a Gold Plated Vest, more powerful than Silver Mail.<PAGE><End>
@@ -33821,7 +33977,7 @@ V116_Text_2607:
     db $75, $6C, $20, $74, $68, $61, $6E, $20, $53, $69, $6C, $76, $65, $72, $20, $4D
     db $61, $69, $6C, $2E, $86, $00
 ; TEXT 2608 / $0A30
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:760E (compressed) -> $FE:16C6 raw, 98 bytes
 ;   Text: <$96>And it will only cost you an Amulet of Annihilation and 800 Gold Coins.<PAGE>Is it a deal?
@@ -33835,7 +33991,7 @@ V116_Text_2608:
     db $20, $64, $65, $61, $6C, $3F, $0A, $8B, $59, $65, $73, $2E, $0A, $8B, $4E, $6F
     db $2E, $00
 ; TEXT 2609 / $0A31
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7646 (compressed) -> $FE:1728 raw, 63 bytes
 ;   Text: <$96><$87>You made a good decision.<S $3D $80> The Gold Plated Vest is yours.<PAGE><End>
@@ -33845,7 +34001,7 @@ V116_Text_2609:
     db $68, $65, $20, $47, $6F, $6C, $64, $20, $50, $6C, $61, $74, $65, $64, $20, $56
     db $65, $73, $74, $20, $69, $73, $20, $79, $6F, $75, $72, $73, $2E, $86, $00
 ; TEXT 2610 / $0A32
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:766D (compressed) -> $FE:1767 raw, 69 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You've got the cash,<S $3D $80> but not the Amulet.<S $79 $80> No
@@ -33857,7 +34013,7 @@ V116_Text_2610:
     db $41, $6D, $75, $6C, $65, $74, $2E, $80, $79, $80, $20, $4E, $6F, $20, $64, $65
     db $61, $6C, $2E, $86, $00
 ; TEXT 2611 / $0A33
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7694 (compressed) -> $FE:17AC raw, 39 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You don't have enough cash<End>
@@ -33866,14 +34022,14 @@ V116_Text_2611:
     db $64, $6F, $6E, $27, $74, $20, $68, $61, $76, $65, $20, $65, $6E, $6F, $75, $67
     db $68, $20, $63, $61, $73, $68, $00
 ; TEXT 2612 / $0A34
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:76A9 (compressed) -> $FE:17D3 raw, 3 bytes
 ;   Text: .<PAGE><End>
 V116_Text_2612:
     db $2E, $86, $00
 ; TEXT 2613 / $0A35
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:76AC (compressed) -> $FE:17D6 raw, 28 bytes
 ;   Text:  or an Amulet.<S $3D $80> No deal.<PAGE><End>
@@ -33881,7 +34037,7 @@ V116_Text_2613:
     db $20, $6F, $72, $20, $61, $6E, $20, $41, $6D, $75, $6C, $65, $74, $2E, $80, $3D
     db $80, $20, $4E, $6F, $20, $64, $65, $61, $6C, $2E, $86, $00
 ; TEXT 2614 / $0A36
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:76BB (compressed) -> $FE:17F2 raw, 43 bytes
 ;   Text: <$96>Sorry.<S $3D $80> I'm all out of arm protection.<PAGE><End>
@@ -33890,7 +34046,7 @@ V116_Text_2614:
     db $6C, $6C, $20, $6F, $75, $74, $20, $6F, $66, $20, $61, $72, $6D, $20, $70, $72
     db $6F, $74, $65, $63, $74, $69, $6F, $6E, $2E, $86, $00
 ; TEXT 2615 / $0A37
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:76D3 (compressed) -> $FE:181D raw, 129 bytes
 ;   Text: <$96>The Magician's Ring is the finest piece of arm protection that I have ever seen.<PAGE>It's much
@@ -33906,7 +34062,7 @@ V116_Text_2615:
     db $68, $65, $20, $49, $72, $6F, $6E, $20, $42, $72, $61, $63, $65, $72, $2E, $86
     db $00
 ; TEXT 2616 / $0A38
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:771D (compressed) -> $FE:189E raw, 98 bytes
 ;   Text: <$96>And it will only cost you an Amulet of Annihilation and 750 Gold Coins.<PAGE>Is it a deal?
@@ -33920,7 +34076,7 @@ V116_Text_2616:
     db $20, $64, $65, $61, $6C, $3F, $0A, $8B, $59, $65, $73, $2E, $0A, $8B, $4E, $6F
     db $2E, $00
 ; TEXT 2617 / $0A39
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:7755 (compressed) -> $FE:1900 raw, 53 bytes
 ;   Text: <$96><$87>You are now the proud owner of a Magician's Ring.<PAGE><End>
@@ -33930,7 +34086,7 @@ V116_Text_2617:
     db $20, $61, $20, $4D, $61, $67, $69, $63, $69, $61, $6E, $27, $73, $20, $52, $69
     db $6E, $67, $2E, $86, $00
 ; TEXT 2618 / $0A3A
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:777A (compressed) -> $FE:1935 raw, 69 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You've got the cash,<S $3D $80> but not the Amulet.<S $79 $80> No
@@ -33942,7 +34098,7 @@ V116_Text_2618:
     db $41, $6D, $75, $6C, $65, $74, $2E, $80, $79, $80, $20, $4E, $6F, $20, $64, $65
     db $61, $6C, $2E, $86, $00
 ; TEXT 2619 / $0A3B
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:77A1 (compressed) -> $FE:197A raw, 39 bytes
 ;   Text: <$96><$87>Sorry.<S $3D $80> You don't have enough cash<End>
@@ -33951,14 +34107,14 @@ V116_Text_2619:
     db $64, $6F, $6E, $27, $74, $20, $68, $61, $76, $65, $20, $65, $6E, $6F, $75, $67
     db $68, $20, $63, $61, $73, $68, $00
 ; TEXT 2620 / $0A3C
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:77B6 (compressed) -> $FE:19A1 raw, 3 bytes
 ;   Text: .<PAGE><End>
 V116_Text_2620:
     db $2E, $86, $00
 ; TEXT 2621 / $0A3D
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_TOWN_FESTIVAL_MARKET
 ;   Provenance: $C2:77B9 (compressed) -> $FE:19A4 raw, 28 bytes
 ;   Text:  or an Amulet.<S $3D $80> No deal.<PAGE><End>
@@ -34332,7 +34488,7 @@ V116_Text_2660:
     db $20, $67, $65, $74, $20, $6F, $6E, $65, $20, $69, $6E, $20, $74, $6F, $77, $6E
     db $2E, $86, $00
 ; TEXT 2661 / $0A65
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7BD3 (compressed) -> $FE:471A raw, 18 bytes
 ;   Text: <$87><$96>Step right up.<PAGE><End>
@@ -34340,7 +34496,7 @@ V116_Text_2661:
     db $87, $96, $53, $74, $65, $70, $20, $72, $69, $67, $68, $74, $20, $75, $70, $2E
     db $86, $00
 ; TEXT 2662 / $0A66
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7BE1 (compressed) -> $FE:472C raw, 58 bytes
 ;   Text: <$96>Sorry, pooch.<S $79 $80> No dogs are allowed in the exhibition.<PAGE><End>
@@ -34360,7 +34516,7 @@ V116_Text_2663:
     db $20, $62, $65, $20, $62, $61, $63, $6B, $20, $69, $6E, $20, $61, $20, $66, $65
     db $77, $20, $6D, $69, $6E, $75, $74, $65, $73, $2E, $86, $00
 ; TEXT 2664 / $0A68
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C22 (compressed) -> $FE:47A2 raw, 52 bytes
 ;   Text: <$96>Stop right there, mutt.<S $3D $80> You're comin' with me.<PAGE><End>
@@ -34370,77 +34526,77 @@ V116_Text_2664:
     db $72, $65, $20, $63, $6F, $6D, $69, $6E, $27, $20, $77, $69, $74, $68, $20, $6D
     db $65, $2E, $86, $00
 ; TEXT 2665 / $0A69
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C3F (compressed) -> $FE:47D6 raw, 10 bytes
 ;   Text: <$87><$96><$93>Ladies<End>
 V116_Text_2665:
     db $87, $96, $93, $4C, $61, $64, $69, $65, $73, $00
 ; TEXT 2666 / $0A6A
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C49 (compressed) -> $FE:47E0 raw, 6 bytes
 ;   Text:  and <End>
 V116_Text_2666:
     db $20, $61, $6E, $64, $20, $00
 ; TEXT 2667 / $0A6B
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C4E (compressed) -> $FE:47E6 raw, 11 bytes
 ;   Text: Gentlemen!<End>
 V116_Text_2667:
     db $47, $65, $6E, $74, $6C, $65, $6D, $65, $6E, $21, $00
 ; TEXT 2668 / $0A6C
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C57 (compressed) -> $FE:47F1 raw, 11 bytes
 ;   Text: <$87><$96><$93>The pig<End>
 V116_Text_2668:
     db $87, $96, $93, $54, $68, $65, $20, $70, $69, $67, $00
 ; TEXT 2669 / $0A6D
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C60 (compressed) -> $FE:47FC raw, 9 bytes
 ;   Text:  race is<End>
 V116_Text_2669:
     db $20, $72, $61, $63, $65, $20, $69, $73, $00
 ; TEXT 2670 / $0A6E
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C68 (compressed) -> $FE:4805 raw, 10 bytes
 ;   Text:  about to<End>
 V116_Text_2670:
     db $20, $61, $62, $6F, $75, $74, $20, $74, $6F, $00
 ; TEXT 2671 / $0A6F
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C6F (compressed) -> $FE:480F raw, 7 bytes
 ;   Text: begin!<End>
 V116_Text_2671:
     db $62, $65, $67, $69, $6E, $21, $00
 ; TEXT 2672 / $0A70
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C76 (compressed) -> $FE:4816 raw, 8 bytes
 ;   Text: <$87><$96><$93>And <End>
 V116_Text_2672:
     db $87, $96, $93, $41, $6E, $64, $20, $00
 ; TEXT 2673 / $0A71
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C7E (compressed) -> $FE:481E raw, 8 bytes
 ;   Text: they're<End>
 V116_Text_2673:
     db $74, $68, $65, $79, $27, $72, $65, $00
 ; TEXT 2674 / $0A72
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C84 (compressed) -> $FE:4826 raw, 6 bytes
 ;   Text:  off!<End>
 V116_Text_2674:
     db $20, $6F, $66, $66, $21, $00
 ; TEXT 2675 / $0A73
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7C8A (compressed) -> $FE:482C raw, 95 bytes
 ;   Text: <$96>The first stop in our tour of oddities will make you ponder the principles of our
@@ -34453,7 +34609,7 @@ V116_Text_2675:
     db $20, $70, $72, $69, $6E, $63, $69, $70, $6C, $65, $73, $20, $6F, $66, $20, $6F
     db $75, $72, $20, $65, $78, $69, $73, $74, $65, $6E, $63, $65, $2E, $86, $00
 ; TEXT 2676 / $0A74
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7CC7 (compressed) -> $FE:488B raw, 140 bytes
 ;   Text: <$96>How,<S $3D $80> you will ask,<S $3D $80> can such a creature live and breathe?<PAGE>There is no
@@ -34469,7 +34625,7 @@ V116_Text_2676:
     db $79, $20, $61, $20, $74, $72, $75, $74, $68, $20, $69, $6E, $20, $74, $68, $65
     db $20, $73, $68, $61, $70, $65, $20, $6F, $66, $5F, $86, $00
 ; TEXT 2677 / $0A75
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7D1E (compressed) -> $FE:4917 raw, 37 bytes
 ;   Text: <$96>Mr. Head:<S $3D $80> The man with no body.<PAGE><End>
@@ -34495,7 +34651,7 @@ V116_Text_2678:
 V116_Text_2679:
     db $96, $57, $65, $69, $72, $64, $21, $86, $00
 ; TEXT 2680 / $0A78
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7D67 (compressed) -> $FE:497E raw, 97 bytes
 ;   Text: <$96>This next exhibit comes to us from the far east via the midwest, with a stopover in
@@ -34509,7 +34665,7 @@ V116_Text_2680:
     db $72, $20, $69, $6E, $20, $4E, $61, $6E, $74, $75, $63, $6B, $65, $74, $2E, $86
     db $00
 ; TEXT 2681 / $0A79
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7DA7 (compressed) -> $FE:49DF raw, 105 bytes
 ;   Text: <$96>It is fantastic, freakish and full of cheese-producing goodness--<PAGE>I give you the one-horned beauty of…<PAGE><End>
@@ -34522,14 +34678,14 @@ V116_Text_2681:
     db $65, $20, $6F, $6E, $65, $2D, $68, $6F, $72, $6E, $65, $64, $20, $62, $65, $61
     db $75, $74, $79, $20, $6F, $66, $5F, $86, $00
 ; TEXT 2682 / $0A7A
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7DEE (compressed) -> $FE:4A48 raw, 15 bytes
 ;   Text: <$96>The Unigoat!<PAGE><End>
 V116_Text_2682:
     db $96, $54, $68, $65, $20, $55, $6E, $69, $67, $6F, $61, $74, $21, $86, $00
 ; TEXT 2683 / $0A7B
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7DFB (compressed) -> $FE:4A57 raw, 21 bytes
 ;   Text: <$96>Isn't she amazing?<PAGE><End>
@@ -34537,7 +34693,7 @@ V116_Text_2683:
     db $96, $49, $73, $6E, $27, $74, $20, $73, $68, $65, $20, $61, $6D, $61, $7A, $69
     db $6E, $67, $3F, $86, $00
 ; TEXT 2684 / $0A7C
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7E0D (compressed) -> $FE:4A6C raw, 36 bytes
 ;   Text: <$96>Please!<S $3D $80> Do not touch the horn!<PAGE><End>
@@ -34546,7 +34702,7 @@ V116_Text_2684:
     db $6F, $74, $20, $74, $6F, $75, $63, $68, $20, $74, $68, $65, $20, $68, $6F, $72
     db $6E, $21, $86, $00
 ; TEXT 2685 / $0A7D
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7E23 (compressed) -> $FE:4A90 raw, 29 bytes
 ;   Text: <$96>Follow me.<S $79 $80> Follow me.<S $79 $80><End>
@@ -34554,7 +34710,7 @@ V116_Text_2685:
     db $96, $46, $6F, $6C, $6C, $6F, $77, $20, $6D, $65, $2E, $80, $79, $80, $20, $46
     db $6F, $6C, $6C, $6F, $77, $20, $6D, $65, $2E, $80, $79, $80, $00
 ; TEXT 2686 / $0A7E
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7E3A (compressed) -> $FE:4AAD raw, 28 bytes
 ;   Text: There is much more to see.<PAGE><End>
@@ -34562,7 +34718,7 @@ V116_Text_2686:
     db $54, $68, $65, $72, $65, $20, $69, $73, $20, $6D, $75, $63, $68, $20, $6D, $6F
     db $72, $65, $20, $74, $6F, $20, $73, $65, $65, $2E, $86, $00
 ; TEXT 2687 / $0A7F
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7E4B (compressed) -> $FE:4AC9 raw, 163 bytes
 ;   Text: <$96>Our next exhibit is not for the squeamish or for the faint of heart.<PAGE>This disgusting, vile
@@ -34580,7 +34736,7 @@ V116_Text_2687:
     db $72, $20, $61, $6E, $64, $20, $72, $65, $70, $75, $67, $6E, $61, $6E, $63, $65
     db $2E, $86, $00
 ; TEXT 2688 / $0A80
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7EAF (compressed) -> $FE:4B6C raw, 211 bytes
 ;   Text: <$96>It has fangs the size of a human femur.<S $B5 $80> Its body is covered in fur from head to
@@ -34602,14 +34758,14 @@ V116_Text_2688:
     db $65, $20, $74, $65, $72, $72, $6F, $72, $20, $74, $68, $61, $74, $20, $69, $73
     db $5F, $86, $00
 ; TEXT 2689 / $0A81
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7F2F (compressed) -> $FE:4C3F raw, 10 bytes
 ;   Text: Mungola!<PAGE><End>
 V116_Text_2689:
     db $4D, $75, $6E, $67, $6F, $6C, $61, $21, $86, $00
 ; TEXT 2690 / $0A82
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7F38 (compressed) -> $FE:4C49 raw, 25 bytes
 ;   Text: <$96>I don't believe it!<S $79 $80> <End>
@@ -34617,7 +34773,7 @@ V116_Text_2690:
     db $96, $49, $20, $64, $6F, $6E, $27, $74, $20, $62, $65, $6C, $69, $65, $76, $65
     db $20, $69, $74, $21, $80, $79, $80, $20, $00
 ; TEXT 2691 / $0A83
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7F4A (compressed) -> $FE:4C62 raw, 23 bytes
 ;   Text: <$96>Mungola has escaped!<PAGE><End>
@@ -34625,7 +34781,7 @@ V116_Text_2691:
     db $96, $4D, $75, $6E, $67, $6F, $6C, $61, $20, $68, $61, $73, $20, $65, $73, $63
     db $61, $70, $65, $64, $21, $86, $00
 ; TEXT 2692 / $0A84
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7F5C (compressed) -> $FE:4C79 raw, 55 bytes
 ;   Text: <$96>I would be very careful if I were you,<S $3D $80> my friend.<PAGE><End>
@@ -34635,7 +34791,7 @@ V116_Text_2692:
     db $72, $65, $20, $79, $6F, $75, $2C, $80, $3D, $80, $20, $6D, $79, $20, $66, $72
     db $69, $65, $6E, $64, $2E, $86, $00
 ; TEXT 2693 / $0A85
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7F79 (compressed) -> $FE:4CB0 raw, 37 bytes
 ;   Text: <$96>It could appear around any corner!<PAGE><End>
@@ -34644,7 +34800,7 @@ V116_Text_2693:
     db $20, $61, $72, $6F, $75, $6E, $64, $20, $61, $6E, $79, $20, $63, $6F, $72, $6E
     db $65, $72, $21, $86, $00
 ; TEXT 2694 / $0A86
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7F8E (compressed) -> $FE:4CD5 raw, 60 bytes
 ;   Text: <$96>Our last exhibit is the most recent addition to the show!<PAGE><End>
@@ -34654,7 +34810,7 @@ V116_Text_2694:
     db $63, $65, $6E, $74, $20, $61, $64, $64, $69, $74, $69, $6F, $6E, $20, $74, $6F
     db $20, $74, $68, $65, $20, $73, $68, $6F, $77, $21, $86, $00
 ; TEXT 2695 / $0A87
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7FB8 (compressed) -> $FE:4D11 raw, 79 bytes
 ;   Text: You will not believe your eyes when you see this rare combination of species.<PAGE><End>
@@ -34665,7 +34821,7 @@ V116_Text_2695:
     db $20, $72, $61, $72, $65, $20, $63, $6F, $6D, $62, $69, $6E, $61, $74, $69, $6F
     db $6E, $20, $6F, $66, $20, $73, $70, $65, $63, $69, $65, $73, $2E, $86, $00
 ; TEXT 2696 / $0A88
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:0000 (compressed) -> $FE:4D60 raw, 81 bytes
 ;   Text: I present to you,<S $3D $80> for the first time ever,<S $3D $80> the fabulous,<S $3D $80>
@@ -34678,7 +34834,7 @@ V116_Text_2696:
     db $80, $20, $75, $6E, $62, $65, $6C, $69, $65, $76, $61, $62, $6C, $65, $5F, $86
     db $00
 ; TEXT 2697 / $0A89
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:0036 (compressed) -> $FE:4DB1 raw, 12 bytes
 ;   Text: Pigpoodle!<PAGE><End>
@@ -34742,7 +34898,7 @@ V116_Text_2703:
     db $20, $69, $74, $20, $75, $70, $20, $6C, $69, $6B, $65, $20, $61, $20, $70, $6F
     db $6F, $64, $6C, $65, $2E, $86, $00
 ; TEXT 2704 / $0A90
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:00F0 (compressed) -> $FE:4ED9 raw, 75 bytes
 ;   Text: <$96>Sorry that whole pigpoodle gig didn't work out, pup.<S $79 $80> That's show biz!<PAGE><End>
@@ -34753,7 +34909,7 @@ V116_Text_2704:
     db $20, $70, $75, $70, $2E, $80, $79, $80, $20, $54, $68, $61, $74, $27, $73, $20
     db $73, $68, $6F, $77, $20, $62, $69, $7A, $21, $86, $00
 ; TEXT 2705 / $0A91
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:011E (compressed) -> $FE:4F24 raw, 91 bytes
 ;   Text: <$96>You look like you have a future in show business.<PAGE>Maybe we can work something out
@@ -34766,7 +34922,7 @@ V116_Text_2705:
     db $77, $6F, $72, $6B, $20, $73, $6F, $6D, $65, $74, $68, $69, $6E, $67, $20, $6F
     db $75, $74, $20, $6C, $61, $74, $65, $72, $2E, $86, $00
 ; TEXT 2706 / $0A92
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:014A (compressed) -> $FE:4F7F raw, 97 bytes
 ;   Text: <$96>The offer still stands to make you a star as the {Bearded Boy!}<PAGE>Is it a deal? <Choice>OK.
@@ -34780,7 +34936,7 @@ V116_Text_2706:
     db $4F, $4B, $2E, $0A, $8B, $4E, $6F, $2C, $20, $74, $68, $61, $6E, $6B, $73, $2E
     db $00
 ; TEXT 2707 / $0A93
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:018A (compressed) -> $FE:4FE0 raw, 175 bytes
 ;   Text: <$96>Hey, kid.<S $79 $80> You look like you have star potential.<PAGE>How's this?<S $79 $80> We put
@@ -34799,7 +34955,7 @@ V116_Text_2707:
     db $6F, $6F, $64, $3F, $0A, $8B, $53, $75, $72, $65, $2E, $0A, $8B, $4E, $6F, $21
     db $20, $59, $6F, $75, $27, $72, $65, $20, $63, $72, $61, $7A, $79, $21, $00
 ; TEXT 2708 / $0A94
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:01FE (compressed) -> $FE:508F raw, 81 bytes
 ;   Text: <$87><$96>OK, fine.<S $3D $80> I try to make you into a star and this is the thanks that I
@@ -34812,7 +34968,7 @@ V116_Text_2708:
     db $6E, $6B, $73, $20, $74, $68, $61, $74, $20, $49, $20, $67, $65, $74, $21, $86
     db $00
 ; TEXT 2709 / $0A95
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:022E (compressed) -> $FE:50E0 raw, 129 bytes
 ;   Text: <$87><$96>Come back later and we'll set you up with a fake beard.<PAGE>Then you'll be on your way to
@@ -34828,7 +34984,7 @@ V116_Text_2709:
     db $20, $7B, $42, $65, $61, $72, $64, $65, $64, $20, $42, $6F, $79, $2E, $7D, $86
     db $00
 ; TEXT 2710 / $0A96
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:027F (compressed) -> $FE:5161 raw, 67 bytes
 ;   Text: <$96>Hi, puppy.<S $3D $80> You could join our show as the {Beardless Poodle!}<PAGE><End>
@@ -35065,7 +35221,7 @@ V116_Text_2730:
     db $20, $69, $6E, $20, $49, $76, $6F, $72, $20, $54, $6F, $77, $65, $72, $2E, $86
     db $00
 ; TEXT 2731 / $0AAB
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:05E7 (compressed) -> $FE:5F31 raw, 87 bytes
 ;   Text: <$96>Hi!<S $29 $80> I'm Naris, the smartest boy in Ebon Keep.<S $51 $80> I bet you're not as smart
@@ -35078,7 +35234,7 @@ V116_Text_2731:
     db $65, $20, $6E, $6F, $74, $20, $61, $73, $20, $73, $6D, $61, $72, $74, $20, $61
     db $73, $20, $6D, $65, $21, $86, $00
 ; TEXT 2732 / $0AAC
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:061E (compressed) -> $FE:5F88 raw, 36 bytes
 ;   Text: I don't want to play right now. <S $51 $80><End>
@@ -35087,7 +35243,7 @@ V116_Text_2732:
     db $70, $6C, $61, $79, $20, $72, $69, $67, $68, $74, $20, $6E, $6F, $77, $2E, $20
     db $80, $51, $80, $00
 ; TEXT 2733 / $0AAD
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:0636 (compressed) -> $FE:5FAC raw, 33 bytes
 ;   Text: I'm working on a youth formula.<PAGE><End>
@@ -35096,7 +35252,7 @@ V116_Text_2733:
     db $20, $79, $6F, $75, $74, $68, $20, $66, $6F, $72, $6D, $75, $6C, $61, $2E, $86
     db $00
 ; TEXT 2734 / $0AAE
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:0646 (compressed) -> $FE:5FCD raw, 41 bytes
 ;   Text: I'm working on a formula to age things.<PAGE><End>
@@ -35105,7 +35261,7 @@ V116_Text_2734:
     db $20, $66, $6F, $72, $6D, $75, $6C, $61, $20, $74, $6F, $20, $61, $67, $65, $20
     db $74, $68, $69, $6E, $67, $73, $2E, $86, $00
 ; TEXT 2735 / $0AAF
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:065A (compressed) -> $FE:5FF6 raw, 98 bytes
 ;   Text: Guess the number of marbles in my hand and I'll give you something.<PAGE>What's your guess? <S $3D
@@ -35119,7 +35275,7 @@ V116_Text_2735:
     db $67, $75, $65, $73, $73, $3F, $0A, $80, $3D, $80, $8B, $A1, $2E, $0A, $8B, $A2
     db $2E, $00
 ; TEXT 2736 / $0AB0
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:0693 (compressed) -> $FE:6058 raw, 83 bytes
 ;   Text: <$96><$87>Wrong!<S $3D $80> That's what happens when you play with the smartest boy in Ebon
@@ -35132,7 +35288,7 @@ V116_Text_2736:
     db $62, $6F, $79, $20, $69, $6E, $20, $45, $62, $6F, $6E, $20, $4B, $65, $65, $70
     db $2E, $85, $00
 ; TEXT 2737 / $0AB1
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:06C6 (compressed) -> $FE:60AB raw, 43 bytes
 ;   Text: Right now I'm working on a youth formula.<PAGE><End>
@@ -35141,7 +35297,7 @@ V116_Text_2737:
     db $72, $6B, $69, $6E, $67, $20, $6F, $6E, $20, $61, $20, $79, $6F, $75, $74, $68
     db $20, $66, $6F, $72, $6D, $75, $6C, $61, $2E, $86, $00
 ; TEXT 2738 / $0AB2
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:06DE (compressed) -> $FE:60D6 raw, 51 bytes
 ;   Text: Right now I'm working on a formula to age things.<PAGE><End>
@@ -35151,7 +35307,7 @@ V116_Text_2738:
     db $6C, $61, $20, $74, $6F, $20, $61, $67, $65, $20, $74, $68, $69, $6E, $67, $73
     db $2E, $86, $00
 ; TEXT 2739 / $0AB3
-;   Source/Theme: Naris -> $0A Inventor [fixed]
+;   Source/Theme: Naris -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:06FA (compressed) -> $FE:6109 raw, 137 bytes
 ;   Text: I'd explain how it works but you probably wouldn't understand.<PAGE>Would you like to equip or
@@ -35418,7 +35574,7 @@ V116_Text_2762:
     db $6F, $6E, $20, $77, $69, $6C, $6C, $20, $69, $6D, $70, $72, $6F, $76, $65, $20
     db $68, $69, $73, $20, $6D, $61, $6E, $6E, $65, $72, $73, $2E, $86, $00
 ; TEXT 2763 / $0ACB
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:0B9A (compressed) -> $FE:6783 raw, 228 bytes
 ;   Text: <$96>Okay, buddy.<S $65 $80> Had your fun? <S $B5 $80>Oh, I've seen your type before.<PAGE><$96>You
@@ -35441,7 +35597,7 @@ V116_Text_2763:
     db $5B, $80, $20, $43, $6F, $6D, $65, $20, $61, $6C, $6F, $6E, $67, $20, $6E, $6F
     db $77, $21, $86, $00
 ; TEXT 2764 / $0ACC
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:0C27 (compressed) -> $FE:6867 raw, 76 bytes
 ;   Text: <$96><$87>Would you like to record your progress? <$97><Choice>OK. <Choice>I'd rather call a
@@ -35496,7 +35652,7 @@ V116_Text_2804:
     db $96, $70, $69, $65, $63, $65, $80, $3D, $80, $20, $62, $79, $80, $3D, $80, $20
     db $70, $69, $65, $63, $65, $2E, $86, $00
 ; TEXT 2805 / $0AF5
-;   Source/Theme: Eronio -> $09 Guard / Authority [fixed]
+;   Source/Theme: Eronio -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:1179 (compressed) -> $FE:69FB raw, 61 bytes
 ;   Text: <$96>But<S $3D $80> Your Highness,<S $3D $80> won't the citizens be suspicious?<PAGE><End>
@@ -36078,7 +36234,7 @@ V116_Text_2867:
 V116_Text_2868:
     db $4E, $6F, $74, $68, $69, $6E, $67, $00
 ; TEXT 2869 / $0B35
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $F1:4B00 (raw) -> $FF:0898 raw, 198 bytes
 ;   Text: <$96><$93>Your interference has exceeded acceptable limits.<PAGE>Three regional administrations
@@ -36112,7 +36268,7 @@ V116_Text_2870:
     db $6D, $6F, $73, $74, $20, $65, $66, $66, $69, $63, $69, $65, $6E, $74, $20, $73
     db $6F, $6C, $75, $74, $69, $6F, $6E, $2E, $86, $00
 ; TEXT 2871 / $0B37
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $F1:4C30 (raw) -> $FF:09B8 raw, 69 bytes
 ;   Text: <$96><$93>System integrity compromised.<PAGE>Power... below operational minimum.<PAGE><End>
@@ -36505,7 +36661,7 @@ V116_Text_2911:
 V116_Text_2912:
     db $87, $00
 ; TEXT 2913 / $0B61
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $C3:1ED5 (compressed) -> $FF:10E4 raw, 25 bytes
 ;   Text: <$96><$93>What have we here?<S $F1 $80> <End>
@@ -36513,7 +36669,7 @@ V116_Text_2913:
     db $96, $93, $57, $68, $61, $74, $20, $68, $61, $76, $65, $20, $77, $65, $20, $68
     db $65, $72, $65, $3F, $80, $F1, $80, $0A, $00
 ; TEXT 2914 / $0B62
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $C3:1EE6 (compressed) -> $FF:10FD raw, 28 bytes
 ;   Text: An intruder,<S $3D $80> I fear!<S $69 $81><$87><End>
@@ -36537,7 +36693,7 @@ V116_Text_2916:
     db $96, $93, $57, $68, $6F, $2E, $80, $15, $80, $2E, $80, $15, $80, $2E, $20, $77
     db $68, $6F, $20, $61, $72, $65, $20, $79, $6F, $75, $3F, $80, $F1, $80, $00
 ; TEXT 2917 / $0B65
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $C3:1F2D (compressed) -> $FF:1153 raw, 65 bytes
 ;   Text: <$96><$93>That's not important!<S $79 $80> We've got to get you out of here.<S $E1 $81><$87><End>
@@ -36548,7 +36704,7 @@ V116_Text_2917:
     db $6F, $75, $74, $20, $6F, $66, $20, $68, $65, $72, $65, $2E, $80, $E1, $81, $87
     db $00
 ; TEXT 2918 / $0B66
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $C3:1F53 (compressed) -> $FF:1194 raw, 67 bytes
 ;   Text: <$96><$93>We can't have you meddling with the Professor's experiments.<S $E1 $81><$87><End>
@@ -36559,7 +36715,7 @@ V116_Text_2918:
     db $73, $20, $65, $78, $70, $65, $72, $69, $6D, $65, $6E, $74, $73, $2E, $80, $E1
     db $81, $87, $00
 ; TEXT 2919 / $0B67
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $C3:1F79 (compressed) -> $FF:11D7 raw, 18 bytes
 ;   Text: <$96><$93>Come along.<S $79 $80><$87><End>
@@ -36575,7 +36731,7 @@ V116_Text_2920:
     db $96, $93, $43, $61, $72, $6C, $74, $72, $6F, $6E, $3F, $20, $49, $73, $20, $73
     db $6F, $6D, $65, $6F, $6E, $65, $20, $74, $68, $65, $72, $65, $3F, $86, $00
 ; TEXT 2921 / $0B69
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $F1:5060 (raw) -> $FF:1208 raw, 37 bytes
 ;   Text: <$96><$93>No one of consequence, Professor.<PAGE><End>
@@ -36584,7 +36740,7 @@ V116_Text_2921:
     db $65, $71, $75, $65, $6E, $63, $65, $2C, $20, $50, $72, $6F, $66, $65, $73, $73
     db $6F, $72, $2E, $86, $00
 ; TEXT 2922 / $0B6A
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $F1:5090 (raw) -> $FF:122D raw, 23 bytes
 ;   Text: <$96><$93>Continue your work.<PAGE><End>
@@ -40080,7 +40236,7 @@ org $FA81F4
 ; v1.20 — JADE EARLY-YES RESPONSE WAIT FIX
 ; =============================================================================
 ; TEXT 0692 ("Perhaps someday I can prove it.") previously ended directly in
-;   Source/Theme: Jade -> $0A Inventor [fixed]
+;   Source/Theme: Jade -> $03 Generic NPC [fixed]
 ; $00, so Jade's event resumed immediately after rendering and cleared the box
 ; without waiting for player acknowledgement.  Keep the wording intact by
 ; placing a corrected copy in unused PREHISTORIA_VILLAGE_FIRE_EYES arena space
@@ -40118,12 +40274,12 @@ V120_JadeSomeday_Wait_Text:
 ; =============================================================================
 
 ; TEXT 2913 -> $FF:2800
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F223
 V121Arrival_TextPtr_2913:
     db $00, $A8, $1F
 ; TEXT 2914 -> $FF:2818
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F226
 V121Arrival_TextPtr_2914:
     db $18, $A8, $1F
@@ -40138,17 +40294,17 @@ org $D1F22C
 V121Arrival_TextPtr_2916:
     db $4F, $A8, $1F
 ; TEXT 2917 -> $FF:286E
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F22F
 V121Arrival_TextPtr_2917:
     db $6E, $A8, $1F
 ; TEXT 2918 -> $FF:28AE
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F232
 V121Arrival_TextPtr_2918:
     db $AE, $A8, $1F
 ; TEXT 2919 -> $FF:28F0
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F235
 V121Arrival_TextPtr_2919:
     db $F0, $A8, $1F
@@ -40158,12 +40314,12 @@ org $D1F238
 V121Arrival_TextPtr_2920:
     db $01, $A9, $1F
 ; TEXT 2921 -> $FF:291F
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F23B
 V121Arrival_TextPtr_2921:
     db $1F, $A9, $1F
 ; TEXT 2922 -> $FF:2943
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F23E
 V121Arrival_TextPtr_2922:
     db $43, $A9, $1F
@@ -40230,11 +40386,11 @@ V121Arrival_Text_2923_Windowed:
 org $DBC1AA
     db $A3, $03, $4D, $4D, $4D, $4D
 ; TEXT 2913
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $DBC1B0
     db $51, $23, $22, $4D
 ; TEXT 2914
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $DBC1BA
     db $51, $26, $22, $4D
 ; clear
@@ -40264,15 +40420,15 @@ org $DBC25C
 org $DBC267
     db $A3, $03, $4D, $4D, $4D, $4D
 ; TEXT 2917
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $DBC26D
     db $51, $2F, $22, $4D
 ; TEXT 2918
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $DBC297
     db $51, $32, $22, $4D
 ; TEXT 2919
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $DBC2A9
     db $51, $35, $22, $4D
 ; clear
@@ -40292,11 +40448,11 @@ org $DBC304
 org $DBC308
     db $A3, $03, $4D, $4D, $4D, $4D
 ; TEXT 2921
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $DBC30E
     db $51, $3B, $22, $4D
 ; TEXT 2922
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $DBC31E
     db $51, $3E, $22, $4D
 ; clear
@@ -40508,7 +40664,7 @@ V121PageMerge_Text_0490:
     db $86, $00
 
 ; TEXT 0501 / $01F5 — Generic Prehistoria NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Mammoth Graveyard alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Mammoth Graveyard alchemist -> $03 Generic NPC [fixed]
 org $D1D5DF
 V121PageMerge_TextPtr_0501:
     db $E0, $32, $1C
@@ -40527,7 +40683,7 @@ V121PageMerge_Text_0501:
     db $74, $20, $52, $6F, $6F, $74, $2E, $86, $00
 
 ; TEXT 0515 / $0203 — Generic Prehistoria NPC; merge live page boundary/boundaries 2
-;   Source/Theme: Volcano / Levitate alchemist -> $07 Alchemist [fixed]
+;   Source/Theme: Volcano / Levitate alchemist -> $03 Generic NPC [fixed]
 org $D1D609
 V121PageMerge_TextPtr_0515:
     db $90, $33, $1C
@@ -40544,7 +40700,7 @@ V121PageMerge_Text_0515:
     db $74, $20, $6E, $6F, $77, $2E, $86, $00
 
 ; TEXT 0544 / $0220 — Generic Prehistoria NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1D660
 V121PageMerge_TextPtr_0544:
     db $20, $34, $1C
@@ -40654,7 +40810,7 @@ V121PageMerge_Text_0640:
     db $20, $74, $72, $79, $20, $6F, $75, $74, $2E, $86, $00
 
 ; TEXT 0683 / $02AB — Generic Prehistoria NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1D801
 V121PageMerge_TextPtr_0683:
     db $60, $E0, $1C
@@ -40868,7 +41024,7 @@ V121PageMerge_Text_0904:
     db $74, $68, $69, $6E, $6B, $20, $00
 
 ; TEXT 0913 / $0391 — Blimp; merge live page boundary/boundaries 2
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 org $D1DAB3
 V121PageMerge_TextPtr_0913:
     db $D0, $52, $1C
@@ -40935,7 +41091,7 @@ V121PageMerge_Text_1022:
     db $21, $86, $00
 
 ; TEXT 1184 / $04A0 — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1DDE0
 V121PageMerge_TextPtr_1184:
     db $30, $43, $1A
@@ -40948,7 +41104,7 @@ V121PageMerge_Text_1184:
     db $65, $6E, $65, $72, $67, $79, $21, $86, $00
 
 ; TEXT 1237 / $04D5 — Generic Antiqua NPC; merge live page boundary/boundaries 2
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1DE7F
 V121PageMerge_TextPtr_1237:
     db $80, $43, $1A
@@ -40969,7 +41125,7 @@ V121PageMerge_Text_1237:
     db $6F, $20, $77, $61, $79, $2E, $00
 
 ; TEXT 1324 / $052C — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1DF84
 V121PageMerge_TextPtr_1324:
     db $50, $44, $1A
@@ -40983,7 +41139,7 @@ V121PageMerge_Text_1324:
     db $73, $61, $6C, $2E, $86, $00
 
 ; TEXT 1366 / $0556 — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E002
 V121PageMerge_TextPtr_1366:
     db $B0, $44, $1A
@@ -40997,7 +41153,7 @@ V121PageMerge_Text_1366:
     db $20, $4D, $6F, $78, $61, $20, $53, $74, $69, $63, $6B, $2E, $86, $00
 
 ; TEXT 1368 / $0558 — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E008
 V121PageMerge_TextPtr_1368:
     db $10, $45, $1A
@@ -41011,7 +41167,7 @@ V121PageMerge_Text_1368:
     db $61, $74, $27, $73, $20, $63, $6F, $6D, $65, $64, $79, $21, $86, $00
 
 ; TEXT 1372 / $055C — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E014
 V121PageMerge_TextPtr_1372:
     db $70, $45, $1A
@@ -41025,7 +41181,7 @@ V121PageMerge_Text_1372:
     db $20, $73, $70, $69, $63, $65, $2E, $86, $00
 
 ; TEXT 1374 / $055E — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E01A
 V121PageMerge_TextPtr_1374:
     db $D0, $45, $1A
@@ -41037,7 +41193,7 @@ V121PageMerge_Text_1374:
     db $6D, $6F, $72, $2E, $86, $00
 
 ; TEXT 1376 / $0560 — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E020
 V121PageMerge_TextPtr_1376:
     db $10, $46, $1A
@@ -41055,7 +41211,7 @@ V121PageMerge_Text_1376:
     db $65, $2E, $86, $00
 
 ; TEXT 1378 / $0562 — Generic Antiqua NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E026
 V121PageMerge_TextPtr_1378:
     db $B0, $46, $1A
@@ -41254,7 +41410,7 @@ V121PageMerge_Text_1948:
     db $74, $2E, $86, $00
 
 ; TEXT 2021 / $07E5 — Generic Gothica NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 org $D1E7AF
 V121PageMerge_TextPtr_2021:
     db $10, $C7, $1D
@@ -41285,7 +41441,7 @@ V121PageMerge_Text_2052:
     db $6C, $73, $21, $86, $00
 
 ; TEXT 2087 / $0827 — Generic Gothica NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E875
 V121PageMerge_TextPtr_2087:
     db $20, $DF, $1A
@@ -41380,7 +41536,7 @@ V121PageMerge_Text_2174:
     db $70, $6C, $61, $63, $65, $20, $63, $6C, $65, $61, $6E, $2E, $86, $00
 
 ; TEXT 2206 / $089E — Generic Gothica NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1E9DA
 V121PageMerge_TextPtr_2206:
     db $10, $E2, $1A
@@ -41394,7 +41550,7 @@ V121PageMerge_Text_2206:
     db $77, $68, $65, $72, $65, $20, $65, $6C, $73, $65, $21, $86, $00
 
 ; TEXT 2257 / $08D1 — Generic Gothica NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Guard / Authority -> $09 Guard / Authority [fixed]
+;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 org $D1EA73
 V121PageMerge_TextPtr_2257:
     db $20, $21, $1B
@@ -41438,7 +41594,7 @@ V121PageMerge_Text_2312:
     db $75, $72, $20, $6A, $6F, $75, $72, $6E, $65, $79, $2E, $86, $00
 
 ; TEXT 2391 / $0957 — Gomi; merge live page boundary/boundaries 1
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 org $D1EC05
 V121PageMerge_TextPtr_2391:
     db $F0, $42, $1B
@@ -41451,7 +41607,7 @@ V121PageMerge_Text_2391:
     db $6E, $64, $20, $66, $72, $69, $65, $6E, $64, $6C, $79, $5F, $86, $00
 
 ; TEXT 2397 / $095D — Gomi; merge live page boundary/boundaries 1
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 org $D1EC17
 V121PageMerge_TextPtr_2397:
     db $40, $43, $1B
@@ -41468,7 +41624,7 @@ V121PageMerge_Text_2397:
     db $65, $20, $63, $6C, $6F, $75, $64, $73, $2E, $86, $00
 
 ; TEXT 2404 / $0964 — Gomi; merge live page boundary/boundaries 1
-;   Source/Theme: Gomi -> $06 Comedic Relief [fixed]
+;   Source/Theme: Gomi -> $08 Gomi [fixed]
 org $D1EC2C
 V121PageMerge_TextPtr_2404:
     db $D0, $43, $1B
@@ -41626,7 +41782,7 @@ V121PageMerge_Text_2556:
     db $2E, $86, $00
 
 ; TEXT 2591 / $0A1F — Generic Gothica NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Merchant / Trader -> $08 Merchant / Trader [fixed]
+;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 org $D1EE5D
 V121PageMerge_TextPtr_2591:
     db $E0, $1D, $1F
@@ -41639,7 +41795,7 @@ V121PageMerge_Text_2591:
     db $79, $6F, $75, $72, $20, $70, $6C, $65, $61, $73, $75, $72, $65, $3F, $00
 
 ; TEXT 2705 / $0A91 — Generic Gothica NPC; merge live page boundary/boundaries 1
-;   Source/Theme: Exhibition presenter -> $06 Comedic Relief [fixed]
+;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 org $D1EFB3
 V121PageMerge_TextPtr_2705:
     db $A0, $56, $1F
@@ -41694,7 +41850,7 @@ V121PageMerge_Text_2762:
     db $00
 
 ; TEXT 2796 / $0AEC — Tinker Tinderbox; merge live page boundary/boundaries 1
-;   Source/Theme: Tinker Tinderbox -> $0A Inventor [fixed]
+;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 org $D1F0C4
 V121PageMerge_TextPtr_2796:
     db $30, $44, $1B
@@ -41712,7 +41868,7 @@ V121PageMerge_Text_2796:
     db $73, $70, $61, $63, $65, $21, $86, $00
 
 ; TEXT 2869 / $0B35 — Carltron; merge live page boundary/boundaries 3
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F19F
 V121PageMerge_TextPtr_2869:
     db $80, $AA, $1F
@@ -41733,7 +41889,7 @@ V121PageMerge_Text_2869:
     db $6D, $69, $74, $74, $65, $64, $2E, $86, $00
 
 ; TEXT 2871 / $0B37 — Carltron; merge live page boundary/boundaries 1
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F1A5
 V121PageMerge_TextPtr_2871:
     db $50, $AB, $1F
@@ -42050,7 +42206,7 @@ org $F46494
     db $72, $65, $20, $63, $61, $6C, $6C, $73, $20, $6D, $65, $20, $7B, $46, $69, $72
     db $65, $20, $45, $79, $65, $73, $2E, $7D, $86, $00
 ; TEXT 0674 Strong Heart — window-safe cinematic copy
-;   Source/Theme: Strong Heart -> $07 Alchemist [fixed]
+;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 org $D1D7E6
     db $DE, $64, $1A
 org $F464DE
@@ -42090,7 +42246,7 @@ org $F465A5
     db $74, $75, $72, $65, $72, $73, $20, $61, $6C, $6F, $6E, $67, $20, $74, $68, $65
     db $20, $72, $69, $76, $65, $72, $2E, $80, $A5, $81, $00
 ; TEXT 1137 Madronius — window-safe cinematic copy
-;   Source/Theme: Madronius -> $07 Alchemist [fixed]
+;   Source/Theme: Madronius -> $03 Generic NPC [fixed]
 org $D1DD53
     db $10, $66, $1A
 org $F46610
@@ -42106,7 +42262,7 @@ org $F46636
     db $65, $20, $6E, $65, $65, $64, $73, $20, $74, $6F, $20, $63, $6C, $65, $61, $6E
     db $20, $74, $68, $65, $20, $70, $6F, $6F, $6C, $21, $85, $00
 ; TEXT 1858 Blimp — window-safe cinematic copy
-;   Source/Theme: Blimp -> $06 Comedic Relief [fixed]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 org $D1E5C6
     db $62, $66, $1A
 org $F46662
@@ -42148,7 +42304,7 @@ org $F46746
     db $96, $54, $68, $65, $20, $42, $61, $62, $79, $6C, $6F, $6E, $69, $61, $6E, $20
     db $42, $72, $75, $69, $73, $65, $72, $2E, $2E, $2E, $80, $B5, $80, $00
 ; TEXT 2869 Carltron — window-safe cinematic copy
-;   Source/Theme: Carltron -> $05 Robot [fixed]
+;   Source/Theme: Carltron -> $0B Carltron [fixed]
 org $D1F19F
     db $64, $67, $1A
 org $F46764
@@ -42503,37 +42659,37 @@ org $F469FB
 ;@TEXTMETA {"id":218,"hex":"00DA","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":219,"hex":"00DB","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":220,"hex":"00DC","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":221,"hex":"00DD","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":222,"hex":"00DE","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":223,"hex":"00DF","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":224,"hex":"00E0","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":225,"hex":"00E1","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":226,"hex":"00E2","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":227,"hex":"00E3","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":228,"hex":"00E4","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":229,"hex":"00E5","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":230,"hex":"00E6","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":231,"hex":"00E7","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":232,"hex":"00E8","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":233,"hex":"00E9","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":234,"hex":"00EA","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":235,"hex":"00EB","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":236,"hex":"00EC","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":237,"hex":"00ED","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":238,"hex":"00EE","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":239,"hex":"00EF","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":240,"hex":"00F0","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":241,"hex":"00F1","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":242,"hex":"00F2","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":243,"hex":"00F3","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":244,"hex":"00F4","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":245,"hex":"00F5","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":246,"hex":"00F6","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":247,"hex":"00F7","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":248,"hex":"00F8","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":249,"hex":"00F9","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":250,"hex":"00FA","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":251,"hex":"00FB","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":221,"hex":"00DD","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":222,"hex":"00DE","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":223,"hex":"00DF","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":224,"hex":"00E0","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":225,"hex":"00E1","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":226,"hex":"00E2","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":227,"hex":"00E3","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":228,"hex":"00E4","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":229,"hex":"00E5","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":230,"hex":"00E6","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":231,"hex":"00E7","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":232,"hex":"00E8","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":233,"hex":"00E9","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":234,"hex":"00EA","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":235,"hex":"00EB","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":236,"hex":"00EC","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":237,"hex":"00ED","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":238,"hex":"00EE","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":239,"hex":"00EF","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":240,"hex":"00F0","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":241,"hex":"00F1","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":242,"hex":"00F2","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":243,"hex":"00F3","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":244,"hex":"00F4","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":245,"hex":"00F5","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":246,"hex":"00F6","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":247,"hex":"00F7","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":248,"hex":"00F8","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":249,"hex":"00F9","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":250,"hex":"00FA","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":251,"hex":"00FB","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":252,"hex":"00FC","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":253,"hex":"00FD","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":254,"hex":"00FE","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -42566,72 +42722,72 @@ org $F469FB
 ;@TEXTMETA {"id":281,"hex":"0119","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":282,"hex":"011A","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":283,"hex":"011B","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":284,"hex":"011C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":285,"hex":"011D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":286,"hex":"011E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":287,"hex":"011F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":288,"hex":"0120","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":289,"hex":"0121","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":290,"hex":"0122","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":291,"hex":"0123","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":292,"hex":"0124","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":293,"hex":"0125","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":294,"hex":"0126","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":295,"hex":"0127","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":296,"hex":"0128","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":297,"hex":"0129","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":298,"hex":"012A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":299,"hex":"012B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":300,"hex":"012C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":301,"hex":"012D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":302,"hex":"012E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":303,"hex":"012F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":304,"hex":"0130","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":305,"hex":"0131","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":306,"hex":"0132","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":307,"hex":"0133","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":308,"hex":"0134","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":309,"hex":"0135","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":310,"hex":"0136","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":311,"hex":"0137","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":312,"hex":"0138","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":313,"hex":"0139","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":314,"hex":"013A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":315,"hex":"013B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":316,"hex":"013C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":317,"hex":"013D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":318,"hex":"013E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":319,"hex":"013F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":320,"hex":"0140","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":321,"hex":"0141","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":322,"hex":"0142","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":323,"hex":"0143","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":324,"hex":"0144","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":325,"hex":"0145","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":326,"hex":"0146","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":327,"hex":"0147","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":328,"hex":"0148","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":329,"hex":"0149","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":330,"hex":"014A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":331,"hex":"014B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":332,"hex":"014C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":333,"hex":"014D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":334,"hex":"014E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":335,"hex":"014F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":336,"hex":"0150","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":337,"hex":"0151","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":338,"hex":"0152","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":339,"hex":"0153","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":340,"hex":"0154","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":341,"hex":"0155","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":342,"hex":"0156","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":343,"hex":"0157","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":344,"hex":"0158","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":345,"hex":"0159","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":346,"hex":"015A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":347,"hex":"015B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":348,"hex":"015C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":349,"hex":"015D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":284,"hex":"011C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":285,"hex":"011D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":286,"hex":"011E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":287,"hex":"011F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":288,"hex":"0120","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":289,"hex":"0121","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":290,"hex":"0122","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":291,"hex":"0123","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":292,"hex":"0124","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":293,"hex":"0125","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":294,"hex":"0126","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":295,"hex":"0127","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":296,"hex":"0128","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":297,"hex":"0129","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":298,"hex":"012A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":299,"hex":"012B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":300,"hex":"012C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":301,"hex":"012D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":302,"hex":"012E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":303,"hex":"012F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":304,"hex":"0130","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":305,"hex":"0131","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":306,"hex":"0132","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":307,"hex":"0133","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":308,"hex":"0134","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":309,"hex":"0135","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":310,"hex":"0136","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":311,"hex":"0137","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-inherit","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":312,"hex":"0138","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":313,"hex":"0139","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":314,"hex":"013A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":315,"hex":"013B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":316,"hex":"013C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":317,"hex":"013D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":318,"hex":"013E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":319,"hex":"013F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":320,"hex":"0140","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":321,"hex":"0141","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":322,"hex":"0142","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":323,"hex":"0143","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":324,"hex":"0144","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":325,"hex":"0145","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":326,"hex":"0146","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":327,"hex":"0147","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":328,"hex":"0148","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":329,"hex":"0149","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":330,"hex":"014A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":331,"hex":"014B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":332,"hex":"014C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":333,"hex":"014D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":334,"hex":"014E","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":335,"hex":"014F","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":336,"hex":"0150","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":337,"hex":"0151","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":338,"hex":"0152","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":339,"hex":"0153","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":340,"hex":"0154","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":341,"hex":"0155","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":342,"hex":"0156","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":343,"hex":"0157","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":344,"hex":"0158","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":345,"hex":"0159","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":346,"hex":"015A","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":347,"hex":"015B","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":348,"hex":"015C","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":349,"hex":"015D","arena":"NATIVE_SHARED_0000_0420","source":"Merchant / Trader caller","assignment":"caller-fragment","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":350,"hex":"015E","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":351,"hex":"015F","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":352,"hex":"0160","arena":"NATIVE_SHARED_0000_0420","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -42757,99 +42913,99 @@ org $F469FB
 ;@TEXTMETA {"id":472,"hex":"01D8","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":473,"hex":"01D9","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":474,"hex":"01DA","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":475,"hex":"01DB","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":476,"hex":"01DC","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":477,"hex":"01DD","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":475,"hex":"01DB","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":476,"hex":"01DC","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":477,"hex":"01DD","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":478,"hex":"01DE","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":479,"hex":"01DF","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":480,"hex":"01E0","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":479,"hex":"01DF","arena":"PREHISTORIA_WILDS","source":"Acid Rain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":480,"hex":"01E0","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
 ;@TEXTMETA {"id":481,"hex":"01E1","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":482,"hex":"01E2","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":483,"hex":"01E3","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":484,"hex":"01E4","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":482,"hex":"01E2","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
+;@TEXTMETA {"id":483,"hex":"01E3","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
+;@TEXTMETA {"id":484,"hex":"01E4","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
 ;@TEXTMETA {"id":485,"hex":"01E5","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":486,"hex":"01E6","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":486,"hex":"01E6","arena":"PREHISTORIA_WILDS","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
 ;@TEXTMETA {"id":487,"hex":"01E7","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":488,"hex":"01E8","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":489,"hex":"01E9","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":490,"hex":"01EA","arena":"PREHISTORIA_WILDS","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":491,"hex":"01EB","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":492,"hex":"01EC","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":493,"hex":"01ED","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":493,"hex":"01ED","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":494,"hex":"01EE","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":495,"hex":"01EF","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":495,"hex":"01EF","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":496,"hex":"01F0","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":497,"hex":"01F1","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":497,"hex":"01F1","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":498,"hex":"01F2","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":499,"hex":"01F3","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":500,"hex":"01F4","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":501,"hex":"01F5","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":502,"hex":"01F6","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":499,"hex":"01F3","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":500,"hex":"01F4","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":501,"hex":"01F5","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":502,"hex":"01F6","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":503,"hex":"01F7","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":504,"hex":"01F8","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":505,"hex":"01F9","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":506,"hex":"01FA","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":505,"hex":"01F9","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":506,"hex":"01FA","arena":"PREHISTORIA_WILDS","source":"Mammoth Graveyard alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":507,"hex":"01FB","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":508,"hex":"01FC","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":508,"hex":"01FC","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":509,"hex":"01FD","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":510,"hex":"01FE","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":510,"hex":"01FE","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":511,"hex":"01FF","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":512,"hex":"0200","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":513,"hex":"0201","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":514,"hex":"0202","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":515,"hex":"0203","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":516,"hex":"0204","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":517,"hex":"0205","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":512,"hex":"0200","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":513,"hex":"0201","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":514,"hex":"0202","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":515,"hex":"0203","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":516,"hex":"0204","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":517,"hex":"0205","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":518,"hex":"0206","arena":"PREHISTORIA_WILDS","source":"Presentation control","assignment":"caller-inherit","theme":"INHERIT","helper":"INHERIT"}
 ;@TEXTMETA {"id":519,"hex":"0207","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":520,"hex":"0208","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":521,"hex":"0209","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":522,"hex":"020A","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":523,"hex":"020B","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":524,"hex":"020C","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":525,"hex":"020D","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":521,"hex":"0209","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":522,"hex":"020A","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":523,"hex":"020B","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":524,"hex":"020C","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":525,"hex":"020D","arena":"PREHISTORIA_WILDS","source":"Volcano / Levitate alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":526,"hex":"020E","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":527,"hex":"020F","arena":"PREHISTORIA_WILDS","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":528,"hex":"0210","arena":"PREHISTORIA_WILDS","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":529,"hex":"0211","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":530,"hex":"0212","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":531,"hex":"0213","arena":"PREHISTORIA_WILDS","source":"Speed alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":532,"hex":"0214","arena":"PREHISTORIA_WILDS","source":"Speed alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":531,"hex":"0213","arena":"PREHISTORIA_WILDS","source":"Speed alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":532,"hex":"0214","arena":"PREHISTORIA_WILDS","source":"Speed alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":533,"hex":"0215","arena":"PREHISTORIA_WILDS","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":534,"hex":"0216","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":535,"hex":"0217","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":534,"hex":"0216","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":535,"hex":"0217","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":536,"hex":"0218","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":537,"hex":"0219","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":538,"hex":"021A","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":539,"hex":"021B","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":540,"hex":"021C","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":541,"hex":"021D","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":542,"hex":"021E","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":543,"hex":"021F","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":544,"hex":"0220","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":537,"hex":"0219","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":538,"hex":"021A","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":539,"hex":"021B","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":540,"hex":"021C","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":541,"hex":"021D","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":542,"hex":"021E","arena":"PREHISTORIA_WILDS","source":"Bugmuck / Hard Ball alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":543,"hex":"021F","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":544,"hex":"0220","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":545,"hex":"0221","arena":"PREHISTORIA_WILDS","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":546,"hex":"0222","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":547,"hex":"0223","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":548,"hex":"0224","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":546,"hex":"0222","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":547,"hex":"0223","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":548,"hex":"0224","arena":"PREHISTORIA_WILDS","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":549,"hex":"0225","arena":"PREHISTORIA_WILDS","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":550,"hex":"0226","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":551,"hex":"0227","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":552,"hex":"0228","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":550,"hex":"0226","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":551,"hex":"0227","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":552,"hex":"0228","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":553,"hex":"0229","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":554,"hex":"022A","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":555,"hex":"022B","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":556,"hex":"022C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":557,"hex":"022D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":558,"hex":"022E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":559,"hex":"022F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":560,"hex":"0230","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":561,"hex":"0231","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":562,"hex":"0232","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":563,"hex":"0233","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":559,"hex":"022F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":560,"hex":"0230","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":561,"hex":"0231","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":562,"hex":"0232","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":563,"hex":"0233","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":564,"hex":"0234","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":565,"hex":"0235","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":566,"hex":"0236","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":567,"hex":"0237","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":565,"hex":"0235","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":566,"hex":"0236","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":567,"hex":"0237","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Drain / Double Drain alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":568,"hex":"0238","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":569,"hex":"0239","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":570,"hex":"023A","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -42870,16 +43026,16 @@ org $F469FB
 ;@TEXTMETA {"id":585,"hex":"0249","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Evil Fire Eyes","assignment":"fixed","theme":"$10 Artificial Fire Eyes","helper":"$10"}
 ;@TEXTMETA {"id":586,"hex":"024A","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Evil Fire Eyes","assignment":"fixed","theme":"$10 Artificial Fire Eyes","helper":"$10"}
 ;@TEXTMETA {"id":587,"hex":"024B","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":588,"hex":"024C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":589,"hex":"024D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":590,"hex":"024E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":588,"hex":"024C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":589,"hex":"024D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":590,"hex":"024E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":591,"hex":"024F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":592,"hex":"0250","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
 ;@TEXTMETA {"id":593,"hex":"0251","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
 ;@TEXTMETA {"id":594,"hex":"0252","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":595,"hex":"0253","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
-;@TEXTMETA {"id":596,"hex":"0254","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":597,"hex":"0255","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":596,"hex":"0254","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":597,"hex":"0255","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":598,"hex":"0256","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":599,"hex":"0257","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":600,"hex":"0258","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -42935,11 +43091,11 @@ org $F469FB
 ;@TEXTMETA {"id":650,"hex":"028A","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":651,"hex":"028B","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":652,"hex":"028C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":653,"hex":"028D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":654,"hex":"028E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":655,"hex":"028F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":656,"hex":"0290","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":657,"hex":"0291","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":653,"hex":"028D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":654,"hex":"028E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":655,"hex":"028F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":656,"hex":"0290","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":657,"hex":"0291","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Retired village alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":658,"hex":"0292","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":659,"hex":"0293","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":660,"hex":"0294","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -42956,25 +43112,25 @@ org $F469FB
 ;@TEXTMETA {"id":671,"hex":"029F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":672,"hex":"02A0","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
 ;@TEXTMETA {"id":673,"hex":"02A1","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
-;@TEXTMETA {"id":674,"hex":"02A2","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":674,"hex":"02A2","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
 ;@TEXTMETA {"id":675,"hex":"02A3","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
 ;@TEXTMETA {"id":676,"hex":"02A4","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":677,"hex":"02A5","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
 ;@TEXTMETA {"id":678,"hex":"02A6","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
-;@TEXTMETA {"id":679,"hex":"02A7","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":680,"hex":"02A8","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":679,"hex":"02A7","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
+;@TEXTMETA {"id":680,"hex":"02A8","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
 ;@TEXTMETA {"id":681,"hex":"02A9","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":682,"hex":"02AA","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":683,"hex":"02AB","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":684,"hex":"02AC","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":685,"hex":"02AD","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":682,"hex":"02AA","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":683,"hex":"02AB","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":684,"hex":"02AC","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":685,"hex":"02AD","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":686,"hex":"02AE","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":687,"hex":"02AF","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":688,"hex":"02B0","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":689,"hex":"02B1","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":690,"hex":"02B2","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":691,"hex":"02B3","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":692,"hex":"02B4","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":689,"hex":"02B1","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":690,"hex":"02B2","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":691,"hex":"02B3","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":692,"hex":"02B4","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Jade","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":693,"hex":"02B5","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":694,"hex":"02B6","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":695,"hex":"02B7","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -42986,22 +43142,22 @@ org $F469FB
 ;@TEXTMETA {"id":701,"hex":"02BD","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":702,"hex":"02BE","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":703,"hex":"02BF","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":704,"hex":"02C0","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":705,"hex":"02C1","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":706,"hex":"02C2","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":707,"hex":"02C3","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":708,"hex":"02C4","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":709,"hex":"02C5","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":710,"hex":"02C6","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":704,"hex":"02C0","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":705,"hex":"02C1","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":706,"hex":"02C2","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":707,"hex":"02C3","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":708,"hex":"02C4","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":709,"hex":"02C5","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":710,"hex":"02C6","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":711,"hex":"02C7","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":712,"hex":"02C8","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":713,"hex":"02C9","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":712,"hex":"02C8","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":713,"hex":"02C9","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":714,"hex":"02CA","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":715,"hex":"02CB","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":716,"hex":"02CC","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":716,"hex":"02CC","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":717,"hex":"02CD","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":718,"hex":"02CE","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":719,"hex":"02CF","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":718,"hex":"02CE","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":719,"hex":"02CF","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Innkeeper","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":720,"hex":"02D0","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":721,"hex":"02D1","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":722,"hex":"02D2","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43011,11 +43167,11 @@ org $F469FB
 ;@TEXTMETA {"id":726,"hex":"02D6","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":727,"hex":"02D7","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":728,"hex":"02D8","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":729,"hex":"02D9","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":730,"hex":"02DA","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":729,"hex":"02D9","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":730,"hex":"02DA","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":731,"hex":"02DB","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":732,"hex":"02DC","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":733,"hex":"02DD","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":732,"hex":"02DC","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":733,"hex":"02DD","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":734,"hex":"02DE","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":735,"hex":"02DF","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":736,"hex":"02E0","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43131,9 +43287,9 @@ org $F469FB
 ;@TEXTMETA {"id":846,"hex":"034E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":847,"hex":"034F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":848,"hex":"0350","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":849,"hex":"0351","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":850,"hex":"0352","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":851,"hex":"0353","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":849,"hex":"0351","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":850,"hex":"0352","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":851,"hex":"0353","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":852,"hex":"0354","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":853,"hex":"0355","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":854,"hex":"0356","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43142,9 +43298,9 @@ org $F469FB
 ;@TEXTMETA {"id":857,"hex":"0359","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":858,"hex":"035A","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":859,"hex":"035B","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":860,"hex":"035C","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":861,"hex":"035D","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":862,"hex":"035E","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Strong Heart","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":860,"hex":"035C","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
+;@TEXTMETA {"id":861,"hex":"035D","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
+;@TEXTMETA {"id":862,"hex":"035E","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Strong Heart","assignment":"fixed","theme":"$07 Strong Heart","helper":"$07"}
 ;@TEXTMETA {"id":863,"hex":"035F","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":864,"hex":"0360","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":865,"hex":"0361","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43182,7 +43338,7 @@ org $F469FB
 ;@TEXTMETA {"id":897,"hex":"0381","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Tiny","assignment":"fixed","theme":"$14 Tiny","helper":"$14"}
 ;@TEXTMETA {"id":898,"hex":"0382","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":899,"hex":"0383","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":900,"hex":"0384","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":900,"hex":"0384","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":901,"hex":"0385","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":902,"hex":"0386","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":903,"hex":"0387","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
@@ -43190,23 +43346,23 @@ org $F469FB
 ;@TEXTMETA {"id":905,"hex":"0389","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":906,"hex":"038A","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":907,"hex":"038B","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":908,"hex":"038C","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":908,"hex":"038C","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":909,"hex":"038D","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":910,"hex":"038E","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":911,"hex":"038F","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":912,"hex":"0390","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":913,"hex":"0391","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":914,"hex":"0392","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":915,"hex":"0393","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":910,"hex":"038E","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":911,"hex":"038F","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":912,"hex":"0390","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":913,"hex":"0391","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":914,"hex":"0392","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":915,"hex":"0393","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":916,"hex":"0394","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":917,"hex":"0395","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":918,"hex":"0396","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":917,"hex":"0395","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":918,"hex":"0396","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":919,"hex":"0397","arena":"ANTIQUA_CRUSTACIA_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":920,"hex":"0398","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":921,"hex":"0399","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":922,"hex":"039A","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":923,"hex":"039B","arena":"NOBILIA_CITY_PALACE","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":924,"hex":"039C","arena":"NOBILIA_CITY_PALACE","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":923,"hex":"039B","arena":"NOBILIA_CITY_PALACE","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":924,"hex":"039C","arena":"NOBILIA_CITY_PALACE","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":925,"hex":"039D","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":926,"hex":"039E","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":927,"hex":"039F","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43239,18 +43395,18 @@ org $F469FB
 ;@TEXTMETA {"id":954,"hex":"03BA","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":955,"hex":"03BB","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":956,"hex":"03BC","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":957,"hex":"03BD","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":958,"hex":"03BE","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":959,"hex":"03BF","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":960,"hex":"03C0","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":961,"hex":"03C1","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":962,"hex":"03C2","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":963,"hex":"03C3","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":964,"hex":"03C4","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":965,"hex":"03C5","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":966,"hex":"03C6","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":967,"hex":"03C7","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":968,"hex":"03C8","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":957,"hex":"03BD","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":958,"hex":"03BE","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":959,"hex":"03BF","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":960,"hex":"03C0","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":961,"hex":"03C1","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":962,"hex":"03C2","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":963,"hex":"03C3","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":964,"hex":"03C4","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":965,"hex":"03C5","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":966,"hex":"03C6","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":967,"hex":"03C7","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":968,"hex":"03C8","arena":"NOBILIA_CITY_PALACE","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":969,"hex":"03C9","arena":"NOBILIA_CITY_PALACE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":970,"hex":"03CA","arena":"NOBILIA_CITY_PALACE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":971,"hex":"03CB","arena":"NOBILIA_CITY_PALACE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -43305,7 +43461,7 @@ org $F469FB
 ;@TEXTMETA {"id":1020,"hex":"03FC","arena":"NOBILIA_CITY_PALACE","source":"Pompolonius","assignment":"fixed","theme":"$13 Pompolonius / Showman","helper":"$13"}
 ;@TEXTMETA {"id":1021,"hex":"03FD","arena":"NOBILIA_CITY_PALACE","source":"Pompolonius","assignment":"fixed","theme":"$13 Pompolonius / Showman","helper":"$13"}
 ;@TEXTMETA {"id":1022,"hex":"03FE","arena":"NOBILIA_CITY_PALACE","source":"Pompolonius","assignment":"fixed","theme":"$13 Pompolonius / Showman","helper":"$13"}
-;@TEXTMETA {"id":1023,"hex":"03FF","arena":"NOBILIA_CITY_PALACE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
+;@TEXTMETA {"id":1023,"hex":"03FF","arena":"NOBILIA_CITY_PALACE","source":"Pompolonius","assignment":"fixed","theme":"$13 Pompolonius / Showman","helper":"$13"}
 ;@TEXTMETA {"id":1024,"hex":"0400","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1025,"hex":"0401","arena":"NOBILIA_CITY_PALACE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":1026,"hex":"0402","arena":"NOBILIA_CITY_PALACE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -43326,48 +43482,48 @@ org $F469FB
 ;@TEXTMETA {"id":1041,"hex":"0411","arena":"NOBILIA_CITY_PALACE","source":"Pompolonius","assignment":"fixed","theme":"$13 Pompolonius / Showman","helper":"$13"}
 ;@TEXTMETA {"id":1042,"hex":"0412","arena":"NOBILIA_CITY_PALACE","source":"Evil Horace","assignment":"fixed","theme":"$11 Artificial Horace","helper":"$11"}
 ;@TEXTMETA {"id":1043,"hex":"0413","arena":"NOBILIA_CITY_PALACE","source":"Pompolonius","assignment":"fixed","theme":"$13 Pompolonius / Showman","helper":"$13"}
-;@TEXTMETA {"id":1044,"hex":"0414","arena":"NOBILIA_CITY_PALACE","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":1044,"hex":"0414","arena":"NOBILIA_CITY_PALACE","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":1045,"hex":"0415","arena":"NOBILIA_CITY_PALACE","source":"Evil Horace","assignment":"fixed","theme":"$11 Artificial Horace","helper":"$11"}
-;@TEXTMETA {"id":1046,"hex":"0416","arena":"NOBILIA_CITY_PALACE","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":1046,"hex":"0416","arena":"NOBILIA_CITY_PALACE","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":1047,"hex":"0417","arena":"NOBILIA_CITY_PALACE","source":"Evil Horace","assignment":"fixed","theme":"$11 Artificial Horace","helper":"$11"}
 ;@TEXTMETA {"id":1048,"hex":"0418","arena":"NOBILIA_CITY_PALACE","source":"Evil Horace","assignment":"fixed","theme":"$11 Artificial Horace","helper":"$11"}
-;@TEXTMETA {"id":1049,"hex":"0419","arena":"NOBILIA_CITY_PALACE","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":1049,"hex":"0419","arena":"NOBILIA_CITY_PALACE","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":1050,"hex":"041A","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1051,"hex":"041B","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1052,"hex":"041C","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":1053,"hex":"041D","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1054,"hex":"041E","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1055,"hex":"041F","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1056,"hex":"0420","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1053,"hex":"041D","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1054,"hex":"041E","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1055,"hex":"041F","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1056,"hex":"0420","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1057,"hex":"0421","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1058,"hex":"0422","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1059,"hex":"0423","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1060,"hex":"0424","arena":"NOBILIA_CITY_PALACE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":1061,"hex":"0425","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1062,"hex":"0426","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1063,"hex":"0427","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1064,"hex":"0428","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1065,"hex":"0429","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1066,"hex":"042A","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1067,"hex":"042B","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1068,"hex":"042C","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1069,"hex":"042D","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1070,"hex":"042E","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1071,"hex":"042F","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1072,"hex":"0430","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1073,"hex":"0431","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1074,"hex":"0432","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1075,"hex":"0433","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1076,"hex":"0434","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1077,"hex":"0435","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1078,"hex":"0436","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1079,"hex":"0437","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1080,"hex":"0438","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1081,"hex":"0439","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1082,"hex":"043A","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1083,"hex":"043B","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1084,"hex":"043C","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1085,"hex":"043D","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":1061,"hex":"0425","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1062,"hex":"0426","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1063,"hex":"0427","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1064,"hex":"0428","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1065,"hex":"0429","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1066,"hex":"042A","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1067,"hex":"042B","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1068,"hex":"042C","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1069,"hex":"042D","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1070,"hex":"042E","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1071,"hex":"042F","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1072,"hex":"0430","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1073,"hex":"0431","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1074,"hex":"0432","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1075,"hex":"0433","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1076,"hex":"0434","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1077,"hex":"0435","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1078,"hex":"0436","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1079,"hex":"0437","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1080,"hex":"0438","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1081,"hex":"0439","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1082,"hex":"043A","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1083,"hex":"043B","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1084,"hex":"043C","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1085,"hex":"043D","arena":"NOBILIA_CITY_PALACE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1086,"hex":"043E","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1087,"hex":"043F","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1088,"hex":"0440","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43415,281 +43571,281 @@ org $F469FB
 ;@TEXTMETA {"id":1130,"hex":"046A","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1131,"hex":"046B","arena":"NOBILIA_CITY_PALACE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
 ;@TEXTMETA {"id":1132,"hex":"046C","arena":"NOBILIA_CITY_PALACE","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1133,"hex":"046D","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1133,"hex":"046D","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1134,"hex":"046E","arena":"NOBILIA_CITY_PALACE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
 ;@TEXTMETA {"id":1135,"hex":"046F","arena":"NOBILIA_CITY_PALACE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
-;@TEXTMETA {"id":1136,"hex":"0470","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1137,"hex":"0471","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1136,"hex":"0470","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1137,"hex":"0471","arena":"NOBILIA_CITY_PALACE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1138,"hex":"0472","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1139,"hex":"0473","arena":"NOBILIA_CITY_PALACE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1140,"hex":"0474","arena":"NOBILIA_MARKET","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1141,"hex":"0475","arena":"NOBILIA_MARKET","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1142,"hex":"0476","arena":"NOBILIA_MARKET","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":1143,"hex":"0477","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1144,"hex":"0478","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1145,"hex":"0479","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1146,"hex":"047A","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1147,"hex":"047B","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1148,"hex":"047C","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1149,"hex":"047D","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1150,"hex":"047E","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1151,"hex":"047F","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1152,"hex":"0480","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1153,"hex":"0481","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1154,"hex":"0482","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1155,"hex":"0483","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1156,"hex":"0484","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1157,"hex":"0485","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1158,"hex":"0486","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1159,"hex":"0487","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1160,"hex":"0488","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1161,"hex":"0489","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1162,"hex":"048A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1163,"hex":"048B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1164,"hex":"048C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1165,"hex":"048D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1166,"hex":"048E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1167,"hex":"048F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1168,"hex":"0490","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1169,"hex":"0491","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1170,"hex":"0492","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1171,"hex":"0493","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1172,"hex":"0494","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1173,"hex":"0495","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1174,"hex":"0496","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1175,"hex":"0497","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1176,"hex":"0498","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1177,"hex":"0499","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1178,"hex":"049A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1179,"hex":"049B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1180,"hex":"049C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1181,"hex":"049D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1182,"hex":"049E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1183,"hex":"049F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1184,"hex":"04A0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1185,"hex":"04A1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1186,"hex":"04A2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1187,"hex":"04A3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1188,"hex":"04A4","arena":"NOBILIA_MARKET","source":"Cure alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1189,"hex":"04A5","arena":"NOBILIA_MARKET","source":"Cure alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1190,"hex":"04A6","arena":"NOBILIA_MARKET","source":"Cure alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1191,"hex":"04A7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1192,"hex":"04A8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1193,"hex":"04A9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1194,"hex":"04AA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1195,"hex":"04AB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1196,"hex":"04AC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1197,"hex":"04AD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1198,"hex":"04AE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1199,"hex":"04AF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1200,"hex":"04B0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1201,"hex":"04B1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1202,"hex":"04B2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1203,"hex":"04B3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1204,"hex":"04B4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1205,"hex":"04B5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1206,"hex":"04B6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1207,"hex":"04B7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1208,"hex":"04B8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1209,"hex":"04B9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1210,"hex":"04BA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1211,"hex":"04BB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1212,"hex":"04BC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1213,"hex":"04BD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1214,"hex":"04BE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1215,"hex":"04BF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1216,"hex":"04C0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":1143,"hex":"0477","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1144,"hex":"0478","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1145,"hex":"0479","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1146,"hex":"047A","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1147,"hex":"047B","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1148,"hex":"047C","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1149,"hex":"047D","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1150,"hex":"047E","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1151,"hex":"047F","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1152,"hex":"0480","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1153,"hex":"0481","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1154,"hex":"0482","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1155,"hex":"0483","arena":"NOBILIA_MARKET","source":"Atlas alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1156,"hex":"0484","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1157,"hex":"0485","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1158,"hex":"0486","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1159,"hex":"0487","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1160,"hex":"0488","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1161,"hex":"0489","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1162,"hex":"048A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1163,"hex":"048B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1164,"hex":"048C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1165,"hex":"048D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1166,"hex":"048E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1167,"hex":"048F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1168,"hex":"0490","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1169,"hex":"0491","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1170,"hex":"0492","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1171,"hex":"0493","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1172,"hex":"0494","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1173,"hex":"0495","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1174,"hex":"0496","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1175,"hex":"0497","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1176,"hex":"0498","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1177,"hex":"0499","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1178,"hex":"049A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1179,"hex":"049B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1180,"hex":"049C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1181,"hex":"049D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1182,"hex":"049E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1183,"hex":"049F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1184,"hex":"04A0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1185,"hex":"04A1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1186,"hex":"04A2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1187,"hex":"04A3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1188,"hex":"04A4","arena":"NOBILIA_MARKET","source":"Cure alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1189,"hex":"04A5","arena":"NOBILIA_MARKET","source":"Cure alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1190,"hex":"04A6","arena":"NOBILIA_MARKET","source":"Cure alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1191,"hex":"04A7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1192,"hex":"04A8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1193,"hex":"04A9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1194,"hex":"04AA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1195,"hex":"04AB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1196,"hex":"04AC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1197,"hex":"04AD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1198,"hex":"04AE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1199,"hex":"04AF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1200,"hex":"04B0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1201,"hex":"04B1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1202,"hex":"04B2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1203,"hex":"04B3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1204,"hex":"04B4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1205,"hex":"04B5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1206,"hex":"04B6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1207,"hex":"04B7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1208,"hex":"04B8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1209,"hex":"04B9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1210,"hex":"04BA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1211,"hex":"04BB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1212,"hex":"04BC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1213,"hex":"04BD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1214,"hex":"04BE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1215,"hex":"04BF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1216,"hex":"04C0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1217,"hex":"04C1","arena":"NOBILIA_MARKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":1218,"hex":"04C2","arena":"NOBILIA_MARKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":1219,"hex":"04C3","arena":"NOBILIA_MARKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":1220,"hex":"04C4","arena":"NOBILIA_MARKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":1221,"hex":"04C5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1222,"hex":"04C6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1223,"hex":"04C7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1224,"hex":"04C8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1225,"hex":"04C9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1226,"hex":"04CA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1227,"hex":"04CB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1228,"hex":"04CC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1229,"hex":"04CD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1230,"hex":"04CE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1231,"hex":"04CF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1232,"hex":"04D0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1233,"hex":"04D1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1234,"hex":"04D2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1235,"hex":"04D3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1236,"hex":"04D4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1237,"hex":"04D5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1238,"hex":"04D6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1239,"hex":"04D7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1240,"hex":"04D8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1241,"hex":"04D9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1242,"hex":"04DA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1243,"hex":"04DB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1244,"hex":"04DC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1245,"hex":"04DD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1246,"hex":"04DE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1247,"hex":"04DF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1248,"hex":"04E0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1249,"hex":"04E1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1250,"hex":"04E2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1251,"hex":"04E3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1252,"hex":"04E4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1253,"hex":"04E5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1254,"hex":"04E6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1255,"hex":"04E7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1256,"hex":"04E8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1257,"hex":"04E9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1258,"hex":"04EA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1259,"hex":"04EB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1260,"hex":"04EC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1261,"hex":"04ED","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1262,"hex":"04EE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1263,"hex":"04EF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1264,"hex":"04F0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1265,"hex":"04F1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1266,"hex":"04F2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1267,"hex":"04F3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1268,"hex":"04F4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1269,"hex":"04F5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1270,"hex":"04F6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1271,"hex":"04F7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1272,"hex":"04F8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1273,"hex":"04F9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1274,"hex":"04FA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1275,"hex":"04FB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1276,"hex":"04FC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1277,"hex":"04FD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1278,"hex":"04FE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1279,"hex":"04FF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1280,"hex":"0500","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1281,"hex":"0501","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1282,"hex":"0502","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1283,"hex":"0503","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1284,"hex":"0504","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1285,"hex":"0505","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1286,"hex":"0506","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1287,"hex":"0507","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1288,"hex":"0508","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1289,"hex":"0509","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1290,"hex":"050A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1291,"hex":"050B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1292,"hex":"050C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1293,"hex":"050D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1294,"hex":"050E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1295,"hex":"050F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1296,"hex":"0510","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1297,"hex":"0511","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1298,"hex":"0512","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1299,"hex":"0513","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1300,"hex":"0514","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1301,"hex":"0515","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1302,"hex":"0516","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1303,"hex":"0517","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1304,"hex":"0518","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1305,"hex":"0519","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1306,"hex":"051A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1307,"hex":"051B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1308,"hex":"051C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1309,"hex":"051D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1310,"hex":"051E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1311,"hex":"051F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1312,"hex":"0520","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1313,"hex":"0521","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1314,"hex":"0522","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1315,"hex":"0523","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1316,"hex":"0524","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1317,"hex":"0525","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1318,"hex":"0526","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1319,"hex":"0527","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1320,"hex":"0528","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1321,"hex":"0529","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1322,"hex":"052A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1323,"hex":"052B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1324,"hex":"052C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1325,"hex":"052D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1326,"hex":"052E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1327,"hex":"052F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1328,"hex":"0530","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1329,"hex":"0531","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1330,"hex":"0532","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1331,"hex":"0533","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1332,"hex":"0534","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1333,"hex":"0535","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1334,"hex":"0536","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1335,"hex":"0537","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1336,"hex":"0538","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1337,"hex":"0539","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1338,"hex":"053A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1339,"hex":"053B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1340,"hex":"053C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1341,"hex":"053D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1342,"hex":"053E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1343,"hex":"053F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1344,"hex":"0540","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1345,"hex":"0541","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1346,"hex":"0542","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1347,"hex":"0543","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1348,"hex":"0544","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1349,"hex":"0545","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1350,"hex":"0546","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1351,"hex":"0547","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1352,"hex":"0548","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1353,"hex":"0549","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1354,"hex":"054A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1355,"hex":"054B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1356,"hex":"054C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1357,"hex":"054D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1358,"hex":"054E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1359,"hex":"054F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1360,"hex":"0550","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1361,"hex":"0551","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1362,"hex":"0552","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1363,"hex":"0553","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1364,"hex":"0554","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1365,"hex":"0555","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1366,"hex":"0556","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1367,"hex":"0557","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1368,"hex":"0558","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1369,"hex":"0559","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1370,"hex":"055A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1371,"hex":"055B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1372,"hex":"055C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1373,"hex":"055D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1374,"hex":"055E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1375,"hex":"055F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1376,"hex":"0560","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1377,"hex":"0561","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1378,"hex":"0562","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1379,"hex":"0563","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1380,"hex":"0564","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1381,"hex":"0565","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1382,"hex":"0566","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1383,"hex":"0567","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1384,"hex":"0568","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1385,"hex":"0569","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1386,"hex":"056A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1387,"hex":"056B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1388,"hex":"056C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1389,"hex":"056D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1390,"hex":"056E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1391,"hex":"056F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1392,"hex":"0570","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1393,"hex":"0571","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1394,"hex":"0572","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1395,"hex":"0573","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1396,"hex":"0574","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1397,"hex":"0575","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1398,"hex":"0576","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1399,"hex":"0577","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1400,"hex":"0578","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1401,"hex":"0579","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1402,"hex":"057A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1403,"hex":"057B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1404,"hex":"057C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":1405,"hex":"057D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":1221,"hex":"04C5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1222,"hex":"04C6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1223,"hex":"04C7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1224,"hex":"04C8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1225,"hex":"04C9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1226,"hex":"04CA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1227,"hex":"04CB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1228,"hex":"04CC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1229,"hex":"04CD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1230,"hex":"04CE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1231,"hex":"04CF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1232,"hex":"04D0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1233,"hex":"04D1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1234,"hex":"04D2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1235,"hex":"04D3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1236,"hex":"04D4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1237,"hex":"04D5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1238,"hex":"04D6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1239,"hex":"04D7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1240,"hex":"04D8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1241,"hex":"04D9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1242,"hex":"04DA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1243,"hex":"04DB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1244,"hex":"04DC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1245,"hex":"04DD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1246,"hex":"04DE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1247,"hex":"04DF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1248,"hex":"04E0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1249,"hex":"04E1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1250,"hex":"04E2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1251,"hex":"04E3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1252,"hex":"04E4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1253,"hex":"04E5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1254,"hex":"04E6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1255,"hex":"04E7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1256,"hex":"04E8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1257,"hex":"04E9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1258,"hex":"04EA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1259,"hex":"04EB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1260,"hex":"04EC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1261,"hex":"04ED","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1262,"hex":"04EE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1263,"hex":"04EF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1264,"hex":"04F0","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1265,"hex":"04F1","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1266,"hex":"04F2","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1267,"hex":"04F3","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1268,"hex":"04F4","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1269,"hex":"04F5","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1270,"hex":"04F6","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1271,"hex":"04F7","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1272,"hex":"04F8","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1273,"hex":"04F9","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1274,"hex":"04FA","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1275,"hex":"04FB","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1276,"hex":"04FC","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1277,"hex":"04FD","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1278,"hex":"04FE","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1279,"hex":"04FF","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1280,"hex":"0500","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1281,"hex":"0501","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1282,"hex":"0502","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1283,"hex":"0503","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1284,"hex":"0504","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1285,"hex":"0505","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1286,"hex":"0506","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1287,"hex":"0507","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1288,"hex":"0508","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1289,"hex":"0509","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1290,"hex":"050A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1291,"hex":"050B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1292,"hex":"050C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1293,"hex":"050D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1294,"hex":"050E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1295,"hex":"050F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1296,"hex":"0510","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1297,"hex":"0511","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1298,"hex":"0512","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1299,"hex":"0513","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1300,"hex":"0514","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1301,"hex":"0515","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1302,"hex":"0516","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1303,"hex":"0517","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1304,"hex":"0518","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1305,"hex":"0519","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1306,"hex":"051A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1307,"hex":"051B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1308,"hex":"051C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1309,"hex":"051D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1310,"hex":"051E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1311,"hex":"051F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1312,"hex":"0520","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1313,"hex":"0521","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1314,"hex":"0522","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1315,"hex":"0523","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1316,"hex":"0524","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1317,"hex":"0525","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1318,"hex":"0526","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1319,"hex":"0527","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1320,"hex":"0528","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1321,"hex":"0529","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1322,"hex":"052A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1323,"hex":"052B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1324,"hex":"052C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1325,"hex":"052D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1326,"hex":"052E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1327,"hex":"052F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1328,"hex":"0530","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1329,"hex":"0531","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1330,"hex":"0532","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1331,"hex":"0533","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1332,"hex":"0534","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1333,"hex":"0535","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1334,"hex":"0536","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1335,"hex":"0537","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1336,"hex":"0538","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1337,"hex":"0539","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1338,"hex":"053A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1339,"hex":"053B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1340,"hex":"053C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1341,"hex":"053D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1342,"hex":"053E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1343,"hex":"053F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1344,"hex":"0540","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1345,"hex":"0541","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1346,"hex":"0542","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1347,"hex":"0543","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1348,"hex":"0544","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1349,"hex":"0545","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1350,"hex":"0546","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1351,"hex":"0547","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1352,"hex":"0548","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1353,"hex":"0549","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1354,"hex":"054A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1355,"hex":"054B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1356,"hex":"054C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1357,"hex":"054D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1358,"hex":"054E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1359,"hex":"054F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1360,"hex":"0550","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1361,"hex":"0551","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1362,"hex":"0552","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1363,"hex":"0553","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1364,"hex":"0554","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1365,"hex":"0555","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1366,"hex":"0556","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1367,"hex":"0557","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1368,"hex":"0558","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1369,"hex":"0559","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1370,"hex":"055A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1371,"hex":"055B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1372,"hex":"055C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1373,"hex":"055D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1374,"hex":"055E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1375,"hex":"055F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1376,"hex":"0560","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1377,"hex":"0561","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1378,"hex":"0562","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1379,"hex":"0563","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1380,"hex":"0564","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1381,"hex":"0565","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1382,"hex":"0566","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1383,"hex":"0567","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1384,"hex":"0568","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1385,"hex":"0569","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1386,"hex":"056A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1387,"hex":"056B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1388,"hex":"056C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1389,"hex":"056D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1390,"hex":"056E","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1391,"hex":"056F","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1392,"hex":"0570","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1393,"hex":"0571","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1394,"hex":"0572","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1395,"hex":"0573","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1396,"hex":"0574","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1397,"hex":"0575","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1398,"hex":"0576","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1399,"hex":"0577","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1400,"hex":"0578","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1401,"hex":"0579","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1402,"hex":"057A","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1403,"hex":"057B","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1404,"hex":"057C","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1405,"hex":"057D","arena":"NOBILIA_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1406,"hex":"057E","arena":"NOBILIA_CITY_SQUARE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":1407,"hex":"057F","arena":"NOBILIA_CITY_SQUARE","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":1407,"hex":"057F","arena":"NOBILIA_CITY_SQUARE","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1408,"hex":"0580","arena":"NOBILIA_CITY_SQUARE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1409,"hex":"0581","arena":"NOBILIA_CITY_SQUARE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1410,"hex":"0582","arena":"NOBILIA_CITY_SQUARE","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43834,9 +43990,9 @@ org $F469FB
 ;@TEXTMETA {"id":1549,"hex":"060D","arena":"HORACE_WEST_BANK","source":"Evil Horace","assignment":"fixed","theme":"$11 Artificial Horace","helper":"$11"}
 ;@TEXTMETA {"id":1550,"hex":"060E","arena":"HORACE_WEST_BANK","source":"Evil Horace","assignment":"fixed","theme":"$11 Artificial Horace","helper":"$11"}
 ;@TEXTMETA {"id":1551,"hex":"060F","arena":"HORACE_WEST_BANK","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1552,"hex":"0610","arena":"HORACE_WEST_BANK","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":1552,"hex":"0610","arena":"HORACE_WEST_BANK","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1553,"hex":"0611","arena":"HORACE_WEST_BANK","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1554,"hex":"0612","arena":"HORACE_WEST_BANK","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":1554,"hex":"0612","arena":"HORACE_WEST_BANK","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1555,"hex":"0613","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1556,"hex":"0614","arena":"HORACE_WEST_BANK","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1557,"hex":"0615","arena":"HORACE_WEST_BANK","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
@@ -43902,15 +44058,15 @@ org $F469FB
 ;@TEXTMETA {"id":1617,"hex":"0651","arena":"HORACE_WEST_BANK","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
 ;@TEXTMETA {"id":1618,"hex":"0652","arena":"HORACE_WEST_BANK","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":1619,"hex":"0653","arena":"HORACE_WEST_BANK","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
-;@TEXTMETA {"id":1620,"hex":"0654","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1621,"hex":"0655","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1622,"hex":"0656","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1623,"hex":"0657","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1624,"hex":"0658","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1625,"hex":"0659","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1626,"hex":"065A","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1627,"hex":"065B","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1628,"hex":"065C","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1620,"hex":"0654","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1621,"hex":"0655","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1622,"hex":"0656","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1623,"hex":"0657","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1624,"hex":"0658","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1625,"hex":"0659","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1626,"hex":"065A","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1627,"hex":"065B","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1628,"hex":"065C","arena":"HORACE_WEST_BANK","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1629,"hex":"065D","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1630,"hex":"065E","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1631,"hex":"065F","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -43920,9 +44076,9 @@ org $F469FB
 ;@TEXTMETA {"id":1635,"hex":"0663","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1636,"hex":"0664","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1637,"hex":"0665","arena":"HORACE_WEST_BANK","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":1638,"hex":"0666","arena":"HORACE_WEST_BANK","source":"Sting alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1639,"hex":"0667","arena":"HORACE_WEST_BANK","source":"Sting alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1640,"hex":"0668","arena":"HORACE_WEST_BANK","source":"Sting alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1638,"hex":"0666","arena":"HORACE_WEST_BANK","source":"Sting alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1639,"hex":"0667","arena":"HORACE_WEST_BANK","source":"Sting alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1640,"hex":"0668","arena":"HORACE_WEST_BANK","source":"Sting alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1641,"hex":"0669","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1642,"hex":"066A","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1643,"hex":"066B","arena":"HORACE_WEST_BANK","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -44140,14 +44296,14 @@ org $F469FB
 ;@TEXTMETA {"id":1855,"hex":"073F","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1856,"hex":"0740","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1857,"hex":"0741","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1858,"hex":"0742","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":1859,"hex":"0743","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":1858,"hex":"0742","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":1859,"hex":"0743","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":1860,"hex":"0744","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1861,"hex":"0745","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":1861,"hex":"0745","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":1862,"hex":"0746","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1863,"hex":"0747","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":1863,"hex":"0747","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":1864,"hex":"0748","arena":"ANTIQUA_HALL_PYRAMID","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":1865,"hex":"0749","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":1865,"hex":"0749","arena":"ANTIQUA_HALL_PYRAMID","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":1866,"hex":"074A","arena":"ANTIQUA_HALL_PYRAMID","source":"Generic Antiqua NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1867,"hex":"074B","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1868,"hex":"074C","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
@@ -44163,16 +44319,16 @@ org $F469FB
 ;@TEXTMETA {"id":1878,"hex":"0756","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1879,"hex":"0757","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1880,"hex":"0758","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1881,"hex":"0759","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1881,"hex":"0759","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1882,"hex":"075A","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":1883,"hex":"075B","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1884,"hex":"075C","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1885,"hex":"075D","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1886,"hex":"075E","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1887,"hex":"075F","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1888,"hex":"0760","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1883,"hex":"075B","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1884,"hex":"075C","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1885,"hex":"075D","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1886,"hex":"075E","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1887,"hex":"075F","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1888,"hex":"0760","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1889,"hex":"0761","arena":"ANTIQUA_HALL_PYRAMID","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":1890,"hex":"0762","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1890,"hex":"0762","arena":"ANTIQUA_HALL_PYRAMID","source":"Madronius's brother","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1891,"hex":"0763","arena":"ANTIQUA_HALL_PYRAMID","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":1892,"hex":"0764","arena":"ANTIQUA_HALL_PYRAMID","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":1893,"hex":"0765","arena":"HORACE_FINALE","source":"Evil Horace","assignment":"fixed","theme":"$11 Artificial Horace","helper":"$11"}
@@ -44201,9 +44357,9 @@ org $F469FB
 ;@TEXTMETA {"id":1916,"hex":"077C","arena":"HORACE_FINALE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
 ;@TEXTMETA {"id":1917,"hex":"077D","arena":"HORACE_FINALE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
 ;@TEXTMETA {"id":1918,"hex":"077E","arena":"HORACE_FINALE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
-;@TEXTMETA {"id":1919,"hex":"077F","arena":"HORACE_FINALE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1919,"hex":"077F","arena":"HORACE_FINALE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1920,"hex":"0780","arena":"HORACE_FINALE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
-;@TEXTMETA {"id":1921,"hex":"0781","arena":"HORACE_FINALE","source":"Madronius","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1921,"hex":"0781","arena":"HORACE_FINALE","source":"Madronius","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1922,"hex":"0782","arena":"HORACE_FINALE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
 ;@TEXTMETA {"id":1923,"hex":"0783","arena":"HORACE_FINALE","source":"Horace Highwater","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
 ;@TEXTMETA {"id":1924,"hex":"0784","arena":"HORACE_FINALE","source":"Horace","assignment":"fixed","theme":"$0E Horace Highwater","helper":"$0E"}
@@ -44234,8 +44390,8 @@ org $F469FB
 ;@TEXTMETA {"id":1949,"hex":"079D","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1950,"hex":"079E","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1951,"hex":"079F","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":1952,"hex":"07A0","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":1953,"hex":"07A1","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":1952,"hex":"07A0","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1953,"hex":"07A1","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1954,"hex":"07A2","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1955,"hex":"07A3","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1956,"hex":"07A4","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -44273,42 +44429,42 @@ org $F469FB
 ;@TEXTMETA {"id":1988,"hex":"07C4","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":1989,"hex":"07C5","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":1990,"hex":"07C6","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
-;@TEXTMETA {"id":1991,"hex":"07C7","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1992,"hex":"07C8","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":1991,"hex":"07C7","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1992,"hex":"07C8","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1993,"hex":"07C9","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":1994,"hex":"07CA","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
-;@TEXTMETA {"id":1995,"hex":"07CB","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":1995,"hex":"07CB","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1996,"hex":"07CC","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
-;@TEXTMETA {"id":1997,"hex":"07CD","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":1998,"hex":"07CE","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":1997,"hex":"07CD","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":1998,"hex":"07CE","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Eronio","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":1999,"hex":"07CF","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":2000,"hex":"07D0","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2001,"hex":"07D1","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2002,"hex":"07D2","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2003,"hex":"07D3","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2004,"hex":"07D4","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2005,"hex":"07D5","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2003,"hex":"07D3","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2004,"hex":"07D4","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2005,"hex":"07D5","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2006,"hex":"07D6","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2007,"hex":"07D7","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2008,"hex":"07D8","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2009,"hex":"07D9","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2010,"hex":"07DA","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2011,"hex":"07DB","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2012,"hex":"07DC","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2013,"hex":"07DD","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2014,"hex":"07DE","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2011,"hex":"07DB","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2012,"hex":"07DC","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2013,"hex":"07DD","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2014,"hex":"07DE","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2015,"hex":"07DF","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2016,"hex":"07E0","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2017,"hex":"07E1","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2018,"hex":"07E2","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2019,"hex":"07E3","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2020,"hex":"07E4","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2021,"hex":"07E5","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2022,"hex":"07E6","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2021,"hex":"07E5","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2022,"hex":"07E6","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2023,"hex":"07E7","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":2024,"hex":"07E8","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2025,"hex":"07E9","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2026,"hex":"07EA","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":2024,"hex":"07E8","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2025,"hex":"07E9","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2026,"hex":"07EA","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Gothica formula-giver","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2027,"hex":"07EB","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2028,"hex":"07EC","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2029,"hex":"07ED","arena":"GOTHICA_ARRIVAL_DUNGEON_SEWER","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -44349,40 +44505,40 @@ org $F469FB
 ;@TEXTMETA {"id":2064,"hex":"0810","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2065,"hex":"0811","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2066,"hex":"0812","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2067,"hex":"0813","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2068,"hex":"0814","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2069,"hex":"0815","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2070,"hex":"0816","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2071,"hex":"0817","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2072,"hex":"0818","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2073,"hex":"0819","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2074,"hex":"081A","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2075,"hex":"081B","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2076,"hex":"081C","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2077,"hex":"081D","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2078,"hex":"081E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2079,"hex":"081F","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2080,"hex":"0820","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2081,"hex":"0821","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2082,"hex":"0822","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2083,"hex":"0823","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2084,"hex":"0824","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2085,"hex":"0825","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2086,"hex":"0826","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2087,"hex":"0827","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2088,"hex":"0828","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2089,"hex":"0829","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2090,"hex":"082A","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2091,"hex":"082B","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2092,"hex":"082C","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2093,"hex":"082D","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2094,"hex":"082E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2095,"hex":"082F","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2096,"hex":"0830","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2097,"hex":"0831","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2098,"hex":"0832","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2099,"hex":"0833","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2100,"hex":"0834","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2067,"hex":"0813","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2068,"hex":"0814","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2069,"hex":"0815","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2070,"hex":"0816","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2071,"hex":"0817","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2072,"hex":"0818","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2073,"hex":"0819","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2074,"hex":"081A","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2075,"hex":"081B","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2076,"hex":"081C","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2077,"hex":"081D","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2078,"hex":"081E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2079,"hex":"081F","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2080,"hex":"0820","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2081,"hex":"0821","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2082,"hex":"0822","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2083,"hex":"0823","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2084,"hex":"0824","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2085,"hex":"0825","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2086,"hex":"0826","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2087,"hex":"0827","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2088,"hex":"0828","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2089,"hex":"0829","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2090,"hex":"082A","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2091,"hex":"082B","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2092,"hex":"082C","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2093,"hex":"082D","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2094,"hex":"082E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2095,"hex":"082F","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2096,"hex":"0830","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2097,"hex":"0831","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2098,"hex":"0832","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2099,"hex":"0833","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2100,"hex":"0834","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2101,"hex":"0835","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2102,"hex":"0836","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2103,"hex":"0837","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -44411,17 +44567,17 @@ org $F469FB
 ;@TEXTMETA {"id":2126,"hex":"084E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2127,"hex":"084F","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2128,"hex":"0850","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":2129,"hex":"0851","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
+;@TEXTMETA {"id":2129,"hex":"0851","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
 ;@TEXTMETA {"id":2130,"hex":"0852","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2131,"hex":"0853","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
+;@TEXTMETA {"id":2131,"hex":"0853","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
 ;@TEXTMETA {"id":2132,"hex":"0854","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2133,"hex":"0855","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
-;@TEXTMETA {"id":2134,"hex":"0856","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
-;@TEXTMETA {"id":2135,"hex":"0857","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
-;@TEXTMETA {"id":2136,"hex":"0858","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
-;@TEXTMETA {"id":2137,"hex":"0859","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
-;@TEXTMETA {"id":2138,"hex":"085A","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
-;@TEXTMETA {"id":2139,"hex":"085B","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$0B Adventurer","helper":"$0B"}
+;@TEXTMETA {"id":2133,"hex":"0855","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
+;@TEXTMETA {"id":2134,"hex":"0856","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
+;@TEXTMETA {"id":2135,"hex":"0857","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
+;@TEXTMETA {"id":2136,"hex":"0858","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
+;@TEXTMETA {"id":2137,"hex":"0859","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
+;@TEXTMETA {"id":2138,"hex":"085A","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
+;@TEXTMETA {"id":2139,"hex":"085B","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Lance","assignment":"fixed","theme":"$09 Lance","helper":"$09"}
 ;@TEXTMETA {"id":2140,"hex":"085C","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2141,"hex":"085D","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2142,"hex":"085E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -44486,29 +44642,29 @@ org $F469FB
 ;@TEXTMETA {"id":2201,"hex":"0899","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2202,"hex":"089A","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2203,"hex":"089B","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2204,"hex":"089C","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2205,"hex":"089D","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2206,"hex":"089E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2207,"hex":"089F","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2208,"hex":"08A0","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2209,"hex":"08A1","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2210,"hex":"08A2","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2211,"hex":"08A3","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":2204,"hex":"089C","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2205,"hex":"089D","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2206,"hex":"089E","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2207,"hex":"089F","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2208,"hex":"08A0","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2209,"hex":"08A1","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2210,"hex":"08A2","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2211,"hex":"08A3","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2212,"hex":"08A4","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2213,"hex":"08A5","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2214,"hex":"08A6","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2215,"hex":"08A7","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2216,"hex":"08A8","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2217,"hex":"08A9","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2218,"hex":"08AA","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2219,"hex":"08AB","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2220,"hex":"08AC","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2221,"hex":"08AD","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2222,"hex":"08AE","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2223,"hex":"08AF","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2224,"hex":"08B0","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2225,"hex":"08B1","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2226,"hex":"08B2","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2218,"hex":"08AA","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2219,"hex":"08AB","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2220,"hex":"08AC","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2221,"hex":"08AD","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2222,"hex":"08AE","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2223,"hex":"08AF","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2224,"hex":"08B0","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2225,"hex":"08B1","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
+;@TEXTMETA {"id":2226,"hex":"08B2","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
 ;@TEXTMETA {"id":2227,"hex":"08B3","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
 ;@TEXTMETA {"id":2228,"hex":"08B4","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2229,"hex":"08B5","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
@@ -44526,23 +44682,23 @@ org $F469FB
 ;@TEXTMETA {"id":2241,"hex":"08C1","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Cecil","assignment":"fixed","theme":"$16 Cecil","helper":"$16"}
 ;@TEXTMETA {"id":2242,"hex":"08C2","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2243,"hex":"08C3","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":2244,"hex":"08C4","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2245,"hex":"08C5","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2246,"hex":"08C6","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2247,"hex":"08C7","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":2244,"hex":"08C4","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2245,"hex":"08C5","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2246,"hex":"08C6","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2247,"hex":"08C7","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Gothica alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2248,"hex":"08C8","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2249,"hex":"08C9","arena":"GOTHICA_TOWNS_EBON_IVOR","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2250,"hex":"08CA","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2251,"hex":"08CB","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2252,"hex":"08CC","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2250,"hex":"08CA","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2251,"hex":"08CB","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2252,"hex":"08CC","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2253,"hex":"08CD","arena":"CAMELLIA_EBON_KEEP","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2254,"hex":"08CE","arena":"CAMELLIA_EBON_KEEP","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2255,"hex":"08CF","arena":"CAMELLIA_EBON_KEEP","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2256,"hex":"08D0","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2257,"hex":"08D1","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2258,"hex":"08D2","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2259,"hex":"08D3","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2260,"hex":"08D4","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2256,"hex":"08D0","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2257,"hex":"08D1","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2258,"hex":"08D2","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2259,"hex":"08D3","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2260,"hex":"08D4","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2261,"hex":"08D5","arena":"CAMELLIA_EBON_KEEP","source":"Gothica King / king-complex plumber","assignment":"fixed","theme":"$15 Gothica King","helper":"$15"}
 ;@TEXTMETA {"id":2262,"hex":"08D6","arena":"CAMELLIA_EBON_KEEP","source":"Gothica King / king-complex plumber","assignment":"fixed","theme":"$15 Gothica King","helper":"$15"}
 ;@TEXTMETA {"id":2263,"hex":"08D7","arena":"CAMELLIA_EBON_KEEP","source":"Gothica King / king-complex plumber","assignment":"fixed","theme":"$15 Gothica King","helper":"$15"}
@@ -44555,7 +44711,7 @@ org $F469FB
 ;@TEXTMETA {"id":2270,"hex":"08DE","arena":"CAMELLIA_EBON_KEEP","source":"Gothica King / king-complex plumber","assignment":"fixed","theme":"$15 Gothica King","helper":"$15"}
 ;@TEXTMETA {"id":2271,"hex":"08DF","arena":"CAMELLIA_EBON_KEEP","source":"Queen Camellia / Queen Bluegarden","assignment":"fixed","theme":"$0F Queen Camellia / Bluegarden","helper":"$0F"}
 ;@TEXTMETA {"id":2272,"hex":"08E0","arena":"CAMELLIA_EBON_KEEP","source":"Queen Camellia / Queen Bluegarden","assignment":"fixed","theme":"$0F Queen Camellia / Bluegarden","helper":"$0F"}
-;@TEXTMETA {"id":2273,"hex":"08E1","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2273,"hex":"08E1","arena":"CAMELLIA_EBON_KEEP","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2274,"hex":"08E2","arena":"CAMELLIA_EBON_KEEP","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2275,"hex":"08E3","arena":"CAMELLIA_EBON_KEEP","source":"Queen Camellia / Queen Bluegarden","assignment":"fixed","theme":"$0F Queen Camellia / Bluegarden","helper":"$0F"}
 ;@TEXTMETA {"id":2276,"hex":"08E4","arena":"CAMELLIA_EBON_KEEP / normal mirrored side","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
@@ -44598,33 +44754,33 @@ org $F469FB
 ;@TEXTMETA {"id":2313,"hex":"0909","arena":"CAMELLIA_EBON_KEEP","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2314,"hex":"090A","arena":"CAMELLIA_EBON_KEEP","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2315,"hex":"090B","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2316,"hex":"090C","arena":"TINKER_GOMI_ROCKET / normal mirrored side","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2317,"hex":"090D","arena":"TINKER_GOMI_ROCKET / normal mirrored side","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2318,"hex":"090E","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2319,"hex":"090F","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2316,"hex":"090C","arena":"TINKER_GOMI_ROCKET / normal mirrored side","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2317,"hex":"090D","arena":"TINKER_GOMI_ROCKET / normal mirrored side","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2318,"hex":"090E","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2319,"hex":"090F","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2320,"hex":"0910","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2321,"hex":"0911","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2322,"hex":"0912","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2322,"hex":"0912","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2323,"hex":"0913","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2324,"hex":"0914","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2325,"hex":"0915","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2326,"hex":"0916","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2327,"hex":"0917","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2328,"hex":"0918","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2329,"hex":"0919","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2330,"hex":"091A","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2331,"hex":"091B","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2332,"hex":"091C","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2333,"hex":"091D","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2334,"hex":"091E","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2335,"hex":"091F","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2329,"hex":"0919","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2330,"hex":"091A","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2331,"hex":"091B","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2332,"hex":"091C","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2333,"hex":"091D","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2334,"hex":"091E","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2335,"hex":"091F","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2336,"hex":"0920","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2337,"hex":"0921","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2338,"hex":"0922","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2339,"hex":"0923","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2340,"hex":"0924","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2341,"hex":"0925","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2342,"hex":"0926","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2337,"hex":"0921","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2338,"hex":"0922","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2339,"hex":"0923","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2340,"hex":"0924","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2341,"hex":"0925","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2342,"hex":"0926","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2343,"hex":"0927","arena":"TINKER_GOMI_ROCKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2344,"hex":"0928","arena":"TINKER_GOMI_ROCKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2345,"hex":"0929","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
@@ -44640,61 +44796,61 @@ org $F469FB
 ;@TEXTMETA {"id":2355,"hex":"0933","arena":"TINKER_GOMI_ROCKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2356,"hex":"0934","arena":"TINKER_GOMI_ROCKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2357,"hex":"0935","arena":"TINKER_GOMI_ROCKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":2358,"hex":"0936","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2359,"hex":"0937","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2358,"hex":"0936","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2359,"hex":"0937","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2360,"hex":"0938","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2361,"hex":"0939","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2362,"hex":"093A","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2363,"hex":"093B","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2364,"hex":"093C","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2365,"hex":"093D","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2366,"hex":"093E","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2367,"hex":"093F","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2368,"hex":"0940","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2369,"hex":"0941","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2370,"hex":"0942","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2371,"hex":"0943","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2372,"hex":"0944","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2373,"hex":"0945","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2374,"hex":"0946","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2375,"hex":"0947","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2376,"hex":"0948","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2377,"hex":"0949","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2378,"hex":"094A","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2361,"hex":"0939","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2362,"hex":"093A","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2363,"hex":"093B","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2364,"hex":"093C","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2365,"hex":"093D","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2366,"hex":"093E","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2367,"hex":"093F","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2368,"hex":"0940","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2369,"hex":"0941","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2370,"hex":"0942","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2371,"hex":"0943","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2372,"hex":"0944","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2373,"hex":"0945","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2374,"hex":"0946","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2375,"hex":"0947","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2376,"hex":"0948","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2377,"hex":"0949","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2378,"hex":"094A","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
 ;@TEXTMETA {"id":2379,"hex":"094B","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2380,"hex":"094C","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2381,"hex":"094D","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2382,"hex":"094E","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2383,"hex":"094F","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2384,"hex":"0950","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2385,"hex":"0951","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2386,"hex":"0952","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2387,"hex":"0953","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2388,"hex":"0954","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2389,"hex":"0955","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2380,"hex":"094C","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2381,"hex":"094D","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2382,"hex":"094E","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2383,"hex":"094F","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2384,"hex":"0950","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2385,"hex":"0951","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2386,"hex":"0952","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2387,"hex":"0953","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2388,"hex":"0954","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2389,"hex":"0955","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
 ;@TEXTMETA {"id":2390,"hex":"0956","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2391,"hex":"0957","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2392,"hex":"0958","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2391,"hex":"0957","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2392,"hex":"0958","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
 ;@TEXTMETA {"id":2393,"hex":"0959","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2394,"hex":"095A","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2395,"hex":"095B","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2396,"hex":"095C","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2397,"hex":"095D","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2398,"hex":"095E","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2395,"hex":"095B","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2396,"hex":"095C","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2397,"hex":"095D","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2398,"hex":"095E","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
 ;@TEXTMETA {"id":2399,"hex":"095F","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2400,"hex":"0960","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2401,"hex":"0961","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2402,"hex":"0962","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2403,"hex":"0963","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2404,"hex":"0964","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2400,"hex":"0960","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2401,"hex":"0961","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2402,"hex":"0962","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2403,"hex":"0963","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
+;@TEXTMETA {"id":2404,"hex":"0964","arena":"TINKER_GOMI_ROCKET","source":"Gomi","assignment":"fixed","theme":"$08 Gomi","helper":"$08"}
 ;@TEXTMETA {"id":2405,"hex":"0965","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2406,"hex":"0966","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2407,"hex":"0967","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2406,"hex":"0966","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2407,"hex":"0967","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2408,"hex":"0968","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2409,"hex":"0969","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2410,"hex":"096A","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2411,"hex":"096B","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2412,"hex":"096C","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":2409,"hex":"0969","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2410,"hex":"096A","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2411,"hex":"096B","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2412,"hex":"096C","arena":"DARK_FOREST","source":"One Up alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2413,"hex":"096D","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2414,"hex":"096E","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2415,"hex":"096F","arena":"DARK_FOREST","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -44719,12 +44875,12 @@ org $F469FB
 ;@TEXTMETA {"id":2434,"hex":"0982","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2435,"hex":"0983","arena":"DARK_FOREST","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
 ;@TEXTMETA {"id":2436,"hex":"0984","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2437,"hex":"0985","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2438,"hex":"0986","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2439,"hex":"0987","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2440,"hex":"0988","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2441,"hex":"0989","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
-;@TEXTMETA {"id":2442,"hex":"098A","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$07 Alchemist","helper":"$07"}
+;@TEXTMETA {"id":2437,"hex":"0985","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2438,"hex":"0986","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2439,"hex":"0987","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2440,"hex":"0988","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2441,"hex":"0989","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2442,"hex":"098A","arena":"DARK_FOREST","source":"Force Field / Stop alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2443,"hex":"098B","arena":"DARK_FOREST","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2444,"hex":"098C","arena":"DARK_FOREST","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2445,"hex":"098D","arena":"GOTHICA_CHESSBOARD_CORE","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -44847,63 +45003,63 @@ org $F469FB
 ;@TEXTMETA {"id":2562,"hex":"0A02","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2563,"hex":"0A03","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2564,"hex":"0A04","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2565,"hex":"0A05","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2566,"hex":"0A06","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2567,"hex":"0A07","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2568,"hex":"0A08","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2569,"hex":"0A09","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2570,"hex":"0A0A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2571,"hex":"0A0B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2572,"hex":"0A0C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2573,"hex":"0A0D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2574,"hex":"0A0E","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2575,"hex":"0A0F","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2576,"hex":"0A10","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2577,"hex":"0A11","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2578,"hex":"0A12","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2579,"hex":"0A13","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2580,"hex":"0A14","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2581,"hex":"0A15","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2582,"hex":"0A16","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2583,"hex":"0A17","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2584,"hex":"0A18","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2585,"hex":"0A19","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2586,"hex":"0A1A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2587,"hex":"0A1B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2588,"hex":"0A1C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2589,"hex":"0A1D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2590,"hex":"0A1E","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2591,"hex":"0A1F","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2592,"hex":"0A20","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2593,"hex":"0A21","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2594,"hex":"0A22","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2595,"hex":"0A23","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2596,"hex":"0A24","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2597,"hex":"0A25","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2598,"hex":"0A26","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2599,"hex":"0A27","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2600,"hex":"0A28","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2601,"hex":"0A29","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2602,"hex":"0A2A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2603,"hex":"0A2B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2604,"hex":"0A2C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2605,"hex":"0A2D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2606,"hex":"0A2E","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2607,"hex":"0A2F","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2608,"hex":"0A30","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2609,"hex":"0A31","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2610,"hex":"0A32","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2611,"hex":"0A33","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2612,"hex":"0A34","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2613,"hex":"0A35","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2614,"hex":"0A36","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2615,"hex":"0A37","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2616,"hex":"0A38","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2617,"hex":"0A39","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2618,"hex":"0A3A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2619,"hex":"0A3B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2620,"hex":"0A3C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
-;@TEXTMETA {"id":2621,"hex":"0A3D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$08 Merchant / Trader","helper":"$08"}
+;@TEXTMETA {"id":2565,"hex":"0A05","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2566,"hex":"0A06","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2567,"hex":"0A07","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2568,"hex":"0A08","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2569,"hex":"0A09","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2570,"hex":"0A0A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2571,"hex":"0A0B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2572,"hex":"0A0C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2573,"hex":"0A0D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2574,"hex":"0A0E","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2575,"hex":"0A0F","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2576,"hex":"0A10","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2577,"hex":"0A11","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2578,"hex":"0A12","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2579,"hex":"0A13","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2580,"hex":"0A14","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2581,"hex":"0A15","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2582,"hex":"0A16","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2583,"hex":"0A17","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2584,"hex":"0A18","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2585,"hex":"0A19","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2586,"hex":"0A1A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2587,"hex":"0A1B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2588,"hex":"0A1C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2589,"hex":"0A1D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2590,"hex":"0A1E","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2591,"hex":"0A1F","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2592,"hex":"0A20","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2593,"hex":"0A21","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2594,"hex":"0A22","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2595,"hex":"0A23","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2596,"hex":"0A24","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2597,"hex":"0A25","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2598,"hex":"0A26","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2599,"hex":"0A27","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2600,"hex":"0A28","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2601,"hex":"0A29","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2602,"hex":"0A2A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2603,"hex":"0A2B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2604,"hex":"0A2C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2605,"hex":"0A2D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2606,"hex":"0A2E","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2607,"hex":"0A2F","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2608,"hex":"0A30","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2609,"hex":"0A31","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2610,"hex":"0A32","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2611,"hex":"0A33","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2612,"hex":"0A34","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2613,"hex":"0A35","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2614,"hex":"0A36","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2615,"hex":"0A37","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2616,"hex":"0A38","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2617,"hex":"0A39","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2618,"hex":"0A3A","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2619,"hex":"0A3B","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2620,"hex":"0A3C","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2621,"hex":"0A3D","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Merchant / Trader","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2622,"hex":"0A3E","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2623,"hex":"0A3F","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2624,"hex":"0A40","arena":"IVOR_TOWN_FESTIVAL_MARKET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -44943,56 +45099,56 @@ org $F469FB
 ;@TEXTMETA {"id":2658,"hex":"0A62","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2659,"hex":"0A63","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2660,"hex":"0A64","arena":"IVOR_EXHIBITION_APPROACH","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2661,"hex":"0A65","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2662,"hex":"0A66","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2661,"hex":"0A65","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2662,"hex":"0A66","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2663,"hex":"0A67","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2664,"hex":"0A68","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2665,"hex":"0A69","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2666,"hex":"0A6A","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2667,"hex":"0A6B","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2668,"hex":"0A6C","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2669,"hex":"0A6D","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2670,"hex":"0A6E","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2671,"hex":"0A6F","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2672,"hex":"0A70","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2673,"hex":"0A71","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2674,"hex":"0A72","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2675,"hex":"0A73","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2676,"hex":"0A74","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2677,"hex":"0A75","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2664,"hex":"0A68","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2665,"hex":"0A69","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2666,"hex":"0A6A","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2667,"hex":"0A6B","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2668,"hex":"0A6C","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2669,"hex":"0A6D","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2670,"hex":"0A6E","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2671,"hex":"0A6F","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2672,"hex":"0A70","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2673,"hex":"0A71","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2674,"hex":"0A72","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2675,"hex":"0A73","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2676,"hex":"0A74","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2677,"hex":"0A75","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2678,"hex":"0A76","arena":"IVOR_EXHIBITION_APPROACH","source":"Mr. Head","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2679,"hex":"0A77","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2680,"hex":"0A78","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2681,"hex":"0A79","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2682,"hex":"0A7A","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2683,"hex":"0A7B","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2684,"hex":"0A7C","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2685,"hex":"0A7D","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2686,"hex":"0A7E","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2687,"hex":"0A7F","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2688,"hex":"0A80","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2689,"hex":"0A81","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2690,"hex":"0A82","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2691,"hex":"0A83","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2692,"hex":"0A84","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2693,"hex":"0A85","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2694,"hex":"0A86","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2695,"hex":"0A87","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2696,"hex":"0A88","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2697,"hex":"0A89","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2680,"hex":"0A78","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2681,"hex":"0A79","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2682,"hex":"0A7A","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2683,"hex":"0A7B","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2684,"hex":"0A7C","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2685,"hex":"0A7D","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2686,"hex":"0A7E","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2687,"hex":"0A7F","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2688,"hex":"0A80","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2689,"hex":"0A81","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2690,"hex":"0A82","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2691,"hex":"0A83","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2692,"hex":"0A84","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2693,"hex":"0A85","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2694,"hex":"0A86","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2695,"hex":"0A87","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2696,"hex":"0A88","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2697,"hex":"0A89","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2698,"hex":"0A8A","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2699,"hex":"0A8B","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2700,"hex":"0A8C","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2701,"hex":"0A8D","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2702,"hex":"0A8E","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2703,"hex":"0A8F","arena":"IVOR_EXHIBITION_APPROACH","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2704,"hex":"0A90","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2705,"hex":"0A91","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2706,"hex":"0A92","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2707,"hex":"0A93","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2708,"hex":"0A94","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2709,"hex":"0A95","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
-;@TEXTMETA {"id":2710,"hex":"0A96","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$06 Comedic Relief","helper":"$06"}
+;@TEXTMETA {"id":2704,"hex":"0A90","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2705,"hex":"0A91","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2706,"hex":"0A92","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2707,"hex":"0A93","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2708,"hex":"0A94","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2709,"hex":"0A95","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2710,"hex":"0A96","arena":"IVOR_EXHIBITION_APPROACH","source":"Exhibition presenter","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2711,"hex":"0A97","arena":"IVOR_EXHIBITION_APPROACH","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2712,"hex":"0A98","arena":"IVOR_EXHIBITION_APPROACH","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2713,"hex":"0A99","arena":"IVOR_EXHIBITION_APPROACH","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
@@ -45013,15 +45169,15 @@ org $F469FB
 ;@TEXTMETA {"id":2728,"hex":"0AA8","arena":"IVOR_EXHIBITION_APPROACH","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2729,"hex":"0AA9","arena":"IVOR_EXHIBITION_APPROACH","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2730,"hex":"0AAA","arena":"IVOR_CASTLE_BANQUET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":2731,"hex":"0AAB","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2732,"hex":"0AAC","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2733,"hex":"0AAD","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2734,"hex":"0AAE","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2735,"hex":"0AAF","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2736,"hex":"0AB0","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2737,"hex":"0AB1","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2738,"hex":"0AB2","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2739,"hex":"0AB3","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2731,"hex":"0AAB","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2732,"hex":"0AAC","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2733,"hex":"0AAD","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2734,"hex":"0AAE","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2735,"hex":"0AAF","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2736,"hex":"0AB0","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2737,"hex":"0AB1","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2738,"hex":"0AB2","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2739,"hex":"0AB3","arena":"IVOR_CASTLE_BANQUET","source":"Naris","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2740,"hex":"0AB4","arena":"IVOR_CASTLE_BANQUET","source":"Generic Gothica NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2741,"hex":"0AB5","arena":"IVOR_CASTLE_BANQUET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2742,"hex":"0AB6","arena":"IVOR_CASTLE_BANQUET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
@@ -45045,49 +45201,49 @@ org $F469FB
 ;@TEXTMETA {"id":2760,"hex":"0AC8","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":2761,"hex":"0AC9","arena":"IVOR_CASTLE_BANQUET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2762,"hex":"0ACA","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
-;@TEXTMETA {"id":2763,"hex":"0ACB","arena":"IVOR_CASTLE_BANQUET","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2764,"hex":"0ACC","arena":"IVOR_CASTLE_BANQUET","source":"Guard / Authority","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
-;@TEXTMETA {"id":2765,"hex":"0ACD","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2766,"hex":"0ACE","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2767,"hex":"0ACF","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2763,"hex":"0ACB","arena":"IVOR_CASTLE_BANQUET","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2764,"hex":"0ACC","arena":"IVOR_CASTLE_BANQUET","source":"Guard / Authority","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":2765,"hex":"0ACD","arena":"TINKER_GOMI_ROCKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
+;@TEXTMETA {"id":2766,"hex":"0ACE","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2767,"hex":"0ACF","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2768,"hex":"0AD0","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2769,"hex":"0AD1","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2770,"hex":"0AD2","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2771,"hex":"0AD3","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2769,"hex":"0AD1","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2770,"hex":"0AD2","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2771,"hex":"0AD3","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2772,"hex":"0AD4","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2773,"hex":"0AD5","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2773,"hex":"0AD5","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2774,"hex":"0AD6","arena":"TINKER_GOMI_ROCKET","source":"Presentation control","assignment":"caller-inherit","theme":"INHERIT","helper":"INHERIT"}
 ;@TEXTMETA {"id":2775,"hex":"0AD7","arena":"TINKER_GOMI_ROCKET","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":2776,"hex":"0AD8","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2776,"hex":"0AD8","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2777,"hex":"0AD9","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2778,"hex":"0ADA","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2779,"hex":"0ADB","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2778,"hex":"0ADA","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2779,"hex":"0ADB","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2780,"hex":"0ADC","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2781,"hex":"0ADD","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2782,"hex":"0ADE","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2783,"hex":"0ADF","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2784,"hex":"0AE0","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2785,"hex":"0AE1","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2786,"hex":"0AE2","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2787,"hex":"0AE3","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2781,"hex":"0ADD","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2782,"hex":"0ADE","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2783,"hex":"0ADF","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2784,"hex":"0AE0","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2785,"hex":"0AE1","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2786,"hex":"0AE2","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2787,"hex":"0AE3","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2788,"hex":"0AE4","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2789,"hex":"0AE5","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2790,"hex":"0AE6","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2791,"hex":"0AE7","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2789,"hex":"0AE5","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2790,"hex":"0AE6","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2791,"hex":"0AE7","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2792,"hex":"0AE8","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2793,"hex":"0AE9","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2794,"hex":"0AEA","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2795,"hex":"0AEB","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2796,"hex":"0AEC","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2797,"hex":"0AED","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2793,"hex":"0AE9","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2794,"hex":"0AEA","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2795,"hex":"0AEB","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2796,"hex":"0AEC","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2797,"hex":"0AED","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2798,"hex":"0AEE","arena":"TINKER_GOMI_ROCKET","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2799,"hex":"0AEF","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2800,"hex":"0AF0","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
-;@TEXTMETA {"id":2801,"hex":"0AF1","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Inventor","helper":"$0A"}
+;@TEXTMETA {"id":2799,"hex":"0AEF","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2800,"hex":"0AF0","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
+;@TEXTMETA {"id":2801,"hex":"0AF1","arena":"TINKER_GOMI_ROCKET","source":"Tinker Tinderbox","assignment":"fixed","theme":"$0A Tinker Tinderbox","helper":"$0A"}
 ;@TEXTMETA {"id":2802,"hex":"0AF2","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":2803,"hex":"0AF3","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":2804,"hex":"0AF4","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
-;@TEXTMETA {"id":2805,"hex":"0AF5","arena":"IVOR_CASTLE_BANQUET","source":"Eronio","assignment":"fixed","theme":"$09 Guard / Authority","helper":"$09"}
+;@TEXTMETA {"id":2805,"hex":"0AF5","arena":"IVOR_CASTLE_BANQUET","source":"Eronio","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":2806,"hex":"0AF6","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":2807,"hex":"0AF7","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
 ;@TEXTMETA {"id":2808,"hex":"0AF8","arena":"IVOR_CASTLE_BANQUET","source":"Evil Queen","assignment":"fixed","theme":"$12 Artificial Queen","helper":"$12"}
@@ -45151,9 +45307,9 @@ org $F469FB
 ;@TEXTMETA {"id":2866,"hex":"0B32","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Omnitopia machine/terminal","assignment":"arena-default","theme":"$05 Robot","helper":"$05"}
 ;@TEXTMETA {"id":2867,"hex":"0B33","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Omnitopia machine/terminal","assignment":"arena-default","theme":"$05 Robot","helper":"$05"}
 ;@TEXTMETA {"id":2868,"hex":"0B34","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Omnitopia machine/terminal","assignment":"arena-default","theme":"$05 Robot","helper":"$05"}
-;@TEXTMETA {"id":2869,"hex":"0B35","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":2869,"hex":"0B35","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":2870,"hex":"0B36","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy / Carltron","assignment":"page-map","theme":"PAGE_MAP","helper":"PAGE_MAP"}
-;@TEXTMETA {"id":2871,"hex":"0B37","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":2871,"hex":"0B37","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":2872,"hex":"0B38","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2873,"hex":"0B39","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2874,"hex":"0B3A","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
@@ -45195,16 +45351,16 @@ org $F469FB
 ;@TEXTMETA {"id":2910,"hex":"0B5E","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Presentation control","assignment":"caller-inherit","theme":"INHERIT","helper":"INHERIT"}
 ;@TEXTMETA {"id":2911,"hex":"0B5F","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2912,"hex":"0B60","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Presentation control","assignment":"caller-inherit","theme":"INHERIT","helper":"INHERIT"}
-;@TEXTMETA {"id":2913,"hex":"0B61","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
-;@TEXTMETA {"id":2914,"hex":"0B62","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":2913,"hex":"0B61","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
+;@TEXTMETA {"id":2914,"hex":"0B62","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":2915,"hex":"0B63","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2916,"hex":"0B64","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":2917,"hex":"0B65","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
-;@TEXTMETA {"id":2918,"hex":"0B66","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
-;@TEXTMETA {"id":2919,"hex":"0B67","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":2917,"hex":"0B65","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
+;@TEXTMETA {"id":2918,"hex":"0B66","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
+;@TEXTMETA {"id":2919,"hex":"0B67","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":2920,"hex":"0B68","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Professor Ruffleberg","assignment":"fixed","theme":"$0C Professor Ruffleberg","helper":"$0C"}
-;@TEXTMETA {"id":2921,"hex":"0B69","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
-;@TEXTMETA {"id":2922,"hex":"0B6A","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$05 Robot","helper":"$05"}
+;@TEXTMETA {"id":2921,"hex":"0B69","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
+;@TEXTMETA {"id":2922,"hex":"0B6A","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Carltron","assignment":"fixed","theme":"$0B Carltron","helper":"$0B"}
 ;@TEXTMETA {"id":2923,"hex":"0B6B","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Professor Ruffleberg","assignment":"fixed","theme":"$0C Professor Ruffleberg","helper":"$0C"}
 ;@TEXTMETA {"id":2924,"hex":"0B6C","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":2925,"hex":"0B6D","arena":"OMNITOPIA_PROFESSOR_CARLTRON","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
@@ -47796,8 +47952,8 @@ org $DBC3BF
 ; already covered by the engine's native geometry-aware wrapping.  Artificial doubles
 ; mirror their real counterpart's border/geometry while swapping to synthetic $1934.
 ;
-; Active theme table:
-;   $02 Narration / System          x=$04 y=$0A w=$18 h=$06  system/unframed helper (unchanged)
+; v1.25 theme table (historical baseline; later v1.32 overrides follow):
+;   $02 Narration / System          x=$04 y=$0A w=$18 h=$06  system/unframed helper (v1.25 state)
 ;   $03 Generic NPC                 x=$04 y=$02 w=$18 h=$08  pattern=$19A4 border=$000E
 ;   $04 Boy                         x=$01 y=$12 w=$1E h=$06  pattern=$1944 border=$000E
 ;   $05 Robot                       x=$13 y=$01 w=$0C h=$14  pattern=$1934 border=$0012
@@ -47838,7 +47994,7 @@ org $DBC3BF
 ; than inheriting the previous speaker's theme.
 ; =============================================================================
 
-; --- Authoritative helper geometry $02-$18 ------------------------------------
+; --- v1.25 helper geometry $02-$18 (later source-order overrides follow) --------
 org $F7E900
     db $54, $01, $55, $47, $00, $04, $0A, $18, $06, $00, $54, $01, $55, $44, $00, $04
     db $02, $18, $08, $00, $54, $01, $55, $44, $00, $84, $12, $1E, $06, $00, $54, $01
@@ -48708,4 +48864,1908 @@ V129_WindwalkerSetup_DefaultMinimapOn:
 ;     - Nobilia takeoff room no longer triggers space-station music;
 ;     - those no-change scenes preserve the already-playing music as expected.
 ;   Detailed MSU history and 3.0 requirements: README_MSU1_EXPERIMENT.md.
+; =============================================================================
+
+; --- v1.31 monster-remains profile hook ---------------------------------------------
+; Native successful normal-prize path at $D0:857B-$D0:8586:
+;   AD A2 0E 99 68 00   LDA $0EA2 / STA $0068,Y
+;   AD AC 0E 99 66 00   LDA $0EAC / STA $0066,Y
+; v1.31 centralizes only this remains-setup beat. The earlier v1.08 chance hook at
+; $D0:8567 remains unchanged. Eight NOPs keep the no-spoils branch target at $D0:858D.
+org $D0857B
+V131_EnemyPrizeProfile_Hook:
+    db $22, $00, $60, $F1, $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA
+
+org $F16000
+V131_EnemyPrizeProfile_Helper:
+    db $08, $C2, $30, $DA, $AF, $DB, $0A, $7E, $29, $FF, $00, $48, $A2, $00, $00, $BF
+    db $00, $61, $F1, $C9, $FF, $FF, $F0, $5E, $C3, $01, $F0, $08, $8A, $18, $69, $08
+    db $00, $AA, $80, $EB, $68, $A9, $07, $00, $8F, $9B, $23, $7E, $A9, $04, $00, $8F
+    db $9D, $23, $7E, $A9, $02, $00, $8F, $9F, $23, $7E, $A9, $01, $00, $8F, $A1, $23
+    db $7E, $BF, $02, $61, $F1, $8F, $A7, $23, $7E, $BF, $04, $61, $F1, $8F, $A3, $23
+    db $7E, $A9, $02, $00, $8F, $A9, $23, $7E, $BF, $06, $61, $F1, $8F, $A5, $23, $7E
+    db $A9, $01, $00, $8F, $AB, $23, $7E, $A9, $40, $00, $99, $68, $00, $A9, $2B, $17
+    db $99, $66, $00, $FA, $28, $6B, $68, $AD, $A2, $0E, $99, $68, $00, $AD, $AC, $0E
+    db $99, $66, $00, $FA, $28, $6B
+
+org $F16100
+V131_EnemyPrizeProfile_Table:
+; --- Prehistoria ---
+; map $5C  Opening Raptor attack: cash 5, ingredient Water x2, trade Bead x1
+    db $5C, $00, $05, $00, $01, $02, $32, $01
+; map $38  Southern Jungle: cash 5, ingredient Root x2, trade Bead x1
+    db $38, $00, $05, $00, $03, $02, $32, $01
+; map $5B  Eastern Jungle: cash 7, ingredient Wax x2, trade Bead x1
+    db $5B, $00, $07, $00, $00, $02, $32, $01
+; map $59  Sandpits / plateau: cash 7, ingredient Clay x2, trade Bead x1
+    db $59, $00, $07, $00, $10, $02, $32, $01
+; map $41  Northern Jungle: cash 12, ingredient Root x2, trade Spice x1
+    db $41, $00, $0C, $00, $03, $02, $3A, $01
+; map $67  Bugmuck: cash 10, ingredient Oil x2, trade Spice x1
+    db $67, $00, $0A, $00, $04, $02, $3A, $01
+; map $16  Inside Big Bug — first area: cash 10, ingredient Wax x2, trade Bead x1
+    db $16, $00, $0A, $00, $00, $02, $32, $01
+; map $17  Inside Big Bug — second area: cash 10, ingredient Ash x2, trade Spice x1
+    db $17, $00, $0A, $00, $14, $02, $3A, $01
+; map $27  Mammoth Graveyard: cash 15, ingredient Ash x2, trade Spice x1
+    db $27, $00, $0F, $00, $14, $02, $3A, $01
+; map $66  Western swamp / adjoining jungle: cash 20, ingredient Water x2, trade Bead x1
+    db $66, $00, $14, $00, $01, $02, $32, $01
+; map $65  Eastern Swamp: cash 20, ingredient Oil x2, trade Spice x1
+    db $65, $00, $14, $00, $04, $02, $3A, $01
+; map $69  Volcano Slopes: cash 30, ingredient Clay x2, trade Perfume x1
+    db $69, $00, $1E, $00, $10, $02, $38, $01
+; map $3C  Volcano entrance / first interior: cash 15, ingredient Wax x2, trade Spice x1
+    db $3C, $00, $0F, $00, $00, $02, $3A, $01
+; map $3B  Volcano main boulder room: cash 20, ingredient Ash x2, trade Perfume x1
+    db $3B, $00, $14, $00, $14, $02, $38, $01
+; map $3D  Volcano Water Pipes: cash 20, ingredient Water x2, trade Perfume x1
+    db $3D, $00, $14, $00, $01, $02, $38, $01
+; map $3E  Volcano pipe side rooms: cash 20, ingredient Oil x2, trade Perfume x1
+    db $3E, $00, $14, $00, $04, $02, $38, $01
+; map $18  Thraxx / Coleoptera room: cash 10, ingredient Ash x2, trade Spice x1
+    db $18, $00, $0A, $00, $14, $02, $3A, $01
+; map $01  Salabog swamp screen: cash 20, ingredient Oil x2, trade Perfume x1
+    db $01, $00, $14, $00, $04, $02, $38, $01
+; map $3F  Magmar room: cash 30, ingredient Ash x2, trade Perfume x1
+    db $3F, $00, $1E, $00, $14, $02, $38, $01
+; --- Antiqua ---
+; map $1B  Desert of Doom: cash 45, ingredient Limestone x2, trade Ceramic Pot x1
+    db $1B, $00, $2D, $00, $08, $02, $33, $01
+; map $05  Western Bank — beach / woods: cash 40, ingredient Vinegar x2, trade Ceramic Pot x1
+    db $05, $00, $28, $00, $02, $02, $33, $01
+; map $07  Western Bank — River Bridge: cash 40, ingredient Bone x2, trade Ceramic Pot x1
+    db $07, $00, $28, $00, $12, $02, $33, $01
+; map $4F  Cliff / coast east of Crustacia: cash 75, ingredient Mud Pepper x2, trade Limestone Tablet x1
+    db $4F, $00, $4B, $00, $05, $02, $37, $01
+; map $6B  Waterfall Area: cash 70, ingredient Crystal x2, trade Limestone Tablet x1
+    db $6B, $00, $46, $00, $0F, $02, $37, $01
+; map $06  Great Pyramid exterior: cash 50, ingredient Limestone x2, trade Jeweled Scarab x1
+    db $06, $00, $32, $00, $08, $02, $36, $01
+; map $55  Great Pyramid — first level: cash 90, ingredient Bone x2, trade Limestone Tablet x1
+    db $55, $00, $5A, $00, $12, $02, $37, $01
+; map $56  Great Pyramid — second level: cash 90, ingredient Brimstone x2, trade Jeweled Scarab x1
+    db $56, $00, $5A, $00, $11, $02, $36, $01
+; map $64  Cave beneath Pyramid: cash 70, ingredient Vinegar x2, trade Limestone Tablet x1
+    db $64, $00, $46, $00, $02, $02, $37, $01
+; map $57  Oglin Hideout: cash 65, ingredient Bone x2, trade Jeweled Scarab x1
+    db $57, $00, $41, $00, $12, $02, $36, $01
+; map $2B  Hall of Collosia entrance: cash 65, ingredient Crystal x2, trade Limestone Tablet x1
+    db $2B, $00, $41, $00, $0F, $02, $37, $01
+; map $23  Hall — southwest room: cash 50, ingredient Vinegar x2, trade Ceramic Pot x1
+    db $23, $00, $32, $00, $02, $02, $33, $01
+; map $24  Hall — northwest room: cash 50, ingredient Brimstone x2, trade Limestone Tablet x1
+    db $24, $00, $32, $00, $11, $02, $37, $01
+; map $28  Hall — collapsing-bridge room: cash 50, ingredient Limestone x2, trade Limestone Tablet x1
+    db $28, $00, $32, $00, $08, $02, $37, $01
+; map $2D  Hall — northeast / Mad Monk room: cash 50, ingredient Mud Pepper x2, trade Jeweled Scarab x1
+    db $2D, $00, $32, $00, $05, $02, $36, $01
+; map $4B  Oglin Caves: cash 70, ingredient Bone x2, trade Jeweled Scarab x1
+    db $4B, $00, $46, $00, $12, $02, $36, $01
+; map $6D  Aquagoth / Tentacle room: cash 70, ingredient Crystal x2, trade Jeweled Scarab x1
+    db $6D, $00, $46, $00, $0F, $02, $36, $01
+; map $1D  Vigor arena: cash 50, ingredient Limestone x2, trade Ceramic Pot x1
+    db $1D, $00, $32, $00, $08, $02, $33, $01
+; map $09  Aegis fight: cash 75, ingredient Crystal x2, trade Jeweled Scarab x1
+    db $09, $00, $4B, $00, $0F, $02, $36, $01
+; map $2C  Mini-taur room: cash 50, ingredient Brimstone x2, trade Limestone Tablet x1
+    db $2C, $00, $32, $00, $11, $02, $37, $01
+; map $2A  Megataur room: cash 50, ingredient Brimstone x2, trade Limestone Tablet x1
+    db $2A, $00, $32, $00, $11, $02, $37, $01
+; map $58  Rimsala room: cash 90, ingredient Crystal x2, trade Jeweled Scarab x1
+    db $58, $00, $5A, $00, $0F, $02, $36, $01
+; --- Gothica ---
+; map $76  Ivor Tower South — forest screen: cash 65, ingredient Feather x2, trade Tapestry x1
+    db $76, $00, $41, $00, $0C, $02, $3C, $01
+; map $79  Ivor Tower Sewers: cash 65, ingredient Mushroom x2, trade Tapestry x1
+    db $79, $00, $41, $00, $06, $02, $3C, $01
+; map $7A  Drained-sewer cliff: cash 65, ingredient Ethanol x2, trade Tapestry x1
+    db $7A, $00, $41, $00, $0D, $02, $3C, $01
+; map $74  Ivor / Ebon Keep Dungeon: cash 85, ingredient Iron x2, trade Annihilation Amulet x1
+    db $74, $00, $55, $00, $09, $02, $31, $01
+; map $19  Chessboard / hedge maze: cash 150, ingredient Grease x2, trade Golden Jackal x1
+    db $19, $00, $96, $00, $0B, $02, $35, $01
+; map $1A  Passages beneath Chessboard: cash 100, ingredient Iron x2, trade Tapestry x1
+    db $1A, $00, $64, $00, $09, $02, $3C, $01
+; map $22  Dark Forest: cash 100, ingredient Mushroom x2, trade Golden Jackal x1
+    db $22, $00, $64, $00, $06, $02, $35, $01
+; map $20  Timberdrake end of Dark Forest: cash 100, ingredient Acorn x2, trade Golden Jackal x1
+    db $20, $00, $64, $00, $15, $02, $35, $01
+; map $12  Ebon Keep Sewers: cash 75, ingredient Ethanol x2, trade Tapestry x1
+    db $12, $00, $4B, $00, $0D, $02, $3C, $01
+; map $13  Sewer / Forest / Gomi junction: cash 75, ingredient Grease x2, trade Tapestry x1
+    db $13, $00, $4B, $00, $0B, $02, $3C, $01
+; map $40  Swamp south of Gomi Tower: cash 90, ingredient Mushroom x2, trade Golden Jackal x1
+    db $40, $00, $5A, $00, $06, $02, $35, $01
+; map $37  Gomi Tower: cash 125, ingredient Feather x2, trade Annihilation Amulet x1
+    db $37, $00, $7D, $00, $0C, $02, $31, $01
+; map $5D  Ebon Keep Castle courtyard: cash 75, ingredient Acorn x2, trade Tapestry x1
+    db $5D, $00, $4B, $00, $15, $02, $3C, $01
+; map $5E  Verminator / front room: cash 80, ingredient Iron x2, trade Annihilation Amulet x1
+    db $5E, $00, $50, $00, $09, $02, $31, $01
+; map $5F  Ebon Keep Dark Passageways: cash 80, ingredient Grease x2, trade Annihilation Amulet x1
+    db $5F, $00, $50, $00, $0B, $02, $31, $01
+; map $60  Ebon Keep downstairs storage: cash 80, ingredient Ethanol x2, trade Tapestry x1
+    db $60, $00, $50, $00, $0D, $02, $3C, $01
+; map $0F  Ebon Keep western room: cash 75, ingredient Acorn x2, trade Tapestry x1
+    db $0F, $00, $4B, $00, $15, $02, $3C, $01
+; map $10  Ebon Keep stained-glass monster hall: cash 80, ingredient Iron x2, trade Golden Jackal x1
+    db $10, $00, $50, $00, $09, $02, $35, $01
+; map $1F  Bad Boy / Shapeshifter bridge: cash 100, ingredient Mushroom x2, trade Golden Jackal x1
+    db $1F, $00, $64, $00, $06, $02, $35, $01
+; map $77  Puppet-show combat room: cash 100, ingredient Iron x2, trade Tapestry x1
+    db $77, $00, $64, $00, $09, $02, $3C, $01
+; map $78  Queen-side castle combat state: cash 100, ingredient Acorn x2, trade Golden Jackal x1
+    db $78, $00, $64, $00, $15, $02, $35, $01
+; --- Omnitopia ---
+; map $49  Junkyard: cash 200, ingredient Meteorite x2, trade Spoon x1
+    db $49, $00, $C8, $00, $07, $02, $3B, $01
+; map $7E  Boiler Room: cash 250, ingredient Gunpowder x2, trade Spoon x1
+    db $7E, $00, $FA, $00, $0A, $02, $3B, $01
+; map $48  Main District: cash 300, ingredient Atlas Amulet x2, trade Spoon x1
+    db $48, $00, $2C, $01, $13, $02, $3B, $01
+; map $43  Security Access: cash 350, ingredient Atlas Amulet x2, trade Chicken x1
+    db $43, $00, $5E, $01, $13, $02, $34, $01
+; map $00  Alarm Room: cash 350, ingredient Gunpowder x2, trade Chicken x1
+    db $00, $00, $5E, $01, $0A, $02, $34, $01
+; map $47  Storage Room: cash 400, ingredient Meteorite x2, trade Rice x1
+    db $47, $00, $90, $01, $07, $02, $39, $01
+; map $42  Heating Chamber: cash 450, ingredient Dry Ice x2, trade Chicken x1
+    db $42, $00, $C2, $01, $0E, $02, $34, $01
+; map $44  Greenhouse: cash 500, ingredient Dry Ice x2, trade Rice x1
+    db $44, $00, $F4, $01, $0E, $02, $39, $01
+; map $4A  Carltron's Lair: cash 600, ingredient Meteorite x2, trade Rice x1
+    db $4A, $00, $58, $02, $07, $02, $39, $01
+; sentinel
+    db $FF, $FF, $00, $00, $00, $00, $00, $00
+
+; --- Trade-good prize extension ------------------------------------------------------
+; Custom prize IDs $0131-$013C map one-to-one to the 12 trade-good quantities at
+; $7E:2517,$2519,...,$252D. Quantities cap at 99; a full stack still marks the pickup
+; successful so ordinary remains can never become permanently uncollectable.
+; Native unknown-prize award fallback expected bytes at physical $D2:A5C6: 09 85 9B 04 09.
+org $D2A5C6
+V131_TradeGoodAward_DispatchHook:
+    db $29, $00, $90, $0F, $00      ; packed event target $B1:9000 -> physical $F1:9000
+org $F19000
+V131_TradeGoodAward_Dispatch:
+    db $09, $08, $39, $01, $29, $04, $31, $01, $A2, $18, $00, $09, $07, $BF, $02, $29
+    db $02, $63, $9E, $09, $00, $14, $BF, $02, $07, $BF, $02, $29, $31, $9A, $0C, $90
+    db $04, $B1, $00, $09, $08, $39, $01, $29, $04, $32, $01, $A2, $18, $00, $09, $07
+    db $C1, $02, $29, $02, $63, $9E, $09, $00, $14, $C1, $02, $07, $C1, $02, $29, $31
+    db $9A, $0C, $90, $04, $B1, $00, $09, $08, $39, $01, $29, $04, $33, $01, $A2, $18
+    db $00, $09, $07, $C3, $02, $29, $02, $63, $9E, $09, $00, $14, $C3, $02, $07, $C3
+    db $02, $29, $31, $9A, $0C, $90, $04, $B1, $00, $09, $08, $39, $01, $29, $04, $34
+    db $01, $A2, $18, $00, $09, $07, $C5, $02, $29, $02, $63, $9E, $09, $00, $14, $C5
+    db $02, $07, $C5, $02, $29, $31, $9A, $0C, $90, $04, $B1, $00, $09, $08, $39, $01
+    db $29, $04, $35, $01, $A2, $18, $00, $09, $07, $C7, $02, $29, $02, $63, $9E, $09
+    db $00, $14, $C7, $02, $07, $C7, $02, $29, $31, $9A, $0C, $90, $04, $B1, $00, $09
+    db $08, $39, $01, $29, $04, $36, $01, $A2, $18, $00, $09, $07, $C9, $02, $29, $02
+    db $63, $9E, $09, $00, $14, $C9, $02, $07, $C9, $02, $29, $31, $9A, $0C, $90, $04
+    db $B1, $00, $09, $08, $39, $01, $29, $04, $37, $01, $A2, $18, $00, $09, $07, $CB
+    db $02, $29, $02, $63, $9E, $09, $00, $14, $CB, $02, $07, $CB, $02, $29, $31, $9A
+    db $0C, $90, $04, $B1, $00, $09, $08, $39, $01, $29, $04, $38, $01, $A2, $18, $00
+    db $09, $07, $CD, $02, $29, $02, $63, $9E, $09, $00, $14, $CD, $02, $07, $CD, $02
+    db $29, $31, $9A, $0C, $90, $04, $B1, $00, $09, $08, $39, $01, $29, $04, $39, $01
+    db $A2, $18, $00, $09, $07, $CF, $02, $29, $02, $63, $9E, $09, $00, $14, $CF, $02
+    db $07, $CF, $02, $29, $31, $9A, $0C, $90, $04, $B1, $00, $09, $08, $39, $01, $29
+    db $04, $3A, $01, $A2, $18, $00, $09, $07, $D1, $02, $29, $02, $63, $9E, $09, $00
+    db $14, $D1, $02, $07, $D1, $02, $29, $31, $9A, $0C, $90, $04, $B1, $00, $09, $08
+    db $39, $01, $29, $04, $3B, $01, $A2, $18, $00, $09, $07, $D3, $02, $29, $02, $63
+    db $9E, $09, $00, $14, $D3, $02, $07, $D3, $02, $29, $31, $9A, $0C, $90, $04, $B1
+    db $00, $09, $08, $39, $01, $29, $04, $3C, $01, $A2, $18, $00, $09, $07, $D5, $02
+    db $29, $02, $63, $9E, $09, $00, $14, $D5, $02, $07, $D5, $02, $29, $31, $9A, $0C
+    db $90, $04, $B1, $00, $00
+
+; Native unknown-prize message fallback expected bytes at physical $D2:B154: 09 85 9B 04 09.
+org $D2B154
+V131_TradeGoodMessage_DispatchHook:
+    db $29, $00, $92, $0F, $00      ; packed event target $B1:9200 -> physical $F1:9200
+org $F19200
+V131_TradeGoodMessage_Dispatch:
+    db $09, $08, $39, $01, $29, $04, $31, $01, $A2, $04, $00, $52, $C7, $17, $00, $09
+    db $08, $39, $01, $29, $04, $32, $01, $A2, $04, $00, $52, $1B, $00, $00, $09, $08
+    db $39, $01, $29, $04, $33, $01, $A2, $04, $00, $52, $1B, $00, $00, $09, $08, $39
+    db $01, $29, $04, $34, $01, $A2, $04, $00, $52, $1B, $00, $00, $09, $08, $39, $01
+    db $29, $04, $35, $01, $A2, $04, $00, $52, $1B, $00, $00, $09, $08, $39, $01, $29
+    db $04, $36, $01, $A2, $04, $00, $52, $1B, $00, $00, $09, $08, $39, $01, $29, $04
+    db $37, $01, $A2, $04, $00, $52, $1B, $00, $00, $09, $08, $39, $01, $29, $04, $38
+    db $01, $A2, $04, $00, $52, $1B, $00, $00, $09, $08, $39, $01, $29, $04, $39, $01
+    db $A2, $04, $00, $52, $B1, $15, $00, $09, $08, $39, $01, $29, $04, $3A, $01, $A2
+    db $04, $00, $52, $AE, $15, $00, $09, $08, $39, $01, $29, $04, $3B, $01, $A2, $04
+    db $00, $52, $1B, $00, $00, $09, $08, $39, $01, $29, $04, $3C, $01, $A2, $04, $00
+    db $52, $1B, $00, $00, $52, $1B, $00, $00
+
+; TEXT 0009 is the native debug/unknown-item message and is not part of ordinary story
+; dialogue. Repoint it to a neutral raw system receipt used for trade goods that do not
+; already have a clean native receipt line. Amulet, Rice and Spice use their existing
+; precise system receipt texts (2029, 1851 and 1850 respectively).
+org $D1D01B
+V131_TextPtr_0009_TradeGoodReceipt:
+    db $00, $E8, $18
+org $F16800
+V131_Text_0009_TradeGoodReceipt:
+    db $46, $6F, $75, $6E, $64, $20, $61, $20, $74, $72, $61, $64, $65, $20, $67, $6F
+    db $6F, $64, $2E, $00
+
+
+; =============================================================================
+; v1.31 RELEASE — ENEMY PRIZE ECONOMY
+; =============================================================================
+; Promoted after successful runtime play testing of the redesigned ordinary-enemy remains.
+;
+; ACTIVE v1.31 PRIZE CONTRACT
+;   - v1.08 continues to decide WHETHER ordinary remains appear.
+;   - On the 71 listed combat-map profiles, remains contents are exactly:
+;       7/13 regional cash
+;       4/13 regional ingredient, quantity 2
+;       2/13 regional trade good, quantity 1
+;   - Routine direct healing-item prizes are removed from these profiles.
+;   - Unlisted maps retain their native $0EA2/$0EAC remains setup.
+;   - Trade-good quantities cap at 99; a full stack still completes the pickup cleanly.
+;   - Native/special prize paths outside this ordinary-remains setup remain untouched.
+;
+; RUNTIME ACCEPTANCE
+;   The v1.31 enemy-drop redesign was play-tested successfully before promotion. The v1.30
+;   native-audio and stable-Windwalker baseline is otherwise unchanged.
+;
+; v1.31 RELEASE ROM IDENTITY
+;   Size:       4,194,304 bytes
+;   SHA-256:    ef1a674e0a1a9f9d523a795aa8c2e98d6c30f02707ea02dd6c1c65445d1a89e8
+;   Checksum:   $57A3
+;   Complement: $A85C
+; =============================================================================
+
+; =============================================================================
+; v1.32 — FOCUSED SUPPORTING-CHARACTER THEMES (INITIAL QA PASS)
+; =============================================================================
+; This late source-order block deliberately supersedes the v1.24/v1.25 class/category
+; routing experiment without rewriting its historical evidence. The accepted v1.31 enemy-prize
+; economy remains untouched.
+;
+; FINAL FOCUSED ROSTER UNDER TEST
+;   $05 Robot          keep current Robot geometry/style; ordinary robots only
+;   $06 Blimp          keep former Comedic Relief geometry/style
+;   $07 Strong Heart   keep former Alchemist geometry/style
+;   $08 Gomi           keep former Merchant/Trader geometry/style
+;   $09 Lance          copy former Adventurer geometry/style
+;   $0A Tinker         keep former Inventor geometry/style
+;   $0B Carltron       Robot pattern/border ($1934/$0012), standard x=$04 y=$02 w=$18 h=$08
+;
+; All other text that previously inherited $05-$0B merely because of a broad class/role is
+; routed to $03 Generic NPC. Existing named helpers $0C-$17 remain unchanged in this pass.
+; PAGE_MAP and unresolved SCENE_ACTOR rows remain excluded from mechanical rerouting.
+;
+; STATIC ROUTING METHOD
+;   Event opener = A3 <helper>. The following $51/$52 operand is decoded as pointer-table
+;   byte offset / 3 to obtain the authoritative TEXT ID. A later A3 before the text call
+;   supersedes the earlier opener. Only verified native event-script banks $D2-$DD, the
+;   source-authored $FA event area, and the explicitly verified $C0:50EB event fragment are
+;   included. This produces 436 live helper-operand corrections.
+;
+; --- Lance inherits the former Adventurer geometry/style in helper $09 ---------------
+org $F7E946
+V132_Lance_HelperGeometry:
+    db $54, $01, $55, $44, $00, $89, $07, $1C, $08, $00
+org $F7EB28
+V132_Lance_ThemeStyle:
+    db $02, $00, $A4, $19, $04, $00, $00, $00
+;
+; --- Carltron becomes a standard-size synthetic speaker in helper $0B ----------------
+org $F7E95A
+V132_Carltron_HelperGeometry:
+    db $54, $01, $55, $44, $00, $8B, $02, $18, $08, $00
+org $F7EB38
+V132_Carltron_ThemeStyle:
+    db $04, $00, $34, $19, $12, $00, $00, $00
+;
+; --- Focused live event routing --------------------------------------------------------
+org $D2C2C1
+    db $03    ; TEXT 0248 Merchant / Trader caller; $08 -> $03
+org $D2C7CB
+    db $03    ; TEXT 0251 Merchant / Trader caller; $08 -> $03
+org $D2CB8B
+    db $03    ; TEXT 0300 Merchant / Trader caller; $06 -> $03
+org $D2CD8A
+    db $03    ; TEXT 0306 Merchant / Trader caller; $06 -> $03
+org $D2CD98
+    db $03    ; TEXT 0308 Merchant / Trader caller; $06 -> $03
+org $D3AE5A
+    db $03    ; TEXT 0475 Acid Rain alchemist; $07 -> $03
+org $D3AE63
+    db $03    ; TEXT 0476 Acid Rain alchemist; $07 -> $03
+org $D3AEB0
+    db $03    ; TEXT 0477 Acid Rain alchemist; $07 -> $03
+org $D3AEDB
+    db $03    ; TEXT 0479 Acid Rain alchemist; $07 -> $03
+org $D3D9D6
+    db $03    ; TEXT 0490 Generic Prehistoria NPC; $08 -> $03
+org $D3DB65
+    db $03    ; TEXT 0493 Mammoth Graveyard alchemist; $07 -> $03
+org $D3DB7F
+    db $03    ; TEXT 0495 Mammoth Graveyard alchemist; $07 -> $03
+org $D3DB93
+    db $03    ; TEXT 0497 Mammoth Graveyard alchemist; $07 -> $03
+org $D3DBA7
+    db $03    ; TEXT 0499 Mammoth Graveyard alchemist; $07 -> $03
+org $D3DBD9
+    db $03    ; TEXT 0500 Mammoth Graveyard alchemist; $07 -> $03
+org $D3DC53
+    db $03    ; TEXT 0502 Mammoth Graveyard alchemist; $07 -> $03
+org $D3DC65
+    db $03    ; TEXT 0505 Mammoth Graveyard alchemist; $07 -> $03
+org $D3DC88
+    db $03    ; TEXT 0506 Mammoth Graveyard alchemist; $07 -> $03
+org $D48022
+    db $03    ; TEXT 0508 Volcano / Levitate alchemist; $07 -> $03
+org $D48046
+    db $03    ; TEXT 0510 Volcano / Levitate alchemist; $07 -> $03
+org $D4806D
+    db $03    ; TEXT 0512 Volcano / Levitate alchemist; $07 -> $03
+org $D4807D
+    db $03    ; TEXT 0513 Volcano / Levitate alchemist; $07 -> $03
+org $D48090
+    db $03    ; TEXT 0515 Volcano / Levitate alchemist; $07 -> $03
+org $D480A6
+    db $03    ; TEXT 0516 Volcano / Levitate alchemist; $07 -> $03
+org $D480F8
+    db $03    ; TEXT 0521 Volcano / Levitate alchemist; $07 -> $03
+org $D48139
+    db $03    ; TEXT 0522 Volcano / Levitate alchemist; $07 -> $03
+org $D4814A
+    db $03    ; TEXT 0523 Volcano / Levitate alchemist; $07 -> $03
+org $D49C94
+    db $03    ; TEXT 0527 Generic Prehistoria NPC; $08 -> $03
+org $D49CBC
+    db $03    ; TEXT 0531 Speed alchemist; $07 -> $03
+org $D49CD3
+    db $03    ; TEXT 0532 Speed alchemist; $07 -> $03
+org $D49CF5
+    db $03    ; TEXT 0533 Generic Prehistoria NPC; $08 -> $03
+org $D49D02
+    db $03    ; TEXT 0534 Merchant / Trader; $08 -> $03
+org $D4A390
+    db $03    ; TEXT 0535 Bugmuck / Hard Ball alchemist; $07 -> $03
+org $D4A3AF
+    db $03    ; TEXT 0537 Bugmuck / Hard Ball alchemist; $07 -> $03
+org $D4A3E6
+    db $03    ; TEXT 0539 Bugmuck / Hard Ball alchemist; $07 -> $03
+org $D4A3F6
+    db $03    ; TEXT 0540 Bugmuck / Hard Ball alchemist; $07 -> $03
+org $D4A41D
+    db $03    ; TEXT 0541 Bugmuck / Hard Ball alchemist; $07 -> $03
+org $D4A430
+    db $03    ; TEXT 0542 Bugmuck / Hard Ball alchemist; $07 -> $03
+org $D4A45E
+    db $03    ; TEXT 0543 Merchant / Trader; $08 -> $03
+org $D4A472
+    db $03    ; TEXT 0544 Merchant / Trader; $08 -> $03
+org $D4A480
+    db $03    ; TEXT 0546 Merchant / Trader; $08 -> $03
+org $D4A488
+    db $03    ; TEXT 0547 Merchant / Trader; $08 -> $03
+org $D4A4D4
+    db $03    ; TEXT 0548 Merchant / Trader; $08 -> $03
+org $D4A4F7
+    db $03    ; TEXT 0550 Merchant / Trader; $08 -> $03
+org $D4A500
+    db $03    ; TEXT 0551 Merchant / Trader; $08 -> $03
+org $D4A55F
+    db $03    ; TEXT 0552 Merchant / Trader; $08 -> $03
+org $D4A67A
+    db $03    ; TEXT 0559 Drain / Double Drain alchemist; $07 -> $03
+org $D4A699
+    db $03    ; TEXT 0560 Drain / Double Drain alchemist; $07 -> $03
+org $D4A6A6
+    db $03    ; TEXT 0561 Drain / Double Drain alchemist; $07 -> $03
+org $D4A6B9
+    db $03    ; TEXT 0562 Drain / Double Drain alchemist; $07 -> $03
+org $D4A6CF
+    db $03    ; TEXT 0563 Drain / Double Drain alchemist; $07 -> $03
+org $D4A6D7
+    db $03    ; TEXT 0564 Generic Prehistoria NPC; $08 -> $03
+org $D4A6DF
+    db $03    ; TEXT 0565 Drain / Double Drain alchemist; $07 -> $03
+org $D4A6EA
+    db $03    ; TEXT 0566 Drain / Double Drain alchemist; $07 -> $03
+org $D4A6FC
+    db $03    ; TEXT 0567 Drain / Double Drain alchemist; $07 -> $03
+org $D4B53A
+    db $10    ; TEXT 0576 Evil Fire Eyes; $08 -> $10
+org $D4B560
+    db $10    ; TEXT 0578 Evil Fire Eyes; $08 -> $10
+org $D4B582
+    db $10    ; TEXT 0580 Evil Fire Eyes; $08 -> $10
+org $D4B590
+    db $10    ; TEXT 0581 Evil Fire Eyes; $08 -> $10
+org $D4B5B6
+    db $10    ; TEXT 0582 Evil Fire Eyes; $08 -> $10
+org $D4B5F8
+    db $10    ; TEXT 0583 Evil Fire Eyes; $08 -> $10
+org $D4BECD
+    db $03    ; TEXT 0587 Generic Prehistoria NPC; $08 -> $03
+org $D4C18B
+    db $03    ; TEXT 0588 Guard / Authority; $08 -> $03
+org $D4C1AA
+    db $03    ; TEXT 0589 Guard / Authority; $09 -> $03
+org $D4C1F3
+    db $03    ; TEXT 0590 Guard / Authority; $09 -> $03
+org $D4C39E
+    db $03    ; TEXT 0597 Guard / Authority; $09 -> $03
+org $D4C510
+    db $03    ; TEXT 0621 Generic Prehistoria NPC; $06 -> $03
+org $D4C5C2
+    db $03    ; TEXT 0627 Generic Prehistoria NPC; $07 -> $03
+org $D4C633
+    db $03    ; TEXT 0628 Generic Prehistoria NPC; $07 -> $03
+org $D4C670
+    db $03    ; TEXT 0629 Generic Prehistoria NPC; $07 -> $03
+org $D4C6C4
+    db $03    ; TEXT 0634 Generic Prehistoria NPC; $08 -> $03
+org $D4C6D2
+    db $03    ; TEXT 0635 Generic Prehistoria NPC; $08 -> $03
+org $D4C70A
+    db $03    ; TEXT 0639 Generic Prehistoria NPC; $08 -> $03
+org $D4C722
+    db $03    ; TEXT 0641 Generic Prehistoria NPC; $08 -> $03
+org $D4C755
+    db $03    ; TEXT 0645 Generic Prehistoria NPC; $08 -> $03
+org $D4C7D8
+    db $03    ; TEXT 0653 Retired village alchemist; $07 -> $03
+org $D4C7EF
+    db $03    ; TEXT 0654 Retired village alchemist; $07 -> $03
+org $D4C7F7
+    db $03    ; TEXT 0655 Retired village alchemist; $07 -> $03
+org $D4C80F
+    db $03    ; TEXT 0656 Retired village alchemist; $07 -> $03
+org $D4C818
+    db $03    ; TEXT 0657 Retired village alchemist; $07 -> $03
+org $D4D0C3
+    db $03    ; TEXT 0682 Merchant / Trader; $08 -> $03
+org $D4D0DF
+    db $03    ; TEXT 0684 Merchant / Trader; $08 -> $03
+org $D4D0EB
+    db $03    ; TEXT 0685 Merchant / Trader; $08 -> $03
+org $D4D131
+    db $03    ; TEXT 0689 Jade; $0A -> $03
+org $D4D25D
+    db $03    ; TEXT 0704 Innkeeper; $08 -> $03
+org $D4D26C
+    db $03    ; TEXT 0705 Innkeeper; $08 -> $03
+org $D4D275
+    db $03    ; TEXT 0706 Innkeeper; $08 -> $03
+org $D4D33C
+    db $03    ; TEXT 0708 Innkeeper; $08 -> $03
+org $D4D3CC
+    db $03    ; TEXT 0710 Innkeeper; $08 -> $03
+org $D4D3EA
+    db $03    ; TEXT 0712 Innkeeper; $08 -> $03
+org $D4D3F6
+    db $03    ; TEXT 0713 Innkeeper; $08 -> $03
+org $D4D41C
+    db $03    ; TEXT 0716 Innkeeper; $08 -> $03
+org $D4D432
+    db $03    ; TEXT 0718 Innkeeper; $08 -> $03
+org $D4D4E2
+    db $03    ; TEXT 0729 Merchant / Trader; $08 -> $03
+org $D4D4F5
+    db $03    ; TEXT 0730 Merchant / Trader; $08 -> $03
+org $D4D51B
+    db $03    ; TEXT 0732 Merchant / Trader; $08 -> $03
+org $D4D526
+    db $03    ; TEXT 0733 Merchant / Trader; $08 -> $03
+org $D4D9BF
+    db $04    ; TEXT 0794 Boy; $06 -> $04
+org $D4DA0F
+    db $04    ; TEXT 0799 Boy; $06 -> $04
+org $D4DA5C
+    db $04    ; TEXT 0803 Boy; $07 -> $04
+org $D4DC83
+    db $03    ; TEXT 0824 Generic Prehistoria NPC; $08 -> $03
+org $D4DD26
+    db $03    ; TEXT 0831 Generic Prehistoria NPC; $08 -> $03
+org $D4DD5F
+    db $03    ; TEXT 0833 Generic Prehistoria NPC; $08 -> $03
+org $D4DD75
+    db $03    ; TEXT 0834 Generic Prehistoria NPC; $08 -> $03
+org $D4DD8B
+    db $03    ; TEXT 0835 Generic Prehistoria NPC; $08 -> $03
+org $D4DDA1
+    db $03    ; TEXT 0836 Generic Prehistoria NPC; $08 -> $03
+org $D4DDB7
+    db $03    ; TEXT 0837 Generic Prehistoria NPC; $08 -> $03
+org $D4DDC3
+    db $03    ; TEXT 0838 Generic Prehistoria NPC; $08 -> $03
+org $D4DE09
+    db $03    ; TEXT 0840 Generic Prehistoria NPC; $08 -> $03
+org $D4E4EA
+    db $03    ; TEXT 0849 Defend alchemist; $07 -> $03
+org $D4E4FB
+    db $03    ; TEXT 0850 Defend alchemist; $07 -> $03
+org $D4E50B
+    db $03    ; TEXT 0851 Defend alchemist; $07 -> $03
+org $D4EC3A
+    db $03    ; TEXT 0863 Generic Antiqua NPC; $08 -> $03
+org $D592CD
+    db $03    ; TEXT 0892 Generic Antiqua NPC; $06 -> $03
+org $D5A86A
+    db $04    ; TEXT 0898 Boy; $06 -> $04
+org $D5A88F
+    db $04    ; TEXT 0899 Boy; $06 -> $04
+org $D5B181
+    db $06    ; TEXT 0900 Blimp; $08 -> $06
+org $D5B1D7
+    db $06    ; TEXT 0908 Blimp; $08 -> $06
+org $D5B1EF
+    db $06    ; TEXT 0910 Blimp; $08 -> $06
+org $D5B20E
+    db $06    ; TEXT 0911 Blimp; $07 -> $06
+org $D5B21D
+    db $06    ; TEXT 0912 Blimp; $07 -> $06
+org $D5B23D
+    db $06    ; TEXT 0913 Blimp; $07 -> $06
+org $D5B25A
+    db $06    ; TEXT 0914 Blimp; $03 -> $06
+org $D5B285
+    db $06    ; TEXT 0915 Blimp; $08 -> $06
+org $D5B29D
+    db $06    ; TEXT 0917 Blimp; $08 -> $06
+org $D5B2CB
+    db $06    ; TEXT 0918 Blimp; $08 -> $06
+org $D5BA65
+    db $06    ; TEXT 0923 Blimp; $08 -> $06
+org $D5BA75
+    db $06    ; TEXT 0924 Blimp; $08 -> $06
+org $D5BD27
+    db $03    ; TEXT 0926 Generic Antiqua NPC; $08 -> $03
+org $D5BD3D
+    db $03    ; TEXT 0927 Generic Antiqua NPC; $08 -> $03
+org $D5BD46
+    db $03    ; TEXT 0928 Generic Antiqua NPC; $08 -> $03
+org $D5BD56
+    db $03    ; TEXT 0929 Generic Antiqua NPC; $08 -> $03
+org $D5BD81
+    db $03    ; TEXT 0932 Generic Antiqua NPC; $08 -> $03
+org $D5BD93
+    db $03    ; TEXT 0933 Generic Antiqua NPC; $08 -> $03
+org $D5BDBD
+    db $03    ; TEXT 0937 Generic Antiqua NPC; $05 -> $03
+org $D5BDD1
+    db $03    ; TEXT 0938 Generic Antiqua NPC; $05 -> $03
+org $D5BDDA
+    db $03    ; TEXT 0939 Generic Antiqua NPC; $05 -> $03
+org $D5BDEB
+    db $03    ; TEXT 0940 Generic Antiqua NPC; $05 -> $03
+org $D5BE08
+    db $03    ; TEXT 0942 Generic Antiqua NPC; $05 -> $03
+org $D5BE30
+    db $03    ; TEXT 0945 Generic Antiqua NPC; $05 -> $03
+org $D5BE3F
+    db $03    ; TEXT 0946 Generic Antiqua NPC; $05 -> $03
+org $D5BE4E
+    db $03    ; TEXT 0947 Generic Antiqua NPC; $05 -> $03
+org $D5BE60
+    db $03    ; TEXT 0948 Generic Antiqua NPC; $05 -> $03
+org $D5BE72
+    db $03    ; TEXT 0949 Generic Antiqua NPC; $05 -> $03
+org $D5BE7B
+    db $03    ; TEXT 0950 Generic Antiqua NPC; $05 -> $03
+org $D5BE9B
+    db $03    ; TEXT 0951 Generic Antiqua NPC; $05 -> $03
+org $D5BEA4
+    db $03    ; TEXT 0952 Generic Antiqua NPC; $05 -> $03
+org $D5BF6B
+    db $03    ; TEXT 0954 Generic Antiqua NPC; $05 -> $03
+org $D5BF9B
+    db $03    ; TEXT 0956 Generic Antiqua NPC; $05 -> $03
+org $D5BFC0
+    db $03    ; TEXT 0958 Merchant / Trader; $08 -> $03
+org $D5BFC9
+    db $03    ; TEXT 0959 Merchant / Trader; $08 -> $03
+org $D5C041
+    db $03    ; TEXT 0962 Merchant / Trader; $08 -> $03
+org $D5C066
+    db $03    ; TEXT 0963 Merchant / Trader; $08 -> $03
+org $D5C16A
+    db $03    ; TEXT 0974 Generic Antiqua NPC; $05 -> $03
+org $D5C552
+    db $03    ; TEXT 0978 Generic Antiqua NPC; $05 -> $03
+org $D5C562
+    db $03    ; TEXT 0979 Generic Antiqua NPC; $08 -> $03
+org $D5C57A
+    db $03    ; TEXT 0981 Generic Antiqua NPC; $08 -> $03
+org $D5C589
+    db $03    ; TEXT 0982 Generic Antiqua NPC; $08 -> $03
+org $D5C598
+    db $03    ; TEXT 0983 Generic Antiqua NPC; $08 -> $03
+org $D5C5A7
+    db $03    ; TEXT 0984 Generic Antiqua NPC; $08 -> $03
+org $D5C5B0
+    db $03    ; TEXT 0985 Generic Antiqua NPC; $08 -> $03
+org $D5C5BF
+    db $03    ; TEXT 0986 Generic Antiqua NPC; $08 -> $03
+org $D5C5C8
+    db $03    ; TEXT 0987 Generic Antiqua NPC; $08 -> $03
+org $D5C5D7
+    db $03    ; TEXT 0988 Generic Antiqua NPC; $05 -> $03
+org $D5C5F0
+    db $03    ; TEXT 0991 Generic Antiqua NPC; $05 -> $03
+org $D5C6B4
+    db $14    ; TEXT 0993 Tiny; $08 -> $14
+org $D5C6B7
+    db $14    ; TEXT 0994 Tiny; $0B -> $14
+org $D5C6E5
+    db $14    ; TEXT 0996 Tiny; $08 -> $14
+org $D5C70E
+    db $04    ; TEXT 0998 Boy; $05 -> $04
+org $D5C76D
+    db $14    ; TEXT 1000 Tiny; $05 -> $14
+org $D5C792
+    db $14    ; TEXT 1002 Tiny; $08 -> $14
+org $D5C992
+    db $14    ; TEXT 1010 Tiny; $08 -> $14
+org $D5D073
+    db $13    ; TEXT 1037 Pompolonius; $08 -> $13
+org $D5D0A1
+    db $13    ; TEXT 1040 Pompolonius; $08 -> $13
+org $D5D1A9
+    db $13    ; TEXT 1043 Pompolonius; $08 -> $13
+org $D5D27D
+    db $0B    ; TEXT 1044 Carltron; $03 -> $0B
+org $D5D29E
+    db $0B    ; TEXT 1046 Carltron; $03 -> $0B
+org $D5D2BB
+    db $0B    ; TEXT 1049 Carltron; $03 -> $0B
+org $D5D387
+    db $03    ; TEXT 1053 Madronius; $07 -> $03
+org $D5D3A9
+    db $03    ; TEXT 1054 Madronius; $07 -> $03
+org $D5D3C9
+    db $03    ; TEXT 1055 Madronius; $07 -> $03
+org $D5D5FF
+    db $03    ; TEXT 1059 Generic Antiqua NPC; $08 -> $03
+org $D5D649
+    db $03    ; TEXT 1061 Guard / Authority; $08 -> $03
+org $D5D658
+    db $03    ; TEXT 1062 Guard / Authority; $08 -> $03
+org $D5D667
+    db $03    ; TEXT 1064 Guard / Authority; $08 -> $03
+org $D5D677
+    db $03    ; TEXT 1065 Guard / Authority; $08 -> $03
+org $D5D68D
+    db $03    ; TEXT 1066 Guard / Authority; $08 -> $03
+org $D5D696
+    db $03    ; TEXT 1067 Guard / Authority; $08 -> $03
+org $D5D6C0
+    db $03    ; TEXT 1069 Guard / Authority; $08 -> $03
+org $D5D7CA
+    db $03    ; TEXT 1074 Guard / Authority; $08 -> $03
+org $D5D7E5
+    db $03    ; TEXT 1076 Guard / Authority; $08 -> $03
+org $D5D800
+    db $03    ; TEXT 1078 Guard / Authority; $08 -> $03
+org $D5D82A
+    db $03    ; TEXT 1082 Guard / Authority; $08 -> $03
+org $D5DC1F
+    db $14    ; TEXT 1123 Tiny; $08 -> $14
+org $D5DFB3
+    db $03    ; TEXT 1133 Madronius; $07 -> $03
+org $D5DFE3
+    db $03    ; TEXT 1136 Madronius; $07 -> $03
+org $D5E728
+    db $03    ; TEXT 1143 Merchant / Trader; $08 -> $03
+org $D5E734
+    db $03    ; TEXT 1144 Merchant / Trader; $08 -> $03
+org $D5E80A
+    db $03    ; TEXT 1145 Atlas alchemist; $07 -> $03
+org $D5E824
+    db $03    ; TEXT 1146 Atlas alchemist; $07 -> $03
+org $D5E830
+    db $03    ; TEXT 1147 Atlas alchemist; $07 -> $03
+org $D5E842
+    db $03    ; TEXT 1148 Atlas alchemist; $07 -> $03
+org $D5E854
+    db $03    ; TEXT 1149 Atlas alchemist; $07 -> $03
+org $D5E863
+    db $03    ; TEXT 1150 Atlas alchemist; $07 -> $03
+org $D5E874
+    db $03    ; TEXT 1151 Atlas alchemist; $07 -> $03
+org $D5E8D4
+    db $03    ; TEXT 1152 Atlas alchemist; $07 -> $03
+org $D5E910
+    db $03    ; TEXT 1155 Atlas alchemist; $07 -> $03
+org $D68181
+    db $03    ; TEXT 1175 Merchant / Trader; $08 -> $03
+org $D68737
+    db $03    ; TEXT 1211 Merchant / Trader; $08 -> $03
+org $D6883E
+    db $03    ; TEXT 1216 Merchant / Trader; $08 -> $03
+org $D69040
+    db $03    ; TEXT 1267 Merchant / Trader; $08 -> $03
+org $D6ABA1
+    db $03    ; TEXT 1414 Generic Antiqua NPC; $08 -> $03
+org $D6ADFB
+    db $03    ; TEXT 1429 Generic Antiqua NPC; $08 -> $03
+org $D6B8B0
+    db $03    ; TEXT 1532 Generic Antiqua NPC; $08 -> $03
+org $D6B8C0
+    db $03    ; TEXT 1533 Generic Antiqua NPC; $08 -> $03
+org $D6CECA
+    db $03    ; TEXT 1554 Guard / Authority; $08 -> $03
+org $D6D48E
+    db $03    ; TEXT 1559 Generic Antiqua NPC; $08 -> $03
+org $D6D4B8
+    db $03    ; TEXT 1562 Generic Antiqua NPC; $08 -> $03
+org $D6D707
+    db $03    ; TEXT 1565 Generic Antiqua NPC; $08 -> $03
+org $D6D73D
+    db $03    ; TEXT 1568 Generic Antiqua NPC; $08 -> $03
+org $D6D74B
+    db $03    ; TEXT 1569 Generic Antiqua NPC; $08 -> $03
+org $D6D795
+    db $03    ; TEXT 1571 Generic Antiqua NPC; $08 -> $03
+org $D6D811
+    db $0E    ; TEXT 1573 Horace Highwater; $08 -> $0E
+org $D6D837
+    db $0E    ; TEXT 1574 Horace Highwater; $08 -> $0E
+org $D6D845
+    db $0E    ; TEXT 1575 Horace Highwater; $08 -> $0E
+org $D6D87B
+    db $0E    ; TEXT 1577 Horace Highwater; $08 -> $0E
+org $D6D8D0
+    db $0E    ; TEXT 1581 Horace Highwater; $08 -> $0E
+org $D6D8F7
+    db $0E    ; TEXT 1582 Horace Highwater; $08 -> $0E
+org $D6D90B
+    db $0E    ; TEXT 1583 Horace Highwater; $08 -> $0E
+org $D6D929
+    db $0E    ; TEXT 1585 Horace Highwater; $08 -> $0E
+org $D6D96B
+    db $0E    ; TEXT 1588 Horace Highwater; $08 -> $0E
+org $D6D979
+    db $0E    ; TEXT 1589 Horace Highwater; $08 -> $0E
+org $D6D9B6
+    db $0E    ; TEXT 1594 Horace Highwater; $08 -> $0E
+org $D6DA0D
+    db $0E    ; TEXT 1602 Horace Highwater; $08 -> $0E
+org $D78151
+    db $17    ; TEXT 1834 Ghost Pirate / Desert Shuttle Captain; $08 -> $17
+org $D78910
+    db $06    ; TEXT 1858 Blimp; $03 -> $06
+org $D7891F
+    db $06    ; TEXT 1859 Blimp; $03 -> $06
+org $D78937
+    db $06    ; TEXT 1861 Blimp; $03 -> $06
+org $D7894F
+    db $06    ; TEXT 1863 Blimp; $03 -> $06
+org $D78DA3
+    db $06    ; TEXT 1865 Blimp; $08 -> $06
+org $D7B5FE
+    db $0E    ; TEXT 1900 Horace Highwater; $08 -> $0E
+org $D7B616
+    db $0E    ; TEXT 1902 Horace Highwater; $08 -> $0E
+org $D7B736
+    db $14    ; TEXT 1908 Tiny; $08 -> $14
+org $D7B774
+    db $14    ; TEXT 1910 Tiny; $08 -> $14
+org $D7B8A7
+    db $14    ; TEXT 1911 Tiny; $08 -> $14
+org $D7B9CF
+    db $03    ; TEXT 1919 Madronius; $08 -> $03
+org $D7B9EB
+    db $03    ; TEXT 1921 Madronius; $08 -> $03
+org $D7EA03
+    db $03    ; TEXT 1950 Generic Gothica NPC; $08 -> $03
+org $D89B2C
+    db $03    ; TEXT 1992 Eronio; $08 -> $03
+org $D89B4D
+    db $12    ; TEXT 1994 Evil Queen; $08 -> $12
+org $D89B7E
+    db $12    ; TEXT 1996 Evil Queen; $08 -> $12
+org $D8D2B1
+    db $09    ; TEXT 2129 Lance; $03 -> $09
+org $D8D2EC
+    db $09    ; TEXT 2131 Lance; $03 -> $09
+org $D8D30A
+    db $09    ; TEXT 2133 Lance; $03 -> $09
+org $D8D33B
+    db $09    ; TEXT 2135 Lance; $03 -> $09
+org $D8D34F
+    db $09    ; TEXT 2136 Lance; $03 -> $09
+org $D8D35B
+    db $09    ; TEXT 2137 Lance; $03 -> $09
+org $D8D366
+    db $09    ; TEXT 2138 Lance; $03 -> $09
+org $D8D37E
+    db $09    ; TEXT 2139 Lance; $03 -> $09
+org $D8DA7E
+    db $03    ; TEXT 2226 Generic Gothica NPC; $08 -> $03
+org $D8DAD8
+    db $16    ; TEXT 2227 Cecil; $08 -> $16
+org $D8DB71
+    db $16    ; TEXT 2235 Cecil; $08 -> $16
+org $D8DB95
+    db $16    ; TEXT 2238 Cecil; $08 -> $16
+org $D8EC86
+    db $03    ; TEXT 2273 Guard / Authority; $08 -> $03
+org $D8ED1E
+    db $0F    ; TEXT 2275 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8ED4C
+    db $0F    ; TEXT 2277 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8ED75
+    db $0F    ; TEXT 2281 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8ED9D
+    db $0F    ; TEXT 2283 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EDAD
+    db $0F    ; TEXT 2285 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EDC5
+    db $0F    ; TEXT 2287 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EDEB
+    db $0F    ; TEXT 2289 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EE0B
+    db $0F    ; TEXT 2290 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EE2A
+    db $0F    ; TEXT 2291 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EE67
+    db $0F    ; TEXT 2294 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EE81
+    db $0F    ; TEXT 2295 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EE95
+    db $0F    ; TEXT 2296 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EEC7
+    db $0F    ; TEXT 2298 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EEE3
+    db $0F    ; TEXT 2300 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EF0B
+    db $0F    ; TEXT 2303 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D8EF21
+    db $0F    ; TEXT 2306 Queen Camellia / Queen Bluegarden; $08 -> $0F
+org $D983C0
+    db $0A    ; TEXT 2316 Tinker Tinderbox; $03 -> $0A
+org $D983FD
+    db $0A    ; TEXT 2318 Tinker Tinderbox; $03 -> $0A
+org $D98411
+    db $0A    ; TEXT 2319 Tinker Tinderbox; $03 -> $0A
+org $D98455
+    db $0A    ; TEXT 2322 Tinker Tinderbox; $03 -> $0A
+org $D98530
+    db $0A    ; TEXT 2329 Tinker Tinderbox; $03 -> $0A
+org $D98548
+    db $0A    ; TEXT 2330 Tinker Tinderbox; $03 -> $0A
+org $D98568
+    db $0A    ; TEXT 2331 Tinker Tinderbox; $03 -> $0A
+org $D98599
+    db $0A    ; TEXT 2333 Tinker Tinderbox; $08 -> $0A
+org $D98608
+    db $0A    ; TEXT 2334 Tinker Tinderbox; $03 -> $0A
+org $D98637
+    db $0A    ; TEXT 2335 Tinker Tinderbox; $03 -> $0A
+org $D98725
+    db $0A    ; TEXT 2337 Tinker Tinderbox; $03 -> $0A
+org $D98754
+    db $0A    ; TEXT 2341 Tinker Tinderbox; $03 -> $0A
+org $D9876F
+    db $0A    ; TEXT 2342 Tinker Tinderbox; $03 -> $0A
+org $D98A1B
+    db $0A    ; TEXT 2358 Tinker Tinderbox; $08 -> $0A
+org $D98A4B
+    db $0A    ; TEXT 2361 Tinker Tinderbox; $08 -> $0A
+org $D98ABF
+    db $0A    ; TEXT 2362 Tinker Tinderbox; $08 -> $0A
+org $D98B05
+    db $0A    ; TEXT 2363 Tinker Tinderbox; $08 -> $0A
+org $D98B8B
+    db $0A    ; TEXT 2370 Tinker Tinderbox; $03 -> $0A
+org $D98BDE
+    db $0A    ; TEXT 2375 Tinker Tinderbox; $03 -> $0A
+org $D98C09
+    db $0A    ; TEXT 2376 Tinker Tinderbox; $03 -> $0A
+org $D98C24
+    db $0A    ; TEXT 2377 Tinker Tinderbox; $03 -> $0A
+org $D99540
+    db $08    ; TEXT 2378 Gomi; $03 -> $08
+org $D995AC
+    db $08    ; TEXT 2380 Gomi; $03 -> $08
+org $D995E0
+    db $08    ; TEXT 2381 Gomi; $03 -> $08
+org $D99613
+    db $08    ; TEXT 2383 Gomi; $03 -> $08
+org $D99627
+    db $08    ; TEXT 2384 Gomi; $03 -> $08
+org $D99654
+    db $08    ; TEXT 2387 Gomi; $03 -> $08
+org $D9966A
+    db $08    ; TEXT 2389 Gomi; $03 -> $08
+org $D99682
+    db $08    ; TEXT 2391 Gomi; $03 -> $08
+org $D99692
+    db $08    ; TEXT 2392 Gomi; $03 -> $08
+org $D996C2
+    db $08    ; TEXT 2395 Gomi; $03 -> $08
+org $D996E1
+    db $08    ; TEXT 2397 Gomi; $03 -> $08
+org $D996EB
+    db $08    ; TEXT 2398 Gomi; $03 -> $08
+org $D9970B
+    db $08    ; TEXT 2400 Gomi; $03 -> $08
+org $D99749
+    db $08    ; TEXT 2401 Gomi; $03 -> $08
+org $D9975D
+    db $08    ; TEXT 2402 Gomi; $03 -> $08
+org $D99792
+    db $08    ; TEXT 2403 Gomi; $03 -> $08
+org $D9A7C5
+    db $08    ; TEXT 2404 Gomi; $03 -> $08
+org $D9DC88
+    db $13    ; TEXT 2446 Pompolonius; $08 -> $13
+org $D9E03E
+    db $13    ; TEXT 2464 Pompolonius; $08 -> $13
+org $D9E44E
+    db $13    ; TEXT 2465 Pompolonius; $08 -> $13
+org $DA9272
+    db $03    ; TEXT 2527 Generic Gothica NPC; $08 -> $03
+org $DA9298
+    db $03    ; TEXT 2529 Generic Gothica NPC; $08 -> $03
+org $DA948E
+    db $03    ; TEXT 2564 Generic Gothica NPC; $08 -> $03
+org $DA94FE
+    db $03    ; TEXT 2569 Merchant / Trader; $08 -> $03
+org $DA9786
+    db $03    ; TEXT 2589 Merchant / Trader; $08 -> $03
+org $DA97B2
+    db $03    ; TEXT 2590 Merchant / Trader; $08 -> $03
+org $DA9802
+    db $03    ; TEXT 2591 Merchant / Trader; $08 -> $03
+org $DA9901
+    db $03    ; TEXT 2596 Merchant / Trader; $08 -> $03
+org $DA9909
+    db $03    ; TEXT 2597 Merchant / Trader; $08 -> $03
+org $DA992D
+    db $0C    ; TEXT 0425 Professor Ruffleberg; $08 -> $0C
+org $DA9938
+    db $03    ; TEXT 2598 Merchant / Trader; $08 -> $03
+org $DAA641
+    db $03    ; TEXT 2650 Generic Gothica NPC; $08 -> $03
+org $DAA6CF
+    db $03    ; TEXT 2660 Generic Gothica NPC; $08 -> $03
+org $DAA701
+    db $03    ; TEXT 2661 Exhibition presenter; $08 -> $03
+org $DAA749
+    db $03    ; TEXT 2662 Exhibition presenter; $08 -> $03
+org $DAA85E
+    db $03    ; TEXT 2664 Exhibition presenter; $08 -> $03
+org $DAAD23
+    db $04    ; TEXT 2679 Boy; $08 -> $04
+org $DAB107
+    db $04    ; TEXT 2701 Boy; $08 -> $04
+org $DAB33A
+    db $03    ; TEXT 2712 Generic Gothica NPC; $08 -> $03
+org $DAB697
+    db $03    ; TEXT 2718 Generic Gothica NPC; $08 -> $03
+org $DAB83F
+    db $03    ; TEXT 2725 Generic Gothica NPC; $08 -> $03
+org $DAB85B
+    db $03    ; TEXT 2727 Generic Gothica NPC; $08 -> $03
+org $DAC4BA
+    db $0A    ; TEXT 2765 Tinker Tinderbox; $03 -> $0A
+org $DAC5CC
+    db $0A    ; TEXT 2766 Tinker Tinderbox; $03 -> $0A
+org $DAC600
+    db $0A    ; TEXT 2769 Tinker Tinderbox; $03 -> $0A
+org $DAC60C
+    db $0A    ; TEXT 2770 Tinker Tinderbox; $03 -> $0A
+org $DAC63D
+    db $0A    ; TEXT 2773 Tinker Tinderbox; $03 -> $0A
+org $DAC9A1
+    db $0A    ; TEXT 2776 Tinker Tinderbox; $08 -> $0A
+org $DAC9D5
+    db $0A    ; TEXT 2778 Tinker Tinderbox; $08 -> $0A
+org $DAC9E6
+    db $0A    ; TEXT 2779 Tinker Tinderbox; $08 -> $0A
+org $DACA22
+    db $0A    ; TEXT 2781 Tinker Tinderbox; $08 -> $0A
+org $DACA5B
+    db $0A    ; TEXT 2783 Tinker Tinderbox; $08 -> $0A
+org $DACA7C
+    db $0A    ; TEXT 2785 Tinker Tinderbox; $08 -> $0A
+org $DACA93
+    db $0A    ; TEXT 2786 Tinker Tinderbox; $08 -> $0A
+org $DACAA6
+    db $0A    ; TEXT 2787 Tinker Tinderbox; $08 -> $0A
+org $DACAD6
+    db $0A    ; TEXT 2789 Tinker Tinderbox; $08 -> $0A
+org $DACB11
+    db $0A    ; TEXT 2793 Tinker Tinderbox; $08 -> $0A
+org $DACB24
+    db $0A    ; TEXT 2795 Tinker Tinderbox; $03 -> $0A
+org $DACB47
+    db $0A    ; TEXT 2796 Tinker Tinderbox; $08 -> $0A
+org $DACB73
+    db $0A    ; TEXT 2797 Tinker Tinderbox; $08 -> $0A
+org $DACBB2
+    db $0A    ; TEXT 2799 Tinker Tinderbox; $08 -> $0A
+org $DACBE8
+    db $0A    ; TEXT 2800 Tinker Tinderbox; $08 -> $0A
+org $DACC2D
+    db $0A    ; TEXT 2801 Tinker Tinderbox; $08 -> $0A
+org $DAD2F9
+    db $12    ; TEXT 2802 Evil Queen; $08 -> $12
+org $DAD333
+    db $12    ; TEXT 2806 Evil Queen; $08 -> $12
+org $DB8288
+    db $05    ; TEXT 2811 Omnitopia machine/terminal; $03 -> $05
+org $DB8290
+    db $05    ; TEXT 2812 Omnitopia machine/terminal; $03 -> $05
+org $DB82CD
+    db $05    ; TEXT 2813 Omnitopia machine/terminal; $03 -> $05
+org $DB830A
+    db $05    ; TEXT 2814 Omnitopia machine/terminal; $03 -> $05
+org $DB873C
+    db $05    ; TEXT 2817 Omnitopia machine/terminal; $03 -> $05
+org $DB8DB7
+    db $05    ; TEXT 2821 Omnitopia machine/terminal; $03 -> $05
+org $DB94AD
+    db $05    ; TEXT 2828 Omnitopia machine/terminal; $03 -> $05
+org $DB94CF
+    db $05    ; TEXT 2829 Omnitopia machine/terminal; $03 -> $05
+org $DB94D9
+    db $05    ; TEXT 2830 Omnitopia machine/terminal; $03 -> $05
+org $DB94E5
+    db $05    ; TEXT 2831 Omnitopia machine/terminal; $03 -> $05
+org $DB995D
+    db $05    ; TEXT 2833 Omnitopia machine/terminal; $03 -> $05
+org $DB9A0F
+    db $05    ; TEXT 2835 Omnitopia machine/terminal; $03 -> $05
+org $DB9A18
+    db $05    ; TEXT 2836 Omnitopia machine/terminal; $03 -> $05
+org $DB9A3A
+    db $05    ; TEXT 2838 Omnitopia machine/terminal; $03 -> $05
+org $DB9A4F
+    db $05    ; TEXT 2839 Omnitopia machine/terminal; $03 -> $05
+org $DB9A7E
+    db $05    ; TEXT 2840 Omnitopia machine/terminal; $03 -> $05
+org $DB9B1F
+    db $05    ; TEXT 2845 Omnitopia machine/terminal; $03 -> $05
+org $DB9B28
+    db $05    ; TEXT 2846 Omnitopia machine/terminal; $03 -> $05
+org $DB9B5D
+    db $05    ; TEXT 2847 Omnitopia machine/terminal; $03 -> $05
+org $DB9B66
+    db $05    ; TEXT 2848 Omnitopia machine/terminal; $03 -> $05
+org $DB9B9B
+    db $05    ; TEXT 2849 Omnitopia machine/terminal; $03 -> $05
+org $DB9BA4
+    db $05    ; TEXT 2850 Omnitopia machine/terminal; $03 -> $05
+org $DB9BAD
+    db $05    ; TEXT 2851 Omnitopia machine/terminal; $03 -> $05
+org $DB9BE3
+    db $05    ; TEXT 2852 Omnitopia machine/terminal; $03 -> $05
+org $DB9C35
+    db $05    ; TEXT 2853 Omnitopia machine/terminal; $03 -> $05
+org $DB9CE0
+    db $05    ; TEXT 2857 Omnitopia machine/terminal; $03 -> $05
+org $DB9D72
+    db $05    ; TEXT 2866 Omnitopia machine/terminal; $03 -> $05
+org $DB9D81
+    db $05    ; TEXT 2867 Omnitopia machine/terminal; $03 -> $05
+org $DBB138
+    db $0B    ; TEXT 2869 Carltron; $03 -> $0B
+org $DBB1F1
+    db $0B    ; TEXT 2871 Carltron; $03 -> $0B
+org $DBB3A0
+    db $0C    ; TEXT 2875 Professor Ruffleberg; $08 -> $0C
+org $DBB3DD
+    db $0C    ; TEXT 2879 Professor Ruffleberg; $08 -> $0C
+org $DBB444
+    db $0C    ; TEXT 2880 Professor Ruffleberg; $08 -> $0C
+org $DBB725
+    db $0C    ; TEXT 2882 Professor Ruffleberg; $08 -> $0C
+org $DBB767
+    db $0C    ; TEXT 2883 Professor Ruffleberg; $08 -> $0C
+org $DBB79F
+    db $0C    ; TEXT 2889 Professor Ruffleberg; $08 -> $0C
+org $DBB7FF
+    db $0C    ; TEXT 2890 Professor Ruffleberg; $08 -> $0C
+org $DBB86B
+    db $0C    ; TEXT 2896 Professor Ruffleberg; $08 -> $0C
+org $DBC1AB
+    db $0B    ; TEXT 2913 Carltron; $05 -> $0B
+org $DBC268
+    db $0B    ; TEXT 2917 Carltron; $05 -> $0B
+org $DBC309
+    db $0B    ; TEXT 2921 Carltron; $05 -> $0B
+org $DBC99C
+    db $05    ; TEXT 2934 Omnitopia machine/terminal; $08 -> $05
+org $DBC9AC
+    db $05    ; TEXT 2935 Omnitopia machine/terminal; $08 -> $05
+org $DBC9C6
+    db $0C    ; TEXT 2936 Professor Ruffleberg; $08 -> $0C
+org $DBCA0C
+    db $0C    ; TEXT 2937 Professor Ruffleberg; $08 -> $0C
+org $DBCA5F
+    db $0C    ; TEXT 2941 Professor Ruffleberg; $08 -> $0C
+org $DBCA9B
+    db $0C    ; TEXT 2946 Professor Ruffleberg; $08 -> $0C
+org $DBCB2A
+    db $0C    ; TEXT 2949 Professor Ruffleberg; $08 -> $0C
+org $DBCB58
+    db $0C    ; TEXT 2950 Professor Ruffleberg; $08 -> $0C
+org $DBCC07
+    db $0C    ; TEXT 2951 Professor Ruffleberg; $08 -> $0C
+org $DBCD58
+    db $0C    ; TEXT 2957 Professor Ruffleberg; $08 -> $0C
+org $DBCE70
+    db $0C    ; TEXT 2958 Professor Ruffleberg; $08 -> $0C
+org $DBCEC3
+    db $0C    ; TEXT 2960 Professor Ruffleberg; $08 -> $0C
+org $DBCED4
+    db $0C    ; TEXT 2961 Professor Ruffleberg; $08 -> $0C
+org $DBCF06
+    db $0C    ; TEXT 2963 Professor Ruffleberg; $08 -> $0C
+org $DBCFF7
+    db $05    ; TEXT 2969 Omnitopia machine/terminal; $03 -> $05
+org $DBD05E
+    db $05    ; TEXT 2973 Omnitopia machine/terminal; $03 -> $05
+org $DBD3B6
+    db $0C    ; TEXT 2977 Professor Ruffleberg; $08 -> $0C
+org $DBDB98
+    db $0C    ; TEXT 2986 Professor Ruffleberg; $08 -> $0C
+org $DBE06B
+    db $05    ; TEXT 2997 Omnitopia machine/terminal; $03 -> $05
+org $DBE07C
+    db $05    ; TEXT 2998 Omnitopia machine/terminal; $03 -> $05
+org $DBE08D
+    db $05    ; TEXT 2999 Omnitopia machine/terminal; $03 -> $05
+org $DBE09E
+    db $05    ; TEXT 3000 Omnitopia machine/terminal; $03 -> $05
+org $DBE0B8
+    db $05    ; TEXT 3001 Omnitopia machine/terminal; $03 -> $05
+org $DCD56F
+    db $17    ; TEXT 1795 Ghost Pirate / Desert Shuttle Captain; $08 -> $17
+org $FA8010
+    db $03    ; TEXT 0689 Jade; $0A -> $03
+org $FA801F
+    db $03    ; TEXT 0690 Jade; $0A -> $03
+org $FA8033
+    db $03    ; TEXT 0691 Jade; $0A -> $03
+org $FA81E0
+    db $03    ; TEXT 0690 Jade; $0A -> $03
+org $FA81F4
+    db $03    ; TEXT 0692 Jade; $0A -> $03
+;
+; v1.32 INITIAL THEME-PASS QA EXPECTATIONS
+;   - Generic merchants/guards/alchemists/inventors/comedy-role/adventurer-role text uses $03.
+;   - Robot remains the only grouped theme in the $05-$0B supporting-character block.
+;   - Blimp=$06, Strong Heart=$07, Gomi=$08, Lance=$09, Tinker=$0A, Carltron=$0B.
+;   - Carltron visually matches Robot's synthetic pattern/border but uses standard dialogue size.
+;   - No v1.31 loot/economy bytes are intentionally changed.
+;   - Runtime QA should sample at least one old merchant, guard, formula-giver, Naris/Jade,
+;     Blimp, Strong Heart, Gomi, Lance, Tinker, ordinary Omnitopia robot, and Carltron.
+;
+; INTERIM v1.32 THEME-PASS QA CHECKPOINT (SUPERSEDED WITHIN v1.32)
+;   Size:       4,194,304 bytes
+;   SHA-256:    9483a148fefaf8dac6c18261a401208d25e23f77c42f18aef33b21cf37562932
+;   Checksum:   $579A
+;   Complement: $A865
+; =============================================================================
+
+; =============================================================================
+; v1.32 QA REFINEMENT — FULL-GAME QA BATCH 1
+; =============================================================================
+; Accumulated runtime findings from the first v1.32 full-game QA segment. This block is
+; intentionally late in source order so earlier release evidence remains intact.
+;
+; 1) Narration/System centered helper now uses five-line height $08. X/Y/width and the
+;    transparent/unframed presentation are unchanged.
+; 2) TEXT 2765 is the same neutral Windwalker/shuttle destination prompt as TEXT 1939-1941;
+;    route it through Narration/System $02 rather than Tinker $0A.
+; 3) Repair explicit Generic-NPC openers on fixed Queen Camellia callsites found in the
+;    Ebon Keep audit, including the post-victory sequence containing TEXT 2308.
+; 4) Repair late fixed Professor Ruffleberg openers that were still Generic NPC in Omnitopia.
+; 5) Remove the sole live TEXT 1639 "See you later!" call from the standard successful-save
+;    path. Reclaim TEXT 1639 for Tinker's successful-save response and use reserved helper $18
+;    as a tiny callback that opens Tinker styling, presents that text, and leaves the box open
+;    for the event's existing follow-up/close choreography. Declining a save skips $18 exactly
+;    as it previously skipped the post-save Tinker reopen.
+;
+; --- Narration/System five-line centered geometry -----------------------------------
+org $F7E908
+V132_NarrationSystem_Height5:
+    db $08
+;
+; --- TEXT 2765 repeated shuttle/system prompt -> Narration/System --------------------
+org $DAC4BA
+V132_Text2765_ShuttlePrompt_Helper:
+    db $02
+;
+; --- Queen Camellia fixed-owner callsite coverage -----------------------------------
+org $D8EADD
+    db $0F    ; TEXT 2271 (TEXT 2272 continues in same Camellia box)
+org $D8EE59
+    db $0F    ; TEXT 2293
+org $D8EF42
+    db $0F    ; TEXT 2307
+org $D8EF4A
+    db $0F    ; TEXT 2308 "Oh, you brave little boy!!"
+org $D8EF6E
+    db $0F    ; TEXT 2310
+org $D8EF76
+    db $0F    ; TEXT 2311 (TEXT 2312 continues in same Camellia box)
+;
+; --- Professor Ruffleberg late-Omnitopia fixed-owner coverage -----------------------
+org $DBCCA2
+    db $0C    ; TEXT 2955
+org $DBCF2A
+    db $0C    ; TEXT 2964 (TEXT 2965 continues in same Professor box)
+org $DBCF4E
+    db $0C    ; TEXT 2966 (TEXT 2967 continues in same Professor box)
+;
+; --- Successful-save cleanup ---------------------------------------------------------
+; An intermediate v1.32 save-response experiment repurposed shared global helper $18,
+; which is used throughout the game as a native/global callback. Restore its exact prefix. The save
+; farewell therefore disappears from the shared save-success path without disturbing
+; unrelated A3 $18 callers.
+org $F7E9DC
+V132QA_Restore_Global18:
+    db $54, $01, $55, $44, $00, $98, $02, $18, $08, $00, $08, $00, $99
+;
+; TEXT 1639 is restored to the Sting alchemist. The Tinker response uses dedicated
+; composite QA text slots instead of hijacking this existing text ID.
+org $D6E14E
+V132QA_Restore_StingAlchemist_Call:
+    db $51, $35, $13
+org $D1E335
+V132QA_Text1639_OriginalPointer:
+    db $56, $52, $1D              ; original raw pointer -> PC $1D5256 / CPU $FA:5256
+;
+; Use two otherwise-unused text IDs as small composite save-success pages. This lets the
+; Tinker response be presented through his normal $0A theme without hijacking helper $18,
+; while preserving the existing follow-up text in each save-success path.
+org $F64600
+V132QA_Superseded_TinkerSaveThanks_Page1:
+    db $96, $87, $49, $27, $6D, $20, $61, $6C, $77, $61, $79, $73, $20, $68, $61, $70
+    db $70, $79, $20, $74, $6F, $20, $68, $65, $6C, $70, $20, $6D, $79, $20, $6C, $61
+    db $62, $20, $61, $73, $73, $69, $73, $2D, $67, $6F, $6F, $64, $20, $66, $72, $69
+    db $65, $6E, $64, $2E, $86, $80, $3D, $80, $96, $87, $43, $6F, $6D, $65, $20, $62
+    db $61, $63, $6B, $20, $61, $66, $74, $65, $72, $20, $79, $6F, $75, $27, $76, $65
+    db $20, $64, $69, $73, $70, $61, $74, $63, $68, $65, $64, $20, $74, $68, $65, $20
+    db $69, $6D, $70, $6F, $73, $74, $65, $72, $2E, $80, $B5, $80, $20, $49, $27, $6C
+    db $6C, $20, $68, $65, $6C, $70, $20, $79, $6F, $75, $20, $72, $65, $74, $75, $72
+    db $6E, $20, $74, $6F, $20, $74, $68, $61, $74, $20, $73, $70, $61, $63, $65, $20
+    db $70, $6C, $61, $63, $65, $2E, $86, $00
+org $F64700
+V132QA_Superseded_TinkerSaveThanks_Page2:
+    db $96, $54, $68, $61, $74, $27, $73, $20, $77, $68, $79, $20, $77, $65, $27, $72
+    db $65, $20, $67, $6F, $69, $6E, $67, $20, $74, $68, $65, $72, $65, $21, $86, $80
+    db $3D, $80, $96, $87, $49, $27, $6D, $20, $61, $6C, $77, $61, $79, $73, $20, $68
+    db $61, $70, $70, $79, $20, $74, $6F, $20, $68, $65, $6C, $70, $20, $6D, $79, $20
+    db $6C, $61, $62, $20, $61, $73, $73, $69, $73, $2D, $67, $6F, $6F, $64, $20, $66
+    db $72, $69, $65, $6E, $64, $2E, $86, $00
+;
+; Redirect unused TEXT 2406/2407 slots to the composite pages above.
+org $D1EC32
+V132QA_Superseded_Text2406_Pointer:
+    db $00, $46, $1B
+org $D1EC35
+V132QA_Superseded_Text2407_Pointer:
+    db $00, $47, $1B
+org $D9876F
+V132QA_Superseded_TinkerSaveSuccess_Path1:
+    db $0A, $51, $32, $1C, $55
+org $D98C24
+V132QA_Superseded_TinkerSaveSuccess_Path2_Helper:
+    db $0A
+org $D98C31
+V132QA_Superseded_TinkerSaveSuccess_Path2_Text:
+    db $35, $1C
+; --- Professor Ruffleberg runtime callsite fix -------------------------------------
+; TEXT 2967 continues the same Professor dialogue box as TEXT 2964/2965. The helper
+; must be established before the first text in that box; the late Omnitopia callsite
+; was still entering through Generic NPC $03.
+org $D5C5D6
+V132QA_Superseded_Professor2964_2967_Helper:
+    db $0C
+;
+; SUPERSEDED v1.32 SAVE-EXPERIMENT EXPECTATIONS
+;   - Centered Narration/System $02 is x=$04 y=$0A w=$18 h=$08.
+;   - All four repeated "Is your destination Omnitopia?" prompts use $02.
+;   - Audited Camellia fixed-owner lines above use $0F, including TEXT 2308.
+;   - Late Professor guidance through TEXT 2967 uses $0C.
+;   - Ordinary successful saves use the native shared save callback without a generic farewell.
+;   - Successful Tinker saves use Tinker's $0A theme and display "I'm always happy to help
+;     my lab assis-good friend." before preserving their existing follow-up text.
+;   - Shared global helper $18 retains its native behavior and no longer carries a save farewell.
+;   - TEXT 1639 remains the Sting alchemist line; Tinker uses dedicated QA text slots 2406/2407.
+;   - TEXT 2967 continues the Professor Ruffleberg theme at its actual runtime callsite.
+;   - v1.31 loot/economy, v1.30 native audio, and v1.29 Windwalker/minimap behavior are unchanged.
+;
+; SUPERSEDED v1.32 SAVE-EXPERIMENT CHECKPOINT
+;   Size:       4,194,304 bytes
+;   SHA-256:    0e37ea60defe479ef5eef6d7296ae3f774489d967db27682a14dd1662b1c4818
+;   Checksum:   $6BA3
+;   Complement: $945C
+; =============================================================================
+
+; =============================================================================
+; v1.32 QA CORRECTION — PROFESSOR/SAVE EXPERIMENT FOLLOW-UP
+; =============================================================================
+; Professor Ruffleberg TEXT 2964/2967 opener: the A3 instruction begins at $D5:C5D6;
+; $D5:C5D7 is its helper operand. The preceding experiment wrote $0C to the opcode byte by mistake.
+org $D5C5D6
+V132_Professor2964_2967_Helper:
+    db $A3, $0C
+;
+; The shared save-success path must not display the generic TEXT 1639 farewell.
+; Keep TEXT 1639's native Sting pointer intact for its real Horace West Bank caller.
+org $D6E14E
+V132QA_Superseded_SaveSuccess_NoGenericFarewell:
+    db $4D, $4D, $4D
+;
+; Interim checksum/complement for this superseded v1.32 QA checkpoint.
+org $C0FFDC
+V132QA_Superseded_FinalChecksum:
+    db $5E, $52, $A1, $AD
+;
+; SUPERSEDED v1.32 FOLLOW-UP CHECKPOINT
+;   Size:       4,194,304 bytes
+;   SHA-256:    33990c39a49495b45eb3bd89e0dbaec78eeb26405b17fd2e6de7e935da5870dd
+;   Checksum:   $ADA1
+;   Complement: $525E
+; =============================================================================
+
+
+; =============================================================================
+; v1.32 FINAL QA CONSOLIDATION — ROLLBACK + ACCEPTED CORRECTIONS
+; =============================================================================
+; These late writes consolidate the runtime-accepted state as v1.32. They roll back only the
+; superseded save-callback experiments above while retaining the accepted v1.32 presentation,
+; theme, Professor Ruffleberg, Robot-text, NG+, and Tinker-save corrections. The save helper
+; itself remains native/shared; Tinker-specific behavior is implemented only in his callers/text.
+;
+; Save-experiment rollback to the native/shared baseline
+;   Native Sting/alchemist save-success call restored: 51 35 13.
+;   Native Tinker save path 1 restored: A3 4F A3 0A 51 72 1B 55.
+;   Native Tinker save path 2 restored through its original A3 33 continuation.
+;   Native TEXT 2406/2407 pointers restored to 81 4C 1B / A4 4C 1B.
+;   The superseded composite pages remain physically present for exact tested-ROM identity but are unreferenced.
+;   Shared/native generic save infrastructure is otherwise untouched.
+;
+; Actual rollback bytes. These late writes override the superseded v1.32 save experiments
+; above and restore the pre-experiment shared save/event behavior byte-for-byte.
+org $D6E14E
+V132_Restore_NativeSaveSuccess_Call:
+    db $51, $35, $13
+org $D1EC32
+V132_Restore_Text2406_2407_Pointers:
+    db $81, $4C, $1B, $A4, $4C, $1B
+org $D9876F
+V132_Restore_TinkerSave_Path1:
+    db $0A, $51, $72, $1B, $55
+org $D98C24
+V132_Restore_TinkerSave_Path2:
+    db $0A, $09, $07, $FE, $00, $29, $31, $A2, $03, $00, $51, $DB, $1B, $55, $A3, $33
+;
+; 1) Centered Narration/System five-line presentation — retained from earlier v1.32 QA.
+; 2) All four Omnitopia destination prompts use Narration/System $02 — retained.
+; 3) Queen Camellia fixed-owner dialogue uses $0F — retained.
+;
+; 4) Robot TEXT 2866 — one page.
+org $FF07E2
+V132_Robot2866_OnePage:
+    db $97, $87, $57, $61, $78, $20, $6F, $6E, $2E, $80, $B5, $80, $20, $57, $61, $78
+    db $20, $6F, $66, $66, $2E, $86, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+    db $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
+
+; 5) NG+ weapon carryover — only Bone Crusher, Neutron Blade, Atom Smasher, Laser Lance.
+;   $7E:22DA keeps $02/$10; $7E:22DB keeps $01/$10. All other weapon bits are cleared.
+org $FA81F9
+V132_NGPlus_WeaponFilter:
+    db $0C, $10, $04, $B0, $0C, $12, $04, $B0, $0C, $13, $04, $B0, $0C, $15, $04, $B0
+    db $0C, $16, $04, $B0, $0C, $17, $04, $B0, $0C, $19, $04, $B0, $0C, $1A, $04, $B0
+    db $0C, $1B, $04, $B0, $0C, $1D, $04, $B0, $0C, $1E, $04, $B0, $0C, $1F, $04, $B0
+    db $A3, $33
+
+; 7) Tinker successful-save response.
+; Native v1.32 Tinker save events already call the native save menu, establish $0A,
+; and then show TEXT 2342 / TEXT 2377. Only those existing text payloads are changed.
+; The generic/native save path is deliberately not modified.
+org $F62B60
+V132_TinkerSave_Text2342:
+    db $96, $87, $49, $27, $6D, $20, $61, $6C, $77, $61, $79, $73, $20, $68, $61, $70
+    db $70, $79, $20, $74, $6F, $20, $68, $65, $6C, $70, $20, $6D, $79, $20, $6C, $61
+    db $62, $20, $61, $73, $73, $69, $73, $2D, $67, $6F, $6F, $64, $20, $66, $72, $69
+    db $65, $6E, $64, $2E, $86, $00
+org $F63589
+V132_TinkerSave_Text2377:
+    db $96, $87, $49, $27, $6D, $20, $61, $6C, $77, $61, $79, $73, $20, $68, $61, $70
+    db $70, $79, $20, $74, $6F, $20, $68, $65, $6C, $70, $20, $6D, $79, $20, $6C, $61
+    db $62, $20, $61, $73, $73, $69, $73, $2D, $67, $6F, $6F, $64, $20, $66, $72, $69
+    db $65, $6E, $64, $2E, $86, $00
+
+; Interim v1.32 consolidation checkpoint; superseded by the final Yes-only gating below.
+; Exact QA checksum $99E6; complement $6619.
+; SHA-256:    f747575c6434c8a940221bed26ea951abee150ad4b675511310fab5f100dd2b9
+org $C0FFDC
+V132QA_ConsolidationChecksum:
+    db $19, $66, $E6, $99
+; =============================================================================
+
+; =============================================================================
+; v1.32 QA CORRECTION — TINKER POST-SAVE EMPTY-WINDOW FIX
+; =============================================================================
+; Runtime QA showed that the later Tinker save path still opened the $0A Tinker
+; window and immediately closed it without displaying TEXT 2377.
+;
+; Root cause:
+;   After A3 $4F (the native save routine) and A3 $0A (Tinker's window helper),
+;   the original event evaluates a condition and uses a +$0003 conditional skip.
+;   Those three skipped bytes are exactly:
+;       51 DB 1B    ; display TEXT 2377
+;   The branch therefore lands directly on:
+;       55          ; close current text box
+;   when the condition is true, producing the observed empty flash.
+;
+; This fix changes ONLY that local branch distance from $0003 to $0000. The
+; condition is still evaluated, but either result now falls through to TEXT 2377.
+; A3 $4F and every byte of the shared/native save implementation remain untouched.
+; The earlier Tinker save path (TEXT 2342) already has no corresponding skip.
+org $D98C2C
+V132_TinkerPostSave_DoNotSkipText2377:
+    db $00, $00
+
+; Final checksum is overridden below after rebuilding this QA image.
+org $C0FFDC
+V132QA_PostSaveCheckpointChecksum:
+    db $1C, $66, $E3, $99
+; Interim v1.32 checksum $99E3; complement $661C.
+; =============================================================================
+
+; =============================================================================
+; v1.32 FINAL CORRECTION — TINKER SAVE RESPONSE: YES-ONLY GATING
+; =============================================================================
+; Runtime QA of the preceding branch-fix build proved the Tinker response itself works,
+; but also proved it was being reached from the native "No" path.
+;
+; The native Tinker prompts already contain a choice branch BEFORE A3 $4F:
+;   09 09 FB 02 94 08 00
+; The +$0008 "No" branch deliberately skips the save-call setup / A3 $4F / reopen
+; and lands on Tinker's original follow-up TEXT. That was correct for the vanilla story
+; reminder, but is wrong after TEXT 2342 / 2377 are repurposed as save acknowledgements.
+;
+; Keep A3 $4F and the complete shared/native save implementation untouched. Extend only
+; the two Tinker-local "No" skips:
+;
+;   Early Tinker save path:
+;     +$0008 -> +$000B
+;     "No" now skips setup + A3 $4F + A3 $0A + TEXT 2342 and lands on the existing $55.
+;     "Yes" falls through unchanged, saves natively, reopens $0A, and shows TEXT 2342.
+;
+;   Later Tinker save path:
+;     +$0008 -> +$0014
+;     "No" now skips setup + A3 $4F + A3 $0A + the old post-save condition + TEXT 2377
+;     and lands on the existing $55 / A3 $33 continuation.
+;     "Yes" falls through unchanged. The preceding QA fix keeps the later +$0003
+;     post-save skip at +$0000 so the acknowledged save reaches TEXT 2377.
+;
+; This therefore changes only Tinker's caller-side choice routing. It does not change the
+; save helper, save menu, SRAM behavior, generic successful-save callback, or other callers.
+org $D98766
+V132_TinkerEarly_NoSkipPastSaveResponse:
+    db $0B, $00
+
+org $D98C1B
+V132_TinkerLate_NoSkipPastSaveResponse:
+    db $14, $00
+
+; Final SNES HiROM checksum/complement for the authoritative v1.32 ROM.
+org $C0FFDC
+V132_FinalChecksum:
+    db $0D, $66, $F2, $99
+; v1.32 checksum $99F2; complement $660D.
+; SHA-256:    5b6f9ac8c72654e56ab5caea9fc32efefb06e81d962997978b2d8d027b34f4a9
+; This is the authoritative v1.32 ROM identity.
+; =============================================================================
+
+; =============================================================================
+; v1.33 RELEASE — STING FAREWELL + POMPOLONIUS COLOSSEUM SAVE PRESENTATION
+; =============================================================================
+; Scope is deliberately limited to two independent dialogue corrections. Native save
+; helpers $4E (generic save conversation) and $4F (save operation/menu) are untouched.
+; Tinker, the Ivor banquet/arrest save, and every other save caller are untouched.
+;
+; 1) Sting alchemist TEXT 1639 — wording only.
+;    The Sting alchemist does NOT call the save helper here; his event calls $4C and then
+;    TEXT 1639. Change the unrelated duplicate "See you later!" wording so future save
+;    audits cannot confuse it with generic save-conversation TEXT 0251.
+;
+;    Existing live pointer: D1:E335 = 56 52 1D -> CPU $FA:5256.
+;    New text owner:       CPU $FA:5468-$FA:547F / PC $3A5468-$3A547F.
+;    This range is zero-filled, source-unwritten arena slack immediately following the
+;    existing Horace-west-bank/page-merge text allocation at $FA:5420-$FA:5467.
+;    Inbound reference added here: only TEXT 1639's primary pointer at $D1:E335.
+org $D1E335
+V133_TextPtr_1639_StingFarewell:
+    db $68, $54, $1D
+org $FA5468
+V133_Text_1639_StingFarewell:
+    db $96, $87, $53, $74, $61, $79, $20, $73, $61, $66, $65, $20, $6F, $75, $74, $20
+    db $74, $68, $65, $72, $65, $2E, $86, $00
+;
+; 2) Pompolonius Colosseum save prompt — ownership/theme + text only.
+;    Existing event at $D5:CD74 begins A3 03, then shows Pompolonius TEXT 1022 and
+;    save-choice TEXT 1023 before directly calling the native $4F save helper. Change only
+;    the helper operand at $D5:CD75 from $03 Generic NPC to $13 Pompolonius. The direct
+;    A3 $4F save call and its choice branch remain byte-for-byte native.
+;
+;    TEXT 1023 grows beyond its old 48-byte slot at $F7:1CC0. Relocate it beside the
+;    already-relocated Pompolonius TEXT 1022 in Nobilia arena slack.
+;    Existing live pointer: D1:DBFD = C0 9C 1B -> CPU $F7:1CC0.
+;    New text owner:       CPU $F7:3FC0-$F7:400C / PC $373FC0-$37400C.
+;    This range is zero-filled and source-unwritten; $F7:3F20-$F7:3FB2 is the existing
+;    live TEXT 1022 allocation, so this keeps the save prompt with its owning scene.
+;    Inbound reference added here: only TEXT 1023's primary pointer at $D1:DBFD.
+org $D5CD75
+V133_Pompolonius_SavePresentationHelper:
+    db $13
+org $D1DBFD
+V133_TextPtr_1023_PompoloniusSave:
+    db $C0, $BF, $1B
+org $F73FC0
+V133_Text_1023_PompoloniusSave:
+    db $48, $61, $76, $65, $20, $61, $6E, $79, $20, $6C, $61, $73, $74, $20, $77, $6F
+    db $72, $64, $73, $20, $49, $20, $73, $68, $6F, $75, $6C, $64, $20, $77, $72, $69
+    db $74, $65, $20, $64, $6F, $77, $6E, $3F, $0A, $97, $8B, $59, $65, $73, $21, $0A
+    db $8B, $54, $65, $6C, $6C, $20, $68, $69, $73, $20, $6D, $6F, $74, $68, $65, $72
+    db $20, $49, $27, $6D, $20, $73, $6F, $72, $72, $79, $2E, $96, $00
+;
+; Release behavior:
+;   - Sting ends with: "Stay safe out there."
+;   - Pompolonius TEXT 1022 and save prompt both retain $13 presentation.
+;   - Pompolonius prompt reads:
+;       Have any last words I should write down?
+;       Yes!
+;       Tell his mother I'm sorry.
+;   - Yes still reaches native A3 $4F; No still skips A3 $4F exactly as before.
+;   - No other save caller changes.
+;
+; =============================================================================
+
+; =============================================================================
+; v1.33 RELEASE — CECIL OWNERSHIP, PAGINATION, AND EBON KEEP SAVE
+; =============================================================================
+; Runtime QA established that the Ebon Keep inn/shop side is Cecil-operated. Earlier
+; metadata classified TEXT 2218-2226 as Generic Gothica NPC, causing the rest/save side
+; of Cecil's building to drop back to $03. This batch corrects that ownership and also
+; fixes the question-chain pagination seen during Cecil's introduction.
+;
+; Scope boundaries:
+;   - Native save operation/menu $4F is untouched.
+;   - Generic save conversation $4E is untouched.
+;   - The nearby ordinary Gothica/Ivor inn save at $D8:D8FF is untouched.
+;   - Only Cecil/Ebon Keep caller-side flow at $D8:DA54 is customized.
+;   - The Sting/Pompolonius release changes above remain unchanged.
+;
+; 1) Cecil-operated Ebon Keep inn/shop presentation.
+;    These helper changes cover the dog-tired innkeeper joke / farewell, repeat greeting,
+;    rest offer, post-rest/currency reminder, and dog interaction. Consecutive TEXT calls
+;    inherit the helper until the event deliberately changes speaker.
+org $D8D946
+V133_CecilInn_Text2218_Helper:
+    db $16
+org $D8D955
+V133_CecilInn_Text2219_Helper:
+    db $16
+org $D8D95E
+V133_CecilInn_Text2220_Through2223_Helper:
+    db $16
+org $D8DA34
+V133_CecilInn_Text2224_2225_Helper:
+    db $16
+org $D8DA7E
+V133_CecilInn_Text2226_Helper:
+    db $16
+;
+; 2) Cecil introduction/repeat-dialogue helper continuity.
+;    TEXT 2229-2233 were metadata-owned by Cecil but the live event reopened as $03 after
+;    the Boy's Podunk response. TEXT 2240/2241 had the same live/helper mismatch on later
+;    Cecil interactions. Keep Cecil on $16 everywhere he is the speaker.
+org $D8DB00
+V133_CecilIntro_Text2229_Through2233_Helper:
+    db $16
+org $D8DC2D
+V133_CecilRepeat_Text2240_Helper:
+    db $16
+org $D8DCC8
+V133_CecilRepeat_Text2241_Helper:
+    db $16
+;
+; 3) Cecil question-chain page boundaries — selection-driven advance.
+;    Runtime QA confirmed that a leading $86 <PAGE> does clear the five-line window,
+;    but it also inserts an unwanted second player-advance after the choice.
+;
+;    The native Cecil follow-up texts use $87 as their immediate page/cursor reset:
+;      TEXT 2230 native payload begins $96,$87
+;      TEXT 2231 native payload begins $96,$87
+;      TEXT 2232 native payload begins $96,$87
+;    That is the desired behavior here: choosing an answer should itself advance the
+;    script, and the next Cecil beat should immediately begin on a fresh page.
+;
+;    TEXT 2231/2232 therefore return to their existing v1.32 pointers/payloads.
+;    TEXT 2230 remains on a private raw copy because the earlier cinematic-standardization
+;    pass removed its native leading $87 from the shared window-safe copy. The only active
+;    TEXT 2230 caller in v1.32 is this ordinary $51 Cecil event, so this private copy safely
+;    restores $96,$87 without touching the old cinematic-safe storage.
+;
+;    No choice logic, response text, or event branching is changed.
+org $D1EA22
+V133_TextPtr_2230_ChoiceAdvance:
+    db $60, $01, $1A
+org $F40160
+V133_Text_2230_ChoiceAdvance:
+    db $96, $87, $48, $6F, $77, $20, $61, $62, $6F, $75, $74, $20, $74, $68, $65, $20
+    db $74, $69, $6D, $65, $20, $74, $68, $61, $74, $20, $49, $20, $74, $75, $72, $6E
+    db $65, $64, $20, $69, $6E, $74, $6F, $20, $61, $20, $70, $61, $6C, $61, $64, $69
+    db $6E, $3F, $0A, $8B, $4E, $6F, $77, $20, $49, $20, $72, $65, $6D, $65, $6D, $62
+    db $65, $72, $21, $0A, $8B, $44, $6F, $65, $73, $6E, $27, $74, $20, $72, $69, $6E
+    db $67, $20, $61, $20, $62, $65, $6C, $6C, $2E, $00
+org $D1EA25
+V133_TextPtr_2231_NativeChoiceAdvance:
+    db $A7, $D8, $1A
+org $D1EA28
+V133_TextPtr_2232_NativeChoiceAdvance:
+    db $F4, $D8, $1A
+;
+; 4) Cecil-specific Ebon Keep save choice.
+;    TEXT 2406 was unused in the live v1.32 event graph (no inbound 51 $1C32 calls before
+;    v1.33). Reuse that slot for Cecil's save question and route only the Ebon Keep
+;    rest script tail through a private absolute-call event at $F6:9000.
+;
+;    Prompt:
+;      Want an old adventurer to record your progress?
+;      Please do.
+;      I'll risk it.
+;
+;    Yes -> native A3 $4F.
+;    No  -> skips A3 $4F.
+;    Both paths then execute the original $D8:DA56-$D8:DA72 post-save/rest continuation.
+;    There is no generic TEXT 0251 "See you later!" because $4E is never called here.
+org $D1EC32
+V133_TextPtr_2406_CecilSavePrompt:
+    db $00, $01, $1A
+org $F40100
+V133_Text_2406_CecilSavePrompt:
+    db $96, $87, $57, $61, $6E, $74, $20, $61, $6E, $20, $6F, $6C, $64, $20, $61, $64
+    db $76, $65, $6E, $74, $75, $72, $65, $72, $20, $74, $6F, $20, $72, $65, $63, $6F
+    db $72, $64, $20, $79, $6F, $75, $72, $20, $70, $72, $6F, $67, $72, $65, $73, $73
+    db $3F, $0A, $97, $8B, $50, $6C, $65, $61, $73, $65, $20, $64, $6F, $2E, $0A, $8B
+    db $49, $27, $6C, $6C, $20, $72, $69, $73, $6B, $20, $69, $74, $2E, $96, $00
+;
+; Replace only the Cecil/Ebon standard-save call tail. $29 $321000 decodes to CPU
+; $F6:9000. Return lands on the inserted $00 at $D8:DA58, ending the original script;
+; the custom subscript itself carries the original continuation bytes.
+org $D8DA54
+V133_CecilSave_CallPrivateTail:
+    db $29, $00, $10, $32, $00
+;
+; Custom caller-side save tail. Native $4F remains unchanged.
+org $F69000
+V133_CecilSave_PrivateTail:
+    db $51, $32, $1C                         ; TEXT 2406
+    db $1C, $FB, $02, $30, $AC               ; resolve choice result
+    db $09, $09, $FB, $02, $94, $02, $00     ; No: skip A3 $4F
+    db $A3, $4F                               ; Yes: native save menu/operation
+    db $55, $80, $2B, $D2, $18, $D7, $01, $82, $20, $18, $BB, $01, $82, $68, $18, $BD
+    db $01, $82, $38, $2B, $D2, $A7, $3C, $18, $D7, $01, $82, $80, $00
+;
+; Release behavior:
+;   - Cecil-operated Ebon Keep inn/rest/dog interactions use $16 throughout.
+;   - Cecil introduction: Boy remains $04; Cecil resumes $16 at TEXT 2229 and stays $16.
+;   - Each Cecil choice immediately advances to a fresh page with no second button press.
+;   - Existing wording is otherwise unchanged; verify five-line fit before considering edits.
+;   - Ebon Keep save uses Cecil prompt above. Yes reaches native $4F; No does not.
+;   - Neither branch emits generic TEXT 0251 "See you later!".
+;   - Ordinary save at $D8:D8FF remains A3 $4E byte-for-byte.
+;
+; =============================================================================
+
+; =============================================================================
+; v1.33 RELEASE — CHARACTER / TERMINAL SAVE PRESENTATION
+; =============================================================================
+; This batch is deliberately caller-side only. Native save operation $4F and the
+; standard generic save conversation $4E remain byte-for-byte untouched.
+;
+; IMPORTANT: $51 operands are BYTE OFFSETS into the 3-byte TEXT pointer table.
+; Therefore these wrappers use TEXT_ID * 3 (for example TEXT 2408 -> $1C38), not
+; the literal text ID. This is the contract used throughout the authoritative source.
+;
+; Batch coverage:
+;   - Blimp's hut + Blimp's cave -> $06 Blimp, same mud-pepper-leaf save prompt.
+;   - Professor Ruffleberg's three late-game save reaches -> $0C Professor.
+;   - Ordinary Omnitopia save terminal -> $05 Robot + "Backup complete." on Yes.
+;   - Final Junkyard system save -> $05 Robot with final-backup wording.
+;   - Generic $4E / TEXT 250-251 and the Ivor arrest save are unchanged.
+; =============================================================================
+
+; --- Blimp ownership / presentation -------------------------------------------
+; These are Blimp's actual hut callers, not the unrelated generic $D5:BF92/$D7:94D1 saves.
+org $D4DE09
+V133_BlimpHut_OpeningTheme:
+    db $06
+org $D4DE74
+V133_BlimpHut_RepeatTheme:
+    db $06
+org $D4DE20
+V133_BlimpHut_Call1:
+    db $29, $00, $12, $32
+org $D4DE75
+V133_BlimpHut_Call2:
+    db $29, $00, $12, $32
+
+; --- Custom save text ----------------------------------------------------------
+; TEXT 2407 / operand $1C35
+org $D1EC35
+V133_TextPtr_2407:
+    db $00, $02, $1A
+org $F40200
+V133_Text_2407:
+    db $96, $57, $61, $6E, $74, $20, $6D, $65, $20, $74, $6F, $20, $77, $72, $69, $74
+    db $65, $20, $79, $6F, $75, $72, $20, $6A, $6F, $75, $72, $6E, $65, $79, $20, $6F
+    db $6E, $20, $74, $68, $65, $73, $65, $20, $6D, $75, $64, $20, $70, $65, $70, $70
+    db $65, $72, $20, $6C, $65, $61, $76, $65, $73, $3F, $0A, $97, $8B, $53, $75, $72
+    db $65, $2E, $0A, $8B, $4E, $6F, $2C, $20, $74, $68, $61, $74, $27, $73, $20, $6F
+    db $6B, $61, $79, $2E, $96, $00
+; TEXT 2408 / operand $1C38
+org $D1EC38
+V133_TextPtr_2408:
+    db $80, $02, $1A
+org $F40280
+V133_Text_2408:
+    db $96, $93, $53, $68, $6F, $75, $6C, $64, $20, $49, $20, $6D, $61, $6B, $65, $20
+    db $61, $20, $62, $61, $63, $6B, $75, $70, $20, $62, $65, $66, $6F, $72, $65, $20
+    db $79, $6F, $75, $20, $67, $6F, $3F, $0A, $97, $8B, $47, $6F, $6F, $64, $20, $69
+    db $64, $65, $61, $2E, $0A, $8B, $49, $20, $6C, $69, $6B, $65, $20, $74, $6F, $20
+    db $6C, $69, $76, $65, $20, $64, $61, $6E, $67, $65, $72, $6F, $75, $73, $6C, $79
+    db $2E, $96, $00
+; TEXT 2410 / operand $1C3E
+org $D1EC3E
+V133_TextPtr_2410:
+    db $00, $03, $1A
+org $F40300
+V133_Text_2410:
+    db $96, $87, $50, $72, $6F, $67, $72, $65, $73, $73, $20, $62, $61, $63, $6B, $75
+    db $70, $20, $61, $76, $61, $69, $6C, $61, $62, $6C, $65, $2E, $0A, $97, $8B, $42
+    db $61, $63, $6B, $20, $75, $70, $2E, $0A, $8B, $53, $6B, $69, $70, $2E, $96, $00
+; TEXT 2411 / operand $1C41
+org $D1EC41
+V133_TextPtr_2411:
+    db $60, $03, $1A
+org $F40360
+V133_Text_2411:
+    db $96, $87, $42, $61, $63, $6B, $75, $70, $20, $63, $6F, $6D, $70, $6C, $65, $74
+    db $65, $2E, $00
+; TEXT 2414 / operand $1C4A
+org $D1EC4A
+V133_TextPtr_2414:
+    db $80, $03, $1A
+org $F40380
+V133_Text_2414:
+    db $96, $87, $46, $69, $6E, $61, $6C, $20, $73, $79, $73, $74, $65, $6D, $20, $62
+    db $61, $63, $6B, $75, $70, $20, $72, $65, $63, $6F, $6D, $6D, $65, $6E, $64, $65
+    db $64, $2E, $0A, $97, $8B, $42, $61, $63, $6B, $20, $75, $70, $2E, $0A, $8B, $50
+    db $72, $6F, $63, $65, $65, $64, $20, $75, $6E, $73, $61, $66, $65, $6C, $79, $2E
+    db $96, $00
+
+; --- Private caller-side save scripts -----------------------------------------
+org $F69200
+V133_BlimpHut:
+    db $51, $EA, $09, $1C, $F9, $02, $30, $AC, $09, $09, $F9, $02, $94, $9A, $00, $55
+    db $6C, $D0, $58, $64, $09, $0A, $01, $00, $94, $04, $00, $6C, $D1, $52, $6A, $6C
+    db $88, $03, $02, $4E, $5F, $2E, $D0, $6E, $D0, $58, $64, $A7, $10, $76, $D0, $3A
+    db $78, $D0, $28, $00, $B4, $09, $0A, $01, $00, $94, $15, $00, $2E, $D1, $6E, $D1
+    db $52, $6A, $A7, $10, $75, $D1, $A7, $08, $76, $D1, $A7, $08, $78, $D1, $3A, $00
+    db $B4, $A3, $00, $33, $50, $A3, $01, $A7, $10, $29, $9B, $58, $00, $2E, $88, $03
+    db $02, $75, $88, $03, $02, $3A, $AA, $95, $D0, $84, $E7, $03, $95, $D1, $84, $E7
+    db $03, $A8, $2C, $01, $A3, $00, $33, $0C, $A3, $01, $29, $C2, $58, $00, $77, $88
+    db $03, $02, $A7, $10, $78, $D0, $2A, $00, $B0, $A7, $20, $09, $0A, $01, $00, $94
+    db $05, $00, $78, $D1, $3E, $00, $B2, $A3, $06, $51, $ED, $09, $09, $0A, $01, $00
+    db $94, $06, $00, $78, $D1, $00, $80, $B0, $BF, $18, $F1, $01, $B1, $51, $35, $1C
+    db $1C, $FB, $02, $30, $AC, $09, $09, $FB, $02, $94, $06, $00, $55, $A3, $4F, $04
+    db $01, $00, $55, $00
+org $F69300
+V133_BlimpCave:
+    db $A3, $06, $51, $35, $1C, $1C, $FB, $02, $30, $AC, $09, $09, $FB, $02, $94, $06
+    db $00, $55, $A3, $4F, $04, $01, $00, $55, $A3, $33, $00
+org $F69400
+V133_ProfessorCommon:
+    db $51, $38, $1C, $1C, $FB, $02, $30, $AC, $09, $09, $FB, $02, $94, $06, $00, $55
+    db $A3, $4F, $04, $01, $00, $55, $5B, $C1, $2B, $8D, $27, $00, $18, $D3, $01, $CF
+    db $A7, $3C, $18, $D7, $01, $82, $80, $00
+org $F69480
+V133_ProfessorEnd:
+    db $51, $38, $1C, $1C, $FB, $02, $30, $AC, $09, $09, $FB, $02, $94, $06, $00, $55
+    db $A3, $4F, $04, $01, $00, $55, $A3, $33, $00
+org $F694C0
+V133_OmnitopiaTerminal:
+    db $51, $3E, $1C, $1C, $FB, $02, $30, $AC, $09, $09, $FB, $02, $94, $08, $00, $55
+    db $A3, $4F, $A3, $05, $51, $41, $1C, $55, $5B, $C1, $00
+org $F69500
+V133_JunkyardFinal:
+    db $09, $05, $65, $00, $29, $05, $9B, $04, $A7, $07, $00, $0C, $0D, $05, $B1, $04
+    db $01, $00, $00, $C0, $5C, $B0, $82, $7E, $5C, $B1, $82, $7E, $5C, $B2, $82, $7E
+    db $5C, $B3, $82, $7E, $A7, $78, $5A, $18, $F1, $01, $EB, $A3, $05, $51, $4A, $1C
+    db $1C, $FB, $02, $30, $AC, $09, $09, $FB, $02, $94, $06, $00, $55, $A3, $4F, $04
+    db $01, $00, $55, $29, $02, $E1, $04, $00
+
+; --- Blimp cave save callers ---------------------------------------------------
+org $D5B22D
+V133_BlimpCave_State1:
+    db $29, $00, $13, $32, $00
+org $D5B254
+V133_BlimpCave_State2:
+    db $29, $00, $13, $32, $00
+org $D5B26A
+V133_BlimpCave_State3:
+    db $29, $00, $13, $32, $00
+
+; --- Professor Ruffleberg save callers ----------------------------------------
+org $DBCEF9
+V133_Professor_FirstTheme:
+    db $0C
+org $DBCEFE
+V133_Professor_Save1:
+    db $29, $00, $14, $32, $00
+org $DBCF0E
+V133_Professor_Save2:
+    db $29, $00, $14, $32, $00
+org $DBCF61
+V133_Professor_Save3:
+    db $29, $80, $14, $32, $00
+
+; --- Omnitopia ordinary save terminal -----------------------------------------
+org $DB9A2C
+V133_OmnitopiaTerminal_SaveTheme:
+    db $05
+org $DB9A31
+V133_OmnitopiaTerminal_SaveCall:
+    db $29, $C0, $14, $32, $00
+
+; --- Junkyard final save / transport event ------------------------------------
+; Native indexed-event entry pointed to DB:E0D2 (encoded $04E0D2). The native event
+; body remains untouched; only this table entry now starts the relocated front half,
+; which rejoins the original event at DB:E102 after the custom save choice.
+org $D28E25
+V133_JunkyardFinal_EventPointer:
+    db $00, $15, $32
+
+; Final SNES HiROM checksum/complement for the authoritative v1.33 ROM.
+org $C0FFDC
+V133_FinalChecksum:
+    db $E2, $19, $1D, $E6
+; v1.33 checksum $E61D; complement $19E2.
+; SHA-256:    66aafecd759c04192cd820c325aae4551c42aaff60f3c3ff7508598d593f32ab
+; This is the authoritative v1.33 ROM identity.
 ; =============================================================================
