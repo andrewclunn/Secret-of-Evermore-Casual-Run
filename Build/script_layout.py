@@ -305,7 +305,7 @@ def write_reports(layout, prefix):
     writer = csv.DictWriter(stream, fieldnames=layout["text_pointers"][0].keys())
     writer.writeheader()
     writer.writerows(layout["text_pointers"])
-    Path(str(prefix) + "_text.csv").write_text(stream.getvalue(), encoding="utf-8")
+    Path(str(prefix) + "_text.csv").write_text(stream.getvalue(), encoding="utf-8", newline="")
     lines = ["# Current script layout", "", f"Built ROM SHA-256: `{layout['sha256']}`.", "",
              "This map records all 3,002 primary text pointers and every final source-owned range. "
              "It does not certify unused text IDs, dead payloads, or free space. "

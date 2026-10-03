@@ -1,6 +1,6 @@
 # Current script layout
 
-Built ROM SHA-256: `90ba5f6262382de13a8437368a0c6218e84b6088ab536767d3c362e3386ea6da`.
+Built ROM SHA-256: `a6ced1e7309222863ef61e02cb0a2887d7004b295ebce632fee70d8dcd1ea4d5`.
 
 This map records all 3,002 primary text pointers and every final source-owned range. It does not certify unused text IDs, dead payloads, or free space. Indirect references and native event entry points require separate audits.
 
@@ -10,14 +10,14 @@ This map records all 3,002 primary text pointers and every final source-owned ra
 | $F1 | 18,415 | 605 | 1 | 0 |
 | $F2 | 1,905 | 0 | 10 | 0 |
 | $F3 | 2,302 | 0 | 0 | 10 |
-| $F4 | 19,345 | 0 | 302 | 0 |
+| $F4 | 19,346 | 0 | 301 | 0 |
 | $F5 | 20,884 | 12 | 218 | 0 |
 | $F6 | 19,039 | 2,519 | 278 | 0 |
 | $F7 | 22,046 | 6,412 | 254 | 0 |
 | $F8 | 13,890 | 0 | 184 | 0 |
 | $F9 | 25,784 | 135 | 307 | 0 |
 | $FA | 17,172 | 555 | 240 | 0 |
-| $FB | 12,749 | 149 | 381 | 0 |
+| $FB | 12,749 | 149 | 382 | 0 |
 | $FC | 0 | 170 | 0 | 0 |
 | $FD | 0 | 136 | 0 | 0 |
 | $FE | 16,538 | 164 | 243 | 0 |
@@ -43,7 +43,7 @@ These are the inherited regional storage reservations. Counts reflect present ph
 | NOBILIA_CITY_PALACE | $F70100-$F760FF | 16,095 | 8,481 | 217 |
 | NOBILIA_COLOSSEUM | $F76100-$F768FF | 914 | 1,134 | 21 |
 | ANTIQUA_DESERT_TRAVEL | $FB0100-$FB10FF | 2,335 | 1,761 | 204 |
-| ANTIQUA_HALL_PYRAMID | $FB1100-$FB20FF | 2,430 | 1,666 | 41 |
+| ANTIQUA_HALL_PYRAMID | $FB1100-$FB20FF | 2,430 | 1,666 | 42 |
 | HORACE_FINALE | $FB2100-$FB30FF | 2,139 | 1,957 | 44 |
 | GOTHICA_ARRIVAL_DUNGEON_SEWER | $FB3100-$FB54FF | 5,689 | 3,527 | 92 |
 | GOTHICA_TOWNS_EBON_IVOR | $F51400-$F57FFF | 20,043 | 7,605 | 218 |

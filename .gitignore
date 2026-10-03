@@ -1,0 +1,5 @@
+# Generated ROMs stay local; distribute versioned IPS patches instead.
+*.sfc
+*.smc
+__pycache__/
+*.pyc

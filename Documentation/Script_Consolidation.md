@@ -1,12 +1,16 @@
 # Script consolidation checkpoint
 
-The authoritative current source is `Build/Secret_of_Evermore_Casual_Run_v1.35.asm`.
-The v1.35 Bazooka charge fix was promoted from the isolated test at user request.
-Its ROM is byte-identical to that test, with SHA-256
+The authoritative current source is `Build/Secret_of_Evermore_Casual_Run_v1.36.asm`.
+Current release: `Secret_of_Evermore_Casual_Run_v1.36.ips`. The cumulative dialogue
+QA and wider Generic NPC windows were promoted at user request. The release ROM
+is byte-identical to the accepted cumulative test, with SHA-256
+`a6ced1e7309222863ef61e02cb0a2887d7004b295ebce632fee70d8dcd1ea4d5`.
+[Release verification notes](Dialogue_QA_v1.36.md) record the changes and checks.
+The current layout maps describe v1.36; the accepted v1.35 source/IPS remain preserved.
+
+Historical v1.35 promoted the Bazooka charge fix and has ROM SHA-256
 `90ba5f6262382de13a8437368a0c6218e84b6088ab536767d3c362e3386ea6da`.
-Current release: `Secret_of_Evermore_Casual_Run_v1.35.ips`. The current layout maps
-include the new charge helpers. [Bazooka validation notes](Bazooka_Charge_Test.md)
-record the change and test coverage.
+[Bazooka validation notes](Bazooka_Charge_Test.md) retain its test coverage.
 
 The historical v1.34 consolidation checkpoint and its identity follow.
 The consolidated checkpoint was promoted to v1.34 and reproduces the user-accepted
@@ -69,19 +73,19 @@ Run these from the repository root with the available Python runtime. Substitute
 path to the verified clean, unheadered USA ROM for `BASE_ROM`.
 
 ```powershell
-python Build/build.py BASE_ROM Build/Secret_of_Evermore_Casual_Run_v1.35.sfc --ips Secret_of_Evermore_Casual_Run_v1.35.ips
-python Build/script_layout.py audit BASE_ROM Build/Secret_of_Evermore_Casual_Run_v1.35.asm --baseline-rom Build/Secret_of_Evermore_Casual_Run_v1.35.sfc --report-prefix Documentation/Script_Layout_Current
-python Build/test_script_layout.py
+python Build/build.py BASE_ROM Build/Secret_of_Evermore_Casual_Run_v1.36.sfc --ips Secret_of_Evermore_Casual_Run_v1.36.ips
+python Build/script_layout.py audit BASE_ROM Build/Secret_of_Evermore_Casual_Run_v1.36.asm --baseline-rom Build/Secret_of_Evermore_Casual_Run_v1.36.sfc --report-prefix Documentation/Script_Layout_Current
+python Build/test_dialogue_qa.py BASE_ROM
 ```
 
-The build script defaults to the authoritative v1.35 source. Explicit `--source`
+The build script defaults to the authoritative v1.36 source. Explicit `--source`
 still builds any preserved release/test source. Audit rejects overlapping writes and
 invalid packed text pointers, and requires exact ROM equality when `--baseline-rom` is
 supplied. Omit that comparison only when checking an intentional future behavior change.
 Audit also validates the packed-pointer round trip for every primary entry.
 
 `consolidate` mode is for an explicitly chosen historical/overlay source. Routine edits
-belong in the v1.35 file; rerunning consolidation from R4 would discard later edits.
+belong in the v1.36 file; rerunning consolidation from R4 would discard later edits.
 The original pre-promotion consolidation command is retained for provenance:
 
 ```powershell

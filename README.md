@@ -1,10 +1,10 @@
 # Secret of Evermore: Casual Run
 
-**Current development baseline:** v1.35\
+**Current development baseline:** v1.36\
 **Next major milestone:** 2.0  
 **Longer-term expansion:** 3.0
 
-**Current release:** [v1.35 IPS patch](Secret_of_Evermore_Casual_Run_v1.35.ips), with the authoritative source in [Build/Secret_of_Evermore_Casual_Run_v1.35.asm](Build/Secret_of_Evermore_Casual_Run_v1.35.asm). This release promotes the Bazooka charge fix: the gauge stops at 100% without holding attack, and B fast charge stays capped at 100%. It retains v1.34's Strong Heart save conversation, Sandpits Skelesnail removal, and [consolidated source layout](Documentation/Script_Consolidation.md). The build script defaults to v1.35.
+**Current release:** [v1.36 IPS patch](Secret_of_Evermore_Casual_Run_v1.36.ips), with the authoritative source in [Build/Secret_of_Evermore_Casual_Run_v1.36.asm](Build/Secret_of_Evermore_Casual_Run_v1.36.asm). This release promotes the latest dialogue QA fixes: Blimp spacing and rest/save pages, corrected speaker themes for Blimp, the volcano alchemist, Fire Eyes and her twin, and Horace’s twin, plus wider default NPC windows. The Boy’s volcano reply is now “Huh?”. It retains v1.35’s Bazooka charge fix and all prior features. The build script defaults to v1.36; [release verification notes](Documentation/Dialogue_QA_v1.36.md) record the scope and validation.
 
 ## What Casual Run Is
 
@@ -12,7 +12,7 @@
 
 The goal is a faster, smoother, less frustrating playthrough while preserving the feel and presentation language of the original SNES game. Casual Run is not intended to be a hard-mode hack or a remake. It favors quality-of-life improvements, clearer progression, modest rebalance, optional depth, bug fixes, and better presentation without turning the game into a modern HUD-heavy redesign.
 
-Casual Run builds on earlier community work, including FuSoYa's two-player patch, selected balance and bug-fix work by Ninakoru, fixes by assassin17, and later community research and fixes credited below. Conn/RedScorpion's MSU-1 work remains an important historical reference for the planned 3.0 audio reimplementation, but MSU-1 is not active in the v1.35/2.0 production line.
+Casual Run builds on earlier community work, including FuSoYa's two-player patch, selected balance and bug-fix work by Ninakoru, fixes by assassin17, and later community research and fixes credited below. Conn/RedScorpion's MSU-1 work remains an important historical reference for the planned 3.0 audio reimplementation, but MSU-1 is not active in the v1.36/2.0 production line.
 
 This README is the **player-facing feature summary, roadmap, and credits document**. The authoritative ASM source is the technical source of truth for exact ROM changes, build identity, hooks, memory usage, validation requirements, historical experiments, and implementation details.
 
@@ -20,7 +20,7 @@ This README is the **player-facing feature summary, roadmap, and credits documen
 
 ## Roadmap at a Glance
 
-The headings **1.0**, **2.0**, and **3.0** are major public-release generations rather than a literal mapping to every internal development version. **1.0** represents the foundation that was already released publicly. **2.0** is the current major revision: its script, presentation, stable Windwalker/minimap behavior, native-audio baseline, enemy-prize economy, focused character theming, and contextual save-dialogue work are implemented through v1.35, while final QA and the Omnitopia flight-return feature remain unfinished. **3.0** is the planned future content and audio expansion.
+The headings **1.0**, **2.0**, and **3.0** are major public-release generations rather than a literal mapping to every internal development version. **1.0** represents the foundation that was already released publicly. **2.0** is the current major revision: its script, presentation, stable Windwalker/minimap behavior, native-audio baseline, enemy-prize economy, focused character theming, and contextual save-dialogue work are implemented through v1.36, while final QA and the Omnitopia flight-return feature remain unfinished. **3.0** is the planned future content and audio expansion.
 
 ### Status Key
 
@@ -153,7 +153,7 @@ Selected characters also receive subtle alternate dialogue in NG+, suggesting re
 
 # 2.0 — Current Major Revision
 
-2.0 is a substantial second-generation release rather than a small polish update. Its major script, presentation, stable Windwalker/minimap, native-audio, enemy-prize economy, focused-theme, and contextual save-dialogue work are implemented in the current v1.35 development baseline; the remaining work is to finish the full-game QA/polish pass and make returning to Omnitopia an action performed in Windwalker flight.
+2.0 is a substantial second-generation release rather than a small polish update. Its major script, presentation, stable Windwalker/minimap, native-audio, enemy-prize economy, focused-theme, and contextual save-dialogue work are implemented in the current v1.36 development baseline; the remaining work is to finish the full-game QA/polish pass and make returning to Omnitopia an action performed in Windwalker flight.
 
 These completed feature families are therefore **2.0 features**, even though they were developed and tested incrementally in internal v1.x builds.
 
@@ -163,6 +163,8 @@ These completed feature families are therefore **2.0 features**, even though the
 - **v1.32 — Focused themes and full-game QA corrections:** the broad occupation/class theme experiment was replaced with focused named-character identities; Narration/System was standardized to centered five-line presentation; repeated Omnitopia shuttle prompts were corrected to System; missed Camellia and late Professor Ruffleberg callsites were fixed; a repeated Robot text sequence was collapsed to one page; NG+ weapon carryover was restricted to four intended late-game weapons; and Tinker gained a Yes-only post-save acknowledgement without changing the native/shared save implementation.
 - **v1.33 — Contextual save dialogue and character polish:** Sting's unrelated duplicate “See you later!” became “Stay safe out there.”; Pompolonius gained a themed Colosseum last-words save prompt; Cecil's Ebon Keep theme continuity, question pagination, and save dialogue were corrected; Blimp's hut/cave saves use his mud-pepper-leaf wording; Professor Ruffleberg's saves use a backup joke; and Omnitopia/Junkyard machine saves use machine-native backup language.
 - **v1.35 — Strong Heart save dialogue, Sandpits polish, and source consolidation:** Strong Heart keeps his theme through all save paths, offers to record your travels in his alchemy notes, and ends with “There we are. Just keep a look out for giant beetles!”; both final responses wait for dismissal. The southern raised-ledge Skelesnail in the Sandpits was removed. The source was consolidated into one active definition per address, with text-pointer and allocation audits; consolidation and release promotion preserve the exact accepted R4 ROM bytes.
+
+- **v1.36 — Dialogue QA and NPC window polish:** corrected Blimp’s spacing, hut speaker themes, and rest/save question separation; the volcano alchemist’s save theme and the Boy’s “Huh?” reply; Fire Eyes/twin theme continuity; and Horace’s twin’s Nobilia scene themes. Default NPC windows move one column left and widen by two columns. The Crustacia amulet vendor was confirmed working through its existing pots trigger and received no appearance change.
 
 ## Script and Dialogue Revision — **Complete**
 
@@ -203,7 +205,7 @@ The result is a prize economy that feeds the game's money, alchemy, and trading 
 
 ## Contextual Save Conversations — **Complete**
 
-v1.32-v1.35 make save prompts feel like part of the scene rather than exposing one generic utility dialogue everywhere. The underlying native save operation remains unchanged; the difference is who asks and how they phrase it.
+v1.32-v1.36 make save prompts feel like part of the scene rather than exposing one generic utility dialogue everywhere. The underlying native save operation remains unchanged; the difference is who asks and how they phrase it.
 
 - **Tinker** keeps his native save route but now gives his “lab assis-good friend” acknowledgement only after the player actually chooses to save.
 - **Strong Heart** keeps his theme on first and repeat visits, asks “Shall I record your travels in my alchemy notes?”, and follows saving with “There we are. Just keep a look out for giant beetles!” His save and decline farewells wait for a button press.
@@ -223,7 +225,7 @@ Ordinary unnamed save NPCs can still use the shared generic save conversation. T
 
 Earlier Casual Run builds included an MSU-1 backend that passed focused one-shot/loop/fallback tests, but the full-game QA pass uncovered unintended song changes in scenes and rooms that normally preserve the music already playing. Restoring the native music-change routine fixed the problem, while restoring the original song-pointer table alone did not.
 
-For the v1.30 native-audio baseline, retained unchanged through v1.35 and the eventual 2.0 release:
+For the v1.30 native-audio baseline, retained unchanged through v1.36 and the eventual 2.0 release:
 
 - Native SPC music playback remains in control end to end.
 - No Casual Run MSU-1 hook is active.
@@ -251,7 +253,7 @@ Experimental altitude-speed changes and alternate flight-control mappings are al
 
 The game will be played from beginning to end with the current feature set active.
 
-This pass has already produced the accepted v1.31 enemy-prize redesign, the v1.32 focused-theme/NG+/Tinker corrections, the v1.33 contextual-save/Cecil/Pompolonius/Sting fixes, and the v1.35 Strong Heart/Sandpits corrections described above. It remains active for the rest of the 2.0 playthrough.
+This pass has already produced the accepted v1.31 enemy-prize redesign, the v1.32 focused-theme/NG+/Tinker corrections, the v1.33 contextual-save/Cecil/Pompolonius/Sting fixes, and the v1.35 Strong Heart/Sandpits corrections described above. The v1.36 dialogue and NPC-window fixes continue that pass. It remains active for the rest of the 2.0 playthrough.
 
 This pass can make surgical corrections when normal play exposes:
 
@@ -300,7 +302,7 @@ Add new tracks where the new 3.0 content benefits from distinct music. New music
 
 ## MSU-1 Support Reimplementation — **Planned**
 
-Reintroduce optional external soundtrack support from the stable native-audio baseline established in v1.30 and retained through v1.35, rather than reviving the v1.18 interception path.
+Reintroduce optional external soundtrack support from the stable native-audio baseline established in v1.30 and retained through v1.36, rather than reviving the v1.18 interception path.
 
 The replacement backend must treat **"do not change music"** as a first-class behavior, not merely map requested song IDs correctly. Development should begin by tracing native music-change semantics across representative rooms and cutscenes, then choose a hook point where the game has already determined that a real music change is required.
 
@@ -344,13 +346,13 @@ A failed prototype may still teach us something, but it is not part of the roadm
 
 Casual Run is intended for a **clean, unheadered U.S. ROM of _Secret of Evermore_**.
 
-Apply [Secret_of_Evermore_Casual_Run_v1.35.ips](Secret_of_Evermore_Casual_Run_v1.35.ips) to that clean base ROM with an appropriate patcher. Earlier versioned patches remain available for their corresponding releases.
+Apply [Secret_of_Evermore_Casual_Run_v1.36.ips](Secret_of_Evermore_Casual_Run_v1.36.ips) to that clean base ROM with an appropriate patcher. Earlier versioned patches remain available for their corresponding releases.
 
 For exact base-ROM hashes, patched-ROM hashes, checksums, source build instructions, expansion-space ownership, and other technical validation information, consult the authoritative ASM source included with the project.
 
 Required clean base: 3,145,728 bytes; SHA-256 `17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db`.
 
-Current v1.35 ROM: 4,194,304 bytes; SHA-256 `90ba5f6262382de13a8437368a0c6218e84b6088ab536767d3c362e3386ea6da`; checksum/complement `$58CC / $A733`. Applying the v1.35 IPS to the required clean base reproduces this ROM exactly.
+Current v1.36 ROM: 4,194,304 bytes; SHA-256 `a6ced1e7309222863ef61e02cb0a2887d7004b295ebce632fee70d8dcd1ea4d5`; checksum/complement `$57D8 / $A827`. Applying the v1.36 IPS to the required clean base reproduces this ROM exactly.
 
 ---
 
