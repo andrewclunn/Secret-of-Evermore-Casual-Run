@@ -1,8 +1,10 @@
 # Secret of Evermore: Casual Run
 
-**Current development baseline:** v1.30  
+**Current development baseline:** v1.35\
 **Next major milestone:** 2.0  
 **Longer-term expansion:** 3.0
+
+**Current release:** [v1.35 IPS patch](Secret_of_Evermore_Casual_Run_v1.35.ips), with the authoritative source in [Build/Secret_of_Evermore_Casual_Run_v1.35.asm](Build/Secret_of_Evermore_Casual_Run_v1.35.asm). This release promotes the Bazooka charge fix: the gauge stops at 100% without holding attack, and B fast charge stays capped at 100%. It retains v1.34's Strong Heart save conversation, Sandpits Skelesnail removal, and [consolidated source layout](Documentation/Script_Consolidation.md). The build script defaults to v1.35.
 
 ## What Casual Run Is
 
@@ -10,7 +12,7 @@
 
 The goal is a faster, smoother, less frustrating playthrough while preserving the feel and presentation language of the original SNES game. Casual Run is not intended to be a hard-mode hack or a remake. It favors quality-of-life improvements, clearer progression, modest rebalance, optional depth, bug fixes, and better presentation without turning the game into a modern HUD-heavy redesign.
 
-Casual Run builds on earlier community work, including FuSoYa's two-player patch, selected balance and bug-fix work by Ninakoru, fixes by assassin17, and later community research and fixes credited below. Conn/RedScorpion's MSU-1 work remains an important historical reference for the planned 3.0 audio reimplementation, but MSU-1 is not active in the v1.30/2.0 production line.
+Casual Run builds on earlier community work, including FuSoYa's two-player patch, selected balance and bug-fix work by Ninakoru, fixes by assassin17, and later community research and fixes credited below. Conn/RedScorpion's MSU-1 work remains an important historical reference for the planned 3.0 audio reimplementation, but MSU-1 is not active in the v1.35/2.0 production line.
 
 This README is the **player-facing feature summary, roadmap, and credits document**. The authoritative ASM source is the technical source of truth for exact ROM changes, build identity, hooks, memory usage, validation requirements, historical experiments, and implementation details.
 
@@ -18,7 +20,7 @@ This README is the **player-facing feature summary, roadmap, and credits documen
 
 ## Roadmap at a Glance
 
-The headings **1.0**, **2.0**, and **3.0** are major public-release generations rather than a literal mapping to every internal development version. **1.0** represents the foundation that was already released publicly. **2.0** is the current major revision: its script, presentation, stable Windwalker/minimap behavior, and native-audio baseline are implemented in v1.30, while final QA and the Omnitopia flight-return feature remain unfinished. **3.0** is the planned future content and audio expansion.
+The headings **1.0**, **2.0**, and **3.0** are major public-release generations rather than a literal mapping to every internal development version. **1.0** represents the foundation that was already released publicly. **2.0** is the current major revision: its script, presentation, stable Windwalker/minimap behavior, native-audio baseline, enemy-prize economy, focused character theming, and contextual save-dialogue work are implemented through v1.35, while final QA and the Omnitopia flight-return feature remain unfinished. **3.0** is the planned future content and audio expansion.
 
 ### Status Key
 
@@ -37,9 +39,11 @@ The headings **1.0**, **2.0**, and **3.0** are major public-release generations 
 | **1.0** | New Game Plus | **Complete** | Optional repeatable replay system through Jade with retained progression and selective residual-memory dialogue. |
 | **2.0** | Windwalker flight stabilization | **Complete** | Native perspective and steering restored after the DSP-1 experiment; repaired world-map graphics retained; minimap defaults ON but remains toggleable. |
 | **2.0** | Native audio stability baseline | **Complete** | Experimental MSU-1 interception removed after full-game QA found unintended song changes; 2.0 uses the original SPC music path. |
-| **2.0** | Dialogue presentation and character theming | **Complete** | Reworked dialogue presentation, semantic character/theme identities, cleaner window behavior, and character/category-specific visual treatment. |
-| **2.0** | Script and dialogue revision | **Complete** | Full regional story/world script review, movie-reference cleanup, terminology and consistency corrections, and selected NG+ dialogue variants. |
-| **2.0** | Full-game QA, script, theme, and friction pass | **In progress** | Play the game end to end and make surgical corrections to bugs, awkward presentation, dialogue/theme coverage, unclear progression, and unnecessary friction discovered in normal play. |
+| **2.0** | Dialogue presentation and focused character theming | **Complete** | Reworked dialogue presentation, cleaner window behavior, and focused semantic identities for narration, robots, the Boy, and recurring named characters rather than broad occupation/class themes. |
+| **2.0** | Script and dialogue revision | **Complete** | Full regional story/world script review, movie-reference cleanup, terminology and consistency corrections, selected NG+ dialogue variants, and later QA-driven character/presentation fixes. |
+| **2.0** | Enemy-prize economy redesign | **Complete** | Ordinary enemy remains on 71 combat-map profiles now favor regional cash, ingredients, and trade goods instead of routine healing-item prizes. |
+| **2.0** | Contextual save conversations | **Complete** | Strong Heart, Tinker, Pompolonius, Cecil, Blimp, Professor Ruffleberg, and Omnitopia/Junkyard machines use caller-specific save dialogue while the native save operation remains intact. |
+| **2.0** | Full-game QA, script, theme, and friction pass | **In progress** | Continue the end-to-end playthrough and make surgical corrections to bugs, awkward presentation, dialogue/theme coverage, unclear progression, and unnecessary friction discovered in normal play. |
 | **2.0** | Return to Omnitopia through Windwalker flight | **Planned** | Replace the menu-style return to the space station with an actual action/destination taken during Windwalker flight. |
 | **3.0** | MSU-1 support reimplementation | **Planned** | Rebuild external soundtrack support from the v1.30 native-audio baseline, preserving no-change room semantics and validating the new backend across the full game. |
 | **3.0** | Higher-quality MSU-1 PCM soundtrack | **Planned** | Produce a substantially higher-quality external soundtrack after the replacement MSU backend is stable. |
@@ -79,6 +83,8 @@ Normal movement defaults to running. The former run button instead becomes a del
 ### Two-player behavior
 
 Casual Run retains FuSoYa's two-player foundation. The A/B role swap applies to both controllers, while Player 1 receives the new Start/X/Y Ring shortcuts. Player 2's existing Start-button join/withdraw behavior is deliberately preserved.
+
+The Bazooka now recharges to **100% and stays ready without holding attack**. Holding B still accelerates recharge below 100%. Melee and Dog charging retain their existing behavior. See the [Bazooka validation notes](Documentation/Bazooka_Charge_Test.md) for verification and remaining gameplay coverage.
 
 ## Less Grinding, Better Growth
 
@@ -139,7 +145,7 @@ Casual Run includes an optional, repeatable New Game Plus system accessed throug
 
 Jade becomes available after the Mammoth Graveyard vipers are defeated and explicitly asks whether the player wants to participate in a time-travel experiment, so the reset cannot be triggered accidentally.
 
-The reset returns the story to a stable early-game replay state while retaining much of the player's long-term growth. Story progression, bosses, switches, chests, gourds, sniff spots, and other replay-sensitive state are reset as needed. The Jaguar Ring is retained, the Bazooka is removed, and the Bone Crusher becomes the equipped weapon.
+The reset returns the story to a stable early-game replay state while retaining much of the player's long-term growth. Story progression, bosses, switches, chests, gourds, sniff spots, and other replay-sensitive state are reset as needed. The Jaguar Ring is retained, the Bazooka is removed, and the Bone Crusher becomes the equipped weapon. As of v1.32, weapon carryover is deliberately limited to **Bone Crusher, Neutron Blade, Atom Smasher, and Laser Lance**, preventing unrelated weapon inventory state from leaking into the new cycle.
 
 Selected characters also receive subtle alternate dialogue in NG+, suggesting residual memory of the previous cycle without rewriting the entire story around the mechanic.
 
@@ -147,9 +153,16 @@ Selected characters also receive subtle alternate dialogue in NG+, suggesting re
 
 # 2.0 — Current Major Revision
 
-2.0 is a substantial second-generation release rather than a small polish update. Its major script, presentation, stable Windwalker/minimap, and native-audio work are implemented in the current v1.30 development baseline; the remaining work is to finish the full-game QA/polish pass and make returning to Omnitopia an action performed in Windwalker flight.
+2.0 is a substantial second-generation release rather than a small polish update. Its major script, presentation, stable Windwalker/minimap, native-audio, enemy-prize economy, focused-theme, and contextual save-dialogue work are implemented in the current v1.35 development baseline; the remaining work is to finish the full-game QA/polish pass and make returning to Omnitopia an action performed in Windwalker flight.
 
 These completed feature families are therefore **2.0 features**, even though they were developed and tested incrementally in internal v1.x builds.
+
+### Changes accepted since v1.30
+
+- **v1.31 — Enemy-prize economy:** 71 explicit combat-map profiles were redesigned so ordinary remains resolve to **7/13 regional cash, 4/13 regional ingredients ×2, and 2/13 regional trade goods ×1**. Routine direct healing-item prizes were removed from those profiles; the existing status-aware remains chance was not changed.
+- **v1.32 — Focused themes and full-game QA corrections:** the broad occupation/class theme experiment was replaced with focused named-character identities; Narration/System was standardized to centered five-line presentation; repeated Omnitopia shuttle prompts were corrected to System; missed Camellia and late Professor Ruffleberg callsites were fixed; a repeated Robot text sequence was collapsed to one page; NG+ weapon carryover was restricted to four intended late-game weapons; and Tinker gained a Yes-only post-save acknowledgement without changing the native/shared save implementation.
+- **v1.33 — Contextual save dialogue and character polish:** Sting's unrelated duplicate “See you later!” became “Stay safe out there.”; Pompolonius gained a themed Colosseum last-words save prompt; Cecil's Ebon Keep theme continuity, question pagination, and save dialogue were corrected; Blimp's hut/cave saves use his mud-pepper-leaf wording; Professor Ruffleberg's saves use a backup joke; and Omnitopia/Junkyard machine saves use machine-native backup language.
+- **v1.35 — Strong Heart save dialogue, Sandpits polish, and source consolidation:** Strong Heart keeps his theme through all save paths, offers to record your travels in his alchemy notes, and ends with “There we are. Just keep a look out for giant beetles!”; both final responses wait for dismissal. The southern raised-ledge Skelesnail in the Sandpits was removed. The source was consolidated into one active definition per address, with text-pointer and allocation audits; consolidation and release promotion preserve the exact accepted R4 ROM bytes.
 
 ## Script and Dialogue Revision — **Complete**
 
@@ -168,10 +181,41 @@ The way dialogue is presented has also been overhauled rather than merely rewrit
 
 - Ordinary dialogue uses cleaner pacing and window lifecycle behavior.
 - Redundant or awkward page breaks and unnecessary presentation delays are removed where appropriate.
-- Semantic presentation identities distinguish narration/system text, generic NPCs, the Boy, robots, comedic characters, alchemists, merchants, guards/authority figures, inventors, adventurers, major story characters, artificial counterparts, supernatural guides, and other recurring categories.
-- Themes can use different combinations of window placement, pattern, and border treatment without abandoning the visual language of the original game.
+- Semantic presentation identities distinguish narration/system text, generic NPCs, the Boy, robots, and recurring named characters. The v1.32 QA pass intentionally **removed the earlier broad occupation/class assignments** for generic merchants, guards, alchemists, inventors, comedic characters, and adventurers; those reusable roles now fall back to Generic NPC unless the speaker has a dedicated identity.
+- Dedicated supporting-character themes currently cover **Blimp, Strong Heart, Gomi, Lance, Tinker Tinderbox, Carltron, Fire Eyes, Horace, Queen Camellia, Pompolonius, Tiny, the Gothica King, Cecil, and the Eerie Guide/supernatural presentation**, in addition to the Boy, Robot, Narration/System, and Generic NPC baselines.
+- Themes can use different combinations of window placement, pattern, border treatment, and sound without abandoning the visual language of the original game.
+- v1.32 also standardized centered Narration/System to five-line geometry and corrected missed Camellia, Professor Ruffleberg, Robot, and Omnitopia shuttle presentation cases found during full-game QA.
 
 The underlying theme system is considered established. The remaining full-game QA pass is intended to catch missed or misapplied callsites rather than redesign the architecture.
+
+## Enemy-Prize Economy — **Complete**
+
+v1.31 replaces the repetitive ordinary-enemy healing-item prize mix on **71 explicit combat-map profiles** with more regionally useful rewards.
+
+- **7/13** outcomes award regional cash.
+- **4/13** outcomes award two of a regional ingredient.
+- **2/13** outcomes award one regional trade good.
+- Routine direct healing-item prizes are removed from those profiles.
+- The v1.08 status-aware remains chance still determines whether remains appear at all; v1.31 changes the contents, not the chance system.
+- Maps outside the audited 71-profile set retain their existing remains setup.
+
+The result is a prize economy that feeds the game's money, alchemy, and trading systems more often instead of repeatedly handing out consumable healing items the player may already be carrying.
+
+## Contextual Save Conversations — **Complete**
+
+v1.32-v1.35 make save prompts feel like part of the scene rather than exposing one generic utility dialogue everywhere. The underlying native save operation remains unchanged; the difference is who asks and how they phrase it.
+
+- **Tinker** keeps his native save route but now gives his “lab assis-good friend” acknowledgement only after the player actually chooses to save.
+- **Strong Heart** keeps his theme on first and repeat visits, asks “Shall I record your travels in my alchemy notes?”, and follows saving with “There we are. Just keep a look out for giant beetles!” His save and decline farewells wait for a button press.
+- **Pompolonius** uses his own presentation and a Colosseum-specific “last words” prompt.
+- **Cecil** stays in his own theme through the Ebon Keep exchange, his three-question introduction advances cleanly from each answer to the next page, and his save prompt is character-specific.
+- **Blimp** asks whether he should write the journey down on his mud pepper leaves at both of his save locations.
+- **Professor Ruffleberg** phrases his save offer as making a backup, with “I like to live dangerously.” as the refusal.
+- **Omnitopia and Junkyard machines** use machine-native backup wording rather than the generic human “record your progress / See you later!” exchange; the ordinary terminal acknowledges a successful save with **“Backup complete.”**
+- The humorous **Ivor banquet/arrest** save sequence remains intact and serves as the model for scene-specific one-off save jokes.
+- The Sting alchemist's unrelated duplicate “See you later!” was changed to **“Stay safe out there.”** so it no longer looks like part of the save system when auditing dialogue.
+
+Ordinary unnamed save NPCs can still use the shared generic save conversation. The goal is not to replace the save engine, but to keep distinctive characters and machines from suddenly sounding interchangeable.
 
 ## Native Audio Stability Baseline — **Complete**
 
@@ -179,7 +223,7 @@ The underlying theme system is considered established. The remaining full-game Q
 
 Earlier Casual Run builds included an MSU-1 backend that passed focused one-shot/loop/fallback tests, but the full-game QA pass uncovered unintended song changes in scenes and rooms that normally preserve the music already playing. Restoring the native music-change routine fixed the problem, while restoring the original song-pointer table alone did not.
 
-For v1.30 and the eventual 2.0 release:
+For the v1.30 native-audio baseline, retained unchanged through v1.35 and the eventual 2.0 release:
 
 - Native SPC music playback remains in control end to end.
 - No Casual Run MSU-1 hook is active.
@@ -206,6 +250,8 @@ Experimental altitude-speed changes and alternate flight-control mappings are al
 ## Full-Game QA, Script, Theme, and Friction Pass — **In progress**
 
 The game will be played from beginning to end with the current feature set active.
+
+This pass has already produced the accepted v1.31 enemy-prize redesign, the v1.32 focused-theme/NG+/Tinker corrections, the v1.33 contextual-save/Cecil/Pompolonius/Sting fixes, and the v1.35 Strong Heart/Sandpits corrections described above. It remains active for the rest of the 2.0 playthrough.
 
 This pass can make surgical corrections when normal play exposes:
 
@@ -254,7 +300,7 @@ Add new tracks where the new 3.0 content benefits from distinct music. New music
 
 ## MSU-1 Support Reimplementation — **Planned**
 
-Reintroduce optional external soundtrack support from the stable v1.30 native-audio baseline rather than reviving the v1.18 interception path.
+Reintroduce optional external soundtrack support from the stable native-audio baseline established in v1.30 and retained through v1.35, rather than reviving the v1.18 interception path.
 
 The replacement backend must treat **"do not change music"** as a first-class behavior, not merely map requested song IDs correctly. Development should begin by tracing native music-change semantics across representative rooms and cutscenes, then choose a hook point where the game has already determined that a real music change is required.
 
@@ -298,11 +344,13 @@ A failed prototype may still teach us something, but it is not part of the roadm
 
 Casual Run is intended for a **clean, unheadered U.S. ROM of _Secret of Evermore_**.
 
-Use the release patch associated with the version you want to play and apply it to that clean base ROM with an appropriate patcher.
+Apply [Secret_of_Evermore_Casual_Run_v1.35.ips](Secret_of_Evermore_Casual_Run_v1.35.ips) to that clean base ROM with an appropriate patcher. Earlier versioned patches remain available for their corresponding releases.
 
 For exact base-ROM hashes, patched-ROM hashes, checksums, source build instructions, expansion-space ownership, and other technical validation information, consult the authoritative ASM source included with the project.
 
-Current v1.30 development ROM SHA-256: `c47b4871d7519e9b2a630f356c054b329a62280d152380167d34f1a34d13ccb7`. The v1.30 source validation contract records checksum/complement `$6B43 / $94BC`.
+Required clean base: 3,145,728 bytes; SHA-256 `17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db`.
+
+Current v1.35 ROM: 4,194,304 bytes; SHA-256 `90ba5f6262382de13a8437368a0c6218e84b6088ab536767d3c362e3386ea6da`; checksum/complement `$58CC / $A733`. Applying the v1.35 IPS to the required clean base reproduces this ROM exactly.
 
 ---
 

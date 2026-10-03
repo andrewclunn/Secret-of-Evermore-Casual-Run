@@ -12,7 +12,7 @@ BUILD / TEST OUTPUT CONVENTION
 - PCM/audio assets remain external to the ASM source and should never be embedded
   into it; keeping them separate avoids unnecessary source/build growth.
 
-v1.18 uses one flattened authoritative source in the recovered org/db subset. Hand-assembled 65816 helper
+The current development source uses one flattened definition in the recovered org/db subset. Hand-assembled 65816 helper
 bytes are documented in the ASM beside each instruction. This keeps the build
 dependency-free while preserving deterministic source control.
 """
@@ -94,7 +94,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("base_rom", help="clean, unheadered U.S. Secret of Evermore ROM")
     ap.add_argument("output_rom", help="output ROM path")
-    ap.add_argument("--source", default=str(Path(__file__).resolve().parent / "src" / "casual_run.asm"))
+    ap.add_argument("--source", default=str(Path(__file__).resolve().parent / "Secret_of_Evermore_Casual_Run_v1.35.asm"))
     ap.add_argument("--ips", help="optional IPS output path")
     ap.add_argument("--baseline-v103", action="store_true",
                     help="require output to match the recovered v1.03 baseline hash")
