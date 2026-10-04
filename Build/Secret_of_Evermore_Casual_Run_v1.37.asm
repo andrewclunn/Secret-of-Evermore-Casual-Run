@@ -1,31 +1,24 @@
-; Secret of Evermore: Casual Run -- AUTHORITATIVE v1.35 RELEASE SOURCE
-; Current accepted baseline: v1.35, promoted at user request from the Bazooka charge test.
+; Secret of Evermore: Casual Run -- AUTHORITATIVE v1.37 SOURCE
+; Accepted scope: completely remove market pots B/C to open the vendor passage.
+; Market cells x=31,y=55-58 receive existing floor graphics and attributes.
+; Experiment controls A/D are not included; those pots retain v1.36 behavior.
 ; Required base: clean, unheadered Secret of Evermore (USA), 3,145,728 bytes.
 ; Base SHA-256: 17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db
 ; Built ROM size: 4,194,304 bytes.
-; Release patch: Secret_of_Evermore_Casual_Run_v1.35.ips
-; Expected built SHA-256: 90ba5f6262382de13a8437368a0c6218e84b6088ab536767d3c362e3386ea6da
-; Expected checksum/complement: $58CC / $A733.
-; Release scope: Bazooka charge caps at 100% without holding attack, including B fast charge.
-; Non-Bazooka and Dog charging retain their inherited behavior; firing/ammo code is unchanged.
-; Preserves v1.34 Strong Heart save flow, Sandpits Skelesnail removal, and consolidated layout.
-; Promotion is byte-identical to Secret_of_Evermore_Casual_Run_v1.34_Bazooka_Charge_Test.sfc.
-; Automated instruction regressions, source/pointer audit, and IPS reproduction are verified.
-; Promotion authorization is not a recorded in-game test; gameplay coverage remains tracked
-; in Documentation/Bazooka_Charge_Test.md. Pyramid issues #1 and #3 remain outstanding.
-; Previous v1.34 ROM SHA-256: f7df247e844b2fd4e70361daf800e8cd50a0074c17e002ea65dcbc27617c2f45
-; New control helpers: $F5:0900-$F5:0925 and $F5:0940-$F5:09A0.
-; Hooks: $CF:CC77-$CF:CC7E and $F0:0B00-$F0:0B05. No new WRAM.
-; No existing storage was relocated or reclaimed. Each address is written exactly once.
-; Origin comments are provenance; version names in labels do not select behavior.
-; Detailed historical design/withdrawal notes remain in the preserved prior sources.
-; Metadata below describes primary TEXT ownership, not an event reachability proof.
-; Generated layout files are advisory: unreferenced or zero bytes are NOT declared free.
-; Text pointer decode: pc=(raw & $007FFF)|((raw & $7F8000)<<1).
-; Raw text allocations must stay within a bank's lower $0000-$7FFF half.
+; Release patch: Secret_of_Evermore_Casual_Run_v1.37.ips
+; Expected built SHA-256: 1b9f0a927c6f1c8d12caeb61ea2cc56a7c40e1bdf352bb636f57ea57727db14a
+; Expected checksum/complement: $2611 / $D9EE.
+; Baseline: v1.36, retaining its dialogue QA, wider windows and prior features.
+; Map $0A copied into $FC0000; native raw grid/table compression mode 0.
+; Room events, graphics list, palettes, dynamic tile definitions and original
+; table entries are preserved. No CPU hooks or additional WRAM allocations.
+; User validated B/C appearance/collision independence in experiment 01.
+; Combined B/C removal and vendor access await final emulator confirmation.
+; Validation and gameplay checklist: Documentation/Market_Removal_v1.37.md.
+; Generated layout files describe ownership, not proof of free space.
 ; Preserve matched F2/F3 NG+ offsets and the native F4 bank selector.
 ; Shared native save helpers $4E/$4F and global IDs remain native-owned.
-; Edit this v1.35 source directly; validate with script_layout.py audit before handoff.
+; Metadata describes primary TEXT ownership, not full event reachability.
 arch 65816
 hirom
 
@@ -781,7 +774,7 @@ Recovered_CCA818:
     db $22, $B0, $05, $F0, $EA, $EA
 
 ; =============================================================================
-; PHASE 2 QA — BORDER-FIRST WINDOW TEARDOWN
+; PHASE 2 QA â€” BORDER-FIRST WINDOW TEARDOWN
 ; =============================================================================
 ; Runtime QA indicates the remaining ordinary close looks layered in the wrong
 ; visual order: text disappears, then the patterned interior, while the frame
@@ -1348,7 +1341,7 @@ V108_DogEquipRing_Action_Hook:
     db $5C, $20, $13, $F5, $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA, $EA
 
 ; =============================================================================
-; v1.19 — remove Window Edit from the accessible Boy Main Ring
+; v1.19 â€” remove Window Edit from the accessible Boy Main Ring
 ; =============================================================================
 ; Script-authored window themes now own the live border/pattern settings used by
 ; dialogue.  The player-facing Window Edit command is therefore removed from the
@@ -1374,7 +1367,7 @@ V119_RemoveMainRingWindowEdit:
     db $EA, $EA, $EA, $EA, $EA, $EA
 
 ; =============================================================================
-; v1.15 TEST — remove Targeting from the Boy Main Ring (corrected)
+; v1.15 TEST â€” remove Targeting from the Boy Main Ring (corrected)
 ; =============================================================================
 ; Native main-Ring setup lives at PC $0E9A86-$0E9B39 (CPU $CE:9A86-$CE:9B39).
 ; The Boy portion writes fixed choice IDs into $7E:0814 and uses Y as the byte
@@ -1449,7 +1442,7 @@ Recovered_CEAE2C:
     db $EA, $EA
 
 ; =============================================================================
-; v1.08 TEST 3B — Boy Ring only, P1 access only
+; v1.08 TEST 3B â€” Boy Ring only, P1 access only
 ; =============================================================================
 ; Supersedes the withdrawn TEST 3 approach that attempted to dedicate P2 Start to
 ; Ring access.  FuSoYa's P2 Start join/withdraw handler remains exactly as it was
@@ -4118,7 +4111,7 @@ org $D1D6BA
 TextPointer_0574:
     db $3E, $88, $1C
 
-; TEXT 0575 -> $F9084C (raw); Evil Fire Eyes
+; TEXT 0575 -> $F9084C (raw); Fire Eyes / Elizabeth
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D6BD
 TextPointer_0575:
@@ -5654,49 +5647,49 @@ org $D1D9BA
 TextPointer_0830:
     db $9F, $D3, $1C
 
-; TEXT 0831 -> $F95412 (raw); Generic Prehistoria NPC
+; TEXT 0831 -> $F95412 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9BD
 TextPointer_0831:
     db $12, $D4, $1C
 
-; TEXT 0832 -> $F9544D (raw); Generic Prehistoria NPC
+; TEXT 0832 -> $F9544D (raw); Boy
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9C0
 TextPointer_0832:
     db $4D, $D4, $1C
 
-; TEXT 0833 -> $F95491 (raw); Generic Prehistoria NPC
+; TEXT 0833 -> $F95491 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9C3
 TextPointer_0833:
     db $91, $D4, $1C
 
-; TEXT 0834 -> $F954F2 (raw); Generic Prehistoria NPC
+; TEXT 0834 -> $F954F2 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9C6
 TextPointer_0834:
     db $F2, $D4, $1C
 
-; TEXT 0835 -> $F95503 (raw); Generic Prehistoria NPC
+; TEXT 0835 -> $F95503 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9C9
 TextPointer_0835:
     db $03, $D5, $1C
 
-; TEXT 0836 -> $F95540 (raw); Generic Prehistoria NPC
+; TEXT 0836 -> $F95540 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9CC
 TextPointer_0836:
     db $40, $D5, $1C
 
-; TEXT 0837 -> $F9557C (raw); Generic Prehistoria NPC
+; TEXT 0837 -> $F9557C (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9CF
 TextPointer_0837:
     db $7C, $D5, $1C
 
-; TEXT 0838 -> $F95583 (raw); Generic Prehistoria NPC
+; TEXT 0838 -> $F95583 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9D2
 TextPointer_0838:
@@ -5708,31 +5701,31 @@ org $D1D9D5
 TextPointer_0839:
     db $A6, $D5, $1C
 
-; TEXT 0840 -> $F955BA (raw); Generic Prehistoria NPC
+; TEXT 0840 -> $F955BA (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9D8
 TextPointer_0840:
     db $BA, $D5, $1C
 
-; TEXT 0841 -> $F955FB (raw); Generic Prehistoria NPC
+; TEXT 0841 -> $F955FB (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9DB
 TextPointer_0841:
     db $FB, $D5, $1C
 
-; TEXT 0842 -> $F95643 (raw); Generic Prehistoria NPC
+; TEXT 0842 -> $F95643 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9DE
 TextPointer_0842:
     db $43, $D6, $1C
 
-; TEXT 0843 -> $F9568F (raw); Generic Prehistoria NPC
+; TEXT 0843 -> $F9568F (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9E1
 TextPointer_0843:
     db $8F, $D6, $1C
 
-; TEXT 0844 -> $F956BF (raw); Generic Prehistoria NPC
+; TEXT 0844 -> $F956BF (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9E4
 TextPointer_0844:
@@ -5744,13 +5737,13 @@ org $D1D9E7
 TextPointer_0845:
     db $1D, $D7, $1C
 
-; TEXT 0846 -> $F95731 (raw); Generic Prehistoria NPC
+; TEXT 0846 -> $F95731 (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9EA
 TextPointer_0846:
     db $31, $D7, $1C
 
-; TEXT 0847 -> $F9576D (raw); Generic Prehistoria NPC
+; TEXT 0847 -> $F9576D (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
 org $D1D9ED
 TextPointer_0847:
@@ -11816,11 +11809,11 @@ org $D1E5C3
 TextPointer_1857:
     db $A3, $91, $1D
 
-; TEXT 1858 -> $F46662 (raw); Blimp
+; TEXT 1858 -> $FB11DF (raw); Blimp
 ; Origin: Allocation_D1E5C6, baseline line 42266.
 org $D1E5C6
 TextPointer_1858:
-    db $62, $66, $1A
+    db $DF, $91, $1D
 
 ; TEXT 1859 -> $FB122E (raw); Blimp
 ; Origin: V116_StoryTextPointers, baseline line 9282.
@@ -18873,7 +18866,7 @@ Allocation_D2BF8C:
     db $03
 
 ; =============================================================================
-; v1.20 — MIGRATE ORDINARY DIALOGUE CALLS TO TWO CANONICAL HELPER IDs
+; v1.20 â€” MIGRATE ORDINARY DIALOGUE CALLS TO TWO CANONICAL HELPER IDs
 ; =============================================================================
 ; Runtime QA of the alias-table stage proved that all ten ordinary helper IDs may resolve to
 ; only two five-line implementations without changing runtime presentation.
@@ -19342,7 +19335,7 @@ Allocation_D2EF8F_At_D2EF91:
     db $4D, $4D, $4D, $4D
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19388,7 +19381,7 @@ Allocation_D2EFBC:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19432,7 +19425,7 @@ Allocation_D2EFC4:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19477,7 +19470,7 @@ Allocation_D2EFD7:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19521,7 +19514,7 @@ Allocation_D2EFE4:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19565,7 +19558,7 @@ Allocation_D2EFF3:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19609,7 +19602,7 @@ Allocation_D2F003:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19654,7 +19647,7 @@ Allocation_D2F015:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -19698,7 +19691,7 @@ Allocation_D2F01D:
     db $04
 
 ; =============================================================================
-; post-v1.22 QA — PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
+; post-v1.22 QA â€” PODUNK MANSION SURGICAL EMPTY-WINDOW LIFECYCLE
 ; =============================================================================
 ; Runtime QA accepted the IntroSafe hotfix above: moving only the first opener in-place
 ; restored stable scene execution.  This follow-up keeps the entire TEXT 0451-0459 event
@@ -20178,11 +20171,12 @@ org $D480C2
 Allocation_D480C2:
     db $A3
 
-; A3 $0B -> $07
+; Volcano alchemist save helper: $03 Generic NPC
 ; Origin: Allocation_D480C3, baseline line 47580.
+; Volcano QA: this alchemist uses $03 Generic NPC, including save paths.
 org $D480C3
 Allocation_D480C3:
-    db $07
+    db $03
 
 ; Origin: Allocation_D480C2, baseline line 46568.
 org $D480C4
@@ -20230,11 +20224,12 @@ org $D4810A
 Allocation_D4810A:
     db $A3
 
-; A3 $0B -> $07
+; Volcano alchemist save helper: $03 Generic NPC
 ; Origin: Allocation_D4810B, baseline line 47582.
+; Volcano QA: this alchemist uses $03 Generic NPC, including save paths.
 org $D4810B
 Allocation_D4810B:
-    db $07
+    db $03
 
 ; Origin: Allocation_D4810A, baseline line 46570.
 org $D4810C
@@ -20282,11 +20277,12 @@ org $D48170
 Allocation_D48170:
     db $A3
 
-; A3 $0B -> $07
+; Volcano alchemist save helper: $03 Generic NPC
 ; Origin: Allocation_D48171, baseline line 47584.
+; Volcano QA: this alchemist uses $03 Generic NPC, including save paths.
 org $D48171
 Allocation_D48171:
-    db $07
+    db $03
 
 ; Origin: Allocation_D48170, baseline line 46572.
 org $D48172
@@ -20298,11 +20294,12 @@ org $D48182
 Allocation_D48182:
     db $A3
 
-; A3 $0B -> $07
+; Volcano alchemist save helper: $03 Generic NPC
 ; Origin: Allocation_D48183, baseline line 47586.
+; Volcano QA: this alchemist uses $03 Generic NPC, including save paths.
 org $D48183
 Allocation_D48183:
-    db $07
+    db $03
 
 ; Origin: Allocation_D48182, baseline line 46574.
 org $D48184
@@ -20314,11 +20311,12 @@ org $D4818C
 Allocation_D4818C:
     db $A3
 
-; A3 $0B -> $07
+; Volcano alchemist save helper: $03 Generic NPC
 ; Origin: Allocation_D4818D, baseline line 47588.
+; Volcano QA: this alchemist uses $03 Generic NPC, including save paths.
 org $D4818D
 Allocation_D4818D:
-    db $07
+    db $03
 
 ; Origin: Allocation_D4818C, baseline line 46576.
 org $D4818E
@@ -20577,11 +20575,12 @@ org $D4AE8D
 Allocation_D4AE8D:
     db $04
 
-; A3 $06->$03, opcode $94B4EC, script $94B4CE
+; A3 $06->$10 for artificial Fire Eyes, opcode $94B4EC, script $94B4CE
 ; Origin: Allocation_D4B4ED, baseline line 37891.
+; Fire Eyes scene QA: TEXT 0573 uses $10 Artificial Fire Eyes.
 org $D4B4ED
 Allocation_D4B4ED:
-    db $03
+    db $10
 
 ; was $08; Boy -> $04; next TEXT 0574 (Boy), +0
 ; Origin: Allocation_D4B500, baseline line 46931.
@@ -20591,9 +20590,10 @@ Allocation_D4B500:
 
 ; TEXT 0575 A_LOWER_RIGHT
 ; Origin: Allocation_D4B526, baseline line 46130.
+; Fire Eyes scene QA: TEXT 0575 uses $0D Fire Eyes.
 org $D4B526
 Allocation_D4B526:
-    db $A3, $03, $4D, $4D, $4D, $4D
+    db $A3, $0D, $4D, $4D, $4D, $4D
 
 ; TEXT 0576 Evil Fire Eyes; $08 -> $10
 ; Origin: Allocation_D4B53A, baseline line 49293.
@@ -20649,17 +20649,19 @@ org $D4B816
 Allocation_D4B816:
     db $0D
 
-; A3 $04->$03, opcode $94B83F, script $94B7C3
+; A3 $04->$10 for artificial Fire Eyes, opcode $94B83F, script $94B7C3
 ; Origin: Allocation_D4B840, baseline line 37913.
+; Fire Eyes scene QA: TEXT 0585 uses $10 Artificial Fire Eyes.
 org $D4B840
 Allocation_D4B840:
-    db $03
+    db $10
 
-; A3 $06->$03, opcode $94B88F, script $94B7C3
+; A3 $06->$10 for artificial Fire Eyes, opcode $94B88F, script $94B7C3
 ; Origin: Allocation_D4B890, baseline line 37915.
+; Fire Eyes scene QA: TEXT 0586 uses $10 Artificial Fire Eyes.
 org $D4B890
 Allocation_D4B890:
-    db $03
+    db $10
 
 ; TEXT 0587 Generic Prehistoria NPC; $08 -> $03
 ; Origin: Allocation_D4BECD, baseline line 49305.
@@ -21906,53 +21908,61 @@ org $D4DCC3
 Allocation_D4DCC3:
     db $03
 
-; TEXT 0831 Generic Prehistoria NPC; $08 -> $03
+; TEXT 0831 Blimp; $08 -> $06
 ; Origin: Allocation_D4DD26, baseline line 49385.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DD26
 Allocation_D4DD26:
-    db $03
+    db $06
 
-; A3 $04->$03, opcode $94DD3B, script $94DCEB
+; A3 $04 retained for Boy, opcode $94DD3B, script $94DCEB
 ; Origin: Allocation_D4DD3C, baseline line 38269.
+; Blimp QA: Boy reply TEXT 0832 uses $04.
 org $D4DD3C
 Allocation_D4DD3C:
-    db $03
+    db $04
 
-; TEXT 0833 Generic Prehistoria NPC; $08 -> $03
+; TEXT 0833 Blimp; $08 -> $06
 ; Origin: Allocation_D4DD5F, baseline line 49387.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DD5F
 Allocation_D4DD5F:
-    db $03
+    db $06
 
-; TEXT 0834 Generic Prehistoria NPC; $08 -> $03
+; TEXT 0834 Blimp; $08 -> $06
 ; Origin: Allocation_D4DD75, baseline line 49389.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DD75
 Allocation_D4DD75:
-    db $03
+    db $06
 
-; TEXT 0835 Generic Prehistoria NPC; $08 -> $03
+; TEXT 0835 Blimp; $08 -> $06
 ; Origin: Allocation_D4DD8B, baseline line 49391.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DD8B
 Allocation_D4DD8B:
-    db $03
+    db $06
 
-; TEXT 0836 Generic Prehistoria NPC; $08 -> $03
+; TEXT 0836 Blimp; $08 -> $06
 ; Origin: Allocation_D4DDA1, baseline line 49393.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DDA1
 Allocation_D4DDA1:
-    db $03
+    db $06
 
-; TEXT 0837 Generic Prehistoria NPC; $08 -> $03
+; TEXT 0837 Blimp; $08 -> $06
 ; Origin: Allocation_D4DDB7, baseline line 49395.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DDB7
 Allocation_D4DDB7:
-    db $03
+    db $06
 
-; TEXT 0838 Generic Prehistoria NPC; $08 -> $03
+; TEXT 0838 Blimp; $08 -> $06
 ; Origin: Allocation_D4DDC3, baseline line 49397.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DDC3
 Allocation_D4DDC3:
-    db $03
+    db $06
 
 ; --- Blimp ownership / presentation -------------------------------------------
 ; These are Blimp's actual hut callers, not the unrelated generic $D5:BF92/$D7:94D1 saves.
@@ -21966,17 +21976,19 @@ org $D4DE20
 V133_BlimpHut_Call1:
     db $29, $00, $12, $32
 
-; A3 $05->$03, opcode $94DE4E, script $94DE48
+; A3 $05->$06 for Blimp dog greeting, opcode $94DE4E, script $94DE48
 ; Origin: Allocation_D4DE4F, baseline line 38285.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DE4F
 Allocation_D4DE4F:
-    db $03
+    db $06
 
-; A3 $02->$03, opcode $94DE56, script $94DE48
+; A3 $02->$06 for Blimp repeat/rest dialogue, opcode $94DE56, script $94DE48
 ; Origin: Allocation_D4DE57, baseline line 38287.
+; Blimp QA: Blimp-owned hut dialogue uses $06.
 org $D4DE57
 Allocation_D4DE57:
-    db $03
+    db $06
 
 ; Origin: V133_BlimpHut_RepeatTheme, baseline line 50619.
 org $D4DE74
@@ -22310,7 +22322,7 @@ Allocation_D592D6:
     db $03
 
 ; -----------------------------------------------------------------------------
-; v1.10 — Tiny's-lair leave/re-entry softlock prevention
+; v1.10 â€” Tiny's-lair leave/re-entry softlock prevention
 ; CPU $D5:9E15 / PC 0x159E15
 ; Original byte: $B1. New byte: $B0.
 ; Source/provenance: black-sliver, Evermizer v029, commit
@@ -22754,7 +22766,7 @@ Allocation_D5C5C8:
     db $03
 
 ; =============================================================================
-; v1.32 QA CORRECTION — PROFESSOR/SAVE EXPERIMENT FOLLOW-UP
+; v1.32 QA CORRECTION â€” PROFESSOR/SAVE EXPERIMENT FOLLOW-UP
 ; =============================================================================
 ; Professor Ruffleberg TEXT 2964/2967 opener: the A3 instruction begins at $D5:C5D6;
 ; $D5:C5D7 is its helper operand. The preceding experiment wrote $0C to the opcode byte by mistake.
@@ -22890,7 +22902,7 @@ Allocation_D5CD61:
     db $03
 
 ;
-; 2) Pompolonius Colosseum save prompt — ownership/theme + text only.
+; 2) Pompolonius Colosseum save prompt â€” ownership/theme + text only.
 ;    Existing event at $D5:CD74 begins A3 03, then shows Pompolonius TEXT 1022 and
 ;    save-choice TEXT 1023 before directly calling the native $4F save helper. Change only
 ;    the helper operand at $D5:CD75 from $03 Generic NPC to $13 Pompolonius. The direct
@@ -22934,9 +22946,10 @@ Allocation_D5D072_At_D5D074:
 
 ; TEXT 1038 A_LOWER_RIGHT
 ; Origin: Allocation_D5D07E, baseline line 46136.
+; Nobilia QA: TEXT 1038/1039 uses $11 Artificial Horace.
 org $D5D07E
 Allocation_D5D07E:
-    db $A3, $03, $4D, $4D, $4D, $4D
+    db $A3, $11, $4D, $4D, $4D, $4D
 
 ; TEXT 1040 B_UPPER_LEFT
 ; Origin: Allocation_D5D0A0, baseline line 46138.
@@ -22958,9 +22971,10 @@ Allocation_D5D0A0_At_D5D0A2:
 
 ; TEXT 1042 A_LOWER_RIGHT
 ; Origin: Allocation_D5D0C7, baseline line 46140.
+; Nobilia QA: TEXT 1042 uses $11 Artificial Horace.
 org $D5D0C7
 Allocation_D5D0C7:
-    db $A3, $03, $4D, $4D, $4D, $4D
+    db $A3, $11, $4D, $4D, $4D, $4D
 
 ; TEXT 1043 B_UPPER_LEFT
 ; Origin: Allocation_D5D1A8, baseline line 46142.
@@ -23000,9 +23014,10 @@ Allocation_D5D27C_At_D5D27E:
 
 ; TEXT 1045 A_LOWER_RIGHT
 ; Origin: Allocation_D5D288, baseline line 46146.
+; Nobilia QA: TEXT 1045 uses $11 Artificial Horace.
 org $D5D288
 Allocation_D5D288:
-    db $A3, $03, $4D, $4D, $4D, $4D
+    db $A3, $11, $4D, $4D, $4D, $4D
 
 ; TEXT 1046 A_LOWER_RIGHT
 ; Origin: Allocation_D5D29D, baseline line 46148.
@@ -23024,9 +23039,10 @@ Allocation_D5D29D_At_D5D29F:
 
 ; TEXT 1047 A_LOWER_RIGHT
 ; Origin: Allocation_D5D2A9, baseline line 46150.
+; Nobilia QA: TEXT 1047/1048 uses $11 Artificial Horace.
 org $D5D2A9
 Allocation_D5D2A9:
-    db $A3, $03, $4D, $4D, $4D, $4D
+    db $A3, $11, $4D, $4D, $4D, $4D
 
 ; TEXT 1049 A_LOWER_RIGHT
 ; Origin: Allocation_D5D2BA, baseline line 46152.
@@ -25195,7 +25211,7 @@ Allocation_D6E148:
     db $03
 
 ; =============================================================================
-; v1.32 FINAL QA CONSOLIDATION — ROLLBACK + ACCEPTED CORRECTIONS
+; v1.32 FINAL QA CONSOLIDATION â€” ROLLBACK + ACCEPTED CORRECTIONS
 ; =============================================================================
 ; These late writes consolidate the runtime-accepted state as v1.32. They roll back only the
 ; superseded save-callback experiments above while retaining the accepted v1.32 presentation,
@@ -26738,7 +26754,7 @@ Allocation_D8D8E0:
     db $03
 
 ; =============================================================================
-; v1.33 RELEASE — CECIL OWNERSHIP, PAGINATION, AND EBON KEEP SAVE
+; v1.33 RELEASE â€” CECIL OWNERSHIP, PAGINATION, AND EBON KEEP SAVE
 ; =============================================================================
 ; Runtime QA established that the Ebon Keep inn/shop side is Cecil-operated. Earlier
 ; metadata classified TEXT 2218-2226 as Generic Gothica NPC, causing the rest/save side
@@ -27227,7 +27243,7 @@ Allocation_D98754:
     db $0A
 
 ; =============================================================================
-; v1.32 FINAL CORRECTION — TINKER SAVE RESPONSE: YES-ONLY GATING
+; v1.32 FINAL CORRECTION â€” TINKER SAVE RESPONSE: YES-ONLY GATING
 ; =============================================================================
 ; Runtime QA of the preceding branch-fix build proved the Tinker response itself works,
 ; but also proved it was being reached from the native "No" path.
@@ -27366,7 +27382,7 @@ V132_Restore_TinkerSave_Path2:
     db $0A, $09, $07, $FE, $00, $29, $31, $A2
 
 ; =============================================================================
-; v1.32 QA CORRECTION — TINKER POST-SAVE EMPTY-WINDOW FIX
+; v1.32 QA CORRECTION â€” TINKER POST-SAVE EMPTY-WINDOW FIX
 ; =============================================================================
 ; Runtime QA showed that the later Tinker save path still opened the $0A Tinker
 ; window and immediately closed it without displaying TEXT 2377.
@@ -30344,8 +30360,8 @@ Recovered_F00000_At_F000B0:
     db $D0, $01, $6B, $DB, $45, $74, $52, $6E, $58, $60
 
 ; --- Same-bank F0 helpers -------------------------------------------------------
-; JSL $F5:0800 / RTS — P1 A/B swap
-; JSL $F5:0820 / RTS — P2 A/B swap
+; JSL $F5:0800 / RTS â€” P1 A/B swap
+; JSL $F5:0820 / RTS â€” P2 A/B swap
 ; Origin: V106_InputHelperTrampolines, baseline line 5628.
 org $F00250
 V106_InputHelperTrampolines:
@@ -33230,7 +33246,7 @@ V104_Text_2276_PairedNormal:
     db $00
 
 ; =============================================================================
-; v1.13 TEST — CAMELLIA / QUEEN BLUEGARDEN CHARACTER SCRIPT PASS
+; v1.13 TEST â€” CAMELLIA / QUEEN BLUEGARDEN CHARACTER SCRIPT PASS
 ; =============================================================================
 ; Covers both Camellia and her robot impostor.  Fake Queen is colder, more
 ; imperious, and cleanliness/status-conscious; real Camellia is warmer and more
@@ -33311,7 +33327,7 @@ V104_Text_2934_PairedNormal:
     db $96, $57, $68, $79, $2C, $80, $1F, $80, $20, $79, $65, $73, $2E, $86, $00
 
 ; =============================================================================
-; v1.14 TEST — PROFESSOR RUFFLEBERG / CARLTRON CHARACTER SCRIPT PASS
+; v1.14 TEST â€” PROFESSOR RUFFLEBERG / CARLTRON CHARACTER SCRIPT PASS
 ; =============================================================================
 ; Joint final-act pass treating Ruffleberg and Carltron as thematic mirrors:
 ; Ruffleberg is expansive, humane, enthusiastic and distractible; Carltron is
@@ -33877,14 +33893,15 @@ LiveText_2230:
 
 ; Primary TEXT targets: 2407
 ; Origin: V133_Text_2407, baseline line 50634.
+; Fresh save question clears preceding rest choices; shared hut/cave payload.
 org $F40200
 LiveText_2407:
-    db $96, $57, $61, $6E, $74, $20, $6D, $65, $20, $74, $6F, $20, $77, $72, $69, $74
-    db $65, $20, $79, $6F, $75, $72, $20, $6A, $6F, $75, $72, $6E, $65, $79, $20, $6F
-    db $6E, $20, $74, $68, $65, $73, $65, $20, $6D, $75, $64, $20, $70, $65, $70, $70
-    db $65, $72, $20, $6C, $65, $61, $76, $65, $73, $3F, $0A, $97, $8B, $53, $75, $72
-    db $65, $2E, $0A, $8B, $4E, $6F, $2C, $20, $74, $68, $61, $74, $27, $73, $20, $6F
-    db $6B, $61, $79, $2E, $96, $00
+    db $96, $87, $57, $61, $6E, $74, $20, $6D, $65, $20, $74, $6F, $20, $77, $72, $69
+    db $74, $65, $20, $79, $6F, $75, $72, $20, $6A, $6F, $75, $72, $6E, $65, $79, $20
+    db $6F, $6E, $20, $74, $68, $65, $73, $65, $20, $6D, $75, $64, $20, $70, $65, $70
+    db $70, $65, $72, $20, $6C, $65, $61, $76, $65, $73, $3F, $0A, $97, $8B, $53, $75
+    db $72, $65, $2E, $0A, $8B, $4E, $6F, $2C, $20, $74, $68, $61, $74, $27, $73, $20
+    db $6F, $6B, $61, $79, $2E, $96, $00
 
 ; Primary TEXT targets: 2408
 ; Origin: V133_Text_2408, baseline line 50646.
@@ -34026,7 +34043,7 @@ LiveText_1145:
 ;   Source/Theme: Atlas alchemist -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2446 (compressed) -> $F4:$05D1 raw, 37 bytes
-;   Text: <$96>I…<S $3D $80> I'm sorry…<S $3D $80> I didn't know…<PAGE><End>
+;   Text: <$96>Iâ€¦<S $3D $80> I'm sorryâ€¦<S $3D $80> I didn't knowâ€¦<PAGE><End>
 ; Origin: V116_Text_1146, baseline line 15944.
 org $F405D1
 LiveText_1146:
@@ -34262,7 +34279,7 @@ LiveText_1161:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:26B1 (compressed) -> $F4:$09D1 raw, 42 bytes
-;   Text: <$96><$87>Kids…<S $3D $80> Always looking, never buying.<PAGE><End>
+;   Text: <$96><$87>Kidsâ€¦<S $3D $80> Always looking, never buying.<PAGE><End>
 ; Origin: V116_Text_1162, baseline line 16116.
 org $F409D1
 LiveText_1162:
@@ -34288,7 +34305,7 @@ LiveText_1163:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:26E5 (compressed) -> $F4:$0A1C raw, 23 bytes
-;   Text: <$96><$87>Yeesh…<S $3D $80> Tourists!<PAGE><End>
+;   Text: <$96><$87>Yeeshâ€¦<S $3D $80> Tourists!<PAGE><End>
 ; Origin: V116_Text_1164, baseline line 16134.
 org $F40A1C
 LiveText_1164:
@@ -34351,7 +34368,7 @@ LiveText_1168:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2762 (compressed) -> $F4:$0AD0 raw, 23 bytes
-;   Text: <$96><$87>Yeesh…<S $3D $80> Tourists!<PAGE><End>
+;   Text: <$96><$87>Yeeshâ€¦<S $3D $80> Tourists!<PAGE><End>
 ; Origin: V116_Text_1169, baseline line 16177.
 org $F40AD0
 LiveText_1169:
@@ -34865,7 +34882,7 @@ LiveText_1204:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2C7B (compressed) -> $F4:$1306 raw, 127 bytes
-;   Text: <$96>No one knows the value of this precious magic gourd…<PAGE>…but I would be willing to part with
+;   Text: <$96>No one knows the value of this precious magic gourdâ€¦<PAGE>â€¦but I would be willing to part with
 ;         it for the egg of an ancient bird.<PAGE><End>
 ; Origin: V116_Text_1205, baseline line 16549.
 org $F41306
@@ -34902,7 +34919,7 @@ LiveText_1206:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:2D05 (compressed) -> $F4:$13E9 raw, 56 bytes
-;   Text: Is it a deal?<S $3D $80> <$97><Choice>It's a deal! <Choice>It's tempting but… no.<End>
+;   Text: Is it a deal?<S $3D $80> <$97><Choice>It's a deal! <Choice>It's tempting butâ€¦ no.<End>
 ; Origin: V116_Text_1207, baseline line 16577.
 org $F413E9
 LiveText_1207:
@@ -35345,7 +35362,7 @@ LiveText_1236:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3186 (compressed) -> $F4:$1B42 raw, 196 bytes
-;   Text: <$96>If you really want to stop the slings and arrows of outrageous fortune…<PAGE>…you need a Centurion Cape.<PAGE>I can provide one for you,<S $3D $80> if you bring me the Jade Disk.<PAGE>Is it a deal? <S $3D $80><$97><Choice>Sure. <Choice>No way.<End>
+;   Text: <$96>If you really want to stop the slings and arrows of outrageous fortuneâ€¦<PAGE>â€¦you need a Centurion Cape.<PAGE>I can provide one for you,<S $3D $80> if you bring me the Jade Disk.<PAGE>Is it a deal? <S $3D $80><$97><Choice>Sure. <Choice>No way.<End>
 ; Origin: V116_Text_1237, baseline line 16901.
 org $F41B42
 V116_Text_1237:
@@ -35870,7 +35887,7 @@ LiveText_1271:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:375C (compressed) -> $F4:$2488 raw, 53 bytes
-;   Text: <$96>As much as I hate to part with one of my chickens…<PAGE><End>
+;   Text: <$96>As much as I hate to part with one of my chickensâ€¦<PAGE><End>
 ; Origin: V116_Text_1272, baseline line 17286.
 org $F42488
 LiveText_1272:
@@ -35884,7 +35901,7 @@ LiveText_1272:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:3778 (compressed) -> $F4:$24BD raw, 56 bytes
-;   Text: <$96>Especially to a low-down chicken-taunter such as you…<PAGE><End>
+;   Text: <$96>Especially to a low-down chicken-taunter such as youâ€¦<PAGE><End>
 ; Origin: V116_Text_1273, baseline line 17296.
 org $F424BD
 LiveText_1273:
@@ -35898,7 +35915,7 @@ LiveText_1273:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:37A0 (compressed) -> $F4:$24F5 raw, 116 bytes
-;   Text: <$96>…I would be willing to trade them for a jar of spice and 2 bags of rice each.<PAGE>Is it a
+;   Text: <$96>â€¦I would be willing to trade them for a jar of spice and 2 bags of rice each.<PAGE>Is it a
 ;         deal?<S $3D $80> <$97><Choice>Sure. <Choice>No thanks.<End>
 ; Origin: V116_Text_1274, baseline line 17307.
 org $F424F5
@@ -35991,7 +36008,7 @@ LiveText_1279:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:38A0 (compressed) -> $F4:$26A6 raw, 113 bytes
-;   Text: <$96>My beads are perfect for your decorating and trading needs…<PAGE>…and they're only 1 bag of
+;   Text: <$96>My beads are perfect for your decorating and trading needsâ€¦<PAGE>â€¦and they're only 1 bag of
 ;         rice and 3 Jewels each.<PAGE><End>
 ; Origin: V116_Text_1280, baseline line 17376.
 org $F426A6
@@ -36996,7 +37013,7 @@ LiveText_1349:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4279 (compressed) -> $F4:$3673 raw, 8 bytes
-;   Text:  <Choice>…more<End>
+;   Text:  <Choice>â€¦more<End>
 ; Origin: V116_Text_1350, baseline line 18101.
 org $F43673
 LiveText_1350:
@@ -37433,7 +37450,7 @@ LiveText_1382:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_MARKET
 ;   Provenance: $C1:4608 (compressed) -> $F4:$3C62 raw, 96 bytes
-;   Text: <$96>Hmmm… this is quite intriguing.<S $3D $80> I'm not sure what powers it has, but it could be
+;   Text: <$96>Hmmmâ€¦ this is quite intriguing.<S $3D $80> I'm not sure what powers it has, but it could be
 ;         valuable.<PAGE><End>
 ; Origin: V116_Text_1383, baseline line 18413.
 org $F43C62
@@ -38016,10 +38033,10 @@ LiveText_1556:
     db $65, $20, $6E, $65, $65, $64, $73, $20, $74, $6F, $20, $63, $6C, $65, $61, $6E
     db $20, $74, $68, $65, $20, $70, $6F, $6F, $6C, $21, $85, $00
 
-; Primary TEXT targets: 1858
+; Retained former shortened TEXT 1858 payload; primary now targets $FB11DF.
 ; Origin: Allocation_F46662, baseline line 42268.
 org $F46662
-LiveText_1858:
+Retained_Text_1858_NoSpace:
     db $96, $57, $68, $61, $74, $20, $61, $20, $72, $65, $6C, $69, $65, $66, $21, $80
     db $79, $80, $54, $68, $61, $74, $20, $62, $65, $61, $73, $74, $20, $77, $61, $73
     db $20, $61, $62, $6F, $75, $74, $20, $74, $6F, $20, $73, $75, $63, $6B, $20, $75
@@ -38207,7 +38224,7 @@ V106_Dog_FieldMenuShortcuts:
 ; PHA / PHX / PHY / PHB
 ; Pattern = $19A4 (Podunk; former Gothica dotted)
 ; Border  = $000E (Boy thin/minimalist)
-; JSL $8C:AC16 — refresh border graphics
+; JSL $8C:AC16 â€” refresh border graphics
 ; PLB / force 16-bit for saved register pulls
 ; PLY / PLX / PLA / PLP
 ; original: Menu Ring Character = Boy
@@ -38232,7 +38249,7 @@ V123_ThemeFoundation_MenuPattern1944:
 ; PHA / PHX / PHY / PHB
 ; Pattern = $19A4 (Podunk; former Gothica dotted)
 ; Border  = $000E (Boy thin/minimalist)
-; JSL $8C:AC16 — refresh border graphics
+; JSL $8C:AC16 â€” refresh border graphics
 ; PLB / force 16-bit for saved register pulls
 ; PLY / PLX / PLA / PLP
 ; original: Menu Ring Character = Boy
@@ -38385,40 +38402,40 @@ Bazooka_FastCharge_Guard:
 ; JML $F0:0B06: resume original Boy charging unchanged.
     db $5C, $06, $0B, $F0
 
-; LDA.l $8E:0029,X — native configured chance
+; LDA.l $8E:0029,X â€” native configured chance
 ; AND #$00FF
-; CMP #$0008 — common ordinary-drop path only
+; CMP #$0008 â€” common ordinary-drop path only
 ; BEQ .eligible
-; RTL — preserve specific/nonstandard chance
-; PHX — caller still needs monster stats offset
-; LDA #$0010 — new 16/128 base
-; STA $12 — temporary chance accumulator
-; LDA $0046,Y — Status 1 ID
+; RTL â€” preserve specific/nonstandard chance
+; PHX â€” caller still needs monster stats offset
+; LDA #$0010 â€” new 16/128 base
+; STA $12 â€” temporary chance accumulator
+; LDA $0046,Y â€” Status 1 ID
 ; JSR $103B (.check_status)
-; LDA $004C,Y — Status 2 ID
+; LDA $004C,Y â€” Status 2 ID
 ; JSR $103B
-; LDA $0052,Y — Status 3 ID
+; LDA $0052,Y â€” Status 3 ID
 ; JSR $103B
-; LDA $0058,Y — Status 4 ID
+; LDA $0058,Y â€” Status 4 ID
 ; JSR $103B
 ; LDA $12
-; CMP #$0070 — 112/128 cap
+; CMP #$0070 â€” 112/128 cap
 ; BCC .chance_ok
 ; LDA #$0070
 ; STA $12
-; LDA $12 — return final chance in A
+; LDA $12 â€” return final chance in A
 ; PLX
 ; RTL
-; AND #$7FFF — ignore most-recent marker
+; AND #$7FFF â€” ignore most-recent marker
 ; CMP #$0098
-; BCS .check_ret — Wings/empty/invalid
-; TAX — status ID is metadata-record offset
-; LDA.l $91:AE37,X — status type field (+$06)
-; CMP #$0002 — negative (and Wings, already excluded)
+; BCS .check_ret â€” Wings/empty/invalid
+; TAX â€” status ID is metadata-record offset
+; LDA.l $91:AE37,X â€” status type field (+$06)
+; CMP #$0002 â€” negative (and Wings, already excluded)
 ; BNE .check_ret
 ; LDA $12
 ; CLC
-; ADC #$0020 — +32/128
+; ADC #$0020 â€” +32/128
 ; STA $12
 ; RTS
 ; Origin: V108_StatusAwareDropChance, baseline line 5893.
@@ -38447,10 +38464,10 @@ V108_DrainHealEquivalentRecovery:
 ; Common physical-B -> legacy-Y translation for the shared helpers above.
 ; Final ORA #$0000 is semantically important: callers rely on Z reflecting the entire
 ; returned input word for repeat/debounce and branch gating.
-; BIT #$0080 — physical B present?
+; BIT #$0080 â€” physical B present?
 ; BEQ .flags
-; EOR #$4080 — clear B, set legacy Y
-; .flags: ORA #$0000 — restore N/Z from full A
+; EOR #$4080 â€” clear B, set legacy Y
+; .flags: ORA #$0000 â€” restore N/Z from full A
 ; RTL
 ; Origin: V108_SecondaryMenu_BToLegacyY, baseline line 5795.
 org $F51200
@@ -38471,7 +38488,7 @@ V108_MenuLegend_BExit_Frame:
     db $10, $14, $03, $6F, $0B, $10, $0F, $03, $39, $0B, $11, $00, $00, $9A, $07
 
 ; =============================================================================
-; v1.25 RELEASE — CATEGORY ROUTING / SAVE-MENU CONTROL CORRECTIONS
+; v1.25 RELEASE â€” CATEGORY ROUTING / SAVE-MENU CONTROL CORRECTIONS
 ; =============================================================================
 ; Runtime QA identified several correctly documented sources whose ordinary event
 ; callsites still opened an older/general helper.  The rule here is deliberately
@@ -38504,15 +38521,15 @@ V124_SaveGame_AExit_Frame:
     db $05, $06, $00, $00, $26, $10, $10, $1E, $03, $41, $0B, $10, $1A, $03, $43, $0B
     db $10, $14, $03, $6F, $0B, $10, $0F, $03, $39, $0B, $11, $00, $00, $9B, $07
 
-; JSL $F0:0340 — native B/Start cancel mask
-; PHA — preserve original mask and eventual Z/N
+; JSL $F0:0340 â€” native B/Start cancel mask
+; PHA â€” preserve original mask and eventual Z/N
 ; BEQ .return (no cancel)
 ; LDA $32F2
 ; BEQ .return (ordinary Ring cancel)
 ; STZ $32F2
-; LDA #$4E89 — Boy Ring actor
+; LDA #$4E89 â€” Boy Ring actor
 ; STA $05A7
-; .return: PLA — restore cancel mask + N/Z
+; .return: PLA â€” restore cancel mask + N/Z
 ; RTL
 ; Origin: V108_DogEquipRing_CancelWrapper, baseline line 6088.
 org $F51300
@@ -38521,12 +38538,12 @@ V108_DogEquipRing_CancelWrapper:
     db $89, $4E, $8D, $A7, $05, $68, $6B
 
 ; LDA #$0001
-; STA $32F2 — mark special Boy->Dog Equipment entry
-; LDA #$4F37 — Dog Ring actor for native equipment logic
+; STA $32F2 â€” mark special Boy->Dog Equipment entry
+; LDA #$4F37 â€” Dog Ring actor for native equipment logic
 ; STA $05A7
-; LDA #$998C — Boy main Ring parent page
+; LDA #$998C â€” Boy main Ring parent page
 ; STA $97
-; JML $CE:9297 — native Equipment action; RTS to caller
+; JML $CE:9297 â€” native Equipment action; RTS to caller
 ; Origin: V108_DogEquipRing_Action, baseline line 6101.
 org $F51320
 V108_DogEquipRing_Action:
@@ -42122,7 +42139,7 @@ LiveText_2248:
 ;   Arena: GOTHICA_TOWNS_EBON_IVOR
 ;   Provenance: $C2:3EC7 (compressed) -> $F5:5E13 raw, 88 bytes
 ;   Text: <$96>Wow!<S $3D $80> This place is just like the other castle.<S $3D $80> Only,<S $3D $80> not quite
-;         as…<S $79 $80> clean.<PAGE><End>
+;         asâ€¦<S $79 $80> clean.<PAGE><End>
 ; Origin: V116_Text_2249, baseline line 30046.
 org $F55E13
 LiveText_2249:
@@ -42969,7 +42986,7 @@ LiveText_2297:
 ;   Source/Theme: Queen Camellia / Queen Bluegarden -> $0F Queen Camellia / Bluegarden [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:4697 (compressed) -> $F6:1C3E raw, 38 bytes
-;   Text: <$96>We'll batten down the hatches here…<PAGE><End>
+;   Text: <$96>We'll batten down the hatches hereâ€¦<PAGE><End>
 ; Origin: V116_Text_2298, baseline line 30503.
 org $F61C3E
 LiveText_2298:
@@ -43198,7 +43215,7 @@ V116_Text_2312:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: CAMELLIA_EBON_KEEP
 ;   Provenance: $C2:492D (compressed) -> $F6:2096 raw, 101 bytes
-;   Text: <$96>Wow! <S $3D $80>What cool windows! <S $51 $80>The pictures seem almost… <S $65
+;   Text: <$96>Wow! <S $3D $80>What cool windows! <S $51 $80>The pictures seem almostâ€¦ <S $65
 ;         $80>alive.<PAGE>It must be a trick of the light.<PAGE><End>
 ; Origin: V116_Text_2313, baseline line 30675.
 org $F62096
@@ -43283,7 +43300,7 @@ LiveText_2315:
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4A1C (compressed) -> $F6:2431 raw, 82 bytes
 ;   Text: <$96>I deal with scientific matters--<S $3D $80> mechanical inventions,<S $3D $80> alchemy
-;         formulas…<PAGE><End>
+;         formulasâ€¦<PAGE><End>
 ; Origin: V116_Text_2318, baseline line 30715.
 org $F62431
 LiveText_2318:
@@ -43417,7 +43434,7 @@ LiveText_2326:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4B91 (compressed) -> $F6:26A3 raw, 130 bytes
-;   Text: <$96>There were two people there.<S $3D $80> One was this scientist, Dr. Ruffleberg…<PAGE>…the other
+;   Text: <$96>There were two people there.<S $3D $80> One was this scientist, Dr. Rufflebergâ€¦<PAGE>â€¦the other
 ;         one looked like it may have been his butler.<PAGE><End>
 ; Origin: V116_Text_2327, baseline line 30814.
 org $F626A3
@@ -43438,7 +43455,7 @@ LiveText_2327:
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4BDF (compressed) -> $F6:2725 raw, 114 bytes
 ;   Text: <$96>I'm not really sure what happened after that,<S $3D $80> but we ended up on
-;         Evermore…<PAGE><$96>…and we've been here ever since.<PAGE><End>
+;         Evermoreâ€¦<PAGE><$96>â€¦and we've been here ever since.<PAGE><End>
 ; Origin: V116_Text_2328, baseline line 30830.
 org $F62725
 LiveText_2328:
@@ -43502,7 +43519,7 @@ LiveText_2331:
 ;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4CA4 (compressed) -> $F6:2874 raw, 52 bytes
-;   Text: <$96>But first,<S $3D $80> there's the matter of the imposter…<PAGE><End>
+;   Text: <$96>But first,<S $3D $80> there's the matter of the imposterâ€¦<PAGE><End>
 ; Origin: V116_Text_2332, baseline line 30878.
 org $F62874
 LiveText_2332:
@@ -43738,7 +43755,7 @@ LiveText_2346:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:4EE2 (compressed) -> $F6:2C58 raw, 67 bytes
-;   Text: <$96>Hmmm… this one requires one part Gunpowder and two parts Grease.<PAGE><End>
+;   Text: <$96>Hmmmâ€¦ this one requires one part Gunpowder and two parts Grease.<PAGE><End>
 ; Origin: V116_Text_2347, baseline line 31045.
 org $F62C58
 LiveText_2347:
@@ -44413,7 +44430,7 @@ LiveText_2390:
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5656 (compressed) -> $F6:38A2 raw, 75 bytes
 ;   Text: <$96>Oh!<S $3D $80> You don't want to go there!<PAGE>That queen acts so nice and
-;         friendly…<PAGE><End>
+;         friendlyâ€¦<PAGE><End>
 ; Origin: V116_Text_2391, baseline line 31540.
 org $F638A2
 V116_Text_2391:
@@ -44428,7 +44445,7 @@ V116_Text_2391:
 ;   Source/Theme: Gomi -> $08 Gomi [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C2:5680 (compressed) -> $F6:38ED raw, 47 bytes
-;   Text: <$96>…but she's really very mean,<S $79 $80> and devious!<PAGE><End>
+;   Text: <$96>â€¦but she's really very mean,<S $79 $80> and devious!<PAGE><End>
 ; Origin: V116_Text_2392, baseline line 31551.
 org $F638ED
 LiveText_2392:
@@ -44996,7 +45013,7 @@ LiveText_2793:
 ;   Source/Theme: Tinker Tinderbox -> $0A Tinker Tinderbox [fixed]
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0F59 (compressed) -> $F6:40AE raw, 101 bytes
-;   Text: <$96>When the statue in the city to the east exploded…<PAGE>…there were two jewels that acted as a
+;   Text: <$96>When the statue in the city to the east explodedâ€¦<PAGE>â€¦there were two jewels that acted as a
 ;         catalyst.<PAGE><End>
 ; Origin: V116_Text_2794, baseline line 31954.
 org $F640AE
@@ -45028,7 +45045,7 @@ LiveText_2795:
 ;   Arena: TINKER_GOMI_ROCKET
 ;   Provenance: $C3:0FB2 (compressed) -> $F6:4148 raw, 149 bytes
 ;   Text: <$96>Well then,<S $3D $80> you know exactly what I'm after!<PAGE>If you can bring me those
-;         items…<PAGE>I'll be able to complete my new invention and send you into space!<PAGE><End>
+;         itemsâ€¦<PAGE>I'll be able to complete my new invention and send you into space!<PAGE><End>
 ; Origin: V116_Text_2796, baseline line 31978.
 org $F64148
 V116_Text_2796:
@@ -45879,7 +45896,7 @@ LiveText_2471:
 ;   Source/Theme: Pompolonius -> $13 Pompolonius / Showman [fixed]
 ;   Arena: IVOR_INTERIOR_PUPPET_MUNGOLA
 ;   Provenance: $C2:61A5 (raw) -> $F6:603D raw, 9 bytes
-;   Text: <$96>Hmm…<S $79 $80><End>
+;   Text: <$96>Hmmâ€¦<S $79 $80><End>
 ; Origin: V116_Text_2472, baseline line 32533.
 org $F6603D
 LiveText_2472:
@@ -45979,7 +45996,7 @@ LiveText_2477:
 ;   Arena: IVOR_INTERIOR_PUPPET_MUNGOLA
 ;   Provenance: $C2:62CC (compressed) -> $F6:623B raw, 168 bytes
 ;   Text: <$96>Well, as {Dusty} Duffy McGander says in {Perilous Patrol over Pluto:}<PAGE>{We may not have a
-;         rat's chance in a room full of cats…<PAGE>…but we're gonna go after that cheese.}<PAGE><End>
+;         rat's chance in a room full of catsâ€¦<PAGE>â€¦but we're gonna go after that cheese.}<PAGE><End>
 ; Origin: V116_Text_2478, baseline line 32609.
 org $F6623B
 LiveText_2478:
@@ -46170,7 +46187,7 @@ LiveText_2491:
 ;   Source/Theme: Puppet-show character -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_INTERIOR_PUPPET_MUNGOLA
 ;   Provenance: $C2:64D3 (compressed) -> $F6:64EF raw, 27 bytes
-;   Text: by Billy Shakesbad begins…<End>
+;   Text: by Billy Shakesbad beginsâ€¦<End>
 ; Origin: V116_Text_2492, baseline line 32744.
 org $F664EF
 LiveText_2492:
@@ -46591,8 +46608,8 @@ LiveText_2525:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: IVOR_INTERIOR_PUPPET_MUNGOLA
 ;   Provenance: $C2:67C9 (compressed) -> $F6:68F3 raw, 78 bytes
-;   Text: <$96>Look,<S $29 $80> <Dog>,<S $29 $80> a gear…<PAGE>I'm beginning to think that queen was<S $29
-;         $80> no<S $29 $80> lady…<$85><End>
+;   Text: <$96>Look,<S $29 $80> <Dog>,<S $29 $80> a gearâ€¦<PAGE>I'm beginning to think that queen was<S $29
+;         $80> no<S $29 $80> ladyâ€¦<$85><End>
 ; Origin: V116_Text_2526, baseline line 33031.
 org $F668F3
 V116_Text_2526:
@@ -46913,7 +46930,7 @@ LiveText_0920:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C0:7D7C (compressed) -> $F7:$0127 raw, 53 bytes
-;   Text: I wonder where he could be…<S $79 $80> or what he could be…<PAGE><End>
+;   Text: I wonder where he could beâ€¦<S $79 $80> or what he could beâ€¦<PAGE><End>
 ; Origin: V116_Text_0921, baseline line 21359.
 org $F70127
 LiveText_0921:
@@ -46941,7 +46958,7 @@ LiveText_0922:
 ;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C0:7DC0 (compressed) -> $F7:$0196 raw, 16 bytes
-;   Text: <$96>Well, friend…<PAGE><End>
+;   Text: <$96>Well, friendâ€¦<PAGE><End>
 ; Origin: V116_Text_0923, baseline line 21379.
 org $F70196
 LiveText_0923:
@@ -46987,7 +47004,7 @@ LiveText_0924:
 ;   Source/Theme: Generic Antiqua NPC -> $03 Generic NPC [arena-default]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C0:7EAD (compressed) -> $F7:$0335 raw, 40 bytes
-;   Text: <$96>Can't… <S $3D $80>talk… <S $3D $80>busy… <S $3D $80>punching.<PAGE><End>
+;   Text: <$96>Can'tâ€¦ <S $3D $80>talkâ€¦ <S $3D $80>busyâ€¦ <S $3D $80>punching.<PAGE><End>
 ; Origin: V116_Text_0925, baseline line 21417.
 org $F70335
 LiveText_0925:
@@ -47562,7 +47579,7 @@ LiveText_0959:
 ;   Source/Theme: Merchant / Trader -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:05B4 (compressed) -> $F7:$0F3D raw, 18 bytes
-;   Text: Pssst… over here.<End>
+;   Text: Pssstâ€¦ over here.<End>
 ; Origin: V116_Text_0960, baseline line 21853.
 org $F70F3D
 LiveText_0960:
@@ -48456,7 +48473,7 @@ V116_Text_1023:
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:0E26 (compressed) -> $F7:$1CF0 raw, 197 bytes
 ;   Text: <$96>Well, <Dog>.<S $3D $80> This is another fine mess you've gotten us into.<PAGE>Here I am, about
-;         to take on some tooth-spitting, sword-carrying champion gladiator…<PAGE>…and all I've got is a
+;         to take on some tooth-spitting, sword-carrying champion gladiatorâ€¦<PAGE>â€¦and all I've got is a
 ;         femur, a claw and a stick!<PAGE><End>
 ; Origin: V116_Text_1024, baseline line 22495.
 org $F71CF0
@@ -49017,7 +49034,7 @@ LiveText_1061:
 ;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: NOBILIA_CITY_PALACE
 ;   Provenance: $C1:148D (compressed) -> $F7:$264B raw, 73 bytes
-;   Text: <$96>Uh…<S $3D $80> kid… <S $3D $80> sorry about that vowel crack. Come and go as you
+;   Text: <$96>Uhâ€¦<S $3D $80> kidâ€¦ <S $3D $80> sorry about that vowel crack. Come and go as you
 ;         wish.<PAGE><End>
 ; Origin: V116_Text_1062, baseline line 22906.
 org $F7264B
@@ -50577,11 +50594,11 @@ LiveText_2469:
 ; Combined clear. DB is already $80 and Y points at the owning message object.
 ; Preserve native glyph clear/commit, then erase the complete old geometry and
 ; deactivate the message object using the native full-container routine.
-; JSL $8C:ADE5 — clear text interior
+; JSL $8C:ADE5 â€” clear text interior
 ; PHY
-; JSL $8C:C55D — commit native clear
+; JSL $8C:C55D â€” commit native clear
 ; PLY
-; JSL $8C:ADF6 — erase full box + deactivate
+; JSL $8C:ADF6 â€” erase full box + deactivate
 ; RTL
 ; Origin: Phase2_ClearTextAndCloseContainer, baseline line 46307.
 org $F76900
@@ -51382,7 +51399,7 @@ Allocation_F7E900:
     db $54, $01, $55, $47, $00, $04, $0A, $18
 
 ; =============================================================================
-; v1.32 QA REFINEMENT — FULL-GAME QA BATCH 1
+; v1.32 QA REFINEMENT â€” FULL-GAME QA BATCH 1
 ; =============================================================================
 ; Accumulated runtime findings from the first v1.32 full-game QA segment. This block is
 ; intentionally late in source order so earlier release evidence remains intact.
@@ -51408,15 +51425,16 @@ V132_NarrationSystem_Height5:
 
 ; --- v1.25 helper geometry $02-$18 (later source-order overrides follow) --------
 ; Origin: Allocation_F7E900, baseline line 47998.
+; Generic NPC $03: X=$03, Y=$02, width=$1A, height=$08.
 org $F7E909
 Allocation_F7E900_At_F7E909:
-    db $00, $54, $01, $55, $44, $00, $04, $02, $18, $08, $00, $54, $01, $55, $44, $00
+    db $00, $54, $01, $55, $44, $00, $03, $02, $1A, $08, $00, $54, $01, $55, $44, $00
     db $84, $12, $1E, $06, $00, $54, $01, $55, $44, $00, $85, $01, $0C, $14, $00, $54
     db $01, $55, $44, $00, $86, $04, $1C, $08, $00, $54, $01, $55, $44, $00, $87, $03
     db $18, $08, $00, $54, $01, $55, $44, $00, $88, $03, $1C, $08, $00
 
 ; =============================================================================
-; v1.32 — FOCUSED SUPPORTING-CHARACTER THEMES (INITIAL QA PASS)
+; v1.32 â€” FOCUSED SUPPORTING-CHARACTER THEMES (INITIAL QA PASS)
 ; =============================================================================
 ; This late source-order block deliberately supersedes the v1.24/v1.25 class/category
 ; routing experiment without rewriting its historical evidence. The accepted v1.31 enemy-prize
@@ -51598,13 +51616,13 @@ Allocation_F7EF00:
     db $00, $EC, $F7
 
 ; original JSL $80:8F85
-; PHP — preserve original return flags
+; PHP â€” preserve original return flags
 ; REP #$20
-; PHA — preserve full 16-bit accumulator
+; PHA â€” preserve full 16-bit accumulator
 ; LDA #$0001
-; STA $0B1D — minimap starts ON
+; STA $0B1D â€” minimap starts ON
 ; PLA
-; PLP — restore original flags/width
+; PLP â€” restore original flags/width
 ; RTL
 ; Origin: V129_WindwalkerSetup_DefaultMinimapOn, baseline line 48803.
 org $F7EF40
@@ -51692,7 +51710,7 @@ LiveText_0423:
 ;   Source/Theme: Narration/System -> $02 Narration / System [fixed]
 ;   Arena: PROLOGUE_1965
 ;   Provenance: $C0:2690 (compressed) -> $F8:001D raw, 36 bytes
-;   Text: An experiment nears its conclusion…<End>
+;   Text: An experiment nears its conclusionâ€¦<End>
 ; Origin: V116_Text_0424, baseline line 10135.
 org $F8001D
 LiveText_0424:
@@ -52952,11 +52970,11 @@ LiveText_0510:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: PREHISTORIA_WILDS
 ;   Provenance: $C0:33CA (compressed) -> $F8:2632 raw, 13 bytes
-;   Text: <$96>Pardon me?<PAGE><End>
+;   Text: <$96>Huh?<PAGE><End> (remaining allocation bytes retained as zero padding)
 ; Origin: V116_Text_0511, baseline line 11064.
 org $F82632
 LiveText_0511:
-    db $96, $50, $61, $72, $64, $6F, $6E, $20, $6D, $65, $3F, $86, $00
+    db $96, $48, $75, $68, $3F, $86, $00, $00, $00, $00, $00, $00, $00
 
 ; Primary TEXT targets: 512
 ; TEXT 0512 / $0200
@@ -53377,7 +53395,7 @@ LiveText_0538:
 ;   Provenance: $C0:3867 (compressed) -> $F8:2E11 raw, 263 bytes
 ;   Text: <$96>If you're going in after him,<S $3D $80> you should have another alchemy formula.<PAGE>Alchemy
 ;         is quite useful.<S $3D $80> <$96>You take a little of this,<S $5B $80> and a little of that,<S $3D
-;         $80> and…<S $79 $80><$97>poof!<$96><S $97 $80> It's like magic!<PAGE>Let me give you the Hard Ball
+;         $80> andâ€¦<S $79 $80><$97>poof!<$96><S $97 $80> It's like magic!<PAGE>Let me give you the Hard Ball
 ;         formula.<S $79 $80> It's an effective weapon.<PAGE><End>
 ; Origin: V116_Text_0539, baseline line 11379.
 org $F82E11
@@ -54033,7 +54051,7 @@ LiveText_0883:
 ;   Source/Theme: Narration/System -> $02 Narration / System [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:77B3 (compressed) -> $F8:494C raw, 13 bytes
-;   Text: Hours later…<End>
+;   Text: Hours laterâ€¦<End>
 ; Origin: V116_Text_0884, baseline line 15477.
 org $F8494C
 LiveText_0884:
@@ -54064,7 +54082,7 @@ LiveText_0885:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:781C (compressed) -> $F8:49DC raw, 25 bytes
-;   Text: <$96>Hmmm…<S $3D $80> No sign of <Dog>.<PAGE><End>
+;   Text: <$96>Hmmmâ€¦<S $3D $80> No sign of <Dog>.<PAGE><End>
 ; Origin: V116_Text_0886, baseline line 15500.
 org $F849DC
 LiveText_0886:
@@ -54383,7 +54401,7 @@ LiveText_0908:
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7AF1 (compressed) -> $F8:4E45 raw, 83 bytes
 ;   Text: <$96>Likewise!<S $3D $80> My dog and I used your boat to float downstream and over the
-;         falls…<PAGE><End>
+;         fallsâ€¦<PAGE><End>
 ; Origin: V116_Text_0909, baseline line 15728.
 org $F84E45
 LiveText_0909:
@@ -54502,7 +54520,7 @@ LiveText_0915:
 ;   Arena: ANTIQUA_CRUSTACIA_APPROACH
 ;   Provenance: $C0:7CA6 (compressed) -> $F8:510A raw, 83 bytes
 ;   Text: <$96>Likewise!<S $3D $80> My dog and I used your boat to float downstream and over the
-;         falls…<PAGE><End>
+;         fallsâ€¦<PAGE><End>
 ; Origin: V116_Text_0916, baseline line 15820.
 org $F8510A
 LiveText_0916:
@@ -55013,7 +55031,7 @@ LiveText_0574:
 
 ; Primary TEXT targets: 575
 ; TEXT 0575 / $023F
-;   Source/Theme: Evil Fire Eyes -> $10 Artificial Fire Eyes [fixed]
+;   Source/Theme: Fire Eyes / Elizabeth -> $0D Fire Eyes / Elizabeth [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:3FCE (compressed) -> $F9:085B raw, 14 bytes
 ;   Text: <$96>You called?<PAGE><End>
@@ -56578,7 +56596,7 @@ LiveText_0673:
 ;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:51BE (compressed) -> $F9:2672 raw, 111 bytes
-;   Text: <$96><$87><$93>Fire Eyes…<S $29 $80> Elizabeth…<S $3D $80> Don't talk like this! The ground has
+;   Text: <$96><$87><$93>Fire Eyesâ€¦<S $29 $80> Elizabethâ€¦<S $3D $80> Don't talk like this! The ground has
 ;         shaken before. <S $2D $81><$87>It's not your fault.<S $B5 $80><End>
 ; Origin: V116_Text_0674, baseline line 13006.
 org $F9265A
@@ -56670,7 +56688,7 @@ LiveText_0679:
 ;   Source/Theme: Strong Heart -> $07 Strong Heart [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:52E1 (compressed) -> $F9:2828 raw, 54 bytes
-;   Text: <$96><$87><$93>You will always have a home here… <S $8D $80>Fire Eyes!<S $F1 $80><End>
+;   Text: <$96><$87><$93>You will always have a home hereâ€¦ <S $8D $80>Fire Eyes!<S $F1 $80><End>
 ; Origin: V116_Text_0680, baseline line 13074.
 org $F92811
 LiveText_0680:
@@ -57214,7 +57232,7 @@ LiveText_0715:
 ;   Source/Theme: Innkeeper -> $03 Generic NPC [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:5895 (compressed) -> $F9:3223 raw, 116 bytes
-;   Text: <$96>Well,<S $3D $80> now that you're both safe in our friendly village…<PAGE>…you can save your
+;   Text: <$96>Well,<S $3D $80> now that you're both safe in our friendly villageâ€¦<PAGE>â€¦you can save your
 ;         game!<S $3D $80> OK?<S $3D $80> <$97><Choice>Sure. <Choice>No thanks.<End>
 ; Origin: V116_Text_0716, baseline line 13477.
 org $F93200
@@ -58278,7 +58296,7 @@ LiveText_0783:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6465 (compressed) -> $F9:4685 raw, 21 bytes
-;   Text: <$96>His name?<S $3D $80> It's…<PAGE><End>
+;   Text: <$96>His name?<S $3D $80> It'sâ€¦<PAGE><End>
 ; Origin: V116_Text_0784, baseline line 14275.
 org $F9465F
 LiveText_0784:
@@ -59002,7 +59020,7 @@ LiveText_0830:
 
 ; Primary TEXT targets: 831
 ; TEXT 0831 / $033F
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6D1C (compressed) -> $F9:5438 raw, 59 bytes
 ;   Text: <$96>It's not the great caverns of Makanda,<S $3D $80> but it's home.<PAGE><End>
@@ -59016,7 +59034,7 @@ LiveText_0831:
 
 ; Primary TEXT targets: 832
 ; TEXT 0832 / $0340
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6D42 (compressed) -> $F9:5473 raw, 68 bytes
 ;   Text: <$96>Well, if you like mud walls and leaf floors,<S $3D $80> it's pretty nice.<PAGE><End>
@@ -59031,11 +59049,11 @@ LiveText_0832:
 
 ; Primary TEXT targets: 833
 ; TEXT 0833 / $0341
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6D6B (compressed) -> $F9:54B7 raw, 105 bytes
-;   Text: <$96>I don't have much to offer in the way of thanks for saving my hut…<PAGE><$96>…but I'd like you to
-;         have…<PAGE><End>
+;   Text: <$96>I don't have much to offer in the way of thanks for saving my hutâ€¦<PAGE><$96>â€¦but I'd like you to
+;         haveâ€¦<PAGE><End>
 ; Origin: V116_Text_0833, baseline line 14840.
 org $F95491
 LiveText_0833:
@@ -59049,7 +59067,7 @@ LiveText_0833:
 
 ; Primary TEXT targets: 834
 ; TEXT 0834 / $0342
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6DA8 (compressed) -> $F9:5520 raw, 17 bytes
 ;   Text: <$96>That's not it.<PAGE><End>
@@ -59061,10 +59079,10 @@ LiveText_0834:
 
 ; Primary TEXT targets: 835
 ; TEXT 0835 / $0343
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6DB1 (compressed) -> $F9:5531 raw, 61 bytes
-;   Text: <$96>Hmmmm…<S $3D $80>I can't see how this would be of much use to you.<PAGE><End>
+;   Text: <$96>Hmmmmâ€¦<S $3D $80>I can't see how this would be of much use to you.<PAGE><End>
 ; Origin: V116_Text_0835, baseline line 14861.
 org $F95503
 LiveText_0835:
@@ -59075,7 +59093,7 @@ LiveText_0835:
 
 ; Primary TEXT targets: 836
 ; TEXT 0836 / $0344
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6DD9 (compressed) -> $F9:556E raw, 60 bytes
 ;   Text: <$96>A still-beating heart!<S $3D $80> Nice!<S $3D $80> But not what you need.<PAGE><End>
@@ -59089,7 +59107,7 @@ LiveText_0836:
 
 ; Primary TEXT targets: 837
 ; TEXT 0837 / $0345
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6E02 (compressed) -> $F9:55AA raw, 7 bytes
 ;   Text: <$96>Aha!<PAGE><End>
@@ -59100,7 +59118,7 @@ LiveText_0837:
 
 ; Primary TEXT targets: 838
 ; TEXT 0838 / $0346
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6E08 (compressed) -> $F9:55B1 raw, 35 bytes
 ;   Text: <$96>Please,<S $1F $80> take this Mud Pepper.<PAGE><End>
@@ -59125,7 +59143,7 @@ LiveText_0839:
 
 ; Primary TEXT targets: 840
 ; TEXT 0840 / $0348
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6E2C (compressed) -> $F9:55E8 raw, 65 bytes
 ;   Text: <$96>Mud Peppers are the active ingredient in the Levitate Formula.<PAGE><End>
@@ -59140,7 +59158,7 @@ LiveText_0840:
 
 ; Primary TEXT targets: 841
 ; TEXT 0841 / $0349
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6E51 (compressed) -> $F9:5629 raw, 72 bytes
 ;   Text: <$96>Mud Peppers have special qualities,<S $3D $80> if you know the right formula.<PAGE><End>
@@ -59155,7 +59173,7 @@ LiveText_0841:
 
 ; Primary TEXT targets: 842
 ; TEXT 0842 / $034A
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6E78 (compressed) -> $F9:5671 raw, 76 bytes
 ;   Text: Come back and see me again if you use it up.<S $79 $80> I'll give you another one!<PAGE><End>
@@ -59170,7 +59188,7 @@ LiveText_0842:
 
 ; Primary TEXT targets: 843
 ; TEXT 0843 / $034B
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6EA1 (compressed) -> $F9:56BD raw, 48 bytes
 ;   Text: <$96>Well, hello friend. You look like a nice dog.<PAGE><End>
@@ -59183,7 +59201,7 @@ LiveText_0843:
 
 ; Primary TEXT targets: 844
 ; TEXT 0844 / $034C
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6EBD (compressed) -> $F9:56ED raw, 94 bytes
 ;   Text: <$96>Welcome back, warrior.<S $79 $80> I see that you've used up that Mud Pepper.<S $3D $80> Here's
@@ -59212,7 +59230,7 @@ LiveText_0845:
 
 ; Primary TEXT targets: 846
 ; TEXT 0846 / $034E
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6F00 (compressed) -> $F9:575F raw, 60 bytes
 ;   Text: <$96>Would you like to rest for a while? <S $5B $80><$97><Choice>Sure. <Choice>No thanks.<End>
@@ -59226,7 +59244,7 @@ LiveText_0846:
 
 ; Primary TEXT targets: 847
 ; TEXT 0847 / $034F
-;   Source/Theme: Generic Prehistoria NPC -> $03 Generic NPC [arena-default]
+;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: PREHISTORIA_VILLAGE_FIRE_EYES
 ;   Provenance: $C0:6F26 (compressed) -> $F9:579B raw, 31 bytes
 ;   Text: <$87><$96>I hope you had a good rest.<PAGE><End>
@@ -60257,7 +60275,7 @@ LiveText_1440:
 ;   Source/Theme: Generic Antiqua NPC -> $03 Generic NPC [arena-default]
 ;   Arena: NOBILIA_CITY_SQUARE
 ;   Provenance: $C1:4F74 (compressed) -> $FA:0973 raw, 128 bytes
-;   Text: <$96>In the eighth minute of the eighth hour of the eighth day of the eighth month…<PAGE>…the goat
+;   Text: <$96>In the eighth minute of the eighth hour of the eighth day of the eighth monthâ€¦<PAGE>â€¦the goat
 ;         will sneeze.<S $3D $80> And it will be good.<PAGE><End>
 ; Origin: V116_Text_1441, baseline line 19060.
 org $FA0973
@@ -60431,7 +60449,7 @@ LiveText_1451:
 ;   Source/Theme: Generic Antiqua NPC -> $03 Generic NPC [arena-default]
 ;   Arena: NOBILIA_CITY_SQUARE
 ;   Provenance: $C1:51B0 (compressed) -> $FA:0CE4 raw, 59 bytes
-;   Text: <$96>Must…<S $15 $80>stop…<S $15 $80>juggling…<S $15 $80>go…<S $15 $80> to…<S $15 $80>big…<S $15
+;   Text: <$96>Mustâ€¦<S $15 $80>stopâ€¦<S $15 $80>jugglingâ€¦<S $15 $80>goâ€¦<S $15 $80> toâ€¦<S $15 $80>bigâ€¦<S $15
 ;         $80>meeting.<PAGE><End>
 ; Origin: V116_Text_1452, baseline line 19191.
 org $FA0CE4
@@ -60446,7 +60464,7 @@ LiveText_1452:
 ;   Source/Theme: Generic Antiqua NPC -> $03 Generic NPC [arena-default]
 ;   Arena: NOBILIA_CITY_SQUARE
 ;   Provenance: $C1:51E7 (compressed) -> $FA:0D1F raw, 37 bytes
-;   Text: <$96>Can't…<S $15 $80>talk…<S $15 $80>busy…<S $15 $80>juggling.<PAGE><End>
+;   Text: <$96>Can'tâ€¦<S $15 $80>talkâ€¦<S $15 $80>busyâ€¦<S $15 $80>juggling.<PAGE><End>
 ; Origin: V116_Text_1453, baseline line 19201.
 org $FA0D1F
 LiveText_1453:
@@ -60459,7 +60477,7 @@ LiveText_1453:
 ;   Source/Theme: Generic Antiqua NPC -> $03 Generic NPC [arena-default]
 ;   Arena: NOBILIA_CITY_SQUARE
 ;   Provenance: $C1:520A (compressed) -> $FA:0D44 raw, 112 bytes
-;   Text: <$96>Soon we will go to the meeting in the City Square…<PAGE>but now we are riveted by this amazing
+;   Text: <$96>Soon we will go to the meeting in the City Squareâ€¦<PAGE>but now we are riveted by this amazing
 ;         display of agility.<PAGE><End>
 ; Origin: V116_Text_1454, baseline line 19211.
 org $FA0D44
@@ -62069,7 +62087,7 @@ LiveText_1554:
 ;   Source/Theme: Generic Antiqua NPC -> $03 Generic NPC [arena-default]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6305 (compressed) -> $FA:3CC7 raw, 18 bytes
-;   Text: glub… glub… glub…<End>
+;   Text: glubâ€¦ glubâ€¦ glubâ€¦<End>
 ; Origin: V116_Text_1555, baseline line 20363.
 org $FA3CC7
 LiveText_1555:
@@ -62142,7 +62160,7 @@ LiveText_1560:
 ;   Source/Theme: Generic Antiqua NPC -> $03 Generic NPC [arena-default]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6396 (compressed) -> $FA:3D8A raw, 42 bytes
-;   Text: <$96>Sacred Dogs… <S $51 $80>I don't believe in 'em!<PAGE><End>
+;   Text: <$96>Sacred Dogsâ€¦ <S $51 $80>I don't believe in 'em!<PAGE><End>
 ; Origin: V116_Text_1561, baseline line 20413.
 org $FA3D8A
 LiveText_1561:
@@ -62304,7 +62322,7 @@ LiveText_1571:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: HORACE_WEST_BANK
 ;   Provenance: $C1:6546 (compressed) -> $FA:405A raw, 11 bytes
-;   Text: <$96>Well, I…<PAGE><End>
+;   Text: <$96>Well, Iâ€¦<PAGE><End>
 ; Origin: V116_Text_1572, baseline line 20531.
 org $FA405A
 LiveText_1572:
@@ -63599,7 +63617,7 @@ org $FA81F5
 Recovered_FA8000_At_FA81F5:
     db $51, $1C, $08, $55
 
-; 5) NG+ weapon carryover — only Bone Crusher, Neutron Blade, Atom Smasher, Laser Lance.
+; 5) NG+ weapon carryover â€” only Bone Crusher, Neutron Blade, Atom Smasher, Laser Lance.
 ;   $7E:22DA keeps $02/$10; $7E:22DB keeps $01/$10. All other weapon bits are cleared.
 ; Origin: V132_NGPlus_WeaponFilter, baseline line 50286.
 org $FA81F9
@@ -63710,8 +63728,8 @@ V116_Text_1651:
 ;   Arena: ANTIQUA_DESERT_TRAVEL
 ;   Provenance: $C1:7329 (compressed) -> $FB:0211 raw, 255 bytes
 ;   Text: <$96><$87>Normally a ride across the hot desert costs one Amulet of
-;         Annihilation.<PAGE><$87>However…<S $51 $80>  Since I don't like foul language aboard my ship,<S $51
-;         $80> potty mouth…<PAGE><$87>…I will require three Amulets of Annihilation from you.<PAGE><$87>Do you
+;         Annihilation.<PAGE><$87>Howeverâ€¦<S $51 $80>  Since I don't like foul language aboard my ship,<S $51
+;         $80> potty mouthâ€¦<PAGE><$87>â€¦I will require three Amulets of Annihilation from you.<PAGE><$87>Do you
 ;         have three Amulets of Annihilation? <End>
 ; Origin: V116_Text_1652, baseline line 24074.
 org $FB0211
@@ -65993,7 +66011,7 @@ LiveText_1854:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:79EE (compressed) -> $FB:1157 raw, 45 bytes
-;   Text: Spin… <S $3D $80> Spin… <S $3D $80> Spin… <S $3D $80> Weeeeeeeee…<S $2D $81><End>
+;   Text: Spinâ€¦ <S $3D $80> Spinâ€¦ <S $3D $80> Spinâ€¦ <S $3D $80> Weeeeeeeeeâ€¦<S $2D $81><End>
 ; Origin: V116_Text_1855, baseline line 25534.
 org $FB1157
 LiveText_1855:
@@ -66006,7 +66024,7 @@ LiveText_1855:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7A14 (compressed) -> $FB:1184 raw, 31 bytes
-;   Text: Gonna… <S $3D $80> Gonna… <S $3D $80> Hurl!<S $2D $81><End>
+;   Text: Gonnaâ€¦ <S $3D $80> Gonnaâ€¦ <S $3D $80> Hurl!<S $2D $81><End>
 ; Origin: V116_Text_1856, baseline line 25543.
 org $FB1184
 LiveText_1856:
@@ -66031,13 +66049,13 @@ LiveText_1857:
 ;   Source/Theme: Blimp -> $06 Blimp [fixed]
 ;   Arena: ANTIQUA_HALL_PYRAMID
 ;   Provenance: $C1:7A73 (compressed) -> $FB:11DF raw, 79 bytes
-;   Text: <$96>What a relief!<S $79 $80><$87>That beast was about to suck up my hut,<S $79 $80> and me with
+;   Text: <$96>What a relief!<S $79 $80> That beast was about to suck up my hut,<S $79 $80> and me with
 ;         it!<PAGE><End>
 ; Origin: V116_Text_1858, baseline line 25562.
 org $FB11DF
-V116_Text_1858:
+LiveText_1858:
     db $96, $57, $68, $61, $74, $20, $61, $20, $72, $65, $6C, $69, $65, $66, $21, $80
-    db $79, $80, $87, $54, $68, $61, $74, $20, $62, $65, $61, $73, $74, $20, $77, $61
+    db $79, $80, $20, $54, $68, $61, $74, $20, $62, $65, $61, $73, $74, $20, $77, $61
     db $73, $20, $61, $62, $6F, $75, $74, $20, $74, $6F, $20, $73, $75, $63, $6B, $20
     db $75, $70, $20, $6D, $79, $20, $68, $75, $74, $2C, $80, $79, $80, $20, $61, $6E
     db $64, $20, $6D, $65, $20, $77, $69, $74, $68, $20, $69, $74, $21, $86, $00
@@ -67510,7 +67528,7 @@ LiveText_1962:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0860 (compressed) -> $FB:361F raw, 63 bytes
-;   Text: <$96>Hmmm…<S $3D $80> This looks dangerous. I'd better avoid these vents.<PAGE><End>
+;   Text: <$96>Hmmmâ€¦<S $3D $80> This looks dangerous. I'd better avoid these vents.<PAGE><End>
 ; Origin: V116_Text_1963, baseline line 26599.
 org $FB361F
 LiveText_1963:
@@ -67792,7 +67810,7 @@ LiveText_1980:
 ;   Source/Theme: Evil Queen -> $12 Artificial Queen [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0B98 (compressed) -> $FB:3B80 raw, 114 bytes
-;   Text: What we need you to do is go down into the ravine, come up the other side…<PAGE>…and open the
+;   Text: What we need you to do is go down into the ravine, come up the other sideâ€¦<PAGE>â€¦and open the
 ;         drawbridge from within.<PAGE><End>
 ; Origin: V116_Text_1981, baseline line 26810.
 org $FB3B80
@@ -68079,7 +68097,7 @@ V116_Text_2000:
 ;   Source/Theme: Boy -> $04 Boy [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0EA5 (compressed) -> $FB:401F raw, 69 bytes
-;   Text: <$87><$96>Sniff… sniff…<S $3D $80> I agree, <Dog>.<S $3D $80> We'll probably stink for a
+;   Text: <$87><$96>Sniffâ€¦ sniffâ€¦<S $3D $80> I agree, <Dog>.<S $3D $80> We'll probably stink for a
 ;         while.<$85><End>
 ; Origin: V116_Text_2001, baseline line 27018.
 org $FB401F
@@ -68136,7 +68154,7 @@ LiveText_2004:
 ;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0F48 (compressed) -> $FB:4105 raw, 74 bytes
-;   Text: <$87><$96>You're coming with me!<S $65 $80> Sniff… <S $3D $80>Sniff… <S $3D $80> Do you smell
+;   Text: <$87><$96>You're coming with me!<S $65 $80> Sniffâ€¦ <S $3D $80>Sniffâ€¦ <S $3D $80> Do you smell
 ;         something?<PAGE><End>
 ; Origin: V116_Text_2005, baseline line 27059.
 org $FB4105
@@ -68163,7 +68181,7 @@ LiveText_2006:
 ;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0F7B (compressed) -> $FB:4156 raw, 44 bytes
-;   Text: <$96>Gotta go! <S $3D $80>GOTTA GO!! <S $3D $80>Aaaaaaahhh…!!!<$85><End>
+;   Text: <$96>Gotta go! <S $3D $80>GOTTA GO!! <S $3D $80>Aaaaaaahhhâ€¦!!!<$85><End>
 ; Origin: V116_Text_2007, baseline line 27077.
 org $FB4156
 LiveText_2007:
@@ -68177,8 +68195,8 @@ LiveText_2007:
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:0FA6 (compressed) -> $FB:4182 raw, 143 bytes
 ;   Text: <$96>They've gone!<S $51 $80> Everybody's gone! <S $65 $80>They must've all gone back to Ebon
-;         Keep!<PAGE>All alone here… <S $65 $80> Gotta go! <S $3D $80>GOTTA GO!! <S $3D
-;         $80>Aaaaaaahhh…!!!<$85><End>
+;         Keep!<PAGE>All alone hereâ€¦ <S $65 $80> Gotta go! <S $3D $80>GOTTA GO!! <S $3D
+;         $80>Aaaaaaahhhâ€¦!!!<$85><End>
 ; Origin: V116_Text_2008, baseline line 27088.
 org $FB4182
 LiveText_2008:
@@ -68253,8 +68271,8 @@ LiveText_2012:
 ;   Source/Theme: Guard / Authority -> $03 Generic NPC [fixed]
 ;   Arena: GOTHICA_ARRIVAL_DUNGEON_SEWER
 ;   Provenance: $C2:10A4 (compressed) -> $FB:42DF raw, 99 bytes
-;   Text: <$96>So what if I sleep on the job! I'm guarding rubble. Rubble, I say!<S $65 $80> Oh, the shame… the
-;         shame… <$85><End>
+;   Text: <$96>So what if I sleep on the job! I'm guarding rubble. Rubble, I say!<S $65 $80> Oh, the shameâ€¦ the
+;         shameâ€¦ <$85><End>
 ; Origin: V116_Text_2013, baseline line 27144.
 org $FB42DF
 LiveText_2013:
@@ -70828,7 +70846,7 @@ LiveText_2675:
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7CC7 (compressed) -> $FE:488B raw, 140 bytes
 ;   Text: <$96>How,<S $3D $80> you will ask,<S $3D $80> can such a creature live and breathe?<PAGE>There is no
-;         answer to your query.<S $79 $80> It is simply a truth in the shape of…<PAGE><End>
+;         answer to your query.<S $79 $80> It is simply a truth in the shape ofâ€¦<PAGE><End>
 ; Origin: V116_Text_2676, baseline line 34617.
 org $FE488B
 LiveText_2676:
@@ -70903,7 +70921,7 @@ LiveText_2680:
 ;   Source/Theme: Exhibition presenter -> $03 Generic NPC [fixed]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C2:7DA7 (compressed) -> $FE:49DF raw, 105 bytes
-;   Text: <$96>It is fantastic, freakish and full of cheese-producing goodness--<PAGE>I give you the one-horned beauty of…<PAGE><End>
+;   Text: <$96>It is fantastic, freakish and full of cheese-producing goodness--<PAGE>I give you the one-horned beauty ofâ€¦<PAGE><End>
 ; Origin: V116_Text_2681, baseline line 34672.
 org $FE49DF
 LiveText_2681:
@@ -71004,7 +71022,7 @@ LiveText_2687:
 ;   Provenance: $C2:7EAF (compressed) -> $FE:4B6C raw, 211 bytes
 ;   Text: <$96>It has fangs the size of a human femur.<S $B5 $80> Its body is covered in fur from head to
 ;         toe.<PAGE>Its eyes are so hypnotic that staring into them could make you spiral into a sea of
-;         madness.<PAGE>This is the terror that is…<PAGE><End>
+;         madness.<PAGE>This is the terror that isâ€¦<PAGE><End>
 ; Origin: V116_Text_2688, baseline line 34745.
 org $FE4B6C
 LiveText_2688:
@@ -71120,7 +71138,7 @@ LiveText_2695:
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:0000 (compressed) -> $FE:4D60 raw, 81 bytes
 ;   Text: I present to you,<S $3D $80> for the first time ever,<S $3D $80> the fabulous,<S $3D $80>
-;         unbelievable…<PAGE><End>
+;         unbelievableâ€¦<PAGE><End>
 ; Origin: V116_Text_2696, baseline line 34829.
 org $FE4D60
 LiveText_2696:
@@ -71468,7 +71486,7 @@ LiveText_2717:
 ;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
 ;   Arena: IVOR_EXHIBITION_APPROACH
 ;   Provenance: $C3:043C (compressed) -> $FE:540F raw, 65 bytes
-;   Text: <$96>Hmmm…<S $3D $80> Well,<S $3D $80> I don't know if that's completely true, but…<PAGE><End>
+;   Text: <$96>Hmmmâ€¦<S $3D $80> Well,<S $3D $80> I don't know if that's completely true, butâ€¦<PAGE><End>
 ; Origin: V116_Text_2718, baseline line 35090.
 org $FE540F
 LiveText_2718:
@@ -71804,7 +71822,7 @@ LiveText_2739:
 ;   Source/Theme: Generic Gothica NPC -> $03 Generic NPC [arena-default]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:0745 (compressed) -> $FE:6192 raw, 25 bytes
-;   Text: <$96>Ooooo… <S $51 $80> nice doggy!<$85><End>
+;   Text: <$96>Oooooâ€¦ <S $51 $80> nice doggy!<$85><End>
 ; Origin: V116_Text_2740, baseline line 35330.
 org $FE6192
 LiveText_2740:
@@ -72147,7 +72165,7 @@ V116_Text_2762:
 ;   Provenance: $C3:0B9A (compressed) -> $FE:6783 raw, 228 bytes
 ;   Text: <$96>Okay, buddy.<S $65 $80> Had your fun? <S $B5 $80>Oh, I've seen your type before.<PAGE><$96>You
 ;         start by messing up your room and wind up years later messing up banquets.<PAGE><$96>And your furry
-;         friend…<S $5B $80> He looks like a real troublemaker.<S $5B $80> Come along now!<PAGE><End>
+;         friendâ€¦<S $5B $80> He looks like a real troublemaker.<S $5B $80> Come along now!<PAGE><End>
 ; Origin: V116_Text_2763, baseline line 35583.
 org $FE6783
 LiveText_2763:
@@ -72213,7 +72231,7 @@ LiveText_2802:
 ;   Source/Theme: Evil Queen -> $12 Artificial Queen [fixed]
 ;   Arena: IVOR_CASTLE_BANQUET
 ;   Provenance: $C3:1121 (compressed) -> $FE:6976 raw, 109 bytes
-;   Text: <$96>My superior has ordered me to do whatever it takes to find it…<PAGE>…even if we must tear the
+;   Text: <$96>My superior has ordered me to do whatever it takes to find itâ€¦<PAGE>â€¦even if we must tear the
 ;         kingdom apart,<S $B5 $80> <End>
 ; Origin: V116_Text_2803, baseline line 35638.
 org $FE6976
@@ -73080,11 +73098,11 @@ LiveText_2865:
 
 ; Primary TEXT targets: 2866
 ;
-; 1) Centered Narration/System five-line presentation — retained from earlier v1.32 QA.
-; 2) All four Omnitopia destination prompts use Narration/System $02 — retained.
-; 3) Queen Camellia fixed-owner dialogue uses $0F — retained.
+; 1) Centered Narration/System five-line presentation â€” retained from earlier v1.32 QA.
+; 2) All four Omnitopia destination prompts use Narration/System $02 â€” retained.
+; 3) Queen Camellia fixed-owner dialogue uses $0F â€” retained.
 ;
-; 4) Robot TEXT 2866 — one page.
+; 4) Robot TEXT 2866 â€” one page.
 ; Origin: V132_Robot2866_OnePage, baseline line 50274.
 org $FF07E2
 LiveText_2866:
@@ -73532,7 +73550,7 @@ V116_Text_2896:
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $C3:1D77 (compressed) -> $FF:0F4C raw, 75 bytes
 ;   Text: Hmmm...<S $A5 $81><$87>Take an eigenvector here, <S $3D $80>invert it, <S $B5 $80>carry the
-;         three…<S $A5 $81><$87><End>
+;         threeâ€¦<S $A5 $81><$87><End>
 ; Origin: V116_Text_2897, baseline line 36538.
 org $FF0F4C
 LiveText_2897:
@@ -73547,7 +73565,7 @@ LiveText_2897:
 ;   Source/Theme: Professor Ruffleberg -> $0C Professor Ruffleberg [fixed]
 ;   Arena: OMNITOPIA_PROFESSOR_CARLTRON
 ;   Provenance: $C3:1DB3 (compressed) -> $FF:0F97 raw, 44 bytes
-;   Text: <$96><$93>Your chances for success are roughly…<S $F1 $80> <End>
+;   Text: <$96><$93>Your chances for success are roughlyâ€¦<S $F1 $80> <End>
 ; Origin: V116_Text_2898, baseline line 36549.
 org $FF0F97
 LiveText_2898:
@@ -74728,7 +74746,7 @@ LiveText_2989:
 ;   Provenance: $F1:0440 (raw) -> $FF:1F4D raw, 168 bytes
 ;   Text: <$96><$87><Dog>!! <S $51 $80>What's happened?? <S $79 $80>You're so... <S $65
 ;         $80>metallic!<PAGE>Well, no worries, my {Brave Little Toaster}.<PAGE>Oh, look over there! A trash
-;         compactor. <S $3D $80>«snicker»<S $29 $80> «snicker»<$85><End>
+;         compactor. <S $3D $80>Â«snickerÂ»<S $29 $80> Â«snickerÂ»<$85><End>
 ; Origin: V116_Text_2990, baseline line 37400.
 org $FF1F4D
 LiveText_2990:
@@ -75747,7 +75765,7 @@ LiveText_2991:
 ;@TEXTMETA {"id":572,"hex":"023C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
 ;@TEXTMETA {"id":573,"hex":"023D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Evil Fire Eyes","assignment":"fixed","theme":"$10 Artificial Fire Eyes","helper":"$10"}
 ;@TEXTMETA {"id":574,"hex":"023E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
-;@TEXTMETA {"id":575,"hex":"023F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Evil Fire Eyes","assignment":"fixed","theme":"$10 Artificial Fire Eyes","helper":"$10"}
+;@TEXTMETA {"id":575,"hex":"023F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
 ;@TEXTMETA {"id":576,"hex":"0240","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Evil Fire Eyes","assignment":"fixed","theme":"$10 Artificial Fire Eyes","helper":"$10"}
 ;@TEXTMETA {"id":577,"hex":"0241","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Fire Eyes / Elizabeth","assignment":"fixed","theme":"$0D Fire Eyes / Elizabeth","helper":"$0D"}
 ;@TEXTMETA {"id":578,"hex":"0242","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Evil Fire Eyes","assignment":"fixed","theme":"$10 Artificial Fire Eyes","helper":"$10"}
@@ -76003,23 +76021,23 @@ LiveText_2991:
 ;@TEXTMETA {"id":828,"hex":"033C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":829,"hex":"033D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":830,"hex":"033E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":831,"hex":"033F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":832,"hex":"0340","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":833,"hex":"0341","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":834,"hex":"0342","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":835,"hex":"0343","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":836,"hex":"0344","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":837,"hex":"0345","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":838,"hex":"0346","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":831,"hex":"033F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":832,"hex":"0340","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Boy","assignment":"fixed","theme":"$04 Boy","helper":"$04"}
+;@TEXTMETA {"id":833,"hex":"0341","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":834,"hex":"0342","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":835,"hex":"0343","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":836,"hex":"0344","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":837,"hex":"0345","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":838,"hex":"0346","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":839,"hex":"0347","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":840,"hex":"0348","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":841,"hex":"0349","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":842,"hex":"034A","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":843,"hex":"034B","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":844,"hex":"034C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":840,"hex":"0348","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":841,"hex":"0349","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":842,"hex":"034A","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":843,"hex":"034B","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":844,"hex":"034C","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":845,"hex":"034D","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Narration/System","assignment":"fixed","theme":"$02 Narration / System","helper":"$02"}
-;@TEXTMETA {"id":846,"hex":"034E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
-;@TEXTMETA {"id":847,"hex":"034F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
+;@TEXTMETA {"id":846,"hex":"034E","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
+;@TEXTMETA {"id":847,"hex":"034F","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Blimp","assignment":"fixed","theme":"$06 Blimp","helper":"$06"}
 ;@TEXTMETA {"id":848,"hex":"0350","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Generic Prehistoria NPC","assignment":"arena-default","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":849,"hex":"0351","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
 ;@TEXTMETA {"id":850,"hex":"0352","arena":"PREHISTORIA_VILLAGE_FIRE_EYES","source":"Defend alchemist","assignment":"fixed","theme":"$03 Generic NPC","helper":"$03"}
@@ -78200,3 +78218,1279 @@ LiveText_2991:
 ;@TEXTARENA {"name":"IVOR_EXHIBITION_APPROACH","pc_start":4080384,"pc_end_exclusive":4087552}
 ;@TEXTARENA {"name":"IVOR_CASTLE_BANQUET","pc_start":4087552,"pc_end_exclusive":4091648}
 ;@TEXTARENA {"name":"OMNITOPIA_PROFESSOR_CARLTRON","pc_start":4128768,"pc_end_exclusive":4141056}
+
+; v1.37: B/C pot removal and relocated market record.
+org $DFFE0F
+V137_Market_MapPointer:
+    db $00, $00, $FC
+org $FC0000
+V137_Market_Room:
+    db $05, $03, $30, $4C, $17, $00, $00, $02, $00, $00, $00, $00, $00, $42, $00, $2E
+    db $0B, $2F, $0F, $4A, $01, $2A, $0A, $2F, $0B, $4A, $01, $29, $0A, $2A, $10, $4A
+    db $01, $06, $1A, $09, $20, $4D, $01, $06, $2D, $09, $31, $50, $01, $06, $0B, $09
+    db $0E, $53, $01, $0D, $33, $11, $35, $56, $01, $24, $34, $29, $35, $59, $01, $27
+    db $07, $2A, $08, $5C, $01, $22, $32, $23, $34, $5F, $01, $40, $31, $41, $33, $62
+    db $01, $5C, $01, $1E, $10, $1F, $12, $65, $01, $20, $11, $21, $12, $68, $01, $1F
+    db $0E, $20, $0F, $68, $01, $2C, $0D, $2D, $0F, $6B, $01, $47, $2A, $48, $2D, $6E
+    db $01, $47, $24, $48, $27, $71, $01, $47, $20, $48, $23, $74, $01, $46, $14, $47
+    db $17, $77, $01, $46, $10, $47, $13, $7A, $01, $3C, $26, $3D, $29, $7D, $01, $3C
+    db $20, $3D, $23, $80, $01, $3C, $14, $3D, $17, $83, $01, $3C, $10, $3D, $13, $86
+    db $01, $3E, $0A, $41, $0B, $89, $01, $34, $0A, $37, $0B, $8C, $01, $32, $30, $35
+    db $31, $8F, $01, $2F, $2A, $30, $2D, $92, $01, $2E, $1C, $2F, $1D, $95, $01, $2F
+    db $14, $30, $17, $98, $01, $2F, $10, $30, $13, $9B, $01, $23, $14, $24, $17, $9E
+    db $01, $23, $1A, $24, $1D, $A1, $01, $23, $2B, $24, $2E, $A4, $01, $17, $27, $18
+    db $2A, $A7, $01, $17, $23, $18, $26, $AA, $01, $17, $1D, $18, $20, $AD, $01, $17
+    db $1A, $18, $1D, $B0, $01, $1F, $0B, $20, $0C, $B3, $01, $0A, $29, $0B, $2C, $B6
+    db $01, $0B, $21, $0C, $24, $B9, $01, $0C, $19, $0D, $1B, $BC, $01, $11, $0A, $14
+    db $0B, $BF, $01, $0A, $0A, $0D, $0B, $C2, $01, $0A, $0F, $0B, $12, $C5, $01, $2F
+    db $21, $30, $23, $C8, $01, $2E, $1D, $2F, $1E, $68, $01, $46, $31, $48, $33, $C8
+    db $01, $23, $34, $24, $35, $68, $01, $0B, $28, $0C, $29, $68, $01, $28, $25, $29
+    db $26, $68, $01, $3B, $2B, $3C, $2C, $68, $01, $31, $1E, $32, $1F, $68, $01, $30
+    db $1D, $31, $1E, $68, $01, $2F, $1B, $30, $1C, $68, $01, $31, $1B, $32, $1C, $68
+    db $01, $3C, $1D, $3D, $1E, $68, $01, $16, $13, $17, $14, $68, $01, $0A, $0B, $0B
+    db $0C, $68, $01, $08, $13, $09, $14, $CB, $01, $26, $09, $27, $0B, $CE, $01, $24
+    db $20, $25, $22, $D1, $01, $20, $27, $21, $29, $C8, $01, $17, $15, $18, $17, $C8
+    db $01, $0B, $15, $0C, $18, $D4, $01, $2A, $21, $2B, $22, $D7, $01, $2A, $22, $2B
+    db $23, $DA, $01, $22, $31, $23, $32, $DD, $01, $22, $34, $23, $35, $DD, $01, $07
+    db $2A, $00, $34, $00, $35, $00, $2E, $00, $36, $00, $37, $00, $2F, $00, $00, $01
+    db $01, $03, $C2, $01, $FC, $40, $E0, $30, $00, $01, $94, $0A, $01, $49, $80, $EE
+    db $3F, $C0, $0B, $00, $03, $80, $03, $40, $00, $A8, $01, $10, $A2, $40, $69, $5F
+    db $FF, $DF, $FC, $03, $61, $7F, $FF, $CF, $00, $20, $20, $23, $0A, $47, $FF, $73
+    db $00, $E4, $00, $50, $67, $00, $28, $3B, $37, $FF, $37, $00, $E5, $00, $C8, $66
+    db $C0, $28, $30, $23, $FC, $03, $8B, $FE, $01, $3A, $01, $5C, $B8, $3F, $EA, $00
+    db $11, $2E, $A1, $FF, $AF, $00, $88, $6A, $40, $5E, $5A, $6F, $FF, $69, $00, $D8
+    db $7F, $AA, $20, $36, $1D, $A7, $FA, $9A, $04, $4F, $05, $0F, $82, $CB, $F3, $FF
+    db $EB, $10, $1F, $97, $39, $FE, $B2, $81, $AA, $74, $DF, $EA, $D8, $1A, $AF, $4B
+    db $FE, $AE, $03, $82, $F3, $3F, $E8, $74, $02, $B4, $0E, $09, $07, $E8, $5A, $60
+    db $17, $BF, $FE, $10, $1E, $17, $58, $00, $A1, $83, $6C, $41, $90, $B5, $C0, $91
+    db $2E, $88, $25, $4B, $54, $FF, $6B, $40, $6C, $77, $6F, $F6, $2E, $02, $12, $12
+    db $94, $40, $30, $10, $1C, $67, $FA, $EB, $01, $09, $89, $69, $02, $05, $36, $EF
+    db $F7, $BC, $0F, $43, $0A, $07, $E0, $05, $10, $EE, $3F, $EC, $84, $06, $BE, $01
+    db $43, $D0, $03, $49, $EC, $01, $7C, $3C, $FC, $06, $C5, $FE, $84, $C0, $00, $42
+    db $40, $FB, $18, $0D, $A3, $FC, $17, $12, $E3, $05, $68, $79, $3F, $FA, $20, $06
+    db $86, $58, $14, $41, $CB, $7F, $BA, $3F, $FC, $D0, $4A, $94, $21, $A1, $C3, $FF
+    db $80, $00, $1A, $35, $01, $00, $02, $69, $00, $00, $02, $6F, $00, $00, $02, $75
+    db $00, $00, $02, $7B, $00, $00, $02, $81, $00, $00, $02, $87, $00, $00, $03, $8D
+    db $00, $00, $03, $96, $00, $00, $02, $9F, $00, $00, $02, $A5, $00, $00, $02, $AB
+    db $00, $00, $02, $B1, $00, $00, $02, $B7, $00, $00, $02, $BD, $00, $00, $03, $C3
+    db $00, $00, $03, $CC, $00, $00, $02, $D5, $00, $00, $02, $DB, $00, $00, $02, $E1
+    db $00, $00, $02, $E7, $00, $20, $04, $ED, $00, $20, $04, $F9, $00, $20, $04, $05
+    db $01, $20, $04, $11, $01, $20, $04, $1D, $01, $20, $04, $29, $01, $FF, $19, $D7
+    db $05, $11, $D8, $05, $1F, $D9, $05, $2C, $DA, $05, $4B, $DB, $05, $04, $DC, $05
+    db $4B, $46, $05, $04, $DD, $05, $0A, $DE, $05, $07, $DF, $05, $08, $E0, $05, $30
+    db $E1, $05, $0C, $E2, $05, $0C, $E3, $05, $0C, $E4, $05, $0C, $E5, $05, $0C, $E6
+    db $05, $0C, $E7, $05, $1F, $DB, $05, $06, $DC, $05, $1F, $46, $05, $06, $DD, $05
+    db $49, $E8, $05, $29, $E9, $05, $49, $EA, $05, $29, $EB, $05, $3B, $D6, $04, $3D
+    db $D7, $04, $3B, $D8, $04, $3D, $D9, $04, $0C, $EC, $05, $0C, $ED, $05, $0C, $EE
+    db $05, $0C, $EF, $05, $0C, $F0, $05, $0C, $F1, $05, $49, $F2, $05, $29, $F3, $05
+    db $49, $F4, $05, $29, $F5, $05, $26, $F6, $05, $0D, $F7, $05, $26, $F8, $05, $0D
+    db $F9, $05, $0C, $DA, $04, $0C, $DB, $04, $0C, $DC, $04, $0C, $DB, $04, $0C, $E0
+    db $04, $0C, $E1, $04, $0C, $E2, $04, $0C, $E1, $04, $0C, $E6, $04, $0C, $E7, $04
+    db $0C, $E8, $04, $0C, $E7, $04, $0C, $DD, $04, $0C, $DE, $04, $0C, $DF, $04, $0C
+    db $DF, $04, $0C, $E3, $04, $0C, $E4, $04, $0C, $E5, $04, $0C, $E5, $04, $0C, $E9
+    db $04, $0C, $EA, $04, $0C, $EA, $04, $0C, $EA, $04, $29, $00, $00, $06, $00, $0C
+    db $00, $12, $00, $18, $00, $1E, $00, $24, $00, $2A, $00, $30, $00, $36, $00, $3C
+    db $00, $42, $00, $48, $00, $4E, $00, $54, $00, $5A, $00, $60, $00, $66, $00, $6C
+    db $00, $72, $00, $78, $00, $7E, $00, $84, $00, $8A, $00, $90, $00, $96, $00, $9C
+    db $00, $A2, $00, $A8, $00, $AE, $00, $B4, $00, $BA, $00, $C0, $00, $C6, $00, $CC
+    db $00, $D2, $00, $D8, $00, $DE, $00, $E4, $00, $EA, $00, $FF, $00, $83, $1C, $00
+    db $80, $1C, $80, $1C, $88, $1C, $90, $1C, $98, $1C, $A0, $1C, $A8, $1C, $B0, $1C
+    db $B8, $1C, $C0, $1C, $C8, $1C, $D0, $1C, $D8, $1C, $E0, $1C, $E8, $1C, $F0, $1C
+    db $F8, $1C, $00, $1D, $08, $1D, $F0, $1C, $10, $1D, $18, $1D, $20, $1D, $28, $1D
+    db $30, $1D, $38, $1D, $40, $1D, $48, $1D, $50, $1D, $58, $1D, $60, $1D, $68, $1D
+    db $70, $1D, $78, $1D, $40, $1D, $80, $1D, $88, $1D, $90, $1D, $98, $1D, $A0, $1D
+    db $A8, $1D, $38, $1D, $40, $1D, $B0, $1D, $C8, $1C, $B8, $1D, $C0, $1D, $C8, $1D
+    db $80, $1D, $D0, $1D, $D8, $1D, $E0, $1D, $E8, $1D, $F0, $1D, $F8, $1D, $B8, $1C
+    db $00, $1E, $08, $1E, $10, $1E, $18, $1E, $20, $1E, $28, $1E, $30, $1E, $38, $1E
+    db $40, $1E, $F0, $1D, $48, $1E, $38, $1E, $40, $1E, $50, $1E, $58, $1E, $60, $1E
+    db $68, $1E, $70, $1E, $78, $1E, $80, $1E, $88, $1E, $90, $1E, $98, $1E, $A0, $1E
+    db $A8, $1E, $B0, $1E, $B8, $1E, $C0, $1E, $C8, $1E, $D0, $1E, $80, $1E, $D8, $1E
+    db $E0, $1E, $E8, $1E, $78, $1E, $F0, $1E, $C8, $1E, $F8, $1E, $00, $1F, $08, $1F
+    db $10, $1F, $18, $1F, $20, $1F, $28, $1F, $30, $1F, $38, $1F, $40, $1F, $A0, $1C
+    db $A8, $1C, $48, $1F, $50, $1F, $58, $1F, $60, $1F, $68, $1F, $70, $1F, $78, $1F
+    db $80, $1F, $88, $1F, $90, $1F, $98, $1F, $A0, $1F, $A8, $1F, $B0, $1F, $B8, $1F
+    db $B8, $1C, $C0, $1F, $A8, $1C, $48, $1F, $C8, $1F, $D0, $1F, $D8, $1F, $E0, $1F
+    db $E8, $1F, $F0, $1F, $F8, $1F, $00, $20, $50, $1F, $58, $1F, $68, $1F, $08, $20
+    db $10, $20, $18, $20, $40, $1F, $20, $20, $80, $1E, $28, $20, $30, $20, $30, $20
+    db $30, $20, $38, $20, $D8, $1D, $40, $20, $48, $20, $50, $20, $10, $1F, $58, $20
+    db $60, $20, $68, $20, $70, $20, $78, $20, $80, $20, $88, $20, $90, $20, $98, $20
+    db $A0, $20, $A8, $20, $B0, $20, $B8, $20, $C0, $20, $C8, $20, $D0, $20, $D8, $20
+    db $E0, $20, $E8, $20, $F0, $20, $68, $20, $F8, $20, $00, $21, $D8, $1F, $08, $21
+    db $10, $21, $18, $21, $28, $1E, $30, $1E, $20, $21, $80, $20, $88, $20, $28, $21
+    db $30, $21, $60, $20, $38, $21, $58, $20, $40, $21, $48, $21, $50, $21, $50, $21
+    db $50, $21, $18, $1F, $58, $21, $60, $21, $68, $21, $70, $21, $78, $21, $80, $21
+    db $88, $21, $90, $21, $98, $21, $A0, $21, $A8, $21, $B0, $21, $B8, $21, $C0, $21
+    db $C8, $21, $D0, $21, $D8, $21, $E0, $21, $E8, $21, $F0, $21, $F8, $21, $00, $22
+    db $08, $22, $E8, $20, $10, $22, $88, $21, $18, $22, $20, $22, $28, $22, $30, $22
+    db $38, $22, $40, $22, $40, $1F, $20, $20, $48, $22, $50, $22, $A8, $21, $58, $22
+    db $B8, $21, $60, $22, $68, $22, $88, $21, $68, $20, $70, $22, $50, $21, $50, $21
+    db $50, $21, $78, $22, $80, $22, $88, $22, $90, $22, $98, $22, $98, $22, $A0, $22
+    db $A8, $22, $B0, $22, $B8, $22, $C0, $22, $C8, $22, $D0, $22, $D8, $22, $E0, $22
+    db $E8, $22, $F0, $22, $F8, $22, $00, $23, $08, $23, $10, $23, $18, $23, $20, $23
+    db $28, $23, $30, $23, $38, $23, $A8, $22, $40, $23, $48, $23, $50, $23, $C0, $1F
+    db $A0, $1C, $58, $23, $10, $1F, $F0, $1D, $60, $23, $68, $23, $70, $23, $78, $23
+    db $80, $23, $88, $23, $90, $23, $98, $23, $A0, $23, $A8, $23, $B0, $23, $B0, $23
+    db $B0, $23, $78, $22, $B8, $23, $C0, $23, $C8, $23, $20, $22, $D0, $23, $D8, $23
+    db $E0, $23, $E8, $23, $F0, $23, $F8, $23, $00, $24, $00, $24, $08, $24, $10, $24
+    db $18, $24, $20, $24, $28, $24, $30, $24, $38, $24, $40, $24, $48, $24, $50, $24
+    db $58, $24, $60, $24, $E0, $23, $48, $24, $68, $24, $70, $24, $78, $24, $80, $24
+    db $88, $24, $90, $24, $98, $24, $A0, $24, $A8, $24, $F8, $23, $B0, $24, $B8, $24
+    db $C0, $24, $C8, $24, $D0, $24, $D8, $24, $D8, $24, $E0, $24, $E8, $24, $E8, $24
+    db $E8, $24, $F0, $24, $F8, $24, $00, $25, $08, $25, $10, $25, $18, $25, $20, $25
+    db $28, $25, $30, $25, $38, $25, $40, $25, $48, $25, $50, $25, $58, $25, $C8, $1C
+    db $60, $25, $68, $25, $B8, $24, $B0, $24, $70, $25, $78, $25, $80, $25, $88, $25
+    db $90, $25, $50, $24, $98, $25, $A0, $25, $A8, $25, $B0, $25, $B8, $25, $B8, $25
+    db $C0, $25, $C8, $25, $C8, $1C, $D0, $25, $D8, $25, $E0, $25, $E8, $25, $F0, $25
+    db $F8, $25, $00, $26, $08, $26, $10, $26, $18, $26, $20, $26, $28, $26, $28, $26
+    db $30, $26, $78, $22, $80, $22, $38, $26, $40, $26, $48, $26, $50, $26, $58, $26
+    db $60, $26, $68, $26, $70, $26, $78, $26, $D8, $24, $78, $26, $80, $26, $88, $26
+    db $90, $26, $98, $26, $A0, $26, $A8, $26, $B0, $26, $B8, $26, $C0, $26, $C8, $26
+    db $D0, $26, $E8, $23, $D8, $26, $28, $25, $E0, $26, $E0, $25, $E8, $25, $E8, $25
+    db $E8, $26, $F0, $26, $F8, $26, $00, $27, $08, $27, $D0, $24, $D8, $24, $78, $26
+    db $10, $27, $18, $27, $68, $26, $68, $26, $20, $27, $28, $27, $30, $27, $30, $27
+    db $38, $27, $78, $22, $38, $26, $F8, $24, $40, $27, $48, $27, $50, $27, $58, $27
+    db $60, $27, $68, $27, $68, $27, $70, $27, $78, $27, $80, $27, $88, $27, $70, $27
+    db $80, $27, $88, $26, $D8, $24, $78, $26, $80, $26, $90, $27, $98, $27, $D8, $26
+    db $A0, $27, $A8, $27, $B0, $27, $B8, $27, $88, $26, $C0, $27, $D0, $24, $D0, $24
+    db $C8, $27, $D0, $27, $D8, $27, $E0, $27, $E8, $27, $08, $26, $78, $27, $F0, $27
+    db $F8, $27, $60, $27, $28, $25, $28, $25, $00, $28, $08, $28, $10, $28, $18, $28
+    db $20, $28, $28, $28, $F8, $24, $B8, $23, $30, $28, $38, $28, $40, $28, $28, $25
+    db $48, $28, $68, $26, $E8, $23, $68, $26, $50, $28, $58, $28, $60, $28, $48, $28
+    db $68, $28, $70, $27, $78, $27, $80, $27, $88, $27, $50, $28, $58, $28, $D0, $26
+    db $98, $25, $B8, $27, $60, $27, $D8, $26, $70, $27, $70, $28, $08, $26, $78, $27
+    db $80, $27, $78, $28, $80, $28, $88, $28, $70, $26, $98, $25, $E8, $23, $60, $28
+    db $48, $28, $E8, $23, $00, $28, $98, $25, $E8, $23, $88, $26, $C0, $27, $90, $28
+    db $98, $28, $A0, $28, $80, $22, $A8, $28, $B0, $28, $B8, $28, $C0, $28, $C8, $28
+    db $60, $27, $28, $25, $50, $28, $58, $28, $68, $26, $B8, $27, $68, $27, $00, $28
+    db $D0, $28, $A8, $27, $B0, $27, $60, $28, $48, $28, $A0, $27, $60, $28, $48, $28
+    db $D8, $26, $D0, $26, $68, $27, $B8, $27, $60, $27, $28, $25, $D8, $26, $98, $25
+    db $68, $27, $B8, $27, $98, $25, $D8, $28, $50, $28, $98, $25, $68, $27, $B8, $27
+    db $60, $27, $28, $25, $D0, $26, $70, $26, $68, $27, $70, $27, $70, $28, $E0, $28
+    db $E8, $28, $A0, $28, $38, $26, $F0, $28, $F8, $28, $00, $29, $08, $29, $10, $29
+    db $68, $28, $18, $29, $50, $28, $50, $28, $58, $28, $58, $24, $E8, $23, $50, $28
+    db $58, $28, $28, $25, $60, $28, $48, $28, $68, $26, $20, $29, $28, $29, $E8, $23
+    db $60, $28, $48, $28, $68, $26, $68, $26, $D0, $26, $E8, $23, $60, $28, $48, $28
+    db $68, $26, $68, $26, $70, $26, $E8, $23, $60, $28, $48, $28, $60, $28, $68, $27
+    db $D8, $26, $98, $25, $60, $28, $48, $28, $68, $26, $98, $25, $48, $28, $20, $23
+    db $30, $29, $38, $29, $F8, $24, $40, $29, $48, $29, $50, $29, $B8, $21, $58, $29
+    db $D0, $28, $A8, $27, $68, $27, $58, $24, $68, $27, $28, $25, $A0, $25, $60, $29
+    db $68, $29, $70, $29, $78, $29, $60, $27, $80, $29, $88, $29, $90, $29, $98, $29
+    db $C8, $28, $A0, $29, $80, $29, $A8, $29, $A0, $29, $98, $29, $C8, $28, $A0, $29
+    db $80, $29, $80, $29, $A0, $25, $98, $29, $C8, $28, $A0, $29, $80, $29, $B0, $29
+    db $A8, $29, $68, $27, $B8, $27, $98, $25, $28, $25, $B8, $27, $A0, $29, $18, $23
+    db $B8, $29, $C0, $29, $C8, $29, $38, $26, $08, $25, $D0, $29, $D8, $29, $E0, $29
+    db $48, $28, $68, $26, $E8, $23, $A8, $27, $60, $27, $E8, $29, $F0, $29, $F8, $29
+    db $00, $2A, $08, $2A, $10, $2A, $60, $28, $18, $2A, $20, $2A, $28, $2A, $30, $2A
+    db $38, $2A, $40, $2A, $48, $2A, $50, $2A, $58, $2A, $60, $2A, $68, $2A, $68, $2A
+    db $70, $2A, $78, $2A, $80, $2A, $88, $2A, $90, $2A, $98, $2A, $A0, $2A, $A8, $2A
+    db $B0, $2A, $B0, $27, $98, $25, $60, $28, $48, $28, $E8, $23, $98, $29, $B8, $2A
+    db $B8, $2A, $A0, $28, $C0, $2A, $C8, $2A, $08, $25, $D0, $2A, $D8, $2A, $E0, $2A
+    db $60, $27, $28, $25, $50, $24, $D8, $28, $B8, $27, $E8, $2A, $F0, $2A, $F8, $2A
+    db $00, $2B, $08, $2B, $68, $29, $B8, $27, $A0, $29, $10, $2B, $18, $2B, $18, $2B
+    db $20, $2B, $28, $2B, $30, $2B, $38, $2B, $40, $2B, $48, $2B, $50, $2B, $18, $2B
+    db $58, $2B, $60, $2B, $68, $2B, $18, $2B, $70, $2B, $78, $2B, $80, $2B, $88, $2B
+    db $90, $2B, $98, $2B, $A0, $2B, $B8, $27, $60, $27, $28, $25, $A0, $25, $A8, $2B
+    db $50, $21, $38, $29, $B0, $2B, $B8, $2B, $C0, $2B, $C8, $2B, $D0, $2B, $D8, $2B
+    db $68, $26, $70, $26, $28, $25, $68, $27, $28, $25, $E0, $2B, $E8, $2B, $F0, $2B
+    db $F8, $2B, $00, $2C, $08, $2C, $68, $26, $B0, $29, $C8, $21, $D0, $21, $10, $2C
+    db $18, $2C, $20, $2C, $E8, $21, $E8, $21, $28, $2C, $30, $2C, $38, $2C, $40, $2C
+    db $48, $2C, $50, $2C, $58, $2C, $10, $2C, $60, $2C, $20, $2C, $68, $2C, $70, $2C
+    db $78, $2C, $60, $28, $80, $2C, $68, $26, $60, $28, $48, $28, $78, $2C, $88, $2C
+    db $50, $21, $C0, $29, $90, $2C, $98, $2C, $A0, $2C, $A8, $2C, $B0, $2C, $B8, $2C
+    db $C0, $2C, $00, $28, $68, $27, $80, $2C, $60, $27, $00, $28, $C8, $2C, $D0, $2C
+    db $D8, $2C, $E0, $2C, $E8, $2C, $28, $25, $80, $29, $F0, $2C, $F8, $2C, $00, $2D
+    db $08, $2D, $C0, $1F, $10, $2D, $18, $2D, $20, $2D, $28, $2D, $F8, $1D, $C0, $1F
+    db $30, $2D, $38, $2D, $40, $2D, $A0, $1C, $10, $2D, $C0, $1F, $48, $2D, $50, $2D
+    db $98, $29, $B8, $27, $98, $25, $D8, $26, $D8, $26, $60, $27, $98, $29, $A8, $2B
+    db $50, $21, $38, $29, $58, $2D, $60, $2D, $68, $2D, $70, $2D, $78, $2D, $80, $2D
+    db $88, $2D, $18, $29, $D8, $26, $68, $26, $90, $2D, $48, $28, $98, $2D, $A0, $2D
+    db $A8, $2D, $B0, $2D, $60, $28, $48, $28, $78, $2C, $B8, $2D, $C0, $2D, $C8, $2D
+    db $D0, $2D, $D8, $2D, $E0, $2D, $E8, $2D, $F0, $2D, $F8, $2D, $00, $2E, $08, $2E
+    db $10, $2E, $68, $23, $18, $2E, $C0, $22, $20, $2E, $28, $2E, $30, $2E, $A0, $1C
+    db $18, $2A, $68, $26, $98, $25, $70, $26, $E8, $23, $60, $28, $18, $2A, $38, $2E
+    db $50, $21, $C0, $29, $40, $2E, $48, $2E, $50, $2E, $58, $2E, $60, $2E, $68, $2E
+    db $70, $2E, $70, $26, $60, $27, $A8, $27, $60, $27, $E8, $23, $78, $2E, $80, $2E
+    db $88, $2E, $90, $2E, $98, $2E, $A0, $29, $98, $29, $A0, $2E, $A8, $2E, $B0, $2E
+    db $B8, $2E, $C0, $2E, $C0, $2E, $C0, $2E, $C0, $2E, $C0, $25, $C8, $2E, $D0, $2E
+    db $D8, $2E, $E0, $2E, $E8, $2E, $00, $24, $F0, $2E, $F8, $2E, $F8, $23, $00, $2F
+    db $A0, $29, $98, $25, $D8, $26, $00, $28, $68, $27, $58, $24, $A0, $29, $08, $2F
+    db $B0, $23, $28, $28, $90, $2C, $10, $2F, $18, $2F, $20, $2F, $28, $2F, $68, $26
+    db $28, $25, $00, $28, $D0, $26, $98, $25, $98, $25, $30, $2F, $30, $25, $38, $2F
+    db $40, $2F, $48, $2F, $50, $2F, $18, $2A, $68, $26, $58, $2F, $60, $2F, $68, $2F
+    db $60, $2F, $70, $2F, $E0, $25, $E8, $25, $58, $25, $78, $2F, $78, $2F, $80, $2F
+    db $88, $2F, $68, $2F, $90, $2F, $98, $2F, $A0, $2F, $A8, $2F, $B0, $2F, $B8, $2F
+    db $C0, $2F, $60, $24, $E0, $23, $48, $24, $B0, $29, $48, $24, $78, $2C, $C8, $2F
+    db $D0, $2F, $A0, $28, $58, $2D, $D8, $2F, $E0, $2F, $E8, $2F, $F0, $2F, $F8, $2F
+    db $68, $27, $D8, $28, $68, $27, $B8, $27, $70, $29, $78, $29, $00, $30, $08, $30
+    db $68, $27, $B8, $27, $B8, $27, $60, $27, $28, $25, $88, $26, $C0, $27, $10, $30
+    db $18, $30, $D0, $24, $D8, $24, $78, $26, $C0, $27, $10, $30, $18, $30, $C0, $27
+    db $78, $26, $18, $30, $D8, $24, $78, $26, $D0, $24, $D8, $24, $78, $26, $80, $26
+    db $90, $25, $A0, $27, $20, $30, $A0, $25, $B8, $2A, $B8, $2A, $B8, $2A, $28, $30
+    db $28, $30, $38, $29, $30, $30, $38, $30, $40, $30, $48, $30, $50, $30, $98, $29
+    db $60, $28, $98, $25, $68, $26, $68, $26, $70, $26, $E8, $23, $60, $28, $48, $28
+    db $68, $26, $60, $28, $48, $28, $68, $26, $68, $27, $70, $27, $70, $28, $58, $30
+    db $60, $30, $08, $26, $78, $27, $80, $27, $70, $28, $58, $30, $60, $30, $70, $28
+    db $58, $30, $60, $30, $78, $27, $80, $27, $08, $26, $78, $27, $80, $27, $88, $27
+    db $68, $28, $68, $30, $98, $25, $C8, $28, $70, $30, $78, $30, $78, $30, $50, $21
+    db $50, $21, $C0, $29, $90, $2C, $80, $30, $88, $30, $88, $30, $90, $30, $C8, $28
+    db $B8, $27, $60, $27, $60, $28, $28, $25, $00, $28, $68, $27, $B8, $27, $60, $27
+    db $28, $25, $B8, $27, $60, $27, $28, $25, $68, $26, $70, $26, $68, $27, $B8, $27
+    db $60, $27, $28, $25, $68, $27, $60, $28, $98, $30, $A0, $30, $18, $2A, $68, $26
+    db $68, $27, $50, $28, $58, $28, $50, $28, $58, $28, $58, $24, $60, $28, $48, $28
+    db $D0, $28, $A8, $27, $B0, $27, $90, $2B, $A8, $30, $50, $21, $B0, $30, $50, $21
+    db $50, $21, $C0, $29, $58, $2D, $B8, $30, $C0, $30, $C8, $30, $D0, $30, $D8, $30
+    db $68, $27, $D8, $26, $D8, $26, $68, $26, $E8, $23, $60, $28, $48, $28, $68, $26
+    db $68, $26, $C0, $2F, $60, $24, $E0, $23, $28, $25, $00, $28, $18, $29, $68, $27
+    db $48, $28, $68, $26, $00, $28, $E0, $30, $E8, $30, $F0, $30, $F8, $30, $80, $29
+    db $68, $28, $68, $30, $10, $2A, $68, $26, $60, $27, $50, $28, $58, $28, $D0, $26
+    db $98, $25, $B8, $27, $E8, $23, $88, $25, $00, $31, $08, $31, $08, $31, $10, $31
+    db $08, $31, $38, $29, $B8, $23, $80, $22, $18, $31, $20, $31, $28, $31, $C8, $28
+    db $60, $27, $28, $25, $B8, $27, $28, $25, $68, $27, $B8, $27, $A0, $29, $80, $29
+    db $80, $29, $90, $2B, $30, $31, $38, $31, $80, $29, $A0, $25, $40, $31, $C8, $28
+    db $A0, $29, $80, $29, $78, $2C, $48, $31, $50, $31, $58, $31, $60, $31, $68, $31
+    db $D0, $28, $A8, $27, $B0, $27, $28, $25, $70, $31, $78, $31, $B0, $29, $48, $24
+    db $C8, $26, $98, $29, $98, $29, $C8, $28, $80, $31, $08, $31, $08, $31, $08, $31
+    db $08, $31, $C0, $29, $C8, $29, $38, $26, $88, $31, $90, $31, $78, $2D, $98, $31
+    db $18, $2A, $E8, $23, $D8, $26, $18, $2A, $A0, $31, $A8, $31, $18, $2A, $B0, $31
+    db $B8, $31, $C0, $31, $C8, $31, $D0, $31, $D8, $31, $C8, $28, $E0, $31, $E8, $31
+    db $F0, $31, $F8, $31, $00, $32, $08, $32, $10, $32, $18, $32, $20, $32, $28, $32
+    db $10, $2A, $68, $26, $60, $28, $68, $27, $B0, $29, $30, $32, $48, $2A, $88, $2A
+    db $38, $32, $40, $32, $B0, $29, $B0, $29, $48, $32, $50, $32, $58, $32, $60, $32
+    db $50, $32, $C0, $29, $C0, $2A, $C8, $2A, $68, $32, $70, $32, $78, $32, $80, $32
+    db $A0, $29, $68, $27, $B8, $27, $A0, $29, $88, $32, $90, $32, $A0, $29, $98, $32
+    db $A0, $32, $A0, $32, $A8, $32, $B0, $32, $B8, $32, $B8, $32, $C0, $32, $C8, $32
+    db $D0, $32, $D8, $32, $68, $29, $E0, $32, $E8, $32, $68, $1D, $70, $1D, $70, $26
+    db $B0, $27, $28, $25, $B8, $27, $60, $27, $80, $29, $F0, $32, $F8, $32, $18, $2B
+    db $00, $33, $08, $33, $80, $29, $80, $29, $10, $33, $18, $33, $20, $33, $28, $33
+    db $18, $33, $38, $29, $B0, $2B, $B8, $2B, $C8, $24, $30, $33, $38, $33, $40, $33
+    db $18, $29, $D8, $26, $48, $33, $50, $33, $58, $33, $60, $33, $18, $2A, $68, $33
+    db $20, $22, $70, $33, $C8, $23, $78, $33, $B0, $29, $48, $24, $80, $33, $88, $33
+    db $A0, $21, $90, $33, $98, $33, $A0, $33, $A8, $33, $B0, $33, $B8, $33, $00, $28
+    db $68, $30, $68, $26, $00, $32, $C0, $33, $C8, $33, $D0, $33, $E8, $21, $E0, $21
+    db $D8, $33, $E0, $33, $18, $2A, $B0, $29, $E8, $33, $F0, $33, $F8, $33, $00, $34
+    db $F0, $33, $C0, $29, $08, $34, $10, $34, $18, $34, $20, $34, $28, $34, $20, $30
+    db $30, $34, $00, $28, $38, $34, $40, $34, $48, $34, $50, $34, $80, $29, $58, $34
+    db $60, $34, $10, $2D, $D8, $2D, $68, $34, $80, $29, $A0, $25, $40, $2D, $70, $34
+    db $F8, $1D, $78, $34, $80, $34, $88, $34, $90, $34, $98, $34, $80, $26, $68, $28
+    db $A8, $27, $B0, $27, $A0, $34, $A8, $34, $B0, $34, $B8, $34, $08, $25, $C0, $34
+    db $C8, $34, $D0, $34, $A0, $29, $80, $29, $10, $33, $D8, $34, $E0, $34, $E8, $34
+    db $F0, $33, $C0, $29, $58, $2D, $60, $2D, $F0, $34, $F8, $34, $88, $25, $48, $28
+    db $E8, $23, $D8, $26, $48, $28, $00, $35, $08, $35, $10, $35, $78, $2C, $18, $35
+    db $D8, $2D, $20, $35, $80, $24, $28, $35, $78, $2C, $88, $25, $30, $35, $38, $35
+    db $D0, $22, $40, $35, $48, $35, $50, $35, $58, $35, $60, $35, $88, $27, $D0, $28
+    db $68, $35, $70, $35, $48, $28, $68, $26, $78, $35, $80, $35, $88, $35, $90, $35
+    db $98, $35, $A0, $35, $B0, $29, $70, $26, $A8, $35, $B0, $35, $B8, $35, $C0, $35
+    db $B0, $35, $38, $29, $30, $30, $48, $2E, $C8, $35, $D0, $35, $C8, $28, $60, $27
+    db $68, $27, $B8, $27, $60, $27, $28, $25, $D8, $35, $E0, $35, $E8, $35, $F0, $35
+    db $00, $24, $C0, $25, $C0, $25, $F8, $35, $00, $36, $08, $36, $10, $36, $F8, $2E
+    db $A8, $2E, $18, $36, $20, $36, $28, $36, $30, $36, $38, $36, $18, $2A, $68, $26
+    db $40, $36, $48, $36, $60, $27, $28, $25, $50, $36, $58, $36, $60, $36, $68, $36
+    db $C0, $25, $70, $36, $80, $29, $00, $28, $D0, $24, $78, $36, $80, $36, $88, $36
+    db $90, $36, $C0, $29, $98, $36, $A0, $36, $A8, $36, $B0, $36, $B8, $36, $60, $28
+    db $48, $28, $98, $25, $68, $26, $70, $26, $C0, $36, $C8, $36, $D0, $36, $D8, $36
+    db $E0, $36, $50, $25, $E8, $36, $F0, $36, $F8, $36, $00, $37, $08, $37, $10, $37
+    db $10, $37, $18, $37, $20, $37, $28, $37, $30, $37, $38, $37, $78, $2C, $60, $28
+    db $48, $28, $68, $26, $68, $26, $70, $26, $40, $37, $48, $37, $50, $37, $58, $37
+    db $50, $25, $60, $37, $E8, $23, $68, $37, $08, $26, $78, $27, $80, $27, $78, $27
+    db $70, $37, $38, $29, $78, $37, $80, $37, $88, $37, $90, $37, $98, $37, $C8, $28
+    db $60, $27, $98, $25, $D8, $26, $D8, $26, $68, $27, $C0, $36, $A0, $37, $88, $26
+    db $D8, $24, $D8, $24, $78, $26, $80, $26, $90, $25, $98, $2B, $88, $26, $C0, $27
+    db $D8, $24, $80, $26, $A8, $37, $B0, $37, $B8, $37, $C0, $37, $68, $27, $B8, $27
+    db $60, $27, $28, $25, $28, $25, $C8, $37, $D0, $37, $D8, $37, $E0, $37, $D8, $24
+    db $D0, $24, $80, $26, $68, $27, $E8, $37, $A8, $27, $60, $27, $F0, $37, $00, $30
+    db $F8, $37, $00, $38, $08, $38, $10, $38, $18, $38, $20, $38, $28, $38, $48, $24
+    db $D8, $26, $60, $24, $D8, $26, $60, $28, $48, $28, $18, $29, $48, $28, $70, $27
+    db $78, $27, $78, $27, $80, $27, $88, $27, $48, $28, $60, $28, $70, $27, $70, $28
+    db $78, $27, $88, $27, $E8, $23, $60, $28, $48, $28, $68, $26, $68, $26, $70, $26
+    db $E8, $23, $60, $28, $30, $38, $38, $38, $40, $38, $48, $38, $50, $38, $78, $27
+    db $08, $26, $88, $27, $68, $27, $30, $25, $38, $2F, $E8, $23, $68, $27, $60, $28
+    db $58, $38, $60, $38, $68, $38, $70, $38, $68, $27, $78, $38, $80, $38, $00, $28
+    db $90, $25, $98, $2B, $20, $30, $B8, $27, $60, $27, $A0, $2B, $60, $27, $28, $25
+    db $28, $25, $00, $28, $68, $27, $B8, $27, $60, $27, $B8, $27, $60, $27, $50, $28
+    db $E0, $32, $D8, $28, $68, $27, $B8, $27, $60, $27, $28, $25, $28, $25, $00, $28
+    db $68, $27, $88, $38, $C8, $1C, $90, $38, $98, $38, $A0, $38, $A8, $38, $98, $2B
+    db $20, $30, $28, $29, $F0, $37, $00, $30, $E0, $23, $80, $2C, $30, $34, $B8, $27
+    db $B0, $38, $B8, $38, $C0, $38, $C8, $38, $58, $28, $30, $34, $68, $26, $50, $24
+    db $50, $24, $D0, $26, $48, $28, $48, $28, $60, $24, $58, $24, $68, $27, $D0, $26
+    db $98, $25, $D0, $26, $98, $25, $68, $26, $68, $26, $70, $26, $E8, $23, $D0, $26
+    db $98, $25, $98, $25, $68, $26, $68, $26, $70, $26, $E8, $23, $60, $28, $48, $28
+    db $68, $26, $60, $28, $D0, $38, $D8, $38, $E0, $38, $E8, $38, $F0, $38, $F8, $38
+    db $00, $39, $68, $26, $60, $28, $48, $28, $50, $24, $D8, $28, $E0, $32, $60, $28
+    db $08, $39, $10, $39, $18, $39, $20, $39, $28, $39, $58, $24, $28, $25, $50, $24
+    db $D8, $26, $B8, $27, $A0, $29, $A8, $29, $E8, $29, $F8, $2F, $28, $39, $78, $2C
+    db $C8, $26, $98, $29, $C8, $26, $80, $29, $80, $29, $A0, $25, $98, $29, $A0, $25
+    db $C8, $26, $A0, $29, $80, $29, $80, $29, $A0, $25, $30, $39, $C8, $28, $38, $39
+    db $00, $28, $40, $39, $C8, $1C, $48, $39, $50, $39, $58, $39, $60, $39, $68, $39
+    db $88, $2E, $70, $39, $68, $27, $D0, $26, $98, $25, $70, $39, $48, $24, $C8, $28
+    db $78, $39, $80, $39, $88, $39, $90, $39, $E8, $29, $00, $28, $30, $23, $98, $39
+    db $A0, $39, $A8, $39, $B0, $39, $B8, $39, $C0, $39, $C8, $39, $D0, $39, $D8, $39
+    db $E0, $39, $28, $2A, $E8, $39, $20, $2A, $F0, $39, $F8, $39, $00, $3A, $00, $3A
+    db $08, $3A, $10, $3A, $F8, $39, $A0, $25, $78, $2C, $18, $3A, $20, $3A, $F8, $2F
+    db $D8, $28, $28, $3A, $30, $3A, $38, $3A, $40, $3A, $48, $3A, $50, $3A, $58, $3A
+    db $60, $3A, $A8, $29, $D0, $26, $98, $25, $D0, $26, $98, $29, $68, $3A, $70, $3A
+    db $78, $3A, $60, $38, $80, $3A, $88, $3A, $A8, $29, $D8, $26, $90, $3A, $60, $27
+    db $D8, $26, $98, $3A, $A0, $3A, $A8, $3A, $B0, $3A, $B8, $3A, $C0, $3A, $C8, $3A
+    db $D0, $3A, $D8, $3A, $E0, $3A, $D0, $3A, $E8, $3A, $F0, $3A, $F8, $3A, $00, $3B
+    db $08, $3B, $10, $3B, $18, $3B, $20, $3B, $98, $25, $28, $3B, $30, $3B, $28, $25
+    db $A0, $27, $88, $25, $38, $3B, $40, $3B, $48, $3B, $50, $3B, $58, $3B, $60, $3B
+    db $68, $3B, $20, $3B, $98, $25, $D8, $26, $D0, $26, $A8, $29, $70, $3B, $78, $3B
+    db $80, $3B, $88, $3B, $90, $3B, $B8, $23, $98, $3B, $A0, $3B, $A8, $3B, $E8, $23
+    db $88, $25, $B0, $3B, $B8, $3B, $98, $21, $C0, $3B, $C8, $3B, $D0, $3B, $B8, $21
+    db $30, $2C, $D8, $3B, $E0, $3B, $E8, $3B, $F0, $3B, $F8, $3B, $00, $3C, $08, $3C
+    db $10, $3C, $18, $3C, $70, $33, $98, $29, $D8, $26, $20, $3C, $28, $3C, $30, $3C
+    db $38, $3C, $40, $3C, $48, $3C, $50, $3C, $58, $3C, $60, $3C, $68, $3C, $70, $3C
+    db $78, $3C, $98, $25, $98, $25, $30, $34, $80, $2C, $C8, $26, $70, $3B, $80, $3C
+    db $80, $3C, $38, $29, $88, $3C, $90, $3C, $98, $3C, $A0, $3C, $A8, $3C, $68, $27
+    db $C8, $28, $B0, $3C, $B8, $3C, $C0, $3C, $F0, $1E, $C8, $3C, $70, $24, $D0, $3C
+    db $40, $24, $10, $2D, $D8, $3C, $E0, $3C, $E8, $3C, $F0, $3C, $F8, $3C, $00, $3D
+    db $08, $3D, $10, $3D, $18, $3D, $A0, $29, $20, $3D, $28, $3D, $30, $3D, $90, $38
+    db $38, $3D, $40, $3D, $48, $3D, $A0, $1C, $68, $23, $50, $3D, $58, $3D, $C8, $3C
+    db $60, $3D, $D8, $26, $50, $28, $E0, $32, $20, $30, $B0, $29, $68, $3D, $70, $3D
+    db $78, $3D, $C0, $29, $80, $3D, $88, $3D, $90, $3D, $78, $27, $98, $3D, $28, $29
+    db $E8, $23, $60, $28, $48, $28, $A0, $3D, $88, $24, $A8, $3D, $00, $23, $B0, $3D
+    db $D8, $2D, $E0, $2D, $E8, $2D, $B8, $3D, $C0, $3D, $C8, $3D, $D0, $3D, $68, $23
+    db $D8, $3D, $E0, $3D, $30, $35, $E8, $3D, $F0, $3D, $A0, $37, $F8, $3D, $00, $3E
+    db $C8, $1C, $90, $38, $08, $3E, $10, $3E, $18, $3E, $20, $3E, $28, $3E, $A8, $3D
+    db $30, $3E, $68, $26, $30, $25, $38, $2F, $30, $34, $80, $29, $38, $3E, $40, $3E
+    db $48, $3E, $C0, $29, $30, $30, $50, $3E, $18, $34, $78, $2D, $58, $3E, $60, $3E
+    db $38, $23, $90, $3A, $68, $3E, $70, $3E, $B8, $2E, $B8, $2E, $78, $3E, $80, $3E
+    db $88, $3E, $F8, $2E, $00, $24, $F8, $23, $90, $3E, $98, $3E, $A0, $3E, $A8, $3E
+    db $B0, $3E, $B8, $3E, $C0, $3E, $C8, $3E, $D0, $3E, $D8, $3E, $E0, $3E, $E8, $3E
+    db $F0, $3E, $B8, $27, $F8, $3E, $00, $3F, $C0, $25, $08, $3F, $10, $3F, $18, $3F
+    db $20, $3F, $28, $25, $00, $30, $28, $3F, $B8, $32, $88, $25, $30, $3F, $38, $3F
+    db $40, $3F, $28, $28, $90, $2C, $48, $3F, $50, $3F, $70, $2D, $78, $2D, $48, $28
+    db $28, $29, $68, $26, $30, $25, $58, $3F, $60, $3F, $68, $3F, $70, $3F, $58, $25
+    db $78, $3F, $80, $3F, $80, $3F, $88, $3F, $90, $3F, $98, $3F, $A0, $3F, $A8, $3F
+    db $D0, $24, $D8, $24, $B0, $3F, $B8, $3F, $C0, $3F, $C8, $3F, $D0, $3F, $88, $25
+    db $D8, $3F, $E0, $3F, $E8, $3F, $F0, $3F, $F8, $3F, $00, $40, $08, $40, $10, $40
+    db $18, $40, $68, $28, $E8, $23, $88, $25, $60, $2A, $20, $40, $28, $40, $30, $40
+    db $38, $40, $A0, $28, $40, $2E, $40, $20, $40, $40, $48, $40, $50, $40, $A0, $29
+    db $90, $29, $28, $25, $00, $30, $88, $26, $D0, $24, $D8, $24, $78, $26, $D0, $24
+    db $D8, $24, $78, $26, $D8, $24, $78, $26, $58, $40, $60, $40, $68, $40, $58, $30
+    db $70, $40, $78, $40, $80, $40, $88, $27, $88, $40, $90, $40, $68, $27, $98, $40
+    db $A0, $40, $A8, $40, $88, $26, $C0, $27, $10, $30, $D0, $24, $D8, $24, $78, $26
+    db $80, $26, $D0, $28, $68, $27, $C8, $28, $48, $2B, $B0, $40, $B8, $40, $C0, $40
+    db $C8, $40, $F0, $24, $30, $30, $D0, $40, $D8, $40, $E0, $40, $E8, $40, $F0, $40
+    db $B0, $29, $70, $26, $E8, $23, $70, $27, $08, $26, $78, $27, $80, $27, $08, $26
+    db $78, $27, $80, $27, $F8, $40, $00, $41, $08, $41, $10, $41, $18, $41, $20, $41
+    db $28, $41, $30, $41, $38, $41, $40, $41, $48, $41, $50, $41, $48, $28, $68, $26
+    db $20, $29, $28, $29, $70, $27, $70, $28, $58, $30, $08, $26, $78, $27, $80, $27
+    db $88, $27, $18, $29, $48, $28, $68, $26, $58, $41, $60, $41, $68, $41, $88, $2C
+    db $00, $31, $78, $22, $80, $22, $70, $41, $78, $41, $78, $41, $80, $41, $88, $41
+    db $80, $29, $00, $28, $68, $27, $E8, $37, $28, $25, $00, $28, $F0, $37, $00, $30
+    db $08, $30, $B8, $27, $90, $41, $08, $35, $98, $41, $A0, $41, $A8, $41, $B0, $41
+    db $60, $27, $28, $25, $B8, $41, $C0, $41, $68, $27, $B8, $27, $60, $27, $28, $25
+    db $B8, $41, $F0, $37, $68, $27, $B8, $27, $90, $25, $98, $2B, $20, $30, $B8, $41
+    db $F0, $37, $A0, $2B, $60, $27, $28, $25, $C8, $41, $D0, $41, $48, $23, $D8, $41
+    db $E0, $41, $A0, $28, $38, $26, $E8, $41, $F0, $41, $78, $41, $F8, $41, $00, $42
+    db $70, $31, $18, $29, $68, $27, $30, $25, $38, $2F, $E8, $23, $E8, $23, $60, $28
+    db $48, $28, $08, $42, $10, $42, $18, $42, $20, $42, $28, $42, $30, $42, $38, $42
+    db $40, $42, $60, $24, $E0, $23, $60, $28, $48, $28, $18, $29, $48, $28, $68, $26
+    db $C0, $2F, $60, $24, $E8, $23, $60, $28, $48, $28, $60, $28, $98, $25, $68, $26
+    db $60, $28, $48, $28, $E8, $23, $60, $28, $48, $42, $50, $42, $A0, $1C, $58, $42
+    db $60, $42, $40, $24, $F8, $24, $80, $22, $68, $42, $70, $42, $18, $25, $18, $31
+    db $38, $31, $A0, $2B, $F0, $37, $00, $30, $00, $28, $80, $2C, $68, $27, $B8, $27
+    db $60, $27, $28, $25, $90, $34, $78, $42, $80, $42, $88, $42, $90, $42, $98, $42
+    db $A0, $42, $98, $2B, $50, $24, $D8, $28, $60, $27, $A0, $2B, $60, $27, $28, $25
+    db $90, $25, $98, $2B, $68, $27, $68, $26, $38, $2F, $B8, $27, $60, $27, $60, $28
+    db $48, $28, $68, $26, $70, $26, $A8, $42, $B0, $42, $B8, $42, $C0, $2B, $C0, $42
+    db $C8, $42, $28, $28, $80, $22, $B8, $23, $08, $25, $D0, $42, $D8, $42, $78, $2D
+    db $48, $28, $58, $24, $B0, $29, $48, $24, $98, $30, $E0, $42, $18, $2A, $B0, $29
+    db $B0, $29, $E8, $42, $F0, $42, $60, $35, $F8, $42, $00, $43, $08, $43, $10, $43
+    db $18, $43, $68, $30, $00, $32, $98, $29, $20, $43, $70, $31, $B0, $29, $48, $24
+    db $28, $43, $B0, $2A, $20, $43, $80, $29, $30, $43, $48, $24, $B0, $29, $88, $25
+    db $48, $28, $28, $29, $30, $25, $38, $43, $40, $43, $48, $43, $50, $43, $58, $43
+    db $60, $43, $A0, $28, $68, $43, $F8, $24, $B8, $2E, $A8, $2E, $70, $43, $78, $2D
+    db $60, $27, $70, $26, $98, $29, $78, $43, $80, $43, $88, $43, $90, $43, $98, $43
+    db $A0, $43, $A8, $43, $B0, $43, $A8, $43, $B8, $43, $C0, $43, $28, $36, $C8, $43
+    db $D0, $28, $A0, $27, $68, $29, $D0, $43, $D8, $43, $E0, $43, $E8, $43, $F0, $43
+    db $40, $31, $F8, $43, $00, $44, $08, $44, $10, $44, $18, $44, $20, $44, $80, $29
+    db $00, $28, $90, $29, $28, $44, $28, $3F, $30, $44, $E0, $37, $38, $44, $40, $44
+    db $48, $44, $A0, $28, $50, $44, $58, $44, $60, $44, $68, $44, $70, $44, $88, $27
+    db $88, $27, $68, $26, $B0, $29, $78, $44, $80, $44, $88, $44, $90, $44, $98, $44
+    db $A0, $44, $A8, $44, $B0, $44, $B8, $44, $C0, $44, $C8, $44, $D0, $44, $D8, $44
+    db $98, $25, $68, $26, $78, $2C, $E0, $44, $E8, $44, $F0, $44, $F8, $44, $00, $45
+    db $78, $2C, $08, $45, $10, $45, $18, $45, $20, $45, $28, $45, $B0, $32, $C8, $28
+    db $30, $45, $98, $29, $38, $45, $40, $45, $70, $3A, $48, $45, $50, $45, $58, $45
+    db $60, $45, $28, $28, $68, $45, $70, $45, $78, $45, $80, $45, $88, $45, $80, $27
+    db $60, $27, $58, $24, $80, $29, $90, $45, $98, $45, $A0, $45, $A8, $45, $B0, $45
+    db $B8, $45, $C0, $45, $C8, $45, $D0, $45, $D8, $45, $E0, $45, $E8, $45, $88, $27
+    db $D8, $26, $28, $25, $98, $29, $F0, $45, $F8, $45, $00, $46, $08, $46, $10, $46
+    db $98, $29, $18, $46, $20, $46, $20, $22, $28, $22, $28, $46, $30, $46, $B0, $29
+    db $38, $46, $40, $46, $48, $46, $50, $46, $C8, $40, $D8, $41, $E0, $41, $58, $46
+    db $60, $46, $A0, $28, $38, $26, $68, $46, $70, $46, $A0, $37, $E0, $23, $78, $46
+    db $68, $28, $68, $30, $00, $32, $80, $46, $28, $1D, $88, $46, $90, $46, $98, $46
+    db $B0, $1D, $A0, $46, $A0, $1C, $A8, $1C, $A8, $46, $B0, $46, $B8, $46, $E8, $23
+    db $D0, $26, $98, $25, $C0, $46, $C8, $46, $A8, $21, $C8, $3B, $D0, $46, $D8, $46
+    db $B0, $29, $58, $3D, $D8, $2D, $E0, $46, $C0, $22, $70, $24, $60, $3D, $80, $29
+    db $E8, $46, $F0, $46, $F8, $46, $00, $47, $08, $47, $08, $47, $10, $47, $18, $47
+    db $80, $31, $78, $22, $F8, $24, $20, $47, $28, $47, $30, $47, $38, $31, $E8, $3E
+    db $D0, $28, $A8, $27, $68, $29, $38, $47, $D8, $2D, $20, $35, $80, $24, $40, $47
+    db $48, $47, $50, $47, $58, $47, $60, $47, $68, $47, $70, $47, $78, $47, $68, $27
+    db $B8, $27, $60, $27, $80, $47, $60, $23, $20, $2E, $28, $2E, $40, $26, $A0, $35
+    db $B0, $29, $58, $3D, $90, $47, $98, $47, $A0, $47, $A8, $47, $60, $3D, $B0, $47
+    db $B8, $47, $C0, $47, $C8, $47, $D0, $47, $D8, $47, $D8, $47, $E0, $47, $E8, $47
+    db $D8, $41, $F0, $24, $80, $22, $F0, $47, $F8, $47, $80, $2A, $90, $2A, $88, $25
+    db $48, $28, $80, $2C, $20, $29, $00, $48, $A8, $2E, $A8, $2E, $B0, $2E, $C0, $25
+    db $08, $48, $10, $48, $18, $48, $D0, $2E, $20, $48, $68, $26, $58, $24, $48, $28
+    db $E8, $23, $60, $28, $18, $2A, $28, $48, $B8, $2E, $B0, $2E, $F8, $2E, $30, $48
+    db $B0, $29, $38, $48, $B8, $24, $F0, $2E, $18, $48, $40, $48, $48, $48, $50, $48
+    db $20, $36, $28, $36, $58, $48, $60, $48, $60, $32, $68, $48, $70, $48, $78, $48
+    db $60, $42, $78, $22, $38, $26, $80, $48, $88, $48, $90, $48, $70, $2B, $C8, $28
+    db $60, $27, $28, $25, $B8, $41, $98, $48, $A0, $48, $A8, $48, $B0, $48, $B8, $48
+    db $C0, $48, $C8, $48, $D0, $48, $D8, $48, $E0, $48, $28, $25, $B8, $27, $60, $27
+    db $78, $2E, $E8, $48, $F0, $48, $F8, $48, $00, $49, $08, $49, $10, $49, $18, $49
+    db $00, $30, $28, $49, $30, $49, $38, $49, $40, $49, $48, $49, $50, $49, $58, $49
+    db $60, $49, $68, $49, $70, $49, $78, $49, $28, $33, $80, $49, $88, $49, $90, $49
+    db $98, $49, $78, $22, $F8, $24, $A0, $49, $A8, $49, $B0, $49, $60, $2C, $B0, $29
+    db $E8, $23, $70, $29, $78, $29, $88, $26, $C0, $27, $10, $30, $18, $30, $D0, $24
+    db $D8, $24, $D0, $24, $D8, $24, $78, $26, $80, $26, $78, $46, $E8, $23, $B8, $49
+    db $48, $28, $C0, $49, $C8, $49, $A0, $37, $70, $27, $D8, $24, $78, $26, $80, $26
+    db $00, $30, $88, $26, $C0, $27, $10, $30, $18, $30, $78, $26, $80, $26, $D8, $49
+    db $E0, $49, $E8, $49, $F0, $49, $F8, $49, $00, $4A, $08, $4A, $10, $4A, $18, $4A
+    db $20, $4A, $F0, $24, $80, $22, $10, $2F, $08, $25, $28, $4A, $30, $4A, $E8, $35
+    db $68, $27, $D8, $26, $68, $27, $70, $27, $70, $28, $58, $30, $60, $30, $08, $26
+    db $78, $27, $08, $26, $78, $27, $80, $27, $88, $27, $38, $4A, $40, $4A, $B8, $27
+    db $A0, $29, $48, $4A, $50, $4A, $58, $4A, $28, $25, $78, $27, $80, $27, $88, $27
+    db $00, $30, $70, $27, $70, $28, $58, $30, $60, $30, $80, $27, $88, $27, $08, $30
+    db $68, $27, $60, $28, $60, $4A, $C8, $42, $68, $4A, $70, $4A, $78, $4A, $80, $4A
+    db $88, $4A, $78, $22, $38, $26, $B8, $23, $08, $25, $90, $4A, $30, $4A, $88, $31
+    db $E0, $23, $70, $26, $70, $29, $78, $29, $68, $26, $50, $28, $D0, $26, $60, $28
+    db $48, $28, $80, $2C, $20, $29, $28, $29, $D0, $26, $98, $25, $48, $28, $98, $4A
+    db $A0, $4A, $A8, $4A, $B0, $4A, $B8, $4A, $C0, $4A, $68, $28, $28, $29, $30, $25
+    db $38, $2F, $60, $28, $48, $28, $68, $26, $20, $29, $28, $29, $E8, $23, $60, $28
+    db $48, $28, $B8, $27, $C8, $4A, $D0, $4A, $D8, $4A, $E0, $4A, $E8, $4A, $B0, $35
+    db $F0, $4A, $78, $22, $F8, $24, $80, $22, $F8, $2E, $B8, $2E, $F8, $4A, $78, $2D
+    db $28, $25, $00, $28, $A0, $29, $80, $29, $80, $29, $A0, $25, $98, $29, $C8, $28
+    db $A0, $29, $80, $29, $88, $29, $90, $29, $20, $3B, $98, $25, $60, $27, $00, $4B
+    db $08, $4B, $10, $4B, $18, $4B, $20, $4B, $28, $4B, $30, $4B, $90, $29, $28, $44
+    db $28, $3F, $C8, $28, $A0, $29, $80, $29, $88, $29, $90, $29, $98, $29, $C8, $28
+    db $A0, $29, $80, $29, $38, $4B, $E0, $37, $40, $4B, $48, $4B, $50, $4B, $90, $26
+    db $58, $4B, $60, $4B, $80, $22, $38, $26, $68, $4B, $70, $4B, $78, $4B, $88, $27
+    db $88, $25, $18, $2A, $78, $2C, $80, $4B, $88, $4B, $C0, $39, $90, $4B, $F0, $31
+    db $E8, $43, $98, $4B, $98, $4B, $A0, $4B, $B0, $29, $E8, $23, $C0, $2F, $60, $24
+    db $A8, $4B, $B0, $4B, $B8, $4B, $C0, $4B, $C8, $4B, $D0, $4B, $50, $2A, $88, $43
+    db $D8, $4B, $E0, $4B, $E8, $4B, $40, $2A, $30, $2A, $F0, $4B, $E0, $4B, $F8, $4B
+    db $00, $4C, $08, $4C, $10, $4C, $50, $38, $58, $30, $60, $30, $78, $27, $80, $27
+    db $38, $40, $88, $3B, $38, $26, $F8, $24, $18, $4C, $20, $4C, $28, $4C, $30, $4C
+    db $D0, $37, $38, $4C, $98, $29, $40, $4C, $48, $4C, $50, $4C, $58, $4C, $D0, $32
+    db $60, $4C, $68, $4C, $68, $4C, $70, $4C, $80, $29, $68, $27, $90, $25, $98, $2B
+    db $38, $31, $78, $4C, $80, $4C, $88, $4C, $38, $2B, $90, $4C, $38, $2B, $88, $44
+    db $98, $4C, $A0, $4C, $A8, $4C, $B0, $4C, $B8, $4C, $C0, $4C, $A0, $4C, $C8, $4C
+    db $D0, $4C, $D8, $4C, $E0, $4C, $E8, $4C, $F0, $4C, $A0, $2B, $60, $27, $F8, $4C
+    db $C8, $40, $60, $4B, $B8, $23, $80, $22, $00, $4D, $08, $4D, $10, $4D, $18, $4D
+    db $20, $4D, $28, $4D, $30, $4D, $98, $21, $38, $4D, $A8, $21, $D0, $46, $40, $4D
+    db $48, $4D, $A8, $21, $A0, $21, $B8, $21, $50, $4D, $D0, $26, $98, $25, $60, $28
+    db $48, $28, $58, $4D, $60, $4D, $68, $4D, $70, $4D, $78, $4D, $80, $4D, $88, $4D
+    db $28, $2C, $90, $4D, $28, $2C, $98, $4D, $A0, $4D, $A8, $4D, $20, $2C, $60, $41
+    db $B0, $4D, $B8, $4D, $C0, $4D, $C8, $4D, $D0, $4D, $D8, $4D, $E0, $4D, $A8, $41
+    db $E8, $4D, $38, $29, $80, $22, $38, $26, $F0, $4D, $F8, $4D, $00, $4E, $08, $4D
+    db $08, $4E, $10, $4E, $18, $4E, $20, $4E, $D8, $2D, $E0, $2D, $E8, $2D, $60, $3D
+    db $70, $24, $78, $24, $28, $4E, $30, $4E, $28, $44, $08, $30, $68, $27, $B8, $27
+    db $60, $27, $38, $4E, $40, $4E, $48, $4E, $50, $4E, $E0, $46, $C0, $22, $D0, $2D
+    db $D8, $2D, $58, $4E, $60, $4E, $D8, $2D, $70, $24, $C0, $22, $B8, $2D, $58, $4E
+    db $68, $23, $68, $4E, $70, $4E, $78, $4E, $80, $4E, $88, $4E, $90, $4E, $58, $31
+    db $98, $4E, $C0, $29, $68, $43, $F8, $24, $00, $36, $A0, $4E, $A8, $4E, $B0, $4E
+    db $B8, $4E, $48, $35, $C0, $4E, $38, $48, $B0, $2E, $A8, $2E, $A8, $2E, $48, $48
+    db $F8, $2E, $B8, $2E, $00, $24, $C8, $4E, $B0, $29, $70, $26, $D0, $26, $D0, $26
+    db $48, $28, $D0, $4E, $D8, $4E, $E0, $4E, $90, $47, $98, $47, $E8, $4E, $F0, $4E
+    db $90, $47, $F8, $4E, $00, $4F, $08, $4F, $00, $23, $10, $4F, $18, $4F, $20, $4F
+    db $28, $4F, $30, $4F, $38, $4F, $40, $4F, $48, $4F, $50, $4F, $58, $4F, $18, $32
+    db $60, $4F, $38, $29, $50, $44, $68, $4F, $70, $4F, $A0, $37, $78, $4F, $80, $4F
+    db $88, $4F, $20, $36, $90, $4F, $98, $4F, $40, $49, $A0, $4F, $A8, $4F, $A8, $2C
+    db $B0, $4F, $B8, $4F, $C0, $4F, $C8, $4F, $28, $25, $00, $28, $A0, $2B, $B8, $27
+    db $60, $27, $D0, $4F, $90, $38, $88, $3E, $B8, $2E, $00, $24, $F0, $2E, $F8, $2E
+    db $C0, $25, $E0, $2E, $E8, $2E, $D8, $2E, $D8, $2E, $C8, $2E, $C0, $25, $C0, $25
+    db $C0, $25, $D8, $4F, $D0, $2E, $B8, $27, $E0, $4F, $E8, $4F, $F0, $4F, $F8, $4F
+    db $00, $50, $C0, $29, $68, $45, $70, $45, $08, $50, $10, $50, $68, $26, $18, $50
+    db $20, $50, $A8, $4E, $28, $50, $D8, $24, $78, $26, $10, $30, $18, $30, $78, $26
+    db $D8, $24, $D8, $24, $78, $26, $80, $26, $30, $34, $68, $27, $70, $29, $78, $29
+    db $68, $28, $68, $30, $10, $2A, $30, $50, $38, $50, $68, $2F, $38, $50, $40, $50
+    db $38, $50, $38, $50, $48, $50, $50, $50, $50, $50, $B8, $2F, $58, $50, $38, $50
+    db $58, $50, $50, $50, $50, $50, $C0, $2F, $60, $24, $60, $50, $68, $50, $70, $50
+    db $78, $50, $38, $29, $10, $2F, $68, $46, $80, $50, $88, $50, $28, $25, $B8, $27
+    db $60, $27, $90, $50, $98, $50, $78, $27, $80, $27, $58, $30, $60, $30, $80, $27
+    db $78, $27, $78, $27, $80, $27, $88, $27, $E0, $32, $98, $25, $D8, $26, $B0, $27
+    db $D0, $28, $A8, $27, $B0, $27, $88, $26, $C0, $27, $10, $30, $18, $30, $D0, $24
+    db $D8, $24, $78, $26, $C0, $27, $10, $30, $18, $30, $D8, $24, $78, $26, $D0, $24
+    db $D8, $24, $78, $26, $80, $26, $90, $25, $98, $2B, $68, $27, $C8, $28, $A0, $50
+    db $58, $46, $C0, $29, $F8, $24, $20, $47, $A8, $50, $B0, $50, $B8, $50, $E0, $23
+    db $50, $24, $D8, $28, $18, $29, $60, $28, $70, $29, $78, $29, $D8, $28, $28, $29
+    db $E8, $23, $60, $28, $48, $28, $70, $29, $78, $29, $68, $28, $D8, $26, $58, $28
+    db $D8, $26, $68, $26, $68, $26, $70, $27, $70, $28, $58, $30, $60, $30, $08, $26
+    db $78, $27, $80, $27, $70, $28, $58, $30, $60, $30, $78, $27, $80, $27, $08, $26
+    db $78, $27, $80, $27, $88, $27, $68, $26, $60, $28, $48, $28, $B0, $29, $C0, $50
+    db $C8, $50, $C0, $29, $B8, $23, $D0, $50, $D8, $50, $E0, $50, $E8, $50, $38, $31
+    db $00, $30, $D0, $26, $98, $25, $D0, $26, $60, $27, $28, $25, $B8, $41, $F0, $37
+    db $68, $27, $B8, $27, $60, $27, $28, $25, $F0, $50, $D0, $28, $68, $27, $D0, $26
+    db $60, $27, $28, $25, $28, $25, $00, $28, $E0, $32, $B8, $27, $60, $27, $D0, $28
+    db $A8, $27, $B0, $27, $B0, $27, $B8, $27, $60, $27, $28, $25, $20, $30, $38, $4A
+    db $68, $27, $B8, $27, $60, $27, $28, $25, $B8, $27, $60, $27, $80, $29, $F8, $50
+    db $38, $3F, $38, $29, $80, $22, $10, $2F, $00, $51, $08, $51, $10, $51, $18, $51
+    db $48, $24, $88, $25, $18, $2A, $B0, $29, $20, $51, $88, $25, $18, $2A, $C8, $26
+    db $48, $24, $A8, $29, $20, $51, $C8, $26, $98, $25, $D8, $26, $48, $28, $68, $26
+    db $68, $37, $68, $37, $48, $28, $B0, $29, $78, $2C, $70, $39, $50, $4D, $30, $45
+    db $78, $2C, $88, $25, $18, $2A, $78, $2C, $48, $24, $30, $43, $68, $28, $68, $30
+    db $10, $2A, $E8, $23, $48, $28, $68, $26, $70, $26, $60, $28, $28, $43, $48, $32
+    db $28, $51, $C0, $29, $38, $26, $80, $22, $78, $26, $78, $2D, $30, $51, $38, $51
+    db $68, $3A, $40, $51, $48, $51, $50, $51, $58, $51, $78, $3A, $48, $51, $58, $51
+    db $68, $3A, $60, $51, $58, $51, $20, $3B, $A0, $25, $40, $31, $A0, $29, $80, $29
+    db $68, $51, $68, $51, $A0, $29, $80, $29, $70, $51, $78, $51, $80, $51, $88, $51
+    db $70, $51, $78, $3A, $48, $51, $70, $51, $68, $3A, $28, $4B, $30, $4B, $90, $51
+    db $68, $29, $98, $29, $A0, $29, $80, $29, $A0, $25, $C8, $28, $40, $31, $98, $51
+    db $C8, $42, $28, $28, $F8, $24, $38, $26, $D0, $24, $88, $31, $A0, $51, $A8, $51
+    db $B0, $51, $B8, $51, $C0, $51, $C8, $51, $B0, $51, $B8, $51, $C0, $51, $C8, $51
+    db $B0, $51, $D0, $51, $D8, $51, $E0, $51, $E8, $51, $F0, $51, $F8, $51, $E0, $51
+    db $E8, $51, $F0, $51, $F8, $51, $50, $4D, $00, $52, $D0, $51, $D8, $51, $08, $52
+    db $10, $52, $D0, $51, $D8, $51, $08, $52, $10, $52, $B0, $47, $F8, $51, $E0, $51
+    db $E8, $51, $F0, $51, $F8, $51, $E0, $51, $E8, $51, $F0, $51, $F8, $51, $18, $52
+    db $20, $52, $A0, $28, $80, $22, $F8, $24, $D0, $24, $D8, $24, $28, $52, $30, $52
+    db $38, $52, $40, $52, $38, $3F, $40, $3F, $38, $52, $40, $52, $38, $3F, $40, $3F
+    db $38, $52, $48, $52, $50, $52, $58, $52, $60, $52, $48, $52, $50, $52, $58, $52
+    db $68, $52, $48, $52, $70, $52, $28, $44, $60, $52, $48, $52, $50, $52, $58, $52
+    db $68, $52, $48, $52, $50, $52, $58, $52, $68, $52, $88, $29, $78, $52, $58, $52
+    db $68, $52, $48, $52, $50, $52, $58, $52, $68, $52, $48, $52, $50, $52, $58, $52
+    db $68, $52, $01, $00, $00, $5D, $2A, $00, $5A, $2A, $00, $A8, $A8, $3E, $AA, $3E
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $22, $69
+    db $20, $69, $48, $2E, $68, $2E, $28, $35, $2A, $35, $68, $2E, $48, $2E, $84, $33
+    db $68, $2E, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $24, $29, $26, $29
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $68, $2E, $00, $A8, $48, $35, $4A, $35
+    db $AC, $2A, $AE, $2A, $68, $2E, $00, $A8, $20, $29, $22, $29, $00, $A8, $00, $A8
+    db $00, $A8, $CA, $3E, $CC, $3E, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $24, $29
+    db $26, $29, $00, $A8, $68, $2E, $00, $A8, $48, $35, $4A, $35, $68, $2E, $AC, $2A
+    db $AE, $2A, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $20, $29, $22, $29
+    db $00, $A8, $00, $A8, $00, $A8, $AC, $2A, $AE, $2A, $48, $2E, $24, $29, $26, $29
+    db $20, $29, $22, $29, $00, $A8, $00, $A8, $26, $29, $00, $A8, $00, $A8, $00, $A8
+    db $00, $A8, $00, $A8, $EA, $3E, $EC, $3E, $EE, $36, $00, $A8, $00, $A8, $2A, $36
+    db $2C, $36, $2C, $36, $2C, $36, $2E, $36, $48, $0E, $4A, $78, $48, $78, $48, $38
+    db $48, $78, $48, $38, $4A, $38, $00, $A8, $00, $A8, $00, $A8, $8C, $30, $CA, $B0
+    db $CC, $B0, $AE, $30, $CA, $30, $8C, $70, $48, $2E, $68, $2E, $2C, $36, $2E, $36
+    db $00, $A8, $00, $A8, $64, $33, $64, $33, $00, $A8, $0A, $3F, $0C, $3F, $0E, $3F
+    db $00, $A8, $00, $A8, $00, $A8, $4A, $36, $4C, $36, $4C, $36, $4C, $36, $4E, $36
+    db $68, $0E, $68, $78, $66, $78, $66, $38, $66, $78, $66, $38, $68, $38, $00, $A8
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $AC, $30, $AE, $30, $CC, $B0, $AE, $70
+    db $AC, $70, $4A, $36, $4C, $36, $4E, $36, $00, $A8, $EA, $1C, $C6, $30, $0E, $31
+    db $26, $3F, $8E, $70, $8E, $30, $8E, $70, $8E, $70, $8C, $70, $00, $A8, $00, $A8
+    db $6A, $36, $6C, $36, $6C, $36, $6C, $36, $6E, $36, $48, $0E, $86, $78, $84, $78
+    db $84, $38, $84, $78, $84, $38, $86, $38, $00, $A8, $00, $A8, $00, $A8, $00, $A8
+    db $CA, $30, $CC, $30, $8E, $B0, $CC, $70, $8C, $B0, $AC, $B0, $6A, $36, $6C, $36
+    db $6C, $36, $00, $A8, $00, $A8, $C6, $30, $00, $A8, $00, $A8, $AE, $70, $AE, $30
+    db $AE, $70, $AC, $70, $00, $A8, $00, $A8, $8A, $76, $00, $A8, $8A, $25, $8C, $25
+    db $8A, $36, $68, $0E, $A6, $78, $A4, $78, $08, $26, $00, $A8, $A6, $78, $A6, $38
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $86, $36, $00, $A8, $6A, $3D
+    db $86, $76, $86, $36, $00, $A8, $8A, $25, $8C, $25, $8A, $36, $48, $0E, $00, $A8
+    db $00, $A8, $00, $A8, $84, $31, $8E, $31, $00, $A8, $CC, $70, $CC, $70, $CC, $70
+    db $CA, $70, $00, $A8, $00, $A8, $A6, $76, $AE, $31, $4E, $2D, $A6, $36, $AC, $2A
+    db $AE, $2A, $C4, $78, $28, $26, $00, $A8, $C4, $38, $00, $A8, $00, $A8, $00, $A8
+    db $00, $A8, $00, $A8, $84, $36, $00, $A8, $6C, $25, $6E, $25, $00, $A8, $84, $76
+    db $24, $29, $26, $29, $A6, $76, $0E, $38, $2C, $38, $A6, $36, $68, $0E, $00, $A8
+    db $00, $A8, $88, $32, $80, $33, $00, $A8, $00, $A8, $26, $3F, $00, $A8, $68, $65
+    db $8A, $36, $0A, $44, $00, $A8, $00, $A8, $C6, $76, $C4, $76, $C4, $36, $C4, $36
+    db $C6, $36, $48, $2E, $A0, $36, $A0, $76, $46, $67, $44, $67, $00, $A8, $00, $A8
+    db $00, $A8, $00, $A8, $A2, $36, $20, $AC, $20, $2C, $00, $A8, $A2, $76, $24, $29
+    db $26, $29, $C4, $76, $C4, $36, $C4, $36, $22, $49, $20, $49, $00, $A8, $E8, $1C
+    db $EA, $1C, $88, $B2, $C8, $F2, $C8, $72, $00, $A8, $00, $A8, $88, $65, $8A, $36
+    db $82, $12, $E4, $18, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $68, $2E
+    db $C0, $32, $00, $A8, $00, $A8, $C0, $72, $AC, $67, $AA, $67, $00, $A8, $00, $A8
+    db $00, $A8, $C6, $76, $C4, $76, $C6, $36, $E4, $B8, $A2, $27, $A4, $27, $00, $A8
+    db $00, $A8, $08, $1D, $88, $32, $C8, $32, $C8, $B2, $A0, $16, $4C, $0D, $A6, $16
+    db $A2, $D8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $4C, $67
+    db $4A, $67, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $A2, $38, $E4, $B8
+    db $C0, $38, $C2, $38, $00, $A8, $00, $A8, $E4, $18, $00, $A8, $E6, $32, $24, $33
+    db $24, $33, $24, $73, $00, $A8, $C0, $12, $C2, $12, $C0, $52, $00, $A8, $00, $A8
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $A2, $78, $CE, $38, $E0, $38, $00, $A8
+    db $00, $A8, $00, $A8, $2C, $36, $2C, $36, $2C, $36, $2E, $36, $00, $A8, $00, $A8
+    db $00, $A8, $00, $A8, $00, $A8, $4C, $36, $4C, $36, $4C, $36, $4E, $36, $46, $1E
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $6C, $36, $6C, $36, $6C, $36
+    db $66, $1E, $AA, $75, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $80, $3E, $66, $65
+    db $8A, $36, $46, $1E, $00, $A8, $A6, $75, $A4, $75, $A2, $75, $A0, $75, $00, $A8
+    db $00, $A8, $4A, $78, $48, $78, $48, $78, $46, $78, $46, $38, $48, $38, $48, $38
+    db $4A, $38, $4A, $78, $48, $78, $46, $78, $46, $38, $48, $38, $48, $78, $4A, $38
+    db $46, $38, $48, $38, $4A, $38, $00, $A8, $64, $33, $8C, $3E, $8E, $3E, $86, $65
+    db $8A, $36, $66, $1E, $C8, $75, $A2, $38, $E4, $38, $C0, $38, $C0, $75, $68, $78
+    db $66, $78, $64, $78, $64, $38, $66, $38, $66, $38, $68, $38, $68, $78, $66, $78
+    db $64, $78, $64, $38, $66, $38, $68, $38, $64, $38, $66, $38, $68, $38, $00, $A8
+    db $00, $A8, $00, $A8, $C6, $30, $A8, $3E, $AA, $3E, $2C, $18, $0E, $18, $A6, $16
+    db $42, $1E, $E8, $75, $E6, $75, $00, $A8, $E2, $75, $E0, $75, $48, $0E, $84, $78
+    db $82, $78, $82, $38, $86, $38, $86, $78, $84, $78, $84, $78, $82, $78, $82, $38
+    db $84, $38, $86, $38, $84, $38, $86, $38, $00, $A8, $00, $A8, $C6, $30, $00, $A8
+    db $CA, $3E, $CC, $3E, $00, $A8, $C6, $16, $66, $1E, $A2, $D8, $48, $0E, $00, $A8
+    db $00, $A8, $48, $0E, $68, $0E, $86, $36, $A4, $78, $00, $A8, $86, $76, $00, $A8
+    db $00, $A8, $A4, $38, $C4, $78, $08, $26, $A4, $78, $86, $36, $A4, $38, $A6, $38
+    db $00, $A8, $EA, $3E, $EC, $3E, $EE, $36, $00, $A8, $A2, $98, $E4, $58, $A2, $B8
+    db $68, $0E, $E4, $58, $E4, $58, $68, $0E, $86, $36, $6E, $65, $6C, $65, $84, $76
+    db $00, $A8, $8A, $25, $8C, $25, $00, $A8, $E2, $78, $E2, $2E, $E0, $2E, $28, $26
+    db $86, $36, $6C, $25, $6E, $25, $C4, $38, $C6, $30, $00, $A8, $0A, $3F, $0C, $3F
+    db $0E, $3F, $E4, $58, $CE, $18, $E0, $18, $86, $27, $88, $07, $E0, $18, $8A, $27
+    db $20, $27, $A0, $36, $E8, $2E, $08, $2F, $4C, $2D, $A0, $2C, $02, $2F, $00, $2F
+    db $E4, $2E, $04, $2F, $06, $2F, $A8, $2D, $82, $32, $A0, $76, $84, $31, $26, $3F
+    db $28, $1F, $2A, $1F, $E4, $58, $E4, $F8, $00, $A8, $A2, $18, $2C, $27, $8C, $27
+    db $86, $36, $28, $3F, $84, $36, $C6, $76, $28, $3F, $86, $36, $28, $3F, $28, $3F
+    db $C0, $32, $C2, $32, $C2, $72, $C0, $72, $84, $36, $00, $A8, $88, $32, $80, $33
+    db $46, $38, $48, $38, $48, $38, $4A, $38, $00, $A8, $00, $A8, $00, $A8, $00, $A8
+    db $00, $A8, $00, $A8, $64, $33, $00, $A8, $64, $38, $66, $38, $66, $38, $68, $38
+    db $00, $A8, $00, $A8, $00, $A8, $0E, $31, $0E, $31, $64, $38, $66, $38, $68, $38
+    db $00, $A8, $AA, $35, $0E, $31, $0E, $71, $82, $38, $84, $38, $84, $38, $86, $38
+    db $A8, $0D, $A0, $35, $A2, $35, $A4, $35, $A6, $35, $0E, $31, $0E, $31, $0E, $71
+    db $00, $A8, $A6, $78, $A6, $38, $00, $A8, $00, $A8, $00, $A8, $C0, $35, $60, $2D
+    db $62, $2D, $64, $2D, $C8, $35, $00, $A8, $00, $A8, $0E, $31, $00, $A8, $C4, $38
+    db $CA, $65, $66, $27, $68, $27, $8C, $30, $8E, $30, $8E, $30, $8E, $70, $8C, $70
+    db $00, $A8, $2A, $36, $2C, $36, $2C, $36, $2A, $76, $00, $A8, $E0, $15, $80, $2D
+    db $82, $2D, $E6, $35, $E8, $35, $4A, $78, $48, $78, $4A, $38, $84, $31, $8E, $71
+    db $8E, $31, $8E, $31, $48, $0E, $E2, $38, $A8, $0D, $EA, $65, $C6, $27, $C8, $27
+    db $AC, $30, $AE, $30, $AE, $70, $AC, $70, $00, $A8, $4A, $36, $4C, $36, $4C, $36
+    db $4A, $76, $00, $A8, $00, $A8, $68, $78, $66, $38, $66, $78, $68, $38, $88, $32
+    db $80, $33, $80, $33, $80, $33, $48, $0E, $48, $0E, $0A, $46, $A4, $67, $A2, $67
+    db $6A, $27, $6C, $27, $CA, $30, $CC, $30, $CA, $70, $6A, $36, $6C, $36, $6A, $76
+    db $EC, $34, $EE, $34, $EC, $34, $EE, $34, $00, $A8, $8A, $27, $20, $27, $86, $78
+    db $84, $78, $86, $38, $88, $32, $C8, $32, $20, $32, $20, $72, $26, $3F, $CA, $3E
+    db $CC, $3E, $68, $0E, $68, $0E, $00, $A8, $E4, $38, $C0, $38, $C2, $38, $88, $07
+    db $84, $36, $00, $A8, $86, $76, $6A, $3D, $84, $76, $82, $33, $0C, $15, $0A, $15
+    db $0C, $15, $E4, $18, $2C, $27, $8C, $27, $84, $36, $00, $A8, $08, $26, $86, $76
+    db $C8, $F2, $CE, $B2, $00, $A8, $EC, $3E, $EE, $36, $CE, $38, $E0, $38, $A2, $18
+    db $86, $36, $6C, $25, $84, $76, $86, $36, $8A, $25, $86, $76, $00, $35, $02, $35
+    db $48, $15, $4A, $15, $C0, $18, $C2, $18, $A2, $38, $86, $36, $2C, $2D, $2E, $2D
+    db $28, $26, $86, $76, $E6, $32, $48, $2E, $CE, $32, $CE, $F2, $0C, $3F, $0E, $3F
+    db $AC, $2A, $AE, $2A, $00, $A8, $A2, $36, $A2, $76, $20, $29, $22, $29, $A2, $36
+    db $A2, $76, $0A, $35, $0C, $35, $8E, $27, $A0, $27, $CE, $18, $E0, $18, $48, $0E
+    db $A2, $16, $A4, $16, $A4, $16, $A2, $76, $68, $2E, $00, $A8, $00, $A8, $68, $2E
+    db $2E, $3C, $26, $3F, $28, $1F, $2A, $1F, $00, $A8, $00, $A8, $20, $29, $22, $29
+    db $C2, $36, $C4, $36, $C4, $76, $C2, $76, $42, $7D, $40, $7D, $C0, $32, $C2, $32
+    db $C0, $72, $28, $35, $84, $33, $AE, $27, $C0, $27, $68, $0E, $C6, $56, $C4, $16
+    db $C4, $16, $C6, $36, $00, $A8, $88, $27, $4C, $3C, $4E, $1C, $00, $A8, $44, $27
+    db $46, $27, $00, $A8, $48, $35, $4A, $35, $4E, $27, $60, $27, $4E, $0D, $EC, $34
+    db $EE, $34, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $00, $A8, $6A, $3C, $6C, $1C
+    db $00, $A8, $AA, $27, $AC, $27, $AC, $2A, $AE, $0A, $82, $33, $0C, $35, $00, $A8
+    db $00, $A8, $00, $A8, $88, $3C, $8A, $1C, $4A, $27, $4C, $27, $AE, $31, $00, $A8
+    db $28, $35, $2A, $35, $E4, $18, $00, $A8, $00, $A8, $A8, $3C, $00, $A8, $24, $09
+    db $26, $09, $48, $35, $4A, $15, $A8, $0D, $E0, $98, $C2, $18, $00, $A8, $00, $A8
+    db $4E, $FC, $C8, $3C, $00, $A8, $48, $27, $00, $A8, $0A, $04, $24, $09, $26, $29
+    db $A2, $38, $A8, $4D, $C2, $98, $00, $A8, $00, $A8, $00, $A8, $80, $3C, $E6, $3C
+    db $00, $A8, $00, $A8, $00, $A8, $00, $A8, $2A, $36, $2C, $36, $2C, $36, $2C, $36
+    db $2E, $36, $4A, $78, $46, $78, $46, $78, $CC, $B0, $8C, $30, $8E, $30, $CA, $B0
+    db $62, $27, $22, $27, $00, $A8, $2A, $36, $2C, $36, $2C, $36, $2A, $76, $4A, $78
+    db $48, $38, $4A, $38, $64, $33, $64, $33, $64, $33, $00, $A8, $04, $3D, $00, $A8
+    db $40, $27, $42, $27, $4A, $36, $4C, $36, $4C, $36, $4C, $36, $4E, $36, $68, $78
+    db $66, $78, $64, $78, $64, $78, $AC, $30, $AC, $30, $8E, $30, $8E, $B0, $AE, $30
+    db $AC, $70, $00, $A8, $6E, $27, $2E, $27, $4A, $36, $4C, $36, $4C, $36, $4A, $76
+    db $68, $78, $66, $38, $68, $38, $0E, $31, $0E, $31, $0E, $31, $00, $A8, $80, $3E
+    db $00, $A8, $00, $A8, $00, $A8, $A6, $27, $A8, $27, $6C, $36, $6C, $36, $6C, $36
+    db $84, $78, $82, $78, $86, $78, $82, $78, $CA, $30, $AE, $30, $CC, $30, $CC, $30
+    db $8C, $B0, $A8, $2D, $24, $29, $26, $29, $22, $69, $20, $69, $6A, $36, $6C, $36
+    db $6C, $36, $6A, $76, $86, $78, $84, $38, $86, $38, $0E, $31, $8C, $3E, $8E, $3E
+    db $00, $A8, $00, $A8, $00, $A8, $C2, $27, $C4, $27, $8A, $76, $08, $26, $8A, $36
+    db $A4, $38, $C4, $38, $00, $A8, $A6, $78, $A6, $38, $A4, $78, $08, $26, $C4, $38
+    db $86, $36, $20, $09, $22, $09, $48, $0E, $AC, $0A, $AE, $2A, $86, $36, $84, $76
+    db $00, $A8, $00, $A8, $84, $31, $8E, $31, $8E, $31, $A8, $3E, $AA, $3E, $00, $A8
+    db $00, $A8, $8A, $76, $28, $26, $8A, $36, $E2, $38, $48, $2E, $48, $2E, $C4, $78
+    db $28, $26, $E2, $38, $EC, $34, $EE, $14, $68, $0E, $2C, $18, $84, $36, $00, $A8
+    db $00, $A8, $86, $76, $8A, $76, $8A, $36, $88, $32, $64, $33, $64, $33, $CA, $3E
+    db $00, $A8, $00, $A8, $00, $A8, $A6, $76, $4C, $6D, $A6, $36, $A0, $36, $A0, $76
+    db $68, $2E, $86, $36, $AE, $31, $06, $25, $88, $27, $86, $36, $0A, $35, $82, $53
+    db $20, $67, $8A, $67, $00, $A8, $A2, $58, $A0, $36, $A4, $36, $A0, $76, $A6, $76
+    db $A4, $36, $A6, $36, $00, $A8, $88, $32, $0E, $31, $0E, $31, $EA, $3E, $EC, $3E
+    db $C6, $76, $C4, $36, $C4, $76, $C4, $36, $C0, $32, $00, $A8, $00, $A8, $C0, $72
+    db $24, $29, $26, $29, $0A, $64, $86, $36, $48, $35, $4A, $15, $8C, $67, $2C, $67
+    db $CE, $98, $E0, $B8, $C0, $32, $C2, $32, $C2, $32, $C0, $72, $C6, $76, $C4, $36
+    db $C6, $36, $48, $78, $46, $78, $C6, $30, $0E, $31, $0C, $3F, $0E, $3F, $00, $A8
+    db $20, $29, $22, $29, $00, $A8, $A2, $27, $A4, $27, $E4, $78, $E4, $38, $C2, $38
+    db $A2, $F8, $E4, $78, $C2, $B8, $66, $78, $64, $78, $C6, $30, $0E, $31, $8C, $30
+    db $8E, $30, $8E, $30, $8E, $70, $8C, $70, $C0, $38, $E4, $38, $AC, $2A, $AE, $2A
+    db $AA, $35, $A4, $67, $A2, $67, $86, $27, $88, $27, $A2, $38, $E4, $F8, $A2, $38
+    db $86, $78, $84, $78, $82, $78, $AC, $30, $AE, $30, $AE, $30, $AC, $70, $CE, $38
+    db $A0, $35, $A2, $35, $A4, $35, $A6, $35, $00, $A8, $A2, $B8, $86, $36, $68, $25
+    db $0E, $31, $0E, $31, $AC, $30, $8E, $30, $CC, $70, $CA, $70, $A2, $18, $EC, $14
+    db $EE, $14, $C0, $15, $00, $A8, $0A, $24, $C6, $35, $C8, $35, $84, $16, $88, $05
+    db $84, $31, $8E, $31, $42, $3E, $66, $65, $82, $53, $E0, $15, $00, $A8, $00, $A8
+    db $00, $A8, $E8, $35, $48, $0E, $A0, $16, $AE, $11, $88, $32, $00, $A8, $86, $65
+    db $8A, $36, $00, $A8, $00, $A8, $48, $15, $E4, $18, $EC, $34, $EE, $34, $48, $2E
+    db $EA, $3C, $00, $A8, $00, $A8, $00, $A8, $68, $0E, $48, $0E, $C2, $12, $C2, $12
+    db $88, $32, $00, $A8, $80, $3E, $A6, $36, $4A, $78, $48, $38, $48, $38, $48, $38
+    db $46, $78, $4A, $78, $48, $38, $48, $78, $4A, $38, $0A, $35, $68, $2E, $2A, $36
+    db $2C, $36, $2C, $36, $2C, $76, $2A, $76, $8C, $30, $8E, $30, $CC, $B0, $8E, $70
+    db $CC, $B0, $8C, $70, $00, $A8, $68, $0E, $00, $A8, $88, $32, $00, $A8, $8C, $3E
+    db $8E, $3E, $C4, $36, $C4, $36, $48, $2E, $68, $78, $66, $38, $66, $38, $66, $38
+    db $64, $78, $68, $78, $66, $38, $66, $78, $66, $38, $68, $38, $84, $53, $2A, $15
+    db $A2, $38, $4A, $36, $4C, $36, $4C, $36, $4C, $76, $4A, $76, $AC, $30, $AE, $30
+    db $AE, $30, $8C, $F0, $8C, $30, $00, $A8, $00, $A8, $64, $33, $64, $33, $64, $33
+    db $64, $33, $64, $33, $A8, $3E, $AA, $3E, $20, $29, $22, $09, $68, $0E, $86, $78
+    db $84, $38, $84, $38, $84, $38, $82, $78, $86, $78, $84, $38, $84, $78, $84, $38
+    db $86, $38, $48, $15, $4A, $15, $4A, $36, $4C, $36, $4C, $36, $4C, $76, $4A, $76
+    db $CA, $30, $CC, $30, $CC, $70, $CA, $70, $EC, $34, $EE, $34, $00, $A8, $C6, $30
+    db $0E, $31, $0E, $31, $CA, $3E, $CC, $1E, $00, $A8, $8A, $76, $6A, $3D, $A4, $38
+    db $86, $36, $6A, $3D, $8A, $36, $E0, $D8, $CE, $D8, $48, $0E, $6A, $36, $6C, $76
+    db $6A, $76, $08, $26, $82, $33, $82, $73, $00, $A8, $0E, $31, $0E, $31, $0E, $31
+    db $0E, $31, $EA, $3E, $EC, $1E, $EE, $16, $8A, $76, $84, $36, $E0, $2E, $8A, $25
+    db $8C, $25, $E0, $2E, $8A, $36, $C2, $D8, $C0, $D8, $68, $0E, $48, $2E, $00, $A8
+    db $28, $26, $2E, $6D, $2C, $6D, $00, $A8, $00, $35, $02, $35, $C6, $30, $C6, $30
+    db $0E, $31, $0E, $31, $0E, $31, $46, $38, $48, $38, $A6, $76, $00, $2F, $E4, $2E
+    db $00, $A8, $A6, $36, $A0, $36, $A0, $76, $00, $A8, $A8, $2D, $00, $A8, $88, $67
+    db $84, $31, $8E, $31, $8E, $31, $8E, $31, $8E, $31, $64, $38, $66, $38, $66, $38
+    db $C0, $32, $C2, $32, $C2, $32, $C2, $32, $C2, $72, $C2, $72, $C2, $72, $C2, $32
+    db $C2, $32, $C0, $72, $88, $27, $20, $29, $22, $29, $C2, $32, $C2, $32, $C2, $72
+    db $C0, $72, $48, $2E, $C6, $76, $C4, $76, $C4, $36, $C4, $36, $C4, $36, $C6, $36
+    db $48, $2E, $84, $73, $2A, $35, $88, $32, $80, $33, $80, $33, $80, $33, $80, $33
+    db $80, $33, $82, $38, $84, $38, $84, $38, $A2, $98, $24, $09, $26, $09, $68, $2E
+    db $68, $2E, $48, $35, $4A, $35, $88, $B2, $C8, $B2, $C8, $32, $20, $32, $20, $72
+    db $C8, $72, $C8, $32, $68, $65, $00, $A8, $00, $A8, $E4, $18, $AE, $11, $AC, $0A
+    db $AE, $0A, $88, $12, $C8, $12, $CE, $32, $CE, $72, $C8, $F2, $64, $33, $88, $65
+    db $C0, $18, $C2, $18, $EC, $34, $EE, $34, $48, $0E, $00, $A8, $E6, $12, $24, $13
+    db $48, $0E, $CE, $32, $CE, $F2, $0E, $31, $00, $A8, $CE, $18, $E0, $18, $0A, $35
+    db $0C, $35, $68, $0E, $00, $A8, $00, $A8, $00, $A8, $68, $0E, $40, $1C, $42, $1C
+    db $0E, $31, $00, $A8, $C2, $32, $C2, $72, $C0, $72, $2A, $36, $2C, $36, $2C, $76
+    db $2C, $36, $2E, $36, $A2, $D8, $28, $35, $84, $33, $4A, $78, $48, $38, $48, $78
+    db $4A, $38, $46, $38, $4A, $38, $4A, $38, $48, $78, $48, $78, $48, $38, $4A, $38
+    db $EC, $34, $EE, $34, $24, $29, $26, $09, $EE, $34, $4A, $36, $4C, $36, $4C, $36
+    db $4C, $76, $4C, $76, $4C, $36, $4E, $36, $00, $35, $02, $35, $64, $38, $66, $78
+    db $68, $38, $64, $38, $68, $38, $64, $38, $66, $78, $68, $38, $66, $78, $66, $78
+    db $66, $38, $68, $38, $20, $29, $22, $29, $AA, $35, $82, $33, $0C, $35, $EC, $34
+    db $EE, $34, $0A, $35, $0C, $35, $48, $0E, $6C, $36, $6C, $36, $6C, $76, $00, $A8
+    db $0A, $35, $0C, $35, $82, $38, $84, $38, $84, $78, $84, $38, $84, $38, $82, $38
+    db $82, $38, $84, $78, $86, $38, $84, $78, $84, $38, $86, $38, $24, $29, $26, $29
+    db $A0, $35, $A2, $35, $84, $31, $48, $35, $4A, $35, $84, $73, $28, $35, $84, $33
+    db $68, $2E, $8A, $76, $6E, $25, $8A, $36, $48, $35, $4A, $35, $A6, $78, $A6, $38
+    db $6A, $3D, $A6, $78, $00, $A8, $A6, $38, $AE, $6A, $AC, $6A, $C0, $35, $60, $2D
+    db $88, $32, $22, $29, $28, $35, $00, $35, $02, $35, $EE, $34, $A6, $36, $AC, $2A
+    db $AE, $2A, $C4, $38, $00, $A8, $86, $76, $8A, $25, $8C, $25, $C4, $78, $E2, $2E
+    db $86, $36, $6C, $25, $6E, $25, $C4, $38, $E0, $2E, $46, $7D, $48, $2E, $E0, $35
+    db $80, $2D, $88, $32, $8E, $3E, $48, $2E, $48, $35, $82, $33, $0C, $35, $82, $73
+    db $C6, $76, $C4, $36, $C4, $36, $C4, $36, $C4, $36, $C4, $36, $C6, $36, $00, $A8
+    db $E4, $6E, $68, $2E, $8A, $07, $20, $07, $64, $33, $64, $33, $68, $2E, $00, $A8
+    db $48, $35, $4A, $35, $2A, $35, $86, $36, $00, $A8, $86, $76, $84, $F6, $00, $A8
+    db $86, $76, $2C, $07, $8C, $07, $C6, $30, $0E, $31, $CC, $3E, $4C, $2D, $48, $35
+    db $4A, $35, $C6, $30, $EC, $3E, $EE, $36, $A8, $0D, $C6, $30, $0E, $31, $0A, $3F
+    db $0C, $1F, $0E, $1F, $A8, $0D, $00, $A8, $C6, $30, $28, $1F, $2A, $1F, $EC, $34
+    db $EE, $34, $00, $A8, $8E, $31, $0A, $35, $0C, $35, $64, $33, $64, $33, $64, $33
+    db $64, $33, $64, $33, $00, $A8, $64, $33, $64, $33, $64, $33, $64, $33, $00, $A8
+    db $88, $12, $84, $73, $2A, $35, $0E, $31, $0E, $31, $0E, $31, $0E, $31, $0E, $31
+    db $0E, $31, $64, $33, $64, $33, $64, $33, $64, $33, $C6, $30, $0E, $31, $0E, $31
+    db $64, $33, $64, $33, $48, $35, $4A, $35, $0E, $31, $0E, $31, $0E, $31, $0E, $31
+    db $0E, $31, $C6, $30, $0E, $31, $C6, $70, $C6, $30, $6C, $36, $C4, $76, $C4, $36
+    db $C4, $36, $C4, $78, $00, $A8, $A0, $36, $C0, $32, $C2, $32, $00, $A8, $00, $A8
+    db $28, $3C, $C4, $36, $00, $A8, $C4, $36, $8A, $36, $00, $A8, $8A, $36, $A6, $16
+    db $8A, $36, $8A, $36, $A6, $16, $48, $0E, $00, $A8, $28, $3F, $C0, $32, $C2, $32
+    db $C2, $72, $00, $A8, $C4, $36, $C4, $76, $C0, $32, $C4, $16, $C6, $36, $C6, $76
+    db $C4, $36, $C6, $36, $C4, $36, $C4, $76, $C4, $36, $C0, $32, $00, $A8, $AE, $31
+    db $0A, $24, $00, $A8, $84, $16, $A0, $16, $C4, $76, $C4, $36, $C4, $36, $8A, $36
+    db $A6, $36, $C2, $32, $C2, $32, $C2, $32, $C2, $72, $C2, $72, $C2, $32, $C2, $32
+    db $C2, $72, $C4, $36, $C4, $36, $C4, $36, $C4, $36, $A4, $36, $A4, $36, $84, $F6
+    db $48, $2E, $8A, $27, $20, $27, $2C, $27, $8C, $27, $00, $A8, $0A, $24, $24, $29
+    db $26, $29, $44, $3D, $46, $3D, $2A, $35, $6E, $1C, $44, $1C, $44, $1C, $08, $1C
+    db $02, $1C, $04, $1C, $06, $1C, $2A, $9C, $22, $9C, $44, $1D, $46, $1D, $28, $9C
+    db $02, $1C, $04, $1C, $06, $1C, $08, $1C, $2A, $9C, $04, $1C, $08, $1C, $22, $9C
+    db $24, $9C, $26, $9C, $08, $5C, $06, $5C, $04, $5C, $02, $5C, $2A, $1C, $00, $1E
+    db $02, $16, $04, $16, $06, $16, $06, $5C, $0C, $1C, $28, $DC, $26, $DC, $24, $DC
+    db $22, $DC, $08, $5C, $02, $5C, $46, $1D, $24, $DC, $22, $DC, $22, $1C, $62, $3C
+    db $62, $1C, $28, $1C, $22, $1C, $24, $1C, $28, $1C, $02, $9C, $04, $9C, $42, $5D
+    db $40, $5D, $22, $1C, $24, $1C, $26, $1C, $28, $1C, $24, $1C, $02, $9C, $04, $9C
+    db $06, $9C, $28, $5C, $26, $5C, $24, $5C, $44, $1D, $46, $1D, $26, $5C, $22, $16
+    db $24, $16, $26, $16, $26, $5C, $2A, $9C, $2A, $1C, $08, $DC, $06, $DC, $02, $DC
+    db $28, $5C, $26, $5C, $22, $5C, $40, $1D, $42, $1D, $02, $DC, $2A, $1C, $6E, $DC
+    db $44, $3C, $AA, $3C, $44, $1E, $46, $1E, $0C, $1C, $06, $1C, $44, $1D, $46, $1D
+    db $02, $1C, $04, $1C, $06, $1C, $06, $1C, $06, $1C, $02, $1C, $04, $1C, $0C, $1C
+    db $02, $1C, $44, $1D, $46, $1D, $26, $DC, $26, $1C, $40, $1D, $42, $1D, $44, $1E
+    db $40, $1E, $42, $1E, $44, $1D, $46, $1D, $04, $1C, $42, $5D, $40, $5D, $04, $1C
+    db $02, $1C, $46, $1D, $00, $A8, $60, $DC, $80, $3C, $64, $3E, $66, $1E, $22, $1C
+    db $24, $1C, $26, $1C, $8A, $56, $02, $1C, $22, $1C, $24, $1C, $26, $1C, $26, $1C
+    db $08, $1C, $00, $A8, $00, $A8, $2A, $1C, $22, $1C, $24, $1C, $08, $DC, $06, $DC
+    db $EA, $DC, $08, $9D, $0C, $1C, $46, $5E, $42, $1E, $40, $1E, $42, $1E, $44, $1E
+    db $2A, $1C, $26, $1C, $22, $1C, $2A, $1C, $06, $1C, $08, $1C, $00, $A8, $80, $3C
+    db $44, $3C, $28, $3F, $2A, $3F, $04, $1C, $06, $1C, $06, $1C, $08, $1C, $8A, $56
+    db $04, $1C, $6A, $1D, $22, $1C, $8A, $16, $24, $DC, $08, $1C, $0C, $1C, $2A, $DC
+    db $00, $A8, $00, $A8, $26, $DC, $0C, $1C, $02, $1C, $04, $1C, $E8, $DC, $66, $5E
+    db $42, $1E, $44, $1E, $40, $1E, $42, $1E, $44, $1E, $22, $9C, $24, $9C, $26, $1C
+    db $2A, $9C, $04, $1C, $28, $1C, $60, $DC, $44, $1C, $62, $1C, $28, $1F, $28, $1F
+    db $26, $1C, $26, $1C, $28, $1C, $22, $1C, $64, $9E, $26, $1C, $60, $9E, $40, $1E
+    db $04, $DC, $28, $1C, $66, $DE, $64, $DE, $42, $9E, $60, $DE, $06, $DC, $2A, $1C
+    db $0C, $1C, $08, $9D, $E8, $DC, $2A, $1C, $26, $1C, $2A, $1C, $66, $9E, $06, $1C
+    db $66, $DE, $64, $DE, $62, $DE, $60, $DE, $00, $A8, $0C, $9C, $66, $DE, $64, $DE
+    db $62, $DE, $60, $DE, $00, $A8, $AA, $1C, $80, $1C, $42, $1E, $28, $1F, $24, $9C
+    db $26, $9C, $0C, $1C, $06, $1C, $A4, $16, $A4, $16, $06, $1C, $02, $1C, $40, $1E
+    db $44, $DE, $42, $1E, $40, $DE, $42, $5E, $22, $1C, $08, $1C, $E8, $9C, $08, $DD
+    db $24, $9C, $60, $9E, $62, $9E, $64, $9E, $64, $9E, $66, $9E, $42, $9E, $0C, $1C
+    db $40, $1E, $40, $1E, $A4, $16, $A4, $16, $00, $A8, $44, $1E, $40, $1E, $42, $1E
+    db $44, $1E, $00, $A8, $6E, $DC, $80, $1C, $44, $1C, $40, $1E, $42, $1E, $02, $9C
+    db $46, $1E, $26, $1C, $24, $DC, $24, $1C, $00, $A8, $08, $DD, $00, $A8, $40, $1E
+    db $46, $1D, $42, $1E, $A4, $16, $46, $1E, $28, $1C, $02, $1C, $02, $9C, $EA, $1C
+    db $28, $1C, $0C, $1C, $A4, $16, $A4, $16, $A4, $16, $40, $1E, $46, $1D, $C6, $56
+    db $40, $1E, $40, $1E, $EA, $DC, $C6, $16, $64, $1E, $60, $1E, $62, $1E, $62, $1E
+    db $64, $1E, $00, $A8, $00, $A8, $62, $1C, $44, $1E, $46, $1E, $0C, $1C, $46, $1E
+    db $04, $1C, $06, $1C, $08, $1C, $44, $1E, $46, $1E, $46, $5E, $44, $1E, $40, $1E
+    db $C2, $32, $C2, $72, $64, $1E, $66, $1E, $06, $1C, $08, $1D, $E8, $1C, $08, $1D
+    db $40, $1E, $40, $1E, $22, $9C, $24, $9C, $44, $1D, $46, $1D, $42, $5D, $40, $5D
+    db $00, $A8, $0C, $1C, $00, $A8, $00, $A8, $40, $1E, $A4, $16, $2A, $1C, $66, $1E
+    db $24, $1C, $2A, $1C, $66, $5E, $62, $1E, $64, $1E, $66, $1E, $08, $DD, $26, $1C
+    db $08, $5D, $24, $5C, $22, $5C, $22, $1C, $44, $5E, $44, $1E, $42, $1E, $44, $1E
+    db $EA, $5C, $22, $16, $00, $5E, $22, $1C, $28, $1C, $2A, $1C, $22, $1C, $00, $A8
+    db $00, $A8, $60, $5C, $44, $1E, $46, $1E, $2A, $9C, $04, $1C, $EA, $DC, $E8, $DC
+    db $02, $1C, $06, $5C, $64, $5E, $62, $1E, $64, $1E, $06, $1C, $40, $1E, $42, $1E
+    db $6E, $5C, $62, $1C, $44, $1E, $46, $1E, $0C, $9C, $22, $1C, $26, $5C, $EA, $9C
+    db $60, $1E, $62, $1E, $80, $1C, $64, $1E, $66, $1E, $00, $A8, $08, $1C, $2A, $9C
+    db $28, $DC, $26, $DC, $02, $1C, $60, $1C, $AA, $1C, $42, $1E, $44, $1E, $28, $1C
+    db $24, $5C, $22, $5C, $EA, $5C, $E8, $5C, $26, $1C, $08, $DC, $06, $DC, $2A, $1C
+    db $24, $1C, $EA, $1C, $06, $1C, $22, $1C, $6E, $1C, $44, $1C, $44, $1E, $46, $1E
+    db $02, $1C, $08, $9D, $02, $1C, $06, $5C, $04, $5C, $02, $5C, $02, $5C, $04, $1C
+    db $06, $1C, $02, $1C, $04, $1C, $0C, $1C, $02, $1C, $04, $1C, $06, $1C, $02, $1C
+    db $04, $1C, $06, $1C, $08, $1C, $0C, $1C, $0C, $1C, $2A, $1C, $0C, $1C, $22, $9C
+    db $24, $9C, $26, $9C, $22, $9C, $00, $A8, $62, $1C, $80, $1C, $44, $1E, $66, $1E
+    db $22, $1C, $24, $1C, $C6, $75, $C4, $75, $C2, $75, $22, $5C, $26, $1C, $00, $A8
+    db $2A, $1C, $22, $1C, $24, $1C, $26, $1C, $22, $1C, $24, $1C, $26, $1C, $00, $A8
+    db $02, $1C, $04, $1C, $2A, $1C, $02, $9C, $02, $1C, $04, $1C, $02, $9C, $04, $9C
+    db $0C, $9C, $22, $1C, $80, $1C, $44, $1C, $A4, $16, $A4, $16, $46, $1E, $0C, $1C
+    db $22, $1C, $E2, $15, $E4, $55, $0C, $1C, $02, $1C, $04, $1C, $02, $1C, $04, $1C
+    db $06, $1C, $0C, $1C, $02, $1C, $04, $1C, $06, $1C, $06, $1C, $22, $1C, $24, $1C
+    db $04, $1C, $22, $1C, $24, $1C, $0C, $1C, $08, $9D, $02, $1C, $44, $3C, $62, $3C
+    db $C4, $16, $C4, $16, $44, $1E, $2A, $1C, $26, $1C, $06, $56, $04, $56, $02, $56
+    db $00, $5E, $2A, $1C, $28, $1C, $2A, $1C, $6A, $5D, $24, $1C, $6A, $1D, $EA, $1C
+    db $2A, $1C, $22, $1C, $E8, $1C, $66, $1E, $2A, $1C, $0C, $1C, $2A, $1C, $62, $3C
+    db $80, $3C, $64, $1E, $44, $1E, $46, $1E, $06, $1C, $08, $1C, $02, $1C, $26, $56
+    db $24, $56, $22, $56, $22, $1C, $60, $9E, $62, $9E, $64, $9E, $66, $9E, $60, $9E
+    db $62, $9E, $64, $9E, $66, $DE, $64, $DE, $62, $DE, $60, $DE, $66, $DE, $62, $DE
+    db $64, $DE, $62, $DE, $60, $DE, $06, $1C, $AA, $3C, $44, $3C, $02, $9C, $64, $1E
+    db $66, $1E, $28, $1C, $06, $1C, $2A, $1C, $22, $1C, $24, $1C, $26, $1C, $22, $1C
+    db $40, $1E, $A4, $16, $A4, $16, $A4, $16, $A4, $16, $A4, $16, $A4, $16, $A4, $16
+    db $A4, $16, $A4, $16, $A4, $16, $A4, $16, $08, $1C, $26, $1C, $62, $1C, $04, $1C
+    db $02, $1C, $EA, $1C, $06, $1C, $22, $DC, $0C, $1C, $02, $1C, $02, $1C, $28, $1F
+    db $40, $1E, $28, $5F, $40, $1E, $40, $1E, $28, $5F, $04, $1C, $00, $A8, $02, $1C
+    db $40, $1E, $40, $1E, $40, $1E, $28, $5F, $22, $9C, $06, $1C, $26, $1C, $80, $1C
+    db $44, $1E, $46, $1E, $24, $1C, $EA, $DC, $04, $DC, $02, $DC, $42, $5E, $40, $5E
+    db $06, $9C, $00, $A8, $80, $3C, $44, $1C, $64, $1E, $66, $1E, $2A, $9C, $62, $5E
+    db $60, $5E, $04, $5C, $24, $9C, $00, $A8, $62, $1C, $00, $A8, $0C, $9C, $E8, $9C
+    db $EA, $9C, $04, $9C, $00, $A8, $80, $1C, $00, $A8, $EA, $1C, $0C, $1C, $02, $1C
+    db $E8, $1C, $EA, $1C, $04, $1C, $24, $1C, $04, $1C, $00, $A8, $00, $A8, $44, $1E
+    db $40, $1E, $40, $1E, $04, $9C, $06, $9C, $0C, $9C, $06, $1C, $C2, $35, $C4, $15
+    db $C6, $35, $06, $1C, $26, $9C, $08, $5D, $02, $1C, $42, $1E, $44, $1E, $02, $1C
+    db $06, $1C, $02, $1C, $0C, $1C, $02, $1C, $42, $1E, $2A, $1C, $2A, $1C, $0C, $5C
+    db $24, $1C, $28, $1C, $06, $5C, $04, $5C, $02, $5C, $26, $1C, $E2, $35, $E4, $15
+    db $00, $A8, $26, $1C, $02, $1C, $22, $1C, $24, $1C, $02, $1C, $00, $A8, $02, $1C
+    db $04, $1C, $62, $1E, $42, $1E, $64, $1E, $22, $1C, $26, $1C, $22, $1C, $2A, $1C
+    db $42, $1E, $42, $1E, $2A, $1C, $2A, $5C, $40, $1E, $00, $A8, $26, $5C, $24, $5C
+    db $2A, $5C, $02, $16, $06, $1C, $00, $A8, $0C, $1C, $02, $1C, $22, $1C, $00, $A8
+    db $22, $1C, $24, $1C, $46, $1E, $22, $56, $62, $1E, $2A, $9C, $02, $1C, $04, $1C
+    db $02, $1C, $06, $1C, $02, $1C, $06, $1C, $0C, $1C, $02, $1C, $06, $1C, $0C, $1C
+    db $40, $1E, $44, $1E, $24, $16, $26, $16, $02, $1C, $04, $1C, $26, $1C, $2A, $1C
+    db $22, $1C, $02, $1C, $00, $A8, $E0, $5F, $CA, $5F, $44, $3C, $62, $1C, $42, $1E
+    db $44, $1E, $66, $1E, $0C, $5C, $0C, $9C, $22, $1C, $24, $1C, $26, $1C, $28, $1C
+    db $46, $5E, $2A, $5C, $22, $1C, $26, $1C, $2A, $1C, $46, $5E, $42, $1E, $44, $1E
+    db $22, $5C, $22, $1C, $24, $1C, $40, $1E, $42, $1E, $44, $1E, $40, $1E, $00, $A8
+    db $E2, $5F, $CC, $5F, $04, $1C, $06, $1C, $06, $1C, $26, $1C, $28, $1C, $22, $16
+    db $62, $9E, $66, $1E, $64, $9E, $06, $1C, $62, $9E, $44, $1E, $44, $1E, $44, $5E
+    db $64, $1E, $0C, $1C, $02, $1C, $06, $1C, $40, $1E, $40, $1E, $42, $1E, $44, $1E
+    db $46, $1E, $0C, $1C, $24, $13, $E4, $5F, $CE, $5F, $24, $1C, $26, $1C, $06, $1C
+    db $60, $9E, $62, $9E, $02, $1C, $28, $1C, $2A, $1C, $22, $1C, $24, $1C, $22, $1C
+    db $40, $1E, $42, $1E, $26, $1C, $02, $1C, $2A, $1C, $22, $1C, $26, $1C, $02, $1C
+    db $04, $1C, $06, $1C, $04, $1C, $42, $1E, $40, $1C, $42, $1C, $44, $1E, $AC, $1D
+    db $AA, $1C, $00, $A8, $00, $A8, $0C, $1C, $40, $1D, $40, $9E, $42, $9E, $42, $1E
+    db $42, $1E, $42, $1E, $00, $A8, $22, $9C, $24, $9C, $26, $9C, $42, $1E, $2A, $9C
+    db $42, $1E, $44, $1E, $46, $1E, $66, $1E, $0C, $1C, $22, $1C, $24, $1C, $26, $1C
+    db $24, $1C, $2A, $DC, $64, $1E, $CC, $1D, $CE, $1D, $44, $1E, $46, $1E, $2A, $1C
+    db $42, $1D, $62, $1E, $64, $1E, $66, $1E, $0C, $1C, $28, $1C, $2A, $1C, $46, $5E
+    db $44, $5E, $0C, $DC, $06, $DC, $02, $DC, $6E, $3C, $EC, $1D, $EE, $1D, $64, $1E
+    db $66, $1E, $06, $1C, $02, $1C, $04, $1C, $06, $1C, $66, $5E, $64, $5E, $06, $1C
+    db $6E, $3C, $0C, $1E, $0E, $1E, $26, $1C, $26, $1C, $22, $1C, $46, $1D, $26, $1C
+    db $02, $1C, $02, $9C, $26, $1C, $6E, $BC, $40, $1E, $64, $1E, $04, $1C, $40, $1E
+    db $44, $1E, $46, $1E, $0C, $1C, $02, $1C, $04, $1C, $04, $1C, $60, $BC, $26, $1C
+    db $E8, $1C, $E8, $DC, $2A, $1C, $08, $DD, $06, $1C, $46, $1D, $64, $1E, $66, $1E
+    db $2A, $1C, $22, $1C, $26, $DC, $24, $1C, $60, $3C, $02, $1C, $08, $1D, $E8, $1C
+    db $EA, $1C, $08, $5D, $08, $1D, $08, $9D, $06, $1C, $E8, $1C, $EA, $1C, $2A, $1C
+    db $08, $9D, $EA, $5C, $02, $1C, $EA, $1C, $08, $9D, $EA, $1C, $06, $1C, $EA, $DC
+    db $04, $1C, $E8, $5C, $EA, $9C, $44, $1D, $46, $1D, $28, $1C, $26, $1C, $08, $9D
+    db $E8, $1C, $28, $1C, $0C, $1C, $22, $1C, $AA, $3C, $2A, $1C, $22, $1C, $08, $1D
+    db $E8, $9C, $EA, $9C, $06, $1C, $08, $1C, $08, $1D, $E8, $9C, $EA, $9C, $22, $1C
+    db $EA, $1C, $EA, $DC, $EA, $9C, $EA, $5C, $40, $1E, $42, $1E, $44, $1E, $44, $1E
+    db $E8, $1C, $EA, $DC, $08, $DD, $E8, $1C, $EA, $1C, $EA, $9C, $E8, $1C, $E8, $9C
+    db $EA, $9C, $EA, $DC, $EA, $DC, $E8, $1C, $EA, $1C, $60, $9C, $80, $1C, $64, $9E
+    db $66, $9E, $08, $1C, $E8, $1C, $06, $1C, $02, $5C, $0C, $1C, $22, $9C, $26, $1C
+    db $44, $1E, $0C, $1C, $EA, $DC, $EA, $DC, $E8, $1C, $EA, $1C, $EA, $DC, $0C, $1C
+    db $08, $5D, $EA, $DC, $E8, $DC, $08, $1D, $08, $1D, $40, $1D, $42, $1D, $E8, $DC
+    db $08, $DD, $08, $1D, $E8, $1C, $EA, $1C, $08, $1D, $44, $1C, $62, $1C, $44, $9E
+    db $46, $9E, $28, $1C, $24, $1C, $26, $1C, $8A, $56, $60, $9E, $64, $9E, $46, $5E
+    db $44, $1E, $66, $1E, $24, $1C, $28, $1C, $08, $1D, $02, $1C, $2A, $1C, $22, $1C
+    db $26, $1C, $EA, $DC, $44, $1D, $42, $5D, $40, $5D, $2A, $9C, $62, $DE, $8A, $56
+    db $8A, $16, $26, $5C, $E8, $DC, $22, $5C, $62, $1C, $80, $1C, $40, $1E, $28, $DC
+    db $06, $1C, $40, $9E, $44, $9E, $66, $9E, $0C, $1C, $22, $9C, $66, $DE, $62, $DE
+    db $62, $9E, $66, $9E, $40, $1D, $26, $9C, $28, $9C, $04, $1C, $46, $DE, $44, $DE
+    db $42, $DE, $0C, $1C, $04, $1C, $08, $1C, $06, $5C, $04, $5C, $44, $1C, $08, $DC
+    db $06, $DC, $24, $1C, $26, $1C, $A4, $56, $02, $9C, $A4, $16, $2A, $1C, $02, $9C
+    db $46, $DE, $44, $DE, $42, $DE, $42, $9E, $44, $9E, $46, $9E, $24, $1C, $E8, $1C
+    db $06, $9C, $08, $9C, $2A, $1C, $24, $1C, $26, $1C, $28, $1C, $2A, $1C, $22, $1C
+    db $24, $1C, $02, $DC, $28, $1C, $26, $5C, $24, $5C, $62, $3C, $28, $1C, $22, $DC
+    db $0C, $1C, $02, $1C, $04, $1C, $C2, $12, $C2, $52, $C2, $12, $04, $1C, $46, $5E
+    db $44, $5E, $42, $5E, $44, $1E, $46, $1E, $26, $9C, $28, $9C, $0C, $1C, $04, $1C
+    db $06, $1C, $40, $1E, $24, $9C, $0C, $1C, $02, $1C, $04, $1C, $06, $1C, $08, $5C
+    db $06, $1C, $04, $5C, $02, $5C, $0C, $1C, $00, $A8, $64, $1E, $66, $1E, $46, $1E
+    db $44, $1D, $46, $1D, $60, $1E, $62, $1E, $64, $1E, $06, $9C, $08, $9C, $22, $1C
+    db $40, $1E, $26, $1C, $26, $1C, $24, $5C, $22, $5C, $2A, $1C, $44, $3C, $40, $3E
+    db $42, $3E, $44, $1E, $06, $1C, $62, $1E, $64, $1E, $40, $1D, $42, $1D, $0C, $1C
+    db $02, $1C, $04, $1C, $06, $1C, $28, $DC, $26, $DC, $0C, $1C, $02, $1C, $06, $1C
+    db $08, $1C, $0C, $1C, $62, $1C, $40, $1E, $44, $1E, $46, $1E, $24, $1C, $44, $1D
+    db $46, $1D, $2A, $1C, $22, $1C, $08, $DC, $06, $DC, $26, $1C, $28, $1C, $22, $1C
+    db $24, $1C, $80, $1C, $40, $1E, $8A, $16, $46, $1E, $06, $1C, $08, $1C, $02, $1C
+    db $04, $1C, $C2, $15, $C4, $15, $C6, $15, $22, $9C, $04, $1C, $06, $1C, $A4, $16
+    db $0C, $1C, $40, $1E, $42, $1E, $44, $1E, $46, $1E, $E2, $15, $E4, $15, $E6, $15
+    db $02, $9C, $28, $DC, $26, $DC, $A4, $16, $A4, $16, $C8, $12, $42, $1E, $44, $1E
+    db $EA, $9C, $66, $5E, $60, $1E, $66, $1E, $02, $16, $04, $16, $06, $16, $06, $5C
+    db $24, $9C, $2A, $9C, $08, $5C, $22, $DC, $C2, $12, $04, $1C, $06, $1C, $C2, $12
+    db $C8, $B2, $62, $1C, $A4, $16, $E8, $1C, $EA, $1C, $08, $1C, $24, $1C, $26, $1C
+    db $26, $1C, $EA, $DC, $E8, $DC, $E8, $DC, $40, $1E, $26, $16, $02, $9C, $04, $9C
+    db $06, $9C, $0C, $1C, $EA, $DC, $02, $9C, $04, $9C, $EA, $5C, $28, $5C, $28, $1C
+    db $26, $1C, $04, $DC, $46, $5E, $42, $5E, $40, $5E, $C8, $F2, $80, $1C, $AA, $1C
+    db $44, $DE, $42, $DE, $C4, $16, $08, $1C, $08, $1D, $28, $1C, $08, $5C, $06, $5C
+    db $06, $5C, $04, $5C, $02, $5C, $06, $1C, $08, $1C, $42, $1E, $44, $1E, $46, $1E
+    db $02, $1C, $04, $1C, $2A, $1C, $06, $1C, $08, $1C, $22, $1C, $EA, $1C, $40, $1E
+    db $42, $1E, $44, $1E, $22, $DC, $64, $33, $06, $5C, $02, $1C, $04, $1C, $06, $1C
+    db $26, $9C, $44, $1C, $62, $1C, $40, $1E, $42, $1E, $62, $1E, $28, $1C, $2A, $1C
+    db $2A, $5C, $28, $5C, $26, $5C, $26, $5C, $24, $5C, $22, $5C, $26, $1C, $28, $1C
+    db $62, $1E, $64, $1E, $22, $1C, $24, $1C, $26, $1C, $26, $1C, $28, $1C, $8A, $56
+    db $40, $1E, $04, $1C, $8A, $16, $08, $1C, $0C, $1C, $0E, $31, $0E, $51, $26, $1C
+    db $06, $9C, $80, $1C, $40, $1D, $28, $9C, $0C, $5C, $2A, $9C, $06, $5C, $04, $5C
+    db $0C, $1C, $06, $1C, $22, $9C, $24, $9C, $06, $1C, $06, $1C, $02, $1C, $04, $1C
+    db $62, $9E, $28, $1C, $2A, $1C, $0E, $11, $0E, $11, $06, $1C, $08, $1C, $0C, $1C
+    db $44, $1C, $40, $1E, $44, $1E, $2A, $5C, $66, $9E, $62, $9E, $66, $DE, $64, $DE
+    db $62, $DE, $60, $DE, $02, $9C, $04, $9C, $26, $1C, $26, $1C, $40, $9E, $42, $9E
+    db $44, $9E, $42, $9E, $28, $DC, $26, $DC, $42, $1E, $22, $DC, $0E, $11, $26, $1C
+    db $28, $1C, $2A, $1C, $62, $1C, $0C, $1F, $26, $DC, $A4, $56, $A4, $56, $A4, $56
+    db $04, $1C, $06, $1C, $02, $1C, $A6, $56, $A4, $56, $A6, $16, $08, $DC, $44, $1E
+    db $02, $1C, $2A, $9C, $26, $9C, $28, $9C, $80, $1C, $42, $1E, $44, $1E, $06, $DC
+    db $2A, $5C, $04, $DC, $02, $DC, $26, $5C, $24, $5C, $22, $5C, $22, $5C, $22, $1C
+    db $24, $1C, $22, $1C, $24, $1C, $C0, $12, $22, $1C, $24, $1C, $26, $1C, $22, $1C
+    db $24, $1C, $2A, $1C, $26, $1C, $28, $1C, $2A, $1C, $02, $9C, $04, $9C, $46, $5E
+    db $44, $5E, $42, $5E, $40, $1E, $80, $13, $26, $1C, $06, $9C, $08, $9C, $2A, $1C
+    db $44, $1C, $62, $1E, $64, $1E, $02, $1C, $06, $1C, $40, $1D, $24, $DC, $66, $5E
+    db $64, $5E, $62, $5E, $60, $1E, $06, $1C, $CA, $1F, $CA, $1F, $E0, $1F, $02, $1C
+    db $04, $1C, $44, $1E, $8A, $16, $08, $9C, $2A, $1C, $44, $1D, $46, $1D, $28, $1C
+    db $04, $1C, $CC, $1F, $CC, $1F, $E2, $1F, $22, $1C, $24, $1C, $42, $1E, $06, $1C
+    db $08, $1C, $0C, $1C, $44, $1D, $46, $1D, $08, $5C, $24, $1C, $C8, $12, $24, $13
+    db $CE, $1F, $E4, $1F, $08, $1C, $A6, $16, $26, $1C, $28, $1C, $2A, $1C, $2A, $1C
+    db $0C, $DC, $28, $5C, $26, $5C, $46, $5E, $42, $5E, $40, $5E, $42, $1E, $28, $1C
+    db $6E, $9C, $04, $1C, $02, $1C, $EA, $1C, $02, $1C, $04, $1C, $08, $5C, $02, $1C
+    db $04, $1C, $26, $9C, $08, $1C, $2A, $1C, $24, $DC, $22, $DC, $0C, $1C, $04, $1C
+    db $06, $1C, $08, $1C, $06, $1C, $08, $1C, $00, $1E, $26, $1C, $66, $5E, $44, $1E
+    db $44, $1E, $46, $1E, $64, $1E, $EA, $9C, $22, $1C, $24, $1C, $26, $1C, $28, $5C
+    db $2A, $1C, $22, $1C, $24, $1C, $28, $1C, $06, $DC, $04, $DC, $08, $9D, $24, $1C
+    db $26, $1C, $28, $1C, $08, $DD, $2A, $1C, $26, $1C, $28, $1C, $02, $9C, $04, $9C
+    db $06, $9C, $22, $1C, $24, $1C, $26, $1C, $44, $1E, $40, $1E, $44, $1D, $46, $1D
+    db $08, $1C, $EA, $1C, $06, $1C, $28, $9C, $8A, $16, $06, $1C, $24, $DC, $06, $1C
+    db $26, $1C, $28, $1C, $E8, $9C, $EA, $9C, $04, $1C, $06, $1C, $08, $DD, $EA, $DC
+    db $E8, $DC, $0C, $5C, $06, $5C, $04, $5C, $02, $5C, $40, $1D, $42, $1D, $26, $9C
+    db $08, $1C, $A6, $15, $26, $1C, $42, $1E, $44, $1E, $22, $1C, $24, $1C, $26, $1C
+    db $06, $9C, $66, $9E, $26, $1C, $06, $1C, $2A, $1C, $E8, $1C, $60, $9E, $62, $9E
+    db $64, $9E, $62, $DE, $60, $DE, $44, $1D, $46, $1D, $06, $9C, $C2, $15, $C6, $15
+    db $EA, $1C, $40, $1E, $40, $1E, $42, $1E, $24, $DC, $26, $9C, $06, $1C, $02, $1C
+    db $04, $1C, $44, $9E, $46, $9E, $42, $9E, $44, $9E, $40, $9E, $44, $9E, $40, $9E
+    db $42, $9E, $44, $DE, $42, $DE, $40, $DE, $46, $5D, $44, $5D, $28, $1C, $E2, $15
+    db $E6, $15, $44, $1C, $40, $1D, $60, $1E, $62, $1E, $46, $1E, $40, $1E, $02, $DC
+    db $22, $1C, $24, $1C, $26, $1C, $02, $9C, $04, $9C, $06, $9C, $44, $1D, $A4, $16
+    db $24, $1C, $00, $1E, $02, $16, $04, $16, $06, $16, $60, $9E, $62, $9E, $64, $1E
+    db $66, $1E, $42, $1E, $28, $5F, $28, $5F, $28, $5F, $28, $5F, $28, $5F, $28, $5F
+    db $0C, $1C, $22, $16, $24, $16, $26, $16, $40, $9E, $42, $9E, $60, $1E, $62, $1E
+    db $24, $1C, $44, $1E, $46, $1E, $24, $9C, $08, $5C, $06, $5C, $62, $1C, $64, $1E
+    db $66, $1E, $04, $9C, $28, $5C, $28, $5C, $08, $1C, $02, $1C, $04, $1C, $E8, $1C
+    db $2A, $DC, $C8, $12, $24, $1C, $26, $1C, $E8, $1C, $24, $1C, $26, $1C, $0C, $DC
+    db $08, $1D, $0C, $DC, $2A, $1C, $06, $DC, $04, $DC, $02, $DC, $24, $5C, $02, $1C
+    db $60, $9E, $04, $5C, $02, $5C, $08, $5C, $06, $5C, $04, $5C, $28, $DC, $26, $DC
+    db $24, $DC, $22, $DC, $28, $DC, $26, $DC, $22, $DC, $24, $DC, $22, $DC, $24, $DC
+    db $22, $DC, $42, $1E, $44, $1E, $22, $5C, $28, $5C, $08, $DC, $06, $DC, $04, $DC
+    db $02, $DC, $02, $DC, $06, $DC, $06, $DC, $28, $1C, $00, $A8, $08, $DD, $00, $A8
+    db $42, $1E, $44, $5E, $46, $5E, $66, $5E, $42, $1E, $46, $1E, $66, $1E, $28, $1C
+    db $40, $1E, $60, $DE, $EA, $DC, $02, $9C, $46, $1E, $0C, $1C, $2A, $1C, $46, $1E
+    db $66, $1E, $46, $1E, $22, $56, $E8, $1C, $04, $1C, $02, $1C, $40, $1E, $40, $1E
+    db $2A, $1C, $42, $1E, $42, $1E, $26, $9C, $26, $1C, $24, $1C, $04, $1C, $06, $1C
+    db $08, $5C, $0C, $1C, $02, $1C, $04, $1C, $C2, $12, $C2, $52, $42, $DE, $42, $9E
+    db $62, $1E, $04, $1C, $26, $DC, $26, $1C, $28, $1C, $2A, $1C, $44, $1E, $A4, $16
+    db $2A, $5C, $04, $DC, $02, $DC, $24, $5C, $22, $5C, $22, $5C, $24, $1C, $26, $1C
+    db $22, $1C, $24, $1C, $26, $1C, $04, $9C, $66, $DE, $64, $DE, $28, $5F, $44, $1E
+    db $E8, $1C, $06, $1C, $24, $1C, $26, $1C, $24, $1C, $26, $1C, $E8, $1C, $06, $1C
+    db $24, $1C, $26, $1C, $2A, $1C, $1F, $18, $1F, $08, $1F, $00, $1F, $00, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $18, $1F, $18, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $10, $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $18, $1F, $18
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $10, $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $18, $1F, $10, $1F, $00, $1F, $00, $1F, $40, $1F, $40
+    db $1F, $40, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $40, $1F, $50, $1F, $50
+    db $1F, $50, $1F, $50, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $00, $1F, $40, $1F, $40, $1F, $10, $1F, $10, $1F, $18, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $00, $1F, $40, $1F, $40, $1F, $40, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $40, $1F, $50, $1F, $50, $1F, $50, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $40
+    db $1F, $40, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $40
+    db $10, $40, $10, $40, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $80
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $40, $10, $50
+    db $10, $50, $10, $50, $10, $50, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $40, $10, $40, $10, $40, $10, $40
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $10
+    db $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $10, $10, $10, $10, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $10, $10, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $1F, $90
+    db $10, $10, $10, $10, $1F, $10, $1F, $90, $1F, $90, $1F, $90, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $00, $10, $00, $10, $00, $10, $10, $10, $10, $10, $00
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90
+    db $1F, $90, $1F, $90, $1F, $10, $1F, $10, $10, $10, $10, $10, $10, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $1F, $10, $10, $00
+    db $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $1F, $10, $1F, $90, $5F, $8C
+    db $5F, $8C, $1F, $10, $17, $00, $10, $00, $10, $00, $10, $10, $10, $10, $1F, $10
+    db $1F, $10, $1F, $10, $10, $10, $19, $10, $1F, $90, $1F, $10, $1A, $10, $10, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $10, $10, $10, $10
+    db $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $18, $90, $1F, $90, $10, $10
+    db $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10
+    db $10, $10, $10, $10, $10, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $10, $10, $10, $10, $10, $10, $10
+    db $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $50, $10, $50, $1F, $10
+    db $1F, $10, $10, $00, $10, $00, $10, $00, $10, $00, $10, $10, $10, $10, $10, $50
+    db $10, $50, $1F, $10, $13, $00, $13, $00, $13, $00, $10, $00, $10, $10, $10, $10
+    db $10, $10, $10, $50, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $00
+    db $10, $00, $10, $10, $10, $10, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $40, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $10, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $10, $00
+    db $10, $00, $11, $00, $1F, $10, $12, $00, $10, $00, $13, $00, $13, $00, $13, $00
+    db $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00
+    db $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $10, $00, $10, $10, $10, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $10, $10, $10, $00
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $13, $00, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $10, $00, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $10, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $10, $00, $10, $00, $10, $00, $10, $10, $10, $10, $10, $10, $1F, $10, $10, $10
+    db $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $13, $00, $13, $00, $10, $00
+    db $10, $10, $10, $10, $10, $10, $1F, $90, $10, $00, $10, $00, $10, $00, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $17, $10, $10, $10, $10, $10, $10, $00, $13, $80, $13, $80, $1F, $10, $1F, $90
+    db $1F, $90, $1F, $90, $1F, $10, $1F, $90, $1F, $90, $1F, $10, $1F, $90, $1F, $90
+    db $1F, $90, $1F, $10, $1F, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $00
+    db $1F, $00, $17, $00, $10, $00, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10
+    db $1F, $10, $1F, $10, $1F, $10, $10, $00, $13, $00, $10, $00, $10, $10, $10, $10
+    db $10, $10, $13, $00, $13, $00, $1F, $10, $10, $00, $10, $00, $10, $00, $10, $00
+    db $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $00, $10, $00, $1F, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $1F, $10, $1F, $00, $1F, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $11, $00, $1F, $00, $1F, $10, $12, $00
+    db $10, $00, $10, $00, $10, $00, $1F, $10, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $1D, $10, $1F, $10, $1F, $10, $1F, $10
+    db $10, $00, $10, $00, $10, $00, $10, $00, $1F, $10, $1F, $00, $1F, $00, $1F, $00
+    db $13, $00, $1F, $00, $1F, $10, $10, $00, $1F, $90, $17, $80, $13, $00, $13, $00
+    db $13, $00, $13, $00, $10, $00, $13, $00, $13, $00, $13, $00, $13, $00, $10, $10
+    db $1D, $10, $13, $00, $13, $00, $13, $00, $13, $00, $1F, $10, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $10, $1F, $10, $1F, $90, $1F, $90, $10, $10, $10, $10, $10, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $11, $10, $12, $10
+    db $11, $10, $12, $10, $10, $10, $10, $00, $10, $00, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $10, $1F, $10, $10, $00, $1F, $00
+    db $1F, $10, $10, $10, $10, $10, $10, $10, $10, $10, $1F, $90, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00
+    db $13, $80, $13, $80, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $00, $1F, $00
+    db $1F, $00, $10, $00, $10, $00, $10, $10, $10, $10, $10, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $00, $1E, $00
+    db $10, $10, $10, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $13, $00, $13, $00, $1F, $10, $1F, $10
+    db $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $10, $00, $10, $00, $10, $10, $10, $10, $13, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $90, $10, $50, $10, $50, $1F, $90, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $17, $10, $19, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90
+    db $1F, $90, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $1F, $90, $1F, $10, $1F, $10
+    db $1F, $10, $10, $00, $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $1F, $90
+    db $10, $10, $1F, $90, $1F, $10, $1F, $10, $1F, $00, $1F, $00, $17, $00, $1F, $10
+    db $1D, $10, $1E, $10, $1F, $90, $1F, $90, $1F, $10, $10, $00, $10, $00, $10, $00
+    db $10, $10, $10, $10, $10, $50, $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $00
+    db $10, $00, $15, $10, $1F, $10, $10, $00, $10, $00, $10, $00, $10, $50, $1F, $00
+    db $1F, $00, $1F, $10, $1F, $90, $17, $90, $1F, $10, $1F, $10, $1F, $00, $12, $00
+    db $10, $00, $10, $50, $1F, $00, $10, $00, $10, $40, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $10, $10, $10, $10, $10, $50, $1F, $00, $10, $00, $10, $40
+    db $10, $00, $10, $00, $10, $00, $1F, $90, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $10, $00, $10, $00, $10, $40, $1F, $00, $10, $00, $10, $40, $10, $50, $10, $50
+    db $10, $50, $10, $40, $10, $40, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $13, $00, $13, $00, $10, $50, $10, $00, $10, $00
+    db $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00
+    db $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $10, $00
+    db $1F, $90, $1F, $90, $13, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $13, $00
+    db $13, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $10, $10, $10
+    db $10, $50, $10, $00, $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $10, $10, $10
+    db $10, $50, $18, $80, $1F, $80, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $50, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $50, $10, $50
+    db $10, $50, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $90, $1F, $90, $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $00
+    db $10, $00, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00, $1F, $10, $1F, $90
+    db $1F, $90, $1F, $90, $1F, $90, $1F, $90, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $90, $1F, $10, $1D, $10, $1F, $10, $13, $80, $13, $80, $10, $10, $10, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $1F, $90, $1F, $90, $11, $00
+    db $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $00, $10, $00, $1F, $10, $1F, $10
+    db $1A, $10, $10, $10, $1F, $90, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10
+    db $10, $10, $1F, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $12, $00, $10, $00, $10, $10, $10, $10, $1F, $10, $1F, $10, $10, $10, $1F, $90
+    db $10, $10, $10, $10, $1F, $90, $10, $10, $10, $10, $10, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $10, $1F, $10, $1F, $10
+    db $1F, $10, $12, $10, $10, $10, $10, $10, $1F, $90, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $10, $11, $10, $12, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $10, $10, $1F, $90, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $10
+    db $13, $10, $1F, $90, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $10, $00
+    db $10, $00, $1D, $00, $10, $00, $1D, $00, $1F, $10, $1F, $10, $10, $10, $10, $00
+    db $10, $00, $10, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $90, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $1F, $10, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $1F, $00, $10, $00, $1F, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00
+    db $13, $00, $13, $00, $13, $00, $13, $00, $1F, $00, $1F, $10, $10, $10, $13, $00
+    db $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00
+    db $13, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $1F, $00, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1E, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $10, $00, $10, $00, $1F, $00, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $10, $00, $10, $10, $13, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $10, $00, $10, $00, $1F, $10, $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $10
+    db $1F, $10, $17, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $10, $00, $10, $10, $1F, $10, $13, $00, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $10, $00, $11, $00, $1F, $00, $1F, $10, $1F, $10, $1F, $00, $1F, $00
+    db $1F, $00, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $80, $1F, $10, $1F, $10
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $10, $1F, $10, $13, $00, $1F, $10, $1F, $90
+    db $1F, $90, $1F, $90, $1F, $10, $1F, $90, $1F, $90, $1F, $90, $1F, $10, $1F, $10
+    db $1F, $90, $1F, $10, $1F, $10, $1F, $90, $1F, $90, $1F, $90, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $90, $1F, $90, $1F, $90, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $10
+    db $1F, $10, $1F, $90, $10, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $00, $1F, $00, $1F, $00, $1F, $00, $1F, $10, $1F, $10, $10, $10, $10, $00
+    db $10, $00, $1D, $00, $1F, $10, $10, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $90, $10, $10, $10, $00, $10, $00, $10, $00, $1F, $10
+    db $10, $00, $10, $00, $10, $00, $1F, $10, $10, $50, $10, $50, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $1F, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $1F, $10, $1F, $10
+    db $1F, $10, $16, $10, $10, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00
+    db $13, $00, $13, $00, $11, $00, $1F, $00, $1F, $00, $13, $00, $13, $00, $13, $00
+    db $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $15, $00
+    db $1F, $10, $16, $10, $13, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00
+    db $10, $00, $13, $10, $1F, $10, $1F, $10, $1F, $10, $10, $00, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $11, $00, $12, $00, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1D, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $15, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90
+    db $1F, $90, $1F, $90, $1F, $90, $1F, $90, $1F, $10, $19, $10, $1F, $10, $1F, $10
+    db $1F, $90, $1F, $90, $1F, $10, $1F, $10, $1F, $10, $10, $10, $1D, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $90, $1F, $10, $1F, $90, $1F, $10, $1F, $90, $1F, $90
+    db $1F, $90, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1D, $10, $1E, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $00, $10, $10, $1F, $10, $1F, $10, $1F, $00, $10, $00, $10, $00, $10, $00
+    db $1F, $10, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $10, $00, $1F, $10, $11, $00
+    db $16, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $13, $00, $10, $00
+    db $10, $00, $10, $00, $10, $00, $13, $00, $13, $00, $13, $00, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $00, $17, $00, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $13, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $17, $00
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $90, $10, $90
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10
+    db $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $1F, $10, $13, $00, $10, $00
+    db $10, $00, $13, $80, $13, $80, $10, $80, $1F, $80, $13, $00, $13, $00, $19, $80
+    db $1A, $80, $10, $00, $01, $01, $0A, $04, $05, $01, $01, $01, $10, $05, $1B, $01
+    db $01, $01, $14, $07, $35, $01, $01, $01, $1C, $05, $44, $01, $01, $01, $24, $04
+    db $5A, $01, $01, $01, $04, $07, $70, $01, $01, $01, $03, $0E, $7F, $01, $01, $01
+    db $15, $11, $91, $01, $01, $01, $05, $18, $A7, $01, $01, $01, $09, $1A, $B7, $01
+    db $01, $01, $18, $11, $CD, $01, $01, $01, $1D, $11, $E5, $01, $01, $01, $1E, $14
+    db $FB, $01, $01, $01, $22, $11, $04, $02, $01, $01, $04, $21, $1C, $02, $01, $01
+    db $0F, $1D, $2B, $02, $01, $01, $15, $1D, $3D, $02, $01, $01, $1B, $1F, $51, $02
+    db $01, $01, $1C, $25, $60, $02, $01, $01, $25, $1D, $6D, $02, $01, $01, $25, $29
+    db $7F, $02, $01, $01, $0B, $29, $8D, $02, $01, $01, $0F, $29, $A1, $02, $01, $01
+    db $17, $29, $B7, $02, $01, $01, $2B, $2F, $C7, $02, $01, $01, $21, $36, $D9, $02
+    db $01, $01, $03, $31, $F1, $02, $01, $01, $03, $3B, $03, $03, $01, $01, $0B, $36
+    db $15, $03, $01, $01, $0F, $36, $2B, $03, $01, $0C, $1B, $36, $45, $03, $01, $01
+    db $0B, $40, $5B, $03, $01, $01, $0F, $40, $71, $03, $01, $01, $1B, $41, $87, $03
+    db $01, $01, $20, $41, $9D, $03, $01, $01, $1F, $44, $B3, $03, $01, $01, $26, $41
+    db $BC, $03, $01, $01, $25, $44, $CC, $03, $01, $01, $0E, $06, $D5, $03, $04, $01
+    db $08, $27, $E0, $03, $01, $08, $28, $EF, $03, $01, $08, $28, $FA, $03, $01, $08
+    db $27, $05, $04, $01, $01, $19, $3E, $12, $04, $03, $04, $F2, $28, $73, $08, $3D
+    db $08, $0F, $38, $06, $C0, $01, $0F, $C0, $01, $C8, $77, $D8, $77, $C8, $77, $03
+    db $04, $FE, $90, $01, $68, $6D, $80, $76, $68, $02, $98, $76, $D8, $77, $78, $01
+    db $0F, $70, $01, $20, $74, $60, $74, $68, $74, $02, $03, $3F, $B0, $77, $20, $00
+    db $68, $74, $70, $0F, $C8, $03, $B0, $02, $03, $04, $F2, $88, $71, $B8, $06, $40
+    db $06, $70, $00, $78, $00, $0F, $78, $00, $08, $03, $08, $77, $08, $77, $03, $04
+    db $F2, $28, $73, $18, $6D, $90, $71, $38, $06, $70, $01, $0F, $78, $01, $08, $03
+    db $08, $77, $00, $77, $02, $03, $3F, $D0, $11, $E0, $77, $48, $75, $58, $75, $88
+    db $02, $40, $74, $03, $03, $F6, $90, $0F, $C0, $7A, $90, $0C, $F8, $79, $00, $0E
+    db $08, $0E, $01, $F8, $78, $03, $04, $DA, $00, $33, $B0, $09, $08, $0F, $68, $0B
+    db $70, $0B, $0F, $78, $0B, $18, $00, $D0, $00, $18, $00, $02, $05, $E2, $50, $15
+    db $10, $14, $F8, $15, $48, $1A, $03, $08, $60, $38, $14, $04, $04, $CC, $10, $18
+    db $20, $14, $A0, $17, $58, $1A, $8F, $50, $1A, $30, $1B, $10, $1B, $00, $1B, $78
+    db $11, $04, $04, $62, $10, $33, $90, $09, $28, $0F, $7F, $00, $0B, $00, $0B, $00
+    db $0B, $00, $0B, $90, $09, $08, $03, $08, $77, $05, $03, $E4, $08, $7E, $68, $60
+    db $E0, $7C, $E0, $03, $7C, $08, $0B, $10, $0B, $18, $0B, $20, $0B, $28, $0B, $03
+    db $01, $07, $B0, $7F, $C8, $7C, $D0, $00, $04, $04, $62, $10, $33, $48, $0D, $40
+    db $60, $7F, $C0, $01, $30, $0B, $38, $0B, $38, $06, $D0, $7C, $F0, $7C, $F0, $7C
+    db $02, $03, $3F, $58, $65, $F8, $64, $70, $78, $98, $11, $50, $1D, $A8, $1D, $03
+    db $04, $72, $10, $33, $50, $11, $40, $06, $C0, $01, $0E, $88, $65, $C8, $77, $98
+    db $65, $03, $04, $B2, $A8, $66, $88, $29, $08, $0F, $38, $0B, $0F, $68, $0B, $70
+    db $64, $D0, $65, $D0, $65, $02, $03, $3F, $B0, $1F, $B0, $13, $48, $1A, $68, $77
+    db $30, $10, $28, $14, $02, $03, $3D, $A8, $10, $E0, $15, $38, $10, $78, $13, $68
+    db $1F, $04, $04, $74, $88, $12, $80, $10, $50, $01, $D8, $13, $E0, $D8, $64, $C8
+    db $77, $E8, $64, $03, $04, $12, $10, $11, $38, $7A, $0E, $98, $13, $88, $13, $B8
+    db $13, $03, $04, $D2, $10, $11, $38, $7A, $78, $0B, $78, $0B, $0F, $60, $76, $C8
+    db $6C, $D8, $6C, $C8, $6C, $04, $04, $62, $10, $33, $90, $09, $28, $0F, $7E, $38
+    db $0B, $C0, $01, $38, $06, $B8, $6C, $48, $6C, $48, $6C, $02, $05, $35, $A8, $21
+    db $B0, $73, $60, $6D, $60, $6D, $03, $78, $66, $98, $13, $03, $03, $DB, $88, $62
+    db $D0, $5F, $A0, $11, $E0, $5E, $40, $11, $78, $67, $01, $00, $0E, $04, $04, $E2
+    db $90, $62, $98, $64, $48, $09, $A8, $64, $7B, $78, $01, $30, $0B, $58, $00, $C8
+    db $1A, $38, $1D, $48, $1D, $03, $03, $F6, $B0, $76, $E0, $77, $10, $76, $C8, $16
+    db $78, $0B, $68, $0B, $01, $68, $17, $03, $03, $F6, $68, $6C, $50, $77, $50, $7E
+    db $50, $77, $38, $0B, $78, $0B, $01, $B0, $02, $03, $04, $F2, $50, $14, $50, $11
+    db $40, $06, $68, $0B, $68, $0B, $0F, $70, $0B, $80, $1C, $80, $1C, $80, $1C, $04
+    db $04, $F2, $20, $5B, $38, $63, $A0, $6A, $30, $64, $08, $09, $7B, $10, $00, $08
+    db $00, $10, $0B, $F8, $1C, $88, $1C, $98, $1C, $03, $04, $D9, $28, $73, $48, $0D
+    db $40, $60, $78, $0B, $70, $0B, $0F, $38, $0B, $D8, $01, $58, $1D, $48, $1D, $03
+    db $04, $F2, $28, $73, $90, $09, $28, $0F, $70, $0B, $68, $0B, $0F, $68, $0B, $48
+    db $1D, $C0, $1B, $C0, $1B, $03, $04, $F2, $28, $73, $B8, $06, $A0, $6A, $38, $0B
+    db $78, $0B, $0F, $C0, $01, $C0, $1B, $F0, $06, $B8, $1B, $04, $04, $22, $38, $6B
+    db $98, $64, $7F, $78, $0B, $C0, $01, $30, $0B, $38, $0B, $68, $00, $D0, $00, $68
+    db $00, $05, $03, $61, $28, $6A, $F8, $6D, $E8, $01, $7E, $F8, $01, $20, $0B, $28
+    db $0B, $18, $0B, $58, $7A, $40, $7A, $03, $01, $07, $68, $00, $68, $00, $D8, $04
+    db $04, $03, $B1, $28, $6A, $20, $6C, $30, $71, $08, $6B, $0C, $18, $6A, $10, $0B
+    db $03, $01, $07, $18, $00, $68, $00, $18, $00, $02, $02, $0F, $98, $01, $88, $19
+    db $40, $2D, $F8, $71, $02, $03, $3F, $50, $1C, $38, $0A, $10, $6F, $10, $6F, $00
+    db $68, $00, $68, $02, $02, $0F, $80, $6F, $18, $7D, $70, $00, $70, $00, $02, $02
+    db $0F, $F0, $6F, $68, $7D, $20, $00, $20, $00, $02, $03, $3D, $10, $00, $00, $72
+    db $68, $7D, $80, $73, $68, $7D, $01, $01, $01, $48, $1F

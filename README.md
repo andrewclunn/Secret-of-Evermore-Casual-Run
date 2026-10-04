@@ -1,10 +1,10 @@
 # Secret of Evermore: Casual Run
 
-**Current development baseline:** v1.38\
+**Current development baseline:** v1.42\
 **Next major milestone:** 2.0  
 **Longer-term expansion:** 3.0
 
-**Current release:** [v1.38 IPS patch](Secret_of_Evermore_Casual_Run_v1.38.ips), with the authoritative source in [Build/Secret_of_Evermore_Casual_Run_v1.38.asm](Build/Secret_of_Evermore_Casual_Run_v1.38.asm). This version fixes Tiny's introduction, missing Tiny/Pompolonius/Horace dialogue themes, post-arena pagination and spacing, and Horace's dialogue input waits. It retains the v1.37 vendor-passage removal and all earlier features. The build script defaults to v1.38; [dialogue release verification notes](Documentation/Dialogue_QA_v1.38.md) record validation and gameplay coverage limits.
+**Current release:** [v1.42 IPS patch](Secret_of_Evermore_Casual_Run_v1.42.ips), with the authoritative source in [Build/Secret_of_Evermore_Casual_Run_v1.42.asm](Build/Secret_of_Evermore_Casual_Run_v1.42.asm). Bronze Axe power rises from 32 to 33, the Boy's axe reply uses his theme, and the Evil Horace statue scene and post-fight exchange use corrected speaker themes and input waits. All earlier features are retained. The build script defaults to v1.42; [release verification notes](Documentation/Release_v1.42.md) describe validation.
 
 ## What Casual Run Is
 
@@ -166,6 +166,10 @@ These completed feature families are therefore **2.0 features**, even though the
 - **v1.35 — Strong Heart save dialogue, Sandpits polish, and source consolidation:** Strong Heart keeps his theme through all save paths, offers to record your travels in his alchemy notes, and ends with “There we are. Just keep a look out for giant beetles!”; both final responses wait for dismissal. The southern raised-ledge Skelesnail in the Sandpits was removed. The source was consolidated into one active definition per address, with text-pointer and allocation audits; consolidation and release promotion preserve the exact accepted R4 ROM bytes.
 
 - **v1.37 — Nobilia vendor passage:** completely removes the two pots labeled B/C during the map experiment, including their collision. The other experiment pots retain their original behavior. Final combined removal and vendor access await emulator confirmation.
+- **v1.42 — Weapon power and finale dialogue:** Bronze Axe power 33, Boy axe-reply styling, Evil Horace statue dialogue themes and waits, and a complete post-fight Horace/Tiny/Boy theme and input-wait audit.
+- **v1.41 — Exploration and handover fixes:** opens the Pyramid return passage, raises Mud Pepper loot capacity to 99, restores both automatic Halls spear throws, and adds Evil Horace themes, input waits, and branch-specific handover dialogue. Boy dialogue returns to Y=18.
+- **v1.40 — Pyramid clarity and axe walls:** adds matching passive symbols before the four switch-operated gates and fixes six Bronze Axe wall events to identify the Boy explicitly.
+- **v1.39 — Pyramid dog separation:** restores the dog's saved room position on the first descent, preventing a premature reunion while preserving the native puzzle and character switching.
 - **v1.38 — Antiqua dialogue QA:** restores Tiny's introduction and missing Tiny, Pompolonius and Horace themes; fixes post-arena pagination and spacing; adds input waits to Horace's introduction and later help pages.
 - **v1.36 — Dialogue QA and NPC window polish:** corrected Blimp’s spacing, hut speaker themes, and rest/save question separation; the volcano alchemist’s save theme and the Boy’s “Huh?” reply; Fire Eyes/twin theme continuity; and Horace’s twin’s Nobilia scene themes. Default NPC windows move one column left and widen by two columns. The Crustacia amulet vendor was confirmed working through its existing pots trigger and received no appearance change.
 
@@ -349,13 +353,13 @@ A failed prototype may still teach us something, but it is not part of the roadm
 
 Casual Run is intended for a **clean, unheadered U.S. ROM of _Secret of Evermore_**.
 
-Apply [Secret_of_Evermore_Casual_Run_v1.38.ips](Secret_of_Evermore_Casual_Run_v1.38.ips) to that clean base ROM with an appropriate patcher. Earlier versioned patches remain available for their corresponding releases.
+Apply [Secret_of_Evermore_Casual_Run_v1.42.ips](Secret_of_Evermore_Casual_Run_v1.42.ips) to that clean base ROM with an appropriate patcher. Earlier versioned patches remain available for their corresponding releases.
 
 For exact base-ROM hashes, patched-ROM hashes, checksums, source build instructions, expansion-space ownership, and other technical validation information, consult the authoritative ASM source included with the project.
 
 Required clean base: 3,145,728 bytes; SHA-256 `17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db`.
 
-Current v1.38 ROM: 4,194,304 bytes; SHA-256 `f187a38f9c7c177e017dfad75f177b28f5eada6893e1924b5e1973993fe9fc45`; checksum/complement `$2D9A / $D265`. The cumulative IPS was composed from the verified v1.37 release patch and the v1.38 changes. Patch composition and application to the local baseline were checked; a clean-ROM rebuild/application remains unverified because the clean base is unavailable in this workspace.
+Current v1.42 ROM: 4,194,304 bytes; SHA-256 `44ddfdc0dc6487a6d86c5e72588937ae2ee7b3208b42d16405129b746f2424bf`; checksum/complement `$DF6B / $2094`. Clean-USA source rebuilding and cumulative IPS application reproduce the accepted Horace Finale Theme Test exactly.
 
 ---
 

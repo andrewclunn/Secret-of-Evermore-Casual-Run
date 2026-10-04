@@ -563,7 +563,7 @@ id,pointer_cpu,packed_pointer,mode,target_pc,target_cpu,target_source_owned,targ
 561,$D1D693,$1C8342,raw,3736386,$F90342,True,LiveText_0561,,PREHISTORIA_VILLAGE_FIRE_EYES,Drain / Double Drain alchemist,$03 Generic NPC
 562,$D1D696,$1C83A8,raw,3736488,$F903A8,True,LiveText_0562,,PREHISTORIA_VILLAGE_FIRE_EYES,Drain / Double Drain alchemist,$03 Generic NPC
 563,$D1D699,$1C8443,raw,3736643,$F90443,True,LiveText_0563,,PREHISTORIA_VILLAGE_FIRE_EYES,Drain / Double Drain alchemist,$03 Generic NPC
-564,$D1D69C,$1C848C,raw,3736716,$F9048C,True,LiveText_0564,,PREHISTORIA_VILLAGE_FIRE_EYES,Generic Prehistoria NPC,$03 Generic NPC
+564,$D1D69C,$1C848C,raw,3736716,$F9048C,True,LiveText_0564,,PREHISTORIA_VILLAGE_FIRE_EYES,Boy,$04 Boy
 565,$D1D69F,$1C84A4,raw,3736740,$F904A4,True,LiveText_0565,,PREHISTORIA_VILLAGE_FIRE_EYES,Drain / Double Drain alchemist,$03 Generic NPC
 566,$D1D6A2,$1C8554,raw,3736916,$F90554,True,LiveText_0566,,PREHISTORIA_VILLAGE_FIRE_EYES,Drain / Double Drain alchemist,$03 Generic NPC
 567,$D1D6A5,$1C85CB,raw,3737035,$F905CB,True,LiveText_0567,,PREHISTORIA_VILLAGE_FIRE_EYES,Drain / Double Drain alchemist,$03 Generic NPC
@@ -1537,21 +1537,21 @@ id,pointer_cpu,packed_pointer,mode,target_pc,target_cpu,target_source_owned,targ
 1535,$D1E1FD,$1D2402,raw,3810306,$FA2402,True,LiveText_1535,,NOBILIA_CITY_SQUARE,Boy,$04 Boy
 1536,$D1E200,$1D2442,raw,3810370,$FA2442,True,LiveText_1536,,NOBILIA_CITY_SQUARE,Boy,$04 Boy
 1537,$D1E203,$1D252D,raw,3810605,$FA252D,True,LiveText_1537,,NOBILIA_CITY_SQUARE,Boy,$04 Boy
-1538,$D1E206,$1D25D9,raw,3810777,$FA25D9,True,LiveText_1538,,NOBILIA_CITY_SQUARE,Boy,$04 Boy
-1539,$D1E209,$1D3900,raw,3815680,$FA3900,True,LiveText_1539,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
-1540,$D1E20C,$1D3970,raw,3815792,$FA3970,True,LiveText_1540,,HORACE_WEST_BANK,Boy,$04 Boy
-1541,$D1E20F,$1D39AA,raw,3815850,$FA39AA,True,LiveText_1541,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
-1542,$D1E212,$1D39F3,raw,3815923,$FA39F3,True,LiveText_1542,,HORACE_WEST_BANK,Boy,$04 Boy
-1543,$D1E215,$1D3A9A,raw,3816090,$FA3A9A,True,LiveText_1543,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
-1544,$D1E218,$1D3ACB,raw,3816139,$FA3ACB,True,LiveText_1544,,HORACE_WEST_BANK,Boy,$04 Boy
+1538,$D1E206,$1D6100,raw,3825920,$FA6100,True,FakeHorace_WaitText_1538,,NOBILIA_CITY_SQUARE,Boy,$04 Boy
+1539,$D1E209,$1D6119,raw,3825945,$FA6119,True,FakeHorace_WaitText_1539,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
+1540,$D1E20C,$1D618A,raw,3826058,$FA618A,True,FakeHorace_WaitText_1540,,HORACE_WEST_BANK,Boy,$04 Boy
+1541,$D1E20F,$1D61C5,raw,3826117,$FA61C5,True,FakeHorace_WaitText_1541,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
+1542,$D1E212,$1D620F,raw,3826191,$FA620F,True,FakeHorace_WaitText_1542,,HORACE_WEST_BANK,Boy,$04 Boy
+1543,$D1E215,$1D62B7,raw,3826359,$FA62B7,True,FakeHorace_WaitText_1543,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
+1544,$D1E218,$1D62E9,raw,3826409,$FA62E9,True,FakeHorace_WaitText_1544,,HORACE_WEST_BANK,Boy,$04 Boy
 1545,$D1E21B,$1D3B79,raw,3816313,$FA3B79,True,LiveText_1545,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
 1546,$D1E21E,$1D3B90,raw,3816336,$FA3B90,True,LiveText_1546,,HORACE_WEST_BANK,Narration/System,$02 Narration / System
-1547,$D1E221,$1D3BA7,raw,3816359,$FA3BA7,True,LiveText_1547,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
-1548,$D1E224,$1D3BB4,raw,3816372,$FA3BB4,True,LiveText_1548,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
-1549,$D1E227,$1D3BC1,raw,3816385,$FA3BC1,True,LiveText_1549,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
-1550,$D1E22A,$1D3BDD,raw,3816413,$FA3BDD,True,LiveText_1550,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
-1551,$D1E22D,$1D5390,raw,3822480,$FA5390,True,LiveText_1551,,HORACE_WEST_BANK,Boy,$04 Boy
-1552,$D1E230,$1D3C1F,raw,3816479,$FA3C1F,True,LiveText_1552,,HORACE_WEST_BANK,Guard / Authority,$03 Generic NPC
+1547,$D1E221,$1D6398,raw,3826584,$FA6398,True,FakeHorace_WaitText_1547,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
+1548,$D1E224,$1D5480,raw,3822720,$FA5480,True,FakeHorace_PostExchangePoliteText,,HORACE_WEST_BANK,Boy,$04 Boy
+1549,$D1E227,$1D63B4,raw,3826612,$FA63B4,True,FakeHorace_WaitText_1549,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
+1550,$D1E22A,$1D63D1,raw,3826641,$FA63D1,True,FakeHorace_WaitText_1550,,HORACE_WEST_BANK,Evil Horace,$11 Artificial Horace
+1551,$D1E22D,$1D63DF,raw,3826655,$FA63DF,True,FakeHorace_WaitText_1551,,HORACE_WEST_BANK,Boy,$04 Boy
+1552,$D1E230,$1D6418,raw,3826712,$FA6418,True,FakeHorace_WaitText_1552,,HORACE_WEST_BANK,Guard / Authority,$03 Generic NPC
 1553,$D1E233,$1D3C60,raw,3816544,$FA3C60,True,LiveText_1553,,HORACE_WEST_BANK,Boy,$04 Boy
 1554,$D1E236,$1D3C84,raw,3816580,$FA3C84,True,LiveText_1554,,HORACE_WEST_BANK,Guard / Authority,$03 Generic NPC
 1555,$D1E239,$1D3CC7,raw,3816647,$FA3CC7,True,LiveText_1555,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
@@ -1892,49 +1892,49 @@ id,pointer_cpu,packed_pointer,mode,target_pc,target_cpu,target_source_owned,targ
 1890,$D1E626,$1D9911,raw,3873041,$FB1911,True,LiveText_1890,,ANTIQUA_HALL_PYRAMID,Madronius's brother,$03 Generic NPC
 1891,$D1E629,$1D996A,raw,3873130,$FB196A,True,LiveText_1891,,ANTIQUA_HALL_PYRAMID,Narration/System,$02 Narration / System
 1892,$D1E62C,$1D9983,raw,3873155,$FB1983,True,LiveText_1892,,ANTIQUA_HALL_PYRAMID,Boy,$04 Boy
-1893,$D1E62F,$1DA100,raw,3875072,$FB2100,True,LiveText_1893,,HORACE_FINALE,Evil Horace,$11 Artificial Horace
-1894,$D1E632,$1DA124,raw,3875108,$FB2124,True,LiveText_1894,,HORACE_FINALE,Evil Horace,$11 Artificial Horace
+1893,$D1E62F,$1DA95E,raw,3877214,$FB295E,True,EvilHorace_StatueWait_1893,,HORACE_FINALE,Evil Horace,$11 Artificial Horace
+1894,$D1E632,$1DA983,raw,3877251,$FB2983,True,EvilHorace_StatueWait_1894,,HORACE_FINALE,Evil Horace,$11 Artificial Horace
 1895,$D1E635,$1DA161,raw,3875169,$FB2161,True,LiveText_1895,,HORACE_FINALE,Boy,$04 Boy
-1896,$D1E638,$1DA1BB,raw,3875259,$FB21BB,True,LiveText_1896,,HORACE_FINALE,Evil Horace,$11 Artificial Horace
+1896,$D1E638,$1DA9C1,raw,3877313,$FB29C1,True,EvilHorace_StatueWait_1896,,HORACE_FINALE,Evil Horace,$11 Artificial Horace
 1897,$D1E63B,$1DA1E7,raw,3875303,$FB21E7,True,LiveText_1897,,HORACE_FINALE,Boy,$04 Boy
 1898,$D1E63E,$191000,raw,3280896,$F21000,True,LiveText_1898,$F31000,HORACE_FINALE / normal mirrored side,Horace / Boy,PAGE_MAP
 1899,$D1E641,$1DA214,raw,3875348,$FB2214,True,LiveText_1899,,HORACE_FINALE,Boy,$04 Boy
 1900,$D1E644,$1DA236,raw,3875382,$FB2236,True,LiveText_1900,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1901,$D1E647,$1DA25E,raw,3875422,$FB225E,True,LiveText_1901,,HORACE_FINALE,Boy,$04 Boy
-1902,$D1E64A,$1DA280,raw,3875456,$FB2280,True,LiveText_1902,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
-1903,$D1E64D,$1DA308,raw,3875592,$FB2308,True,LiveText_1903,,HORACE_FINALE,Boy,$04 Boy
-1904,$D1E650,$1DA32D,raw,3875629,$FB232D,True,LiveText_1904,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1902,$D1E64A,$1DA9EE,raw,3877358,$FB29EE,True,HoraceFinale_WaitText_1902,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1903,$D1E64D,$1DAA77,raw,3877495,$FB2A77,True,HoraceFinale_WaitText_1903,,HORACE_FINALE,Boy,$04 Boy
+1904,$D1E650,$1DAA9D,raw,3877533,$FB2A9D,True,HoraceFinale_WaitText_1904,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1905,$D1E653,$1DA38D,raw,3875725,$FB238D,True,LiveText_1905,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1906,$D1E656,$1DA3C6,raw,3875782,$FB23C6,True,LiveText_1906,,HORACE_FINALE,Tiny,$14 Tiny
 1907,$D1E659,$1DA3FB,raw,3875835,$FB23FB,True,LiveText_1907,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
-1908,$D1E65C,$1DA46C,raw,3875948,$FB246C,True,LiveText_1908,,HORACE_FINALE,Tiny,$14 Tiny
+1908,$D1E65C,$1DAAFE,raw,3877630,$FB2AFE,True,HoraceFinale_WaitText_1908,,HORACE_FINALE,Tiny,$14 Tiny
 1909,$D1E65F,$1DA49E,raw,3875998,$FB249E,True,LiveText_1909,,HORACE_FINALE,Tiny,$14 Tiny
 1910,$D1E662,$1DA4B6,raw,3876022,$FB24B6,True,LiveText_1910,,HORACE_FINALE,Tiny,$14 Tiny
 1911,$D1E665,$1DA4C4,raw,3876036,$FB24C4,True,LiveText_1911,,HORACE_FINALE,Tiny,$14 Tiny
 1912,$D1E668,$1DA4D6,raw,3876054,$FB24D6,True,LiveText_1912,,HORACE_FINALE,Boy,$04 Boy
 1913,$D1E66B,$1DA4F8,raw,3876088,$FB24F8,True,LiveText_1913,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1914,$D1E66E,$1DA52C,raw,3876140,$FB252C,True,LiveText_1914,,HORACE_FINALE,Boy,$04 Boy
-1915,$D1E671,$1DA56F,raw,3876207,$FB256F,True,LiveText_1915,,HORACE_FINALE,Boy,$04 Boy
-1916,$D1E674,$1DA5AF,raw,3876271,$FB25AF,True,LiveText_1916,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
-1917,$D1E677,$1DA5CE,raw,3876302,$FB25CE,True,LiveText_1917,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
-1918,$D1E67A,$1DA5D4,raw,3876308,$FB25D4,True,LiveText_1918,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1915,$D1E671,$1DAB31,raw,3877681,$FB2B31,True,HoraceFinale_WaitText_1915,,HORACE_FINALE,Boy,$04 Boy
+1916,$D1E674,$1DAB72,raw,3877746,$FB2B72,True,HoraceFinale_WaitText_1916,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1917,$D1E677,$1DAB92,raw,3877778,$FB2B92,True,HoraceFinale_WaitText_1917,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1918,$D1E67A,$1DAB99,raw,3877785,$FB2B99,True,HoraceFinale_WaitText_1918,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1919,$D1E67D,$1DA5E3,raw,3876323,$FB25E3,True,LiveText_1919,,HORACE_FINALE,Madronius,$03 Generic NPC
 1920,$D1E680,$1DA616,raw,3876374,$FB2616,True,LiveText_1920,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1921,$D1E683,$1DA640,raw,3876416,$FB2640,True,LiveText_1921,,HORACE_FINALE,Madronius,$03 Generic NPC
-1922,$D1E686,$1DA6D1,raw,3876561,$FB26D1,True,LiveText_1922,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
-1923,$D1E689,$1DA6FC,raw,3876604,$FB26FC,True,LiveText_1923,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1922,$D1E686,$1DABA9,raw,3877801,$FB2BA9,True,HoraceFinale_WaitText_1922,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1923,$D1E689,$1DABD5,raw,3877845,$FB2BD5,True,HoraceFinale_WaitText_1923,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1924,$D1E68C,$1DA713,raw,3876627,$FB2713,True,LiveText_1924,,HORACE_FINALE,Horace,$0E Horace Highwater
 1925,$D1E68F,$1DA730,raw,3876656,$FB2730,True,LiveText_1925,,HORACE_FINALE,Horace,$0E Horace Highwater
 1926,$D1E692,$1DA735,raw,3876661,$FB2735,True,LiveText_1926,,HORACE_FINALE,Horace,$0E Horace Highwater
-1927,$D1E695,$1DA73D,raw,3876669,$FB273D,True,LiveText_1927,,HORACE_FINALE,Boy,$04 Boy
+1927,$D1E695,$1DABED,raw,3877869,$FB2BED,True,HoraceFinale_WaitText_1927,,HORACE_FINALE,Boy,$04 Boy
 1928,$D1E698,$1DA764,raw,3876708,$FB2764,True,LiveText_1928,,HORACE_FINALE,Boy,$04 Boy
-1929,$D1E69B,$1DA781,raw,3876737,$FB2781,True,LiveText_1929,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
-1930,$D1E69E,$1DA7A1,raw,3876769,$FB27A1,True,LiveText_1930,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
-1931,$D1E6A1,$1DA7F4,raw,3876852,$FB27F4,True,LiveText_1931,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1929,$D1E69B,$1DAC15,raw,3877909,$FB2C15,True,HoraceFinale_WaitText_1929,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1930,$D1E69E,$1DAC36,raw,3877942,$FB2C36,True,HoraceFinale_WaitText_1930,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1931,$D1E6A1,$1DAC8A,raw,3878026,$FB2C8A,True,HoraceFinale_WaitText_1931,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1932,$D1E6A4,$1DA845,raw,3876933,$FB2845,True,LiveText_1932,,HORACE_FINALE,Narration/System,$02 Narration / System
-1933,$D1E6A7,$1DA910,raw,3877136,$FB2910,True,LiveText_1933,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1933,$D1E6A7,$1DACDC,raw,3878108,$FB2CDC,True,HoraceFinale_WaitText_1933,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1934,$D1E6AA,$1DA8A6,raw,3877030,$FB28A6,True,LiveText_1934,,HORACE_FINALE,Narration/System,$02 Narration / System
-1935,$D1E6AD,$1DA8BD,raw,3877053,$FB28BD,True,LiveText_1935,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
+1935,$D1E6AD,$1DAD2B,raw,3878187,$FB2D2B,True,HoraceFinale_WaitText_1935,,HORACE_FINALE,Horace Highwater,$0E Horace Highwater
 1936,$D1E6B0,$1DA8EC,raw,3877100,$FB28EC,True,LiveText_1936,,HORACE_FINALE,Boy,$04 Boy
 1937,$D1E6B3,$1DA8FE,raw,3877118,$FB28FE,True,LiveText_1937,,HORACE_FINALE,Boy,$04 Boy
 1938,$D1E6B6,$1DB100,raw,3879168,$FB3100,True,LiveText_1938,,GOTHICA_ARRIVAL_DUNGEON_SEWER,Narration/System,$02 Narration / System

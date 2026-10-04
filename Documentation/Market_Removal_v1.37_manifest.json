@@ -1,0 +1,102 @@
+{
+  "baseline_sha256": "a6ced1e7309222863ef61e02cb0a2887d7004b295ebce632fee70d8dcd1ea4d5",
+  "rom_sha256": "1b9f0a927c6f1c8d12caeb61ea2cc56a7c40e1bdf352bb636f57ea57727db14a",
+  "checksum": "2611",
+  "rom_bytes": 4194304,
+  "room_cpu_address": "FC0000",
+  "room_bytes": 20299,
+  "edits": [
+    {
+      "label": "B",
+      "x": 31,
+      "y": 55,
+      "mode": "full",
+      "donor": [
+        31,
+        54
+      ],
+      "old_pointer": 18312,
+      "new_pointer": 10672,
+      "old": [
+        11848,
+        7206,
+        19
+      ],
+      "new": [
+        43008,
+        7174,
+        16
+      ]
+    },
+    {
+      "label": "B",
+      "x": 31,
+      "y": 56,
+      "mode": "full",
+      "donor": [
+        31,
+        54
+      ],
+      "old_pointer": 8192,
+      "new_pointer": 10672,
+      "old": [
+        11880,
+        7172,
+        31
+      ],
+      "new": [
+        43008,
+        7174,
+        16
+      ]
+    },
+    {
+      "label": "C",
+      "x": 31,
+      "y": 57,
+      "mode": "full",
+      "donor": [
+        31,
+        59
+      ],
+      "old_pointer": 18720,
+      "new_pointer": 12288,
+      "old": [
+        11848,
+        7204,
+        4127
+      ],
+      "new": [
+        43008,
+        56324,
+        4112
+      ]
+    },
+    {
+      "label": "C",
+      "x": 31,
+      "y": 58,
+      "mode": "full",
+      "donor": [
+        31,
+        59
+      ],
+      "old_pointer": 18896,
+      "new_pointer": 12288,
+      "old": [
+        11880,
+        56356,
+        4127
+      ],
+      "new": [
+        43008,
+        56324,
+        4112
+      ]
+    }
+  ],
+  "text_pointers_validated": 3002,
+  "source_overlapping_bytes": 0,
+  "ips_sha256": "e442169ba255d0c80b25b9f73a5db19f29a46ed2e555791c95d773297650af83",
+  "verification": "Baseline hash, native raw decompression, full source rebuild, text pointers, restricted ROM diff and cumulative IPS composition; final gameplay pending. Clean-ROM rebuild not performed because clean ROM is unavailable."
+}
