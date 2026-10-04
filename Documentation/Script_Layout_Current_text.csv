@@ -1564,61 +1564,61 @@ id,pointer_cpu,packed_pointer,mode,target_pc,target_cpu,target_source_owned,targ
 1562,$D1E24E,$1D3DB4,raw,3816884,$FA3DB4,True,LiveText_1562,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
 1563,$D1E251,$1D3DFD,raw,3816957,$FA3DFD,True,LiveText_1563,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
 1564,$D1E254,$1D3E69,raw,3817065,$FA3E69,True,LiveText_1564,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
-1565,$D1E257,$1D3EC6,raw,3817158,$FA3EC6,True,LiveText_1565,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
+1565,$D1E257,$1D3EC6,raw,3817158,$FA3EC6,True,LiveText_1565,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
 1566,$D1E25A,$1D3F01,raw,3817217,$FA3F01,True,LiveText_1566,,HORACE_WEST_BANK,Boy,$04 Boy
 1567,$D1E25D,$1D3F49,raw,3817289,$FA3F49,True,LiveText_1567,,HORACE_WEST_BANK,Boy,$04 Boy
-1568,$D1E260,$1D3F96,raw,3817366,$FA3F96,True,LiveText_1568,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
-1569,$D1E263,$1D3FAC,raw,3817388,$FA3FAC,True,LiveText_1569,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
+1568,$D1E260,$1D3F96,raw,3817366,$FA3F96,True,LiveText_1568,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1569,$D1E263,$1D3FAC,raw,3817388,$FA3FAC,True,LiveText_1569,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
 1570,$D1E266,$1D3FDF,raw,3817439,$FA3FDF,True,LiveText_1570,,HORACE_WEST_BANK,Boy,$04 Boy
-1571,$D1E269,$1D4029,raw,3817513,$FA4029,True,LiveText_1571,,HORACE_WEST_BANK,Generic Antiqua NPC,$03 Generic NPC
+1571,$D1E269,$1D4029,raw,3817513,$FA4029,True,LiveText_1571,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
 1572,$D1E26C,$1D405A,raw,3817562,$FA405A,True,LiveText_1572,,HORACE_WEST_BANK,Boy,$04 Boy
-1573,$D1E26F,$1D4065,raw,3817573,$FA4065,True,LiveText_1573,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1574,$D1E272,$1D408E,raw,3817614,$FA408E,True,LiveText_1574,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1575,$D1E275,$1D40D0,raw,3817680,$FA40D0,True,LiveText_1575,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1576,$D1E278,$1D4102,raw,3817730,$FA4102,True,LiveText_1576,,HORACE_WEST_BANK,Boy,$04 Boy
-1577,$D1E27B,$1D411A,raw,3817754,$FA411A,True,LiveText_1577,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1578,$D1E27E,$1D4121,raw,3817761,$FA4121,True,LiveText_1578,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1579,$D1E281,$1D413A,raw,3817786,$FA413A,True,LiveText_1579,,HORACE_WEST_BANK,Boy,$04 Boy
-1580,$D1E284,$1D4155,raw,3817813,$FA4155,True,LiveText_1580,,HORACE_WEST_BANK,Boy,$04 Boy
-1581,$D1E287,$1D416D,raw,3817837,$FA416D,True,LiveText_1581,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1582,$D1E28A,$1D419C,raw,3817884,$FA419C,True,LiveText_1582,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1583,$D1E28D,$1D41D7,raw,3817943,$FA41D7,True,LiveText_1583,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1584,$D1E290,$1D42CC,raw,3818188,$FA42CC,True,LiveText_1584,,HORACE_WEST_BANK,Boy,$04 Boy
-1585,$D1E293,$1D4314,raw,3818260,$FA4314,True,LiveText_1585,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1586,$D1E296,$1D4330,raw,3818288,$FA4330,True,LiveText_1586,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1587,$D1E299,$1D4343,raw,3818307,$FA4343,True,LiveText_1587,,HORACE_WEST_BANK,Boy,$04 Boy
-1588,$D1E29C,$1D438D,raw,3818381,$FA438D,True,LiveText_1588,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1589,$D1E29F,$1D43A6,raw,3818406,$FA43A6,True,LiveText_1589,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1590,$D1E2A2,$1D448F,raw,3818639,$FA448F,True,LiveText_1590,,HORACE_WEST_BANK,Boy,$04 Boy
-1591,$D1E2A5,$1D44A9,raw,3818665,$FA44A9,True,LiveText_1591,,HORACE_WEST_BANK,Boy,$04 Boy
-1592,$D1E2A8,$1D450E,raw,3818766,$FA450E,True,LiveText_1592,,HORACE_WEST_BANK,Boy,$04 Boy
-1593,$D1E2AB,$1D4576,raw,3818870,$FA4576,True,LiveText_1593,,HORACE_WEST_BANK,Boy,$04 Boy
-1594,$D1E2AE,$1D45B0,raw,3818928,$FA45B0,True,LiveText_1594,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1595,$D1E2B1,$1D45CA,raw,3818954,$FA45CA,True,LiveText_1595,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1596,$D1E2B4,$1D4631,raw,3819057,$FA4631,True,LiveText_1596,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1597,$D1E2B7,$1D4680,raw,3819136,$FA4680,True,LiveText_1597,,HORACE_WEST_BANK,Boy,$04 Boy
-1598,$D1E2BA,$1D46BC,raw,3819196,$FA46BC,True,LiveText_1598,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1599,$D1E2BD,$1D4715,raw,3819285,$FA4715,True,LiveText_1599,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1600,$D1E2C0,$1D4771,raw,3819377,$FA4771,True,LiveText_1600,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1601,$D1E2C3,$1D47C6,raw,3819462,$FA47C6,True,LiveText_1601,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1602,$D1E2C6,$1D47F1,raw,3819505,$FA47F1,True,LiveText_1602,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1603,$D1E2C9,$1D4828,raw,3819560,$FA4828,True,LiveText_1603,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1604,$D1E2CC,$1D4862,raw,3819618,$FA4862,True,LiveText_1604,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1605,$D1E2CF,$1D48CE,raw,3819726,$FA48CE,True,LiveText_1605,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1606,$D1E2D2,$1D4945,raw,3819845,$FA4945,True,LiveText_1606,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1607,$D1E2D5,$1D496D,raw,3819885,$FA496D,True,LiveText_1607,,HORACE_WEST_BANK,Boy,$04 Boy
-1608,$D1E2D8,$1D497B,raw,3819899,$FA497B,True,LiveText_1608,,HORACE_WEST_BANK,Boy,$04 Boy
+1573,$D1E26F,$1D5500,raw,3822848,$FA5500,True,HoraceIntro_WaitText_1573,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1574,$D1E272,$1D552A,raw,3822890,$FA552A,True,HoraceIntro_WaitText_1574,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1575,$D1E275,$1D556D,raw,3822957,$FA556D,True,HoraceIntro_WaitText_1575,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1576,$D1E278,$1D55A0,raw,3823008,$FA55A0,True,HoraceIntro_WaitText_1576,,HORACE_WEST_BANK,Boy,$04 Boy
+1577,$D1E27B,$1D55B9,raw,3823033,$FA55B9,True,HoraceIntro_WaitText_1577,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1578,$D1E27E,$1D55C1,raw,3823041,$FA55C1,True,HoraceIntro_WaitText_1578,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1579,$D1E281,$1D55DB,raw,3823067,$FA55DB,True,HoraceIntro_WaitText_1579,,HORACE_WEST_BANK,Boy,$04 Boy
+1580,$D1E284,$1D55F7,raw,3823095,$FA55F7,True,HoraceIntro_WaitText_1580,,HORACE_WEST_BANK,Boy,$04 Boy
+1581,$D1E287,$1D5610,raw,3823120,$FA5610,True,HoraceIntro_WaitText_1581,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1582,$D1E28A,$1D5640,raw,3823168,$FA5640,True,HoraceIntro_WaitText_1582,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1583,$D1E28D,$1D567C,raw,3823228,$FA567C,True,HoraceIntro_WaitText_1583,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1584,$D1E290,$1D5772,raw,3823474,$FA5772,True,HoraceIntro_WaitText_1584,,HORACE_WEST_BANK,Boy,$04 Boy
+1585,$D1E293,$1D57BB,raw,3823547,$FA57BB,True,HoraceIntro_WaitText_1585,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1586,$D1E296,$1D57D8,raw,3823576,$FA57D8,True,HoraceIntro_WaitText_1586,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1587,$D1E299,$1D57EC,raw,3823596,$FA57EC,True,HoraceIntro_WaitText_1587,,HORACE_WEST_BANK,Boy,$04 Boy
+1588,$D1E29C,$1D5837,raw,3823671,$FA5837,True,HoraceIntro_WaitText_1588,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1589,$D1E29F,$1D5851,raw,3823697,$FA5851,True,HoraceIntro_WaitText_1589,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1590,$D1E2A2,$1D593B,raw,3823931,$FA593B,True,HoraceIntro_WaitText_1590,,HORACE_WEST_BANK,Boy,$04 Boy
+1591,$D1E2A5,$1D5956,raw,3823958,$FA5956,True,HoraceIntro_WaitText_1591,,HORACE_WEST_BANK,Boy,$04 Boy
+1592,$D1E2A8,$1D59BC,raw,3824060,$FA59BC,True,HoraceIntro_WaitText_1592,,HORACE_WEST_BANK,Boy,$04 Boy
+1593,$D1E2AB,$1D5A25,raw,3824165,$FA5A25,True,HoraceIntro_WaitText_1593,,HORACE_WEST_BANK,Boy,$04 Boy
+1594,$D1E2AE,$1D5A60,raw,3824224,$FA5A60,True,HoraceIntro_WaitText_1594,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1595,$D1E2B1,$1D5A7B,raw,3824251,$FA5A7B,True,HoraceIntro_WaitText_1595,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1596,$D1E2B4,$1D5AE3,raw,3824355,$FA5AE3,True,HoraceIntro_WaitText_1596,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1597,$D1E2B7,$1D5B33,raw,3824435,$FA5B33,True,HoraceIntro_WaitText_1597,,HORACE_WEST_BANK,Boy,$04 Boy
+1598,$D1E2BA,$1D5B70,raw,3824496,$FA5B70,True,HoraceIntro_WaitText_1598,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1599,$D1E2BD,$1D5BCA,raw,3824586,$FA5BCA,True,HoraceIntro_WaitText_1599,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1600,$D1E2C0,$1D5C27,raw,3824679,$FA5C27,True,HoraceIntro_WaitText_1600,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1601,$D1E2C3,$1D5C7D,raw,3824765,$FA5C7D,True,HoraceIntro_WaitText_1601,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1602,$D1E2C6,$1D5CA9,raw,3824809,$FA5CA9,True,HoraceIntro_WaitText_1602,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1603,$D1E2C9,$1D5CE1,raw,3824865,$FA5CE1,True,HoraceIntro_WaitText_1603,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1604,$D1E2CC,$1D5D1C,raw,3824924,$FA5D1C,True,HoraceIntro_WaitText_1604,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1605,$D1E2CF,$1D5D89,raw,3825033,$FA5D89,True,HoraceIntro_WaitText_1605,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1606,$D1E2D2,$1D5E01,raw,3825153,$FA5E01,True,HoraceIntro_WaitText_1606,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1607,$D1E2D5,$1D5E2A,raw,3825194,$FA5E2A,True,HoraceIntro_WaitText_1607,,HORACE_WEST_BANK,Boy,$04 Boy
+1608,$D1E2D8,$1D5E39,raw,3825209,$FA5E39,True,HoraceIntro_WaitText_1608,,HORACE_WEST_BANK,Boy,$04 Boy
 1609,$D1E2DB,$1D4988,raw,3819912,$FA4988,True,LiveText_1609,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1610,$D1E2DE,$1D49E8,raw,3820008,$FA49E8,True,LiveText_1610,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1611,$D1E2E1,$1D53D0,raw,3822544,$FA53D0,True,LiveText_1611,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1610,$D1E2DE,$1D5E50,raw,3825232,$FA5E50,True,HoraceFollowup_WaitText_1610,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1611,$D1E2E1,$1D5EB2,raw,3825330,$FA5EB2,True,HoraceFollowup_WaitText_1611,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
 1612,$D1E2E4,$1D4A8D,raw,3820173,$FA4A8D,True,LiveText_1612,,HORACE_WEST_BANK,Narration/System,$02 Narration / System
-1613,$D1E2E7,$1D5420,raw,3822624,$FA5420,True,LiveText_1613,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1614,$D1E2EA,$1D4AE8,raw,3820264,$FA4AE8,True,LiveText_1614,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1613,$D1E2E7,$1D5EFA,raw,3825402,$FA5EFA,True,HoraceFollowup_WaitText_1613,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1614,$D1E2EA,$1D5F43,raw,3825475,$FA5F43,True,HoraceFollowup_WaitText_1614,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
 1615,$D1E2ED,$1D4B37,raw,3820343,$FA4B37,True,LiveText_1615,,HORACE_WEST_BANK,Narration/System,$02 Narration / System
-1616,$D1E2F0,$1D4B4C,raw,3820364,$FA4B4C,True,LiveText_1616,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
-1617,$D1E2F3,$1D4B7E,raw,3820414,$FA4B7E,True,LiveText_1617,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1616,$D1E2F0,$1D5F93,raw,3825555,$FA5F93,True,HoraceFollowup_WaitText_1616,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1617,$D1E2F3,$1D5FC6,raw,3825606,$FA5FC6,True,HoraceFollowup_WaitText_1617,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
 1618,$D1E2F6,$1D4BCD,raw,3820493,$FA4BCD,True,LiveText_1618,,HORACE_WEST_BANK,Narration/System,$02 Narration / System
-1619,$D1E2F9,$1D4BE2,raw,3820514,$FA4BE2,True,LiveText_1619,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
+1619,$D1E2F9,$1D6016,raw,3825686,$FA6016,True,HoraceFollowup_WaitText_1619,,HORACE_WEST_BANK,Horace Highwater,$0E Horace Highwater
 1620,$D1E2FC,$1D4C29,raw,3820585,$FA4C29,True,LiveText_1620,,HORACE_WEST_BANK,Madronius,$03 Generic NPC
 1621,$D1E2FF,$1D4D9C,raw,3820956,$FA4D9C,True,LiveText_1621,,HORACE_WEST_BANK,Madronius,$03 Generic NPC
 1622,$D1E302,$1D4DD8,raw,3821016,$FA4DD8,True,LiveText_1622,,HORACE_WEST_BANK,Madronius,$03 Generic NPC

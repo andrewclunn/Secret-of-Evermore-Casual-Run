@@ -94,7 +94,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("base_rom", help="clean, unheadered U.S. Secret of Evermore ROM")
     ap.add_argument("output_rom", help="output ROM path")
-    ap.add_argument("--source", default=str(Path(__file__).resolve().parent / "Secret_of_Evermore_Casual_Run_v1.36.asm"))
+    ap.add_argument("--source", default=str(Path(__file__).resolve().parent / "Secret_of_Evermore_Casual_Run_v1.38.asm"))
     ap.add_argument("--ips", help="optional IPS output path")
     ap.add_argument("--baseline-v103", action="store_true",
                     help="require output to match the recovered v1.03 baseline hash")

@@ -1,6 +1,6 @@
 # Current script layout
 
-Built ROM SHA-256: `a6ced1e7309222863ef61e02cb0a2887d7004b295ebce632fee70d8dcd1ea4d5`.
+Built ROM SHA-256: `f187a38f9c7c177e017dfad75f177b28f5eada6893e1924b5e1973993fe9fc45`.
 
 This map records all 3,002 primary text pointers and every final source-owned range. It does not certify unused text IDs, dead payloads, or free space. Indirect references and native event entry points require separate audits.
 
@@ -16,9 +16,9 @@ This map records all 3,002 primary text pointers and every final source-owned ra
 | $F7 | 22,046 | 6,412 | 254 | 0 |
 | $F8 | 13,890 | 0 | 184 | 0 |
 | $F9 | 25,784 | 135 | 307 | 0 |
-| $FA | 17,172 | 555 | 240 | 0 |
+| $FA | 20,073 | 555 | 240 | 0 |
 | $FB | 12,749 | 149 | 382 | 0 |
-| $FC | 0 | 170 | 0 | 0 |
+| $FC | 20,299 | 170 | 0 | 0 |
 | $FD | 0 | 136 | 0 | 0 |
 | $FE | 16,538 | 164 | 243 | 0 |
 | $FF | 10,952 | 0 | 164 | 0 |
@@ -39,7 +39,7 @@ These are the inherited regional storage reservations. Counts reflect present ph
 | ANTIQUA_CRUSTACIA_APPROACH | $F84000-$F857FF | 5,004 | 1,140 | 60 |
 | NOBILIA_MARKET | $F40400-$F463FF | 17,259 | 7,317 | 269 |
 | NOBILIA_CITY_SQUARE | $FA0100-$FA38FF | 9,985 | 4,351 | 133 |
-| HORACE_WEST_BANK | $FA3900-$FA64FF | 7,022 | 4,242 | 107 |
+| HORACE_WEST_BANK | $FA3900-$FA64FF | 9,923 | 1,341 | 107 |
 | NOBILIA_CITY_PALACE | $F70100-$F760FF | 16,095 | 8,481 | 217 |
 | NOBILIA_COLOSSEUM | $F76100-$F768FF | 914 | 1,134 | 21 |
 | ANTIQUA_DESERT_TRAVEL | $FB0100-$FB10FF | 2,335 | 1,761 | 204 |

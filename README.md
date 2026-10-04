@@ -1,10 +1,10 @@
 # Secret of Evermore: Casual Run
 
-**Current development baseline:** v1.36\
+**Current development baseline:** v1.38\
 **Next major milestone:** 2.0  
 **Longer-term expansion:** 3.0
 
-**Current release:** [v1.36 IPS patch](Secret_of_Evermore_Casual_Run_v1.36.ips), with the authoritative source in [Build/Secret_of_Evermore_Casual_Run_v1.36.asm](Build/Secret_of_Evermore_Casual_Run_v1.36.asm). This release promotes the latest dialogue QA fixes: Blimp spacing and rest/save pages, corrected speaker themes for Blimp, the volcano alchemist, Fire Eyes and her twin, and Horace’s twin, plus wider default NPC windows. The Boy’s volcano reply is now “Huh?”. It retains v1.35’s Bazooka charge fix and all prior features. The build script defaults to v1.36; [release verification notes](Documentation/Dialogue_QA_v1.36.md) record the scope and validation.
+**Current release:** [v1.38 IPS patch](Secret_of_Evermore_Casual_Run_v1.38.ips), with the authoritative source in [Build/Secret_of_Evermore_Casual_Run_v1.38.asm](Build/Secret_of_Evermore_Casual_Run_v1.38.asm). This version fixes Tiny's introduction, missing Tiny/Pompolonius/Horace dialogue themes, post-arena pagination and spacing, and Horace's dialogue input waits. It retains the v1.37 vendor-passage removal and all earlier features. The build script defaults to v1.38; [dialogue release verification notes](Documentation/Dialogue_QA_v1.38.md) record validation and gameplay coverage limits.
 
 ## What Casual Run Is
 
@@ -110,6 +110,7 @@ Related formulas share experience at a predictable 50% rate. Every second cast w
 - Regular enemies award double currency.
 - The first hidden desert-crossing Amulet of Annihilation costs **500 Jewels** instead of 10,000.
 - The Nobilia Atlas Amulet vendor charges **100 Jewels** and restocks indefinitely.
+- Two pots beside the Nobilia vendor stalls are removed to open the passage between vendors.
 - A redundant Nobilia rice vendor is replaced with a bead vendor selling **5 beads for 75 Jewels**.
 - Ordinary drop behavior is more rewarding when enemies are affected by negative status conditions.
 
@@ -164,6 +165,8 @@ These completed feature families are therefore **2.0 features**, even though the
 - **v1.33 — Contextual save dialogue and character polish:** Sting's unrelated duplicate “See you later!” became “Stay safe out there.”; Pompolonius gained a themed Colosseum last-words save prompt; Cecil's Ebon Keep theme continuity, question pagination, and save dialogue were corrected; Blimp's hut/cave saves use his mud-pepper-leaf wording; Professor Ruffleberg's saves use a backup joke; and Omnitopia/Junkyard machine saves use machine-native backup language.
 - **v1.35 — Strong Heart save dialogue, Sandpits polish, and source consolidation:** Strong Heart keeps his theme through all save paths, offers to record your travels in his alchemy notes, and ends with “There we are. Just keep a look out for giant beetles!”; both final responses wait for dismissal. The southern raised-ledge Skelesnail in the Sandpits was removed. The source was consolidated into one active definition per address, with text-pointer and allocation audits; consolidation and release promotion preserve the exact accepted R4 ROM bytes.
 
+- **v1.37 — Nobilia vendor passage:** completely removes the two pots labeled B/C during the map experiment, including their collision. The other experiment pots retain their original behavior. Final combined removal and vendor access await emulator confirmation.
+- **v1.38 — Antiqua dialogue QA:** restores Tiny's introduction and missing Tiny, Pompolonius and Horace themes; fixes post-arena pagination and spacing; adds input waits to Horace's introduction and later help pages.
 - **v1.36 — Dialogue QA and NPC window polish:** corrected Blimp’s spacing, hut speaker themes, and rest/save question separation; the volcano alchemist’s save theme and the Boy’s “Huh?” reply; Fire Eyes/twin theme continuity; and Horace’s twin’s Nobilia scene themes. Default NPC windows move one column left and widen by two columns. The Crustacia amulet vendor was confirmed working through its existing pots trigger and received no appearance change.
 
 ## Script and Dialogue Revision — **Complete**
@@ -346,13 +349,13 @@ A failed prototype may still teach us something, but it is not part of the roadm
 
 Casual Run is intended for a **clean, unheadered U.S. ROM of _Secret of Evermore_**.
 
-Apply [Secret_of_Evermore_Casual_Run_v1.36.ips](Secret_of_Evermore_Casual_Run_v1.36.ips) to that clean base ROM with an appropriate patcher. Earlier versioned patches remain available for their corresponding releases.
+Apply [Secret_of_Evermore_Casual_Run_v1.38.ips](Secret_of_Evermore_Casual_Run_v1.38.ips) to that clean base ROM with an appropriate patcher. Earlier versioned patches remain available for their corresponding releases.
 
 For exact base-ROM hashes, patched-ROM hashes, checksums, source build instructions, expansion-space ownership, and other technical validation information, consult the authoritative ASM source included with the project.
 
 Required clean base: 3,145,728 bytes; SHA-256 `17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db`.
 
-Current v1.36 ROM: 4,194,304 bytes; SHA-256 `a6ced1e7309222863ef61e02cb0a2887d7004b295ebce632fee70d8dcd1ea4d5`; checksum/complement `$57D8 / $A827`. Applying the v1.36 IPS to the required clean base reproduces this ROM exactly.
+Current v1.38 ROM: 4,194,304 bytes; SHA-256 `f187a38f9c7c177e017dfad75f177b28f5eada6893e1924b5e1973993fe9fc45`; checksum/complement `$2D9A / $D265`. The cumulative IPS was composed from the verified v1.37 release patch and the v1.38 changes. Patch composition and application to the local baseline were checked; a clean-ROM rebuild/application remains unverified because the clean base is unavailable in this workspace.
 
 ---
 
