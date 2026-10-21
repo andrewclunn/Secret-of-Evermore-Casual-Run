@@ -1,3 +1,8 @@
+# Only Build and Screenshots are included among top-level folders.
+/*/
+!/Build/
+!/Screenshots/
+
 # Generated ROMs stay local; distribute versioned IPS patches instead.
 **/*.sfc
 **/*.smc
