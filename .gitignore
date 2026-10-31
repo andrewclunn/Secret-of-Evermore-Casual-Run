@@ -9,3 +9,9 @@
 **/*.pyc
 **/*.py
 __pycache__/
+
+# Keep the third-player proof-of-concept build and verification scripts.
+!Build/build.py
+!Build/ShadowPrototype/*.py
+!Build/VisualPrototype/*.py
+!Build/GrowthPrototype/*.py

@@ -1,16 +1,18 @@
 # Secret of Evermore: Casual Run
 
-**Version 2.0**
+**Version 2.4**
 
-Casual Run makes *Secret of Evermore* faster to play and easier to enjoy, with more direct controls, less grinding, better rewards, revised dialogue, and optional two-player play and New Game Plus. It keeps the original game's story, exploration, puzzles, and SNES presentation while smoothing out many of its frustrations.
+Casual Run makes *Secret of Evermore* faster to play and easier to enjoy, with more direct controls, less grinding, better rewards, revised dialogue, optional multiplayer, and New Game Plus. It keeps the original game's story, exploration, puzzles, and SNES presentation while smoothing out many of its frustrations.
 
 This document describes what changes **compared with the original game**.
 
-[Download the v2.0 IPS patch](Secret_of_Evermore_Casual_Run_v2.0.ips) · [ASM source](Build/Secret_of_Evermore_Casual_Run_v2.0.asm)
+For the changes introduced in **2.1**, **2.2**, **2.3** and **2.4**, see the [changelog](CHANGELOG.md).
+
+[Download the v2.4 IPS patch](Secret_of_Evermore_Casual_Run_v2.4.ips) | [ASM source](Build/Secret_of_Evermore_Casual_Run_v2.4.asm)
 
 ## Controls and menus
 
-You run by default (after aquiring a particular item early on). Hold **B** when you want to walk or charge your weapon faster. Attacking, talking, and confirming selections use **A**, while **B** consistently cancels or backs out of menus.
+You run by default after acquiring the Jaguar Ring early on. Hold **B** when you want to walk or charge your weapon faster. Attacking, talking, and confirming selections use **A**, while **B** consistently cancels or backs out of menus.
 
 Dedicated shortcuts let you open the Boy's rings directly:
 
@@ -25,6 +27,10 @@ Dedicated shortcuts let you open the Boy's rings directly:
 
 The Main Ring is simpler: Dog Equipment replaces Control Preferences, and the redundant Targeting command and Window Edit are removed from normal access. You can manage the Dog's equipment without opening a separate Dog Main Ring.
 
+With the **Oracle Bone**, press **L** to cycle the Dog between **Prehistoric -> Sacred Dog -> Poodle -> Prehistoric**. Holding L transforms once; Toaster Dog ignores L. **R** commands sniff. Player 1 controls transformations in single-player, whether controlling the Boy or Dog. When player 2 controls the Dog, only player 2 can transform it. Native story and map form changes still apply. Successful L transformations now have a brief brightening effect.
+
+The Oracle Bone description explains L transformations and R sniffing; the Magic Gourd description explains controller 3's Start button.
+
 Charge sounds are silenced.
 
 ## Two-player co-op
@@ -32,6 +38,31 @@ Charge sounds are silenced.
 A second player can control the other character. Press **Start on controller 2** to join or withdraw, allowing the AI to take over when needed. Both controllers use A to attack and confirm, and B to cancel; the direct Ring shortcuts belong to player 1.
 
 Either player can switch the camera focus with Select. The character with camera focus handles area exits and certain events, while the other can move beyond the visible screen.
+
+The inherited controller-2 join checks are corrected in 2.2. Player 2 can control the Dog alongside the optional third player.
+
+## Optional third-player reflection
+
+**The Magic Gourd enables a third human player.** Connect a **Multitap to physical controller port 2** in your emulator or on supported hardware. Logical controller 1 controls the Boy, controller 2 can join as the Dog, and controller 3 controls the reflection. The reflection has no AI.
+
+| Controller 3 button | Action |
+|---|---|
+| **Start** | Form the reflection, or dismiss it if already formed |
+| **D-pad** | Move |
+| **A** | Attack |
+| **B**, held | Walk and charge faster |
+
+Formation requires the Magic Gourd, both the Boy and Dog present and alive, an equipped weapon, and an area where attacks are available. Menus, dialogue and scripted events can prevent formation. The reflection disappears when the ordinary party separates or becomes unarmed, and during some events, including enemy-drop pickups. The original party controls camera focus and progression.
+
+The reflection is a blue copy of the Boy, using his jeans colors across its skin, hair, clothes and outlines. Each formation captures the Boy's **current HP, equipped weapon and combat stats**. Subsequent equipment/stat changes to the Boy do not change that reflection. It has its own position and charge, and its life can only decrease. Its HP and charge meter are deliberately hidden.
+
+The reflection cannot open menus, talk to NPCs or interact with containers. It is excluded from single and multiple spell target selection. Normal weapon-hit kills credit the weapon captured when the reflection formed.
+
+After voluntary dismissal or an event despawn, wait **two seconds of gameplay** before pressing Start again. If killed, it must wait **one minute of gameplay**. Pauses and blocked gameplay can extend those waits. Reforming takes a fresh snapshot of the Boy. A one-pixel blue outline follows the Boy's portrait silhouette when the reflection is absent and ready to form. The outline disappears while formed, during cooldowns, or when formation is blocked.
+
+**Snes9x save states:** loading a state can restore stale Multitap routing even if Joypad 3 is enabled and mapped. After loading, select ordinary joypads in the Input menu, then select **Multi Player 5 / Multitap** again before pressing controller 3's Start.
+
+The third-player feature has limited full-campaign coverage. Full immunity to enemy/area spells and status effects, all charged/projectile weapon EXP paths, crowded palettes and every cutscene interaction still need further validation. Its palette can fall back to the Boy's colors when no unused palette is available. The reflection can also obstruct narrow paths; dismiss it to clear the way. [Technical notes and test coverage](Build/ShadowPrototype/README.md) and [2.4 validation notes](Build/GrowthPrototype/README.md) record the current limits.
 
 ## Less grinding
 
@@ -42,6 +73,17 @@ Character growth and training are more forgiving:
 - Weapon experience is shared within sword, axe, and spear families. Kills credited to either character can contribute to the Boy's shared weapon progress.
 - Successful sniffing gives the Dog character experience and attack-skill progress.
 - Common sniff rewards and ordinary one-unit enemy ingredient drops give **two ingredients** instead of one.
+
+Sniff bonuses depend on the Dog's form when the pickup is collected:
+
+| Dog form | Character EXP | Attack-skill points |
+|---|---:|---:|
+| Prehistoric | 10 | 4 |
+| Sacred Dog | 100 | 2 |
+| Poodle | 1,000 | 1 |
+| Podunk / Toaster | 50 | 4 |
+
+These bonuses are awarded once per successful ingredient pickup; they do not change the ingredients or their quantity. Growth belongs to the Dog across all forms. Character EXP stops at level 99 and attack skill at level 3. One full attack-skill level takes 256 points, so Prehistoric needs 64 pickups, Sacred Dog 128, and Poodle 256 from an empty progress bar. A large character EXP award immediately processes all earned level-ups.
 
 Related alchemy formulas also share experience. Every second cast within a family gives the other formulas in that family a normal experience tick for their current level, so you can develop a useful set of spells without training each one separately.
 
@@ -66,6 +108,7 @@ Several purchases and passages are more convenient:
 - A bead vendor sells **five beads for 75 Jewels** in place of a redundant rice vendor.
 - Two pots are removed to open the passage between Nobilia's vendor stalls.
 - Mud Pepper loot can be collected up to a carrying limit of **99**.
+- Defeating the final/third Dark Forest copy awards the **Magic Gourd** if you do not already own it. The original Nobilia trade remains available, so players who acquire it earlier can summon the reflection earlier.
 
 ## Combat and equipment
 
@@ -78,6 +121,7 @@ Combat receives selected balance changes to make more weapons, spells, and charm
 - Enemy stats, armor, evasion, and character growth are adjusted alongside those changes.
 - Several charms have stronger or corrected effects.
 - Silver Sheath ownership and Bazooka ammunition, level, and equipment-display bugs are fixed.
+- The **Crusader Sword** is now awarded after **Footknight's chessboard defeat**, following the checkmate dialogue, instead of after the Dark Forest copies. Already-owned rewards do not repeat their acquisition notification; an already-owned sword leaves your current equipment alone.
 
 ## Dialogue and presentation
 
@@ -86,6 +130,8 @@ The script is revised throughout the game, with corrections to grammar, punctuat
 Dialogue windows help distinguish who's speaking. The Boy, robots, narration, and recurring characters have their own presentation, using different window positions, patterns, borders, and text sounds. Characters such as Fire Eyes, Strong Heart, Horace, Tinker, Queen Camellia, and Professor Ruffleberg keep their identities through conversations and dialog.
 
 Page breaks, timing, and window transitions are cleaned up. Important passages wait long enough to be read, repeated or empty windows are removed, and conversations advance more naturally.
+
+Version 2.1 added a dedicated **borderless Boy dialogue style for the opening Podunk and initial laboratory scenes**, with a blank background, lower-screen placement and his existing text voice. Later ordinary Boy dialogue retains its usual framed presentation; Carltron and the Professor retain their own styles.
 
 Saving feels like part of the conversation: Strong Heart records your travels in his alchemy notes, Blimp writes on mud pepper leaves, the Professor offers to make a backup, and machines acknowledge a completed backup. Other named characters have their own save wording and farewells.
 
@@ -119,24 +165,26 @@ Some characters have alternate dialogue that hints at memories of the previous c
 ## Installing
 
 1. Start with a **clean, unheadered U.S. ROM of Secret of Evermore**.
-2. Apply [Secret_of_Evermore_Casual_Run_v2.0.ips](Secret_of_Evermore_Casual_Run_v2.0.ips) using an IPS patcher.
+2. Apply [Secret_of_Evermore_Casual_Run_v2.4.ips](Secret_of_Evermore_Casual_Run_v2.4.ips) using an IPS patcher.
 3. Open the patched ROM in your SNES emulator.
+
+Existing 2.1-2.3 battery saves can be used. If your emulator matches saves by ROM filename, copy the battery save to match the new ROM's name. Players who already own the Magic Gourd can use the reflection immediately in eligible areas. The new Dark Forest reward is granted when that encounter is completed; it is not retroactively added to a save where the encounter is already finished.
 
 The patch contains the complete set of changes. Apply it to the original ROM, rather than over another version of Casual Run or a different hack.
 
 ### Building from source (optional)
 
-The [ASM source](Build/Secret_of_Evermore_Casual_Run_v2.0.asm) includes technical comments for anyone interested in how the changes work. With Python installed, you can build from your clean ROM:
+The [ASM source](Build/Secret_of_Evermore_Casual_Run_v2.4.asm) includes technical comments for anyone interested in how the changes work. With Python installed, you can build from your clean ROM:
 
 ```powershell
-python Build/build.py "PATH_TO_CLEAN_ROM" Build/Secret_of_Evermore_Casual_Run_v2.0.sfc
+python Build/build.py "PATH_TO_CLEAN_ROM" Build/Secret_of_Evermore_Casual_Run_v2.4.sfc
 ```
 
-The required base is 3,145,728 bytes, with SHA-256 `17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db`. The resulting 4 MiB ROM has SHA-256 `718614572208aec79b28e2287a09369bd3c9b64d3b1e87a17be26b56ecbef0e6`.
+The required base is 3,145,728 bytes, with SHA-256 `17c864a76d498feb6479eee8e7d6807b951c66225033228622bb66754baab1db`. The resulting 4 MiB ROM has SHA-256 `620b6cde35ac77966f6ee1988561be38e4b848ae33dd9fed7612c0d8e6dda1c9`.
 
 ## Roadmap
 
-The features above are available in **2.0**. The following additions are planned for **3.0**.
+The features above are available in **2.4**. The following additions remain planned; the larger content and audio expansion targets **3.0**.
 
 ### Status Key
 
@@ -147,6 +195,7 @@ The features above are available in **2.0**. The following additions are planned
 
 | Future feature | Status |
 |---|---|
+| Completion-based unlocks for New Game Plus and earlier three-player access | Planned |
 | Return to Omnitopia by flying to it in the Windwalker | Planned |
 | Optional quest to obtain the Atom Smasher | Planned |
 | Repeatable end-game Colosseum challenges with rewards | Planned |
@@ -159,6 +208,7 @@ The features above are available in **2.0**. The following additions are planned
 Casual Run builds on the work of the Secret of Evermore hacking community.
 
 - **FuSoYa** — the two-player foundation.
+- **Silentfan86** - [second-hero add-on](https://github.com/Silentfan86/SoE-A-second-hero-instead-of-the-dog) research informing the reflection's weapon/animation handling and inherited multiplayer signature fixes; the reflection adds a separate actor while preserving the Dog.
 - **Ninakoru** — balance work, bug fixes, and research into combat, growth, equipment, alchemy, charms, and enemies.
 - **assassin17** — Silver Sheath and Bazooka fixes.
 - **black-sliver / Evermizer** — Tiny's-lair softlock prevention, tools, and technical research.
