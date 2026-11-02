@@ -12,6 +12,7 @@ __pycache__/
 
 # Keep the third-player proof-of-concept build and verification scripts.
 !Build/build.py
+!Build/document_native_rom.py
 !Build/ShadowPrototype/*.py
 !Build/VisualPrototype/*.py
 !Build/GrowthPrototype/*.py

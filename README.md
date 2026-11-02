@@ -174,7 +174,15 @@ The patch contains the complete set of changes. Apply it to the original ROM, ra
 
 ### Building from source (optional)
 
-The [ASM source](Build/Secret_of_Evermore_Casual_Run_v2.4.asm) includes technical comments for anyone interested in how the changes work. With Python installed, you can build from your clean ROM:
+The [ASM source](Build/Secret_of_Evermore_Casual_Run_v2.4.asm) includes technical comments for anyone interested in how the changes work.
+
+The single ASM file combines the patch and native documentation in ascending ROM address order, from bank `$C0` through `$FF`. Bank headings summarize function and byte coverage; routine, data-table, map-record and event-entry notes appear at their corresponding addresses beside the relevant patch blocks. A short opening guide covers address conventions, runtime RAM and source references. Native bytes inherited from the clean ROM are documented without emitting duplicate data, and undecoded areas remain labelled explicitly. No separate native ASM or documentation include is required to build.
+
+Change summaries explain the verified behavior of the main helpers. Commented symbolic instructions restore names and control flow from the matching release sources, while native before/after byte notes and printable text previews make data edits easier to inspect. Those symbolic lines are explanatory comments; the `org`/`db` statements remain the authoritative emitted bytes. Unattributed byte edits are not assigned speculative purposes.
+
+The ASM is self-contained and needs no documentation generator to build. Its output has been checked against the approved v2.4 ROM and IPS using both the existing builder and Asar. An explicit final zero byte ensures direct assemblers also emit the full 4 MiB image. This is an address-organized patch and reference, not a complete native disassembly.
+
+With Python installed, you can build from your clean ROM:
 
 ```powershell
 python Build/build.py "PATH_TO_CLEAN_ROM" Build/Secret_of_Evermore_Casual_Run_v2.4.sfc
