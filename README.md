@@ -216,7 +216,7 @@ The features above are available in **2.4**. The following additions remain plan
 Casual Run builds on the work of the Secret of Evermore hacking community.
 
 - **FuSoYa** — the two-player foundation.
-- **Silentfan86** - [second-hero add-on](https://github.com/Silentfan86/SoE-A-second-hero-instead-of-the-dog) research informing the reflection's weapon/animation handling and inherited multiplayer signature fixes; the reflection adds a separate actor while preserving the Dog.
+- **Robman (Silentfan86)** inspired Casual Run's three-player reflection with his second-hero add-on. His research informed the reflection's weapon and animation handling and helped identify inherited multiplayer signature checks. Casual Run implements the reflection as a separate actor alongside the Boy and Dog. [Second-hero add-on](https://github.com/Silentfan86/SoE-A-second-hero-instead-of-the-dog)
 - **Ninakoru** — balance work, bug fixes, and research into combat, growth, equipment, alchemy, charms, and enemies.
 - **assassin17** — Silver Sheath and Bazooka fixes.
 - **black-sliver / Evermizer** — Tiny's-lair softlock prevention, tools, and technical research.
